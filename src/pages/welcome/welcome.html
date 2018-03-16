@@ -7,12 +7,29 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Welcome</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Quaobee - tracking</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content class="cover">
+  <div class="overlay"></div>
+  <div class="v-center">
+    <img src="/assets/imgs/logo_mini.png">
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+          <button (click)="goToLogin()" ion-button color="danger" block>{{ 'Login' | translate }}</button>
+        </ion-col>
 
+        <ion-col col-6>
+          <button ion-button block>{{ 'Subscribe' | translate }}</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
 </ion-content>
