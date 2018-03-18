@@ -1,0 +1,9 @@
+<ion-item *ngIf="user">
+
+    <div class="overlay"></div>
+    <ion-avatar item-start>
+        <img src="{{user.avatar || '../assets/imgs/user.png' }}">
+    </ion-avatar>
+    <h2>{{ user.firstname }} {{ user.name }}</h2>
+    <!--<p>Ugh. As if.</p>-->
+</ion-item>

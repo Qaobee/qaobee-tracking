@@ -2,11 +2,12 @@ import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {UniqueDeviceID} from '@ionic-native/unique-device-id';
 
-import {UserService} from '../../services/userService';
+import {UserService} from '../../providers/api/user.service';
 import {SignupPage} from '../signup/signup';
 import {Storage} from '@ionic/storage';
 import {MenuPage} from "../menu/menu";
-import {AuthenticationService} from "../../services/authenticationService";
+import {AuthenticationService} from "../../providers/authentication.service";
+import {EventsService} from "../../providers/event.service";
 
 /**
  * LoginPage page.
@@ -21,20 +22,22 @@ export class LoginPage {
     private passwd: string;
 
     /**
-     *
+     * .
      * @param {NavController} navCtrl
      * @param {NavParams} navParams
      * @param {UserService} userService
      * @param {Storage} storage
      * @param {UniqueDeviceID} uniqueDeviceID
      * @param {AuthenticationService} authenticationService
+     * @param {EventsService} eventService
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private userService: UserService,
                 private storage: Storage,
                 private uniqueDeviceID: UniqueDeviceID,
-                private authenticationService: AuthenticationService) {
+                private authenticationService: AuthenticationService,
+                private eventService: EventsService) {
         this.storage.get("login").then(l => {
             this.login = l;
         })
@@ -42,11 +45,10 @@ export class LoginPage {
 
     /** */
     doLogin() {
-        this.uniqueDeviceID.get()
-            .then((uuid: any) => {
-                console.log(uuid)
-                this.submitLogin(uuid);
-            }).catch((error: any) => {
+        this.uniqueDeviceID.get().then((uuid: any) => {
+            console.log(uuid)
+            this.submitLogin(uuid);
+        }).catch((error: any) => {
             console.error(error);
             this.submitLogin("123456-" + this.login);
         });
@@ -66,7 +68,8 @@ export class LoginPage {
                 this.storage.set("login", this.login);
                 this.storage.set("mobileToken", uuid);
                 console.log(result);
-                this.navCtrl.push(MenuPage, {user: result});
+                this.navCtrl.setRoot(MenuPage, {user: result});
+                this.eventService.broadcast('user-logged', result);
             }
         });
     }

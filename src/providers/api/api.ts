@@ -4,8 +4,8 @@ import {App, NavController, ToastController} from 'ionic-angular';
 import {Observable} from "rxjs/Observable";
 import {of} from "rxjs/observable/of";
 import {HttpHeaders} from "@angular/common/http";
-import {LoginPage} from "../pages/login/login";
-import {AuthenticationService} from "./authenticationService";
+import {LoginPage} from "../../pages/login/login";
+import {AuthenticationService} from "../authentication.service";
 
 
 /**

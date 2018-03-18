@@ -6,38 +6,38 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-      <button ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
         </button>
-    <ion-title>Login</ion-title>
-  </ion-navbar>
+        <ion-title>Login</ion-title>
+    </ion-navbar>
 
 </ion-header>
 
 
 <ion-content class="cover">
-  <div class="overlay"></div>
-  <div class="over">
-    <img src="/assets/imgs/logo_mini.png">
-    <ion-card text-center>
-      <ion-item>
-        <ion-icon name="contact"></ion-icon>
-        <ion-label floating>{{ 'Username' | translate }}</ion-label>
-        <ion-input type="text" [(ngModel)]="login"></ion-input>
-      </ion-item>
+    <div class="overlay"></div>
+    <div class="over">
+        <img src="/assets/imgs/logo_mini.png">
+        <ion-card text-center>
+            <ion-item>
+                <ion-icon name="contact"></ion-icon>
+                <ion-label floating>{{ 'Username' | translate }}</ion-label>
+                <ion-input type="text" [(ngModel)]="login"></ion-input>
+            </ion-item>
 
-      <ion-item>
-        <ion-icon name="lock"></ion-icon>
-        <ion-label floating>{{ 'Password' | translate }}</ion-label>
-        <ion-input type="password" [(ngModel)]="passwd"></ion-input>
-      </ion-item>
-      <div class="login-btn">
-        <button ion-fab color="secondary" padding (click)="doLogin()">
-          <ion-icon name="checkmark"></ion-icon>
-        </button>
-        <span (click)="goToSignup()" class="link">{{ 'Signup.link' | translate  }}</span>
-      </div>
-    </ion-card>
-  </div>
+            <ion-item>
+                <ion-icon name="lock"></ion-icon>
+                <ion-label floating>{{ 'Password' | translate }}</ion-label>
+                <ion-input type="password" [(ngModel)]="passwd"></ion-input>
+            </ion-item>
+            <div class="login-btn">
+                <button ion-fab color="secondary" padding (click)="doLogin()">
+                    <ion-icon name="checkmark"></ion-icon>
+                </button>
+                <span (click)="goToSignup()" class="link">{{ 'Signup.link' | translate  }}</span>
+            </div>
+        </ion-card>
+    </div>
 </ion-content>

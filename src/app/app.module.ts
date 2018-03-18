@@ -12,12 +12,14 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {LoginPage} from '../pages/login/login';
 import {SignupPage} from '../pages/signup/signup';
-import {UserService} from '../services/userService';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {MenuPage} from "../pages/menu/menu";
 import {UniqueDeviceID} from "@ionic-native/unique-device-id";
-import {AuthenticationService} from "../services/authenticationService";
+import {EventsService} from "../providers/event.service";
+import {UserService} from "../providers/api/user.service";
+import {AuthenticationService} from "../providers/authentication.service";
+import {ComponentsModule} from "../components/components.module";
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -37,6 +39,7 @@ export function createTranslateLoader(http: HttpClient) {
         HttpClientModule,
         IonicModule.forRoot(MyApp),
         IonicStorageModule.forRoot(),
+        ComponentsModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -60,6 +63,7 @@ export function createTranslateLoader(http: HttpClient) {
         UserService,
         UniqueDeviceID,
         AuthenticationService,
+        EventsService,
         {provide: ErrorHandler, useClass: IonicErrorHandler}
     ]
 })

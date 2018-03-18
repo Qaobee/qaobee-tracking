@@ -5,7 +5,7 @@ import {catchError} from 'rxjs/operators';
 import 'rxjs/add/operator/map';
 import {ApiService} from "./api";
 import {App, Platform, ToastController} from 'ionic-angular';
-import {AuthenticationService} from "./authenticationService";
+import {AuthenticationService} from "../authentication.service";
 
 
 @Injectable()
