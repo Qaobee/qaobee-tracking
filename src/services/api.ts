@@ -1,40 +1,66 @@
 import {Injectable} from "@angular/core";
 import 'rxjs/add/operator/map';
-import { ToastController } from 'ionic-angular';
+import {App, NavController, ToastController} from 'ionic-angular';
 import {Observable} from "rxjs/Observable";
 import {of} from "rxjs/observable/of";
+import {HttpHeaders} from "@angular/common/http";
+import {LoginPage} from "../pages/login/login";
+import {AuthenticationService} from "./authenticationService";
+
+
 /**
  * ApiService
  */
 @Injectable()
 export class ApiService {
-    protected toastCtrl: ToastController;
-    protected host:string = "http://localhost:8888"
+    protected host: string = "http://localhost:8888";
+    private navCtrl: NavController;
+    private excludedOperations: string[] = ['UserService.login'];
+
     /**
      *
-     * @param toasterService
-     * @param authenticationService
-     * @param router
+     * @param {App} app
+     * @param {AuthenticationService} authenticationService
+     * @param {ToastController} toastCtrl
      */
-    constructor(toastCtrl: ToastController) {
-        this.toastCtrl = toastCtrl;
+    constructor(app: App, public authenticationService: AuthenticationService, public toastCtrl: ToastController) {
+        this.navCtrl = app.getActiveNav();
     }
 
     /**
      *
-     * @param error
-     * @returns {string}
+     * @param {string} operation
+     * @param {T} result
+     * @returns {(error: any) => Observable<T>}
      */
-    handleError<T> (operation = 'operation', result?: T) {
+    handleError<T>(operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
-
-            // TODO: send the error to remote logging infrastructure
-            console.error(error); // log to console instead
-            // TODO: better job of transforming error for user consumption
-            console.log(`${operation} failed: ${error.message}`);
-
-            // Let the app keep running by returning an empty result.
-            return of(result as T);
+            console.error(operation, error);
+            if (error.status === 401 && this.excludedOperations.indexOf(operation) === -1) {
+                this.navCtrl.push(LoginPage);
+                this.authenticationService.isLogged = false;
+                return of(result as T);
+            } else {
+                console.error(error);
+                console.error(`${operation} failed: ${error.message}`);
+                let errMsg = (error.error.message) ? error.error.message : error.status ? error.statusText : 'Server error';
+                this.toastCtrl.create({
+                    message: errMsg,
+                    duration: 3000,
+                    position: 'top',
+                    cssClass: 'danger-toast'
+                }).present();
+                // Let the app keep running by returning an empty result.
+                return of(result as T);
+            }
         };
+    }
+
+    /**
+     *
+     * @returns {}
+     */
+    addHeaderToken(): any {
+        return {headers: new HttpHeaders().set('token', this.authenticationService.token)};
     }
 }

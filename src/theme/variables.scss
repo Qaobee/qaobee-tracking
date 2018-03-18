@@ -41,7 +41,7 @@ $colors: (
   dark:       #37474F
 );
 
-
+$toolbar-background : color($colors, secondary, base);
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
