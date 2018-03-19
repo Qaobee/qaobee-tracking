@@ -12,6 +12,7 @@ import {Storage} from "@ionic/storage";
 import {UserService} from "../providers/api/user.service";
 import {MenuPage} from "../pages/menu/menu";
 import {EventsService} from "../providers/event.service";
+import {ProfilePage} from "../pages/profile/profile";
 
 @Component({
     templateUrl: 'app.html'
@@ -88,10 +89,11 @@ export class MyApp {
     }
 
     private buildLoggedMenu() {
-        this.translate.get(['Home', 'Logout']).subscribe(
+        this.translate.get(['Home', 'Logout', 'Profile']).subscribe(
             value => {
                 this.pages = [
                     {title: value['Home'], component: MenuPage, icon: 'home'},
+                    {title: value['Profile'], component: ProfilePage, icon: 'contact'},
                     {title: value['Logout'], component: LoginPage, icon: 'log-out'}
                 ];
             }

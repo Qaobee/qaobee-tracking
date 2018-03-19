@@ -7,13 +7,11 @@ import {HttpHeaders} from "@angular/common/http";
 import {LoginPage} from "../../pages/login/login";
 import {AuthenticationService} from "../authentication.service";
 
-
 /**
  * ApiService
  */
 @Injectable()
 export class ApiService {
-    protected host: string = "http://localhost:8888";
     private navCtrl: NavController;
     private excludedOperations: string[] = ['UserService.login'];
 

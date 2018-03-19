@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-
+import { ENV } from '@app/env'
 /**
  * Generated class for the MenuHeaderComponent component.
  *
@@ -13,6 +13,7 @@ import {Component, Input} from '@angular/core';
 export class MenuHeaderComponent {
     @Input() user: any;
 
+    root: string = ENV.hive;
     constructor() {
     }
 
