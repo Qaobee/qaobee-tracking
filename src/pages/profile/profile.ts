@@ -46,12 +46,13 @@ export class ProfilePage {
     }
 
     updateSearchResults() {
-        if (this.user.address.formattedAddress == '') {
+        if (!this.address || this.address == '') {
             this.autocompleteItems = [];
             return;
         }
         this.GoogleAutocomplete.getPlacePredictions({input: this.address},
             (predictions, status) => {
+                console.log(status);
                 this.autocompleteItems = [];
                 predictions.forEach((prediction) => {
                     this.autocompleteItems.push(prediction);
@@ -61,7 +62,6 @@ export class ProfilePage {
 
     selectSearchResult(item) {
         this.autocompleteItems = [];
-
         this.address = item.description;
         this.geocoder.geocode({'placeId': item.place_id}, (results, status) => {
             if (status === 'OK' && results[0]) {
@@ -107,10 +107,7 @@ export class ProfilePage {
                     }
                 }, {
                     text: 'Cancel',
-                    role: 'cancel',
-                    handler: () => {
-                        console.log('Cancel clicked');
-                    }
+                    role: 'cancel'
                 }
             ]
         });
@@ -120,6 +117,7 @@ export class ProfilePage {
     captureImage(options: CameraOptions) {
         this.camera.getPicture(options).then((imageData) => {
             this.imageURI = imageData;
+            this.uploadFile();
         }, (err) => {
             console.log(err);
             this.presentToast(err);
@@ -146,7 +144,7 @@ export class ProfilePage {
         });
     }
 
-    ionViewDidLoad() {
+    ionViewDidLoad(): void { // tslint:disable-line:no-unused-variable
         this.user = this.authenticationService.user;
         if (this.user.address && this.user.address.formatedAddress) {
             this.address = this.user.address.formatedAddress;
