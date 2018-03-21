@@ -19,25 +19,31 @@
 <ion-content class="cover">
     <div class="overlay"></div>
     <div class="over">
-        <img src="../../assets/imgs/logo_mini.png">
-        <ion-card text-center>
-            <ion-item>
-                <ion-icon name="contact"></ion-icon>
-                <ion-label floating>{{ 'Username' | translate }}</ion-label>
-                <ion-input type="text" [(ngModel)]="login"></ion-input>
-            </ion-item>
+    <ion-list>
+        <ion-item>
+            <ion-label stacked>{{ 'Username' | translate }}</ion-label>
+            <ion-input type="text" [(ngModel)]="login"></ion-input>
+        </ion-item>
 
-            <ion-item>
-                <ion-icon name="lock"></ion-icon>
-                <ion-label floating>{{ 'Password' | translate }}</ion-label>
-                <ion-input type="password" [(ngModel)]="passwd"></ion-input>
-            </ion-item>
-            <div class="login-btn">
-                <button ion-fab color="secondary" padding (click)="doLogin()">
-                    <ion-icon name="checkmark"></ion-icon>
+        <ion-item>
+            <ion-label stacked>{{ 'Password' | translate }}</ion-label>
+            <ion-input type="password" [(ngModel)]="passwd"></ion-input>
+        </ion-item>
+
+        <ion-item text-center padding>
+                <button ion-button icon-left large (tap)="doLogin()" color="danger">
+                    <ion-icon name="log-in"></ion-icon>
+                    {{ 'Login' | translate  }}
                 </button>
-                <span (click)="goToSignup()" class="link">{{ 'Signup.link' | translate  }}</span>
-            </div>
-        </ion-card>
+        </ion-item>
+    </ion-list>
+
+    
+    
+    <div padding padding text-center>
+        <button ion-button icon-left medium (tap)="goToSignup()">
+                {{ 'Subscribe' | translate  }}
+        </button>
     </div>
+</div>
 </ion-content>
