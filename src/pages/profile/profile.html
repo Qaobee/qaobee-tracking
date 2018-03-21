@@ -27,29 +27,42 @@
             <p>{{ user.account.login }}</p>
         </ion-item>
         <ion-card-content>
-            <ion-list>
 
-                <ion-item>
-                    <ion-label floating>Firstname</ion-label>
-                    <ion-input type="text" [(ngModel)]="user.firstname"></ion-input>
-                </ion-item>
+            <ion-item>
+                <ion-label floating>Firstname</ion-label>
+                <ion-input type="text" [(ngModel)]="user.firstname"></ion-input>
+            </ion-item>
 
-                <ion-item>
-                    <ion-label floating>Name</ion-label>
-                    <ion-input type="text" [(ngModel)]="user.name"></ion-input>
-                </ion-item>
+            <ion-item>
+                <ion-label floating>Name</ion-label>
+                <ion-input type="text" [(ngModel)]="user.name"></ion-input>
+            </ion-item>
 
+            <ion-item>
+                <ion-label floating>EMail</ion-label>
+                <ion-input type="text" [(ngModel)]="user.contact.email"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Birth date</ion-label>
+                <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="user.birthdate"></ion-datetime>
+            </ion-item>
+
+
+            <div class="autocomplete">
                 <ion-item>
                     <ion-label floating>Address</ion-label>
-                        <ion-input
-                                type="text"
-                                [(ngModel)]="user.address.formattedAddress"
-                                (keyup)="updateSearchResults()"
-                                autocomplete="on"
-                                debounce=500>
-                        </ion-input>
+                    <ion-input type="text" [(ngModel)]="address" (keyup)="updateSearchResults()"></ion-input>
                 </ion-item>
-            </ion-list>
+                <ion-searchbar
+                        [(ngModel)]="address"
+                        debounce=500>
+                </ion-searchbar>
+                <ion-list>
+                    <ion-item *ngFor="let res of autocompleteItems" (click)="selectSearchResult(res)">
+                        {{res.description}}
+                    </ion-item>
+                </ion-list>
+            </div>
         </ion-card-content>
 
         <ion-row>
