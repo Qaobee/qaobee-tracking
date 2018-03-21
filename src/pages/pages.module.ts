@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {IonicPageModule} from 'ionic-angular';
 import {ProfilePage} from './profile/profile';
 import {WelcomePage} from "./welcome/welcome";
-import {MenuPage} from "./menu/menu";
 import {HomePage} from "./home/home";
 import {LoginPage} from "./login/login";
 import {SignupPage} from "./signup/signup";
@@ -18,7 +17,6 @@ import {createTranslateLoader} from "../app/app.module";
         WelcomePage,
         LoginPage,
         SignupPage,
-        MenuPage,
         ProfilePage,
     ],
     imports: [
@@ -38,8 +36,7 @@ import {createTranslateLoader} from "../app/app.module";
         HomePage,
         WelcomePage,
         LoginPage,
-        SignupPage,
-        MenuPage
+        SignupPage
     ]
 })
 export class PageModule {

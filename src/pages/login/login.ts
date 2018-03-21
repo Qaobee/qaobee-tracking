@@ -1,3 +1,4 @@
+import { HomePage } from './../home/home';
 import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {UniqueDeviceID} from '@ionic-native/unique-device-id';
@@ -5,7 +6,6 @@ import {UniqueDeviceID} from '@ionic-native/unique-device-id';
 import {UserService} from '../../providers/api/user.service';
 import {SignupPage} from '../signup/signup';
 import {Storage} from '@ionic/storage';
-import {MenuPage} from "../menu/menu";
 import {AuthenticationService} from "../../providers/authentication.service";
 import {EventsService} from "../../providers/event.service";
 
@@ -18,8 +18,8 @@ import {EventsService} from "../../providers/event.service";
 })
 export class LoginPage {
 
-    private login: string;
-    private passwd: string;
+    public login: string;
+    public passwd: string;
 
     /**
      * .
@@ -67,8 +67,7 @@ export class LoginPage {
                 this.authenticationService.user = result;
                 this.storage.set("login", this.login);
                 this.storage.set("mobileToken", uuid);
-                console.log(result);
-                this.navCtrl.setRoot(MenuPage, {user: result});
+                this.navCtrl.setRoot(HomePage, {user: result});
                 this.eventService.broadcast('user-logged', result);
             }
         });

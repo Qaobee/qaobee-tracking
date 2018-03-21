@@ -5,7 +5,7 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {IonicStorageModule} from '@ionic/storage';
 import {FileTransfer} from '@ionic-native/file-transfer';
 import {File} from '@ionic-native/file';
-import {Camera} from '@ionic-native/camera';
+import {Camera} from '@ionic-native/camera'; 
 
 import {MyApp} from './app.component';
 
@@ -14,9 +14,11 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {UniqueDeviceID} from "@ionic-native/unique-device-id";
+
 import {EventsService} from "../providers/event.service";
 import {UserService} from "../providers/api/user.service";
 import {AuthenticationService} from "../providers/authentication.service";
+
 import {ComponentsModule} from "../components/components.module";
 import {PageModule} from "../pages/pages.module";
 

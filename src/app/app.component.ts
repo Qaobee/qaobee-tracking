@@ -1,3 +1,4 @@
+import { HomePage } from './../pages/home/home';
 import {Component, ViewChild} from '@angular/core';
 import {Nav, Platform} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
@@ -10,9 +11,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {AuthenticationService} from "../providers/authentication.service";
 import {Storage} from "@ionic/storage";
 import {UserService} from "../providers/api/user.service";
-import {MenuPage} from "../pages/menu/menu";
 import {EventsService} from "../providers/event.service";
-import {ProfilePage} from "../pages/profile/profile";
+import {ProfilePage} from "../pages/profile/profile"; 
 
 @Component({
     templateUrl: 'app.html'
@@ -92,7 +92,7 @@ export class MyApp {
         this.translate.get(['Home', 'Logout', 'Profile']).subscribe(
             value => {
                 this.pages = [
-                    {title: value['Home'], component: MenuPage, icon: 'home'},
+                    {title: value['Home'], component: HomePage, icon: 'home'},
                     {title: value['Profile'], component: ProfilePage, icon: 'contact'},
                     {title: value['Logout'], component: LoginPage, icon: 'log-out'}
                 ];
@@ -112,7 +112,7 @@ export class MyApp {
                             this.storage.set("login", l);
                             this.storage.set("mobileToken", mt);
                             console.log(result);
-                            this.nav.setRoot(MenuPage, {user: result});
+                            this.nav.setRoot(HomePage, {user: result});
                             this.eventService.broadcast('user-logged', result);
                         }
                     });
