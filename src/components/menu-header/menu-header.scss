@@ -1,8 +1,5 @@
 menu-header {
   ion-item {
-    background: url(../../assets/imgs/logo_3.9.png) no-repeat top;
-    -webkit-background-size: cover; /* pour anciens Chrome et Safari */
-    background-size: cover; /* version standardisée */
     height: 150px;
 
     ion-avatar, h2 {
@@ -13,7 +10,7 @@ menu-header {
       bottom: 0;
     }
     .overlay {
-      background-color: rgba($color: #000000, $alpha: 0.6);
+      background-color: color($colors, dark, base);
       position: absolute;
       top: 0;
       right: 0;
