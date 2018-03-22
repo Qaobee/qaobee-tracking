@@ -14,7 +14,7 @@ import {AuthenticationService} from "../authentication.service";
 export class ApiService {
     private navCtrl: NavController;
     private excludedOperations: string[] = ['UserService.login'];
-
+    protected rootPath: string = '/api/1/';
     /**
      *
      * @param {App} app

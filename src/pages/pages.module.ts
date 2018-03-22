@@ -39,5 +39,6 @@ import {createTranslateLoader} from "../app/app.module";
         SignupPage
     ]
 })
+
 export class PageModule {
 }

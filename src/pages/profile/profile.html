@@ -19,71 +19,60 @@
 <ion-content padding>
 
     <ion-card *ngIf="user">
-        <ion-item>
-            <ion-avatar item-start>
-                <img src="{{ root + '/file/User/' +  user.avatar || '../assets/imgs/user.png' }}">
-            </ion-avatar>
-            <h2>{{ user.firstname }} {{ user.name }}</h2>
-            <p>{{ user.account.login }}</p>
-        </ion-item>
         <ion-card-content>
-            <ion-list>
 
-                <ion-item>
-                    <ion-label floating>Firstname</ion-label>
-                    <ion-input type="text" [(ngModel)]="user.firstname"></ion-input>
-                </ion-item>
+            <div class="wrapper">
+                <div class="image-cropper">
+                    <ion-img class="avatar" width="200" height="200"
+                             src="{{ root + '/file/User/' +  user.avatar || '../assets/imgs/user.png' }}"></ion-img>
+                </div>
+            </div>
+            <ion-item>
+                <ion-label floating>Firstname</ion-label>
+                <ion-input type="text" [(ngModel)]="user.firstname"></ion-input>
+            </ion-item>
 
-                <ion-item>
-                    <ion-label floating>Name</ion-label>
-                    <ion-input type="text" [(ngModel)]="user.name"></ion-input>
-                </ion-item>
+            <ion-item>
+                <ion-label floating>Name</ion-label>
+                <ion-input type="text" [(ngModel)]="user.name"></ion-input>
+            </ion-item>
 
+            <ion-item>
+                <ion-label floating>EMail</ion-label>
+                <ion-input type="text" [(ngModel)]="user.contact.email"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Birth date</ion-label>
+                <ion-datetime [(ngModel)]="birthdate"></ion-datetime>
+            </ion-item>
+
+
+            <div class="autocomplete">
                 <ion-item>
                     <ion-label floating>Address</ion-label>
-                        <ion-input
-                                type="text"
-                                [(ngModel)]="user.address.formattedAddress"
-                                (keyup)="updateSearchResults()"
-                                autocomplete="on"
-                                debounce=500>
-                        </ion-input>
+                    <ion-input type="text" [(ngModel)]="address" (keyup)="updateSearchResults()"></ion-input>
                 </ion-item>
-            </ion-list>
+                <ion-list>
+                    <ion-item *ngFor="let res of autocompleteItems" (click)="selectSearchResult(res)">
+                        {{res.description}}
+                    </ion-item>
+                </ion-list>
+            </div>
         </ion-card-content>
 
         <ion-row>
             <ion-col>
-                <button ion-button icon-left clear small>
-                    <ion-icon name="thumbs-up"></ion-icon>
-                    <div>12 Likes</div>
+                <button ion-button icon-left clear small (click)="getImage()">
+                    <ion-icon name="image"></ion-icon>
+                    <div>Update profile picture</div>
                 </button>
             </ion-col>
             <ion-col>
-                <button ion-button icon-left clear small>
-                    <ion-icon name="text"></ion-icon>
-                    <div>4 Comments</div>
+                <button ion-button icon-left clear small (click)="saveProfile()">
+                    <ion-icon name="checkmark"></ion-icon>
+                    <div>Save</div>
                 </button>
             </ion-col>
-            <ion-col center text-center>
-                <ion-note>
-                    11h ago
-                </ion-note>
-            </ion-col>
         </ion-row>
-
     </ion-card>
-    <ion-content padding>
-        <ion-item>
-            <p>{{imageURI}}</p>
-            <button ion-button color="secondary" (click)="getImage()">Get Image</button>
-        </ion-item>
-        <ion-item>
-            <h4>Image Preview</h4>
-            <img src="{{imageFileName}}" *ngIf="imageFileName" alt="Ionic File" width="300"/>
-        </ion-item>
-        <ion-item>
-            <button ion-button (click)="uploadFile()">Upload</button>
-        </ion-item>
-    </ion-content>
 </ion-content>

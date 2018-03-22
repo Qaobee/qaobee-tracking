@@ -1,4 +1,3 @@
-import { HomePage } from './../pages/home/home';
 import {Component, ViewChild} from '@angular/core';
 import {Nav, Platform} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
@@ -11,8 +10,10 @@ import {TranslateService} from '@ngx-translate/core';
 import {AuthenticationService} from "../providers/authentication.service";
 import {Storage} from "@ionic/storage";
 import {UserService} from "../providers/api/user.service";
-import {EventsService} from "../providers/event.service";
-import {ProfilePage} from "../pages/profile/profile"; 
+import {EventService} from "../providers/event.service";
+import {ProfilePage} from "../pages/profile/profile";
+import {MetaService} from "../providers/api/meta.service";
+import {HomePage} from "../pages/home/home";
 
 @Component({
     templateUrl: 'app.html'
@@ -32,7 +33,8 @@ export class MyApp {
      * @param {Storage} storage
      * @param {AuthenticationService} authenticationService
      * @param {TranslateService} translate
-     * @param {EventsService} eventService
+     * @param {EventService} eventService
+     * @param {MetaService} metaService
      */
     constructor(private platform: Platform,
                 private statusBar: StatusBar,
@@ -41,7 +43,8 @@ export class MyApp {
                 private storage: Storage,
                 private authenticationService: AuthenticationService,
                 private translate: TranslateService,
-                private eventService: EventsService) {
+                private eventService: EventService,
+                private metaService: MetaService) {
         this.initializeApp();
         this.pages = [];
         translate.setDefaultLang('en');
@@ -61,7 +64,17 @@ export class MyApp {
 
             this.eventService.on('user-logged', user => {
                 this.user = user;
+                this.authenticationService.isLogged = true;
+                this.authenticationService.token = user.account.token;
+                this.authenticationService.user = user;
+                this.storage.set("login", user.account.login);
                 this.buildLoggedMenu();
+                this.metaService.getMeta().subscribe(m => {
+                   if(m) {
+                       this.authenticationService.meta = m;
+                       this.nav.setRoot(HomePage, {user: user});
+                   }
+                });
             });
         });
     }
@@ -106,13 +119,7 @@ export class MyApp {
                 if (l && mt) {
                     this.userService.sso(l, mt).subscribe((result: any) => {
                         if (result) {
-                            this.authenticationService.isLogged = true;
-                            this.authenticationService.token = result.account.token;
-                            this.authenticationService.user = result;
-                            this.storage.set("login", l);
                             this.storage.set("mobileToken", mt);
-                            console.log(result);
-                            this.nav.setRoot(HomePage, {user: result});
                             this.eventService.broadcast('user-logged', result);
                         }
                     });

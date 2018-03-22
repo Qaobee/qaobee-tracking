@@ -1,9 +1,38 @@
 page-profile {
+
+  .image-cropper {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    margin: auto;
+  }
+  ion-card {
+    padding-top: 50px;
+  }
+  .wrapper {
+    position: absolute;
+    z-index: 999;
+    top:10px;
+    right: calc(50vw - 50px);
+    left: calc(50vw - 50px);
+
+  }
+  .avatar {
+    img {
+      display: inline;
+      margin: 0 auto;
+      height: 100%;
+      width: auto;
+    }
+  }
   .autocomplete {
     width: 100%;
 
     ion-searchbar {
       padding: 1px !important;
+      display: none;
     }
 
     ion-list {
@@ -12,16 +41,6 @@ page-profile {
       overflow-y: scroll;
       max-height: 150%;
       z-index: 999;
-
-      ion-item {
-
-        img {
-          max-height: 2.5rem;
-          width: auto;
-          margin: auto;
-          display: block;
-        }
-      }
 
       ion-item:hover {
         cursor: pointer;

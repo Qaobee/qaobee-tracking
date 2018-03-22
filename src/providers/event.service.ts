@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {Subject, Observable} from "rxjs";
 
 @Injectable()
-export class EventsService {
+export class EventService {
     private listeners = {};
     private eventsSubject = new Subject();
     private events;

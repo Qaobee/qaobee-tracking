@@ -7,7 +7,7 @@ import {UserService} from '../../providers/api/user.service';
 import {SignupPage} from '../signup/signup';
 import {Storage} from '@ionic/storage';
 import {AuthenticationService} from "../../providers/authentication.service";
-import {EventsService} from "../../providers/event.service";
+import {EventService} from "../../providers/event.service";
 
 /**
  * LoginPage page.
@@ -29,7 +29,7 @@ export class LoginPage {
      * @param {Storage} storage
      * @param {UniqueDeviceID} uniqueDeviceID
      * @param {AuthenticationService} authenticationService
-     * @param {EventsService} eventService
+     * @param {EventService} eventService
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -37,7 +37,7 @@ export class LoginPage {
                 private storage: Storage,
                 private uniqueDeviceID: UniqueDeviceID,
                 private authenticationService: AuthenticationService,
-                private eventService: EventsService) {
+                private eventService: EventService) {
         this.storage.get("login").then(l => {
             this.login = l;
         })
@@ -62,12 +62,7 @@ export class LoginPage {
     submitLogin(uuid: string) {
         this.userService.login(this.login, this.passwd, uuid).subscribe((result: any) => {
             if (result) {
-                this.authenticationService.isLogged = true;
-                this.authenticationService.token = result.account.token;
-                this.authenticationService.user = result;
-                this.storage.set("login", this.login);
                 this.storage.set("mobileToken", uuid);
-                this.navCtrl.setRoot(HomePage, {user: result});
                 this.eventService.broadcast('user-logged', result);
             }
         });

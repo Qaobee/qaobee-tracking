@@ -1,0 +1,31 @@
+<ion-card *ngIf="nextEvent">
+    <ion-card-header>Next event</ion-card-header>
+    <ion-card-content>
+        <h4>{{ nextEvent.label }}</h4>
+        <div *ngIf="nextEvent.address.formatedAddress">
+            <ion-fab right top>
+                <button ion-fab>
+                    <ion-icon name="pin"></ion-icon>
+                </button>
+            </ion-fab>
+            <div #mapelement  id="map"></div>
+            <p>{{ nextEvent.address.formatedAddress }}</p>
+        </div>
+        <ion-item>
+            <ion-icon name="people" item-start large></ion-icon>
+            <h2>{{ nextEvent.participants.teamHome.label }}</h2>
+            <h2>{{ nextEvent.participants.teamVisitor.label }}</h2>
+        </ion-item>
+        <ion-item>
+            <ion-icon name="calendar" item-start large></ion-icon>
+            <h3>{{ nextEvent.startDate  | date:"mediumDate" }} {{ nextEvent.startDate  | date:"shortTime" }}</h3>
+        </ion-item>
+        <ion-item actions>
+            <button ion-button color="secondary" clear item-end icon-start>
+                <ion-icon name='navigate'></ion-icon>
+                Collect
+            </button>
+        </ion-item>
+
+    </ion-card-content>
+</ion-card>
