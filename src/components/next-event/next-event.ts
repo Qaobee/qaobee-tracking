@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {EventsService} from "../../providers/api/events.service";
 
 /**
  * Generated class for the NextEventComponent component.
@@ -14,7 +15,7 @@ export class NextEventComponent {
 
   text: string;
 
-  constructor() {
+  constructor(private eventsServices: EventsService) {
     console.log('Hello NextEventComponent Component');
     this.text = 'Hello World';
   }

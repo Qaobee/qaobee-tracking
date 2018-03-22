@@ -4,12 +4,11 @@ import {AuthenticationService} from "../authentication.service";
 import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
+import {ENV} from "@app/env";
+import {catchError} from "rxjs/operators";
 
 @Injectable()
-export class EventsServices extends ApiService {
-    private rootPath: string = '/api/1/commons/users';
-    private rootPath2: string = '/api/2/commons';
-
+export class MetaService extends ApiService {
     /**
      *
      * @param {App} app
@@ -25,4 +24,16 @@ export class EventsServices extends ApiService {
                 private translate: TranslateService) {
         super(app, authenticationService, toastCtrl);
     }
+
+    getMeta() {
+        return this.http.get<any>(ENV.hive + this.rootPath +  '/commons/users/user/meta', this.addHeaderToken()).pipe(
+            catchError(this.handleError('MetaServices.getMeta'))
+        );
+    }
+    getParams() {
+        return this.http.get<any>(ENV.hive + this.rootPath + '/commons/settings/get', this.addHeaderToken()).pipe(
+            catchError(this.handleError('MetaServices.getParams'))
+        );
+    }
+
 }

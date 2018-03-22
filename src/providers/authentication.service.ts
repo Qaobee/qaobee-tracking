@@ -8,4 +8,5 @@ export class AuthenticationService {
     public token: string;
     public isLogged: boolean = false;
     public user: any;
+    public meta: any;
 }

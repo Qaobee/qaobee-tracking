@@ -13,8 +13,7 @@ import {ENV} from "@app/env";
 
 @Injectable()
 export class UserService extends ApiService {
-    private rootPath: string = '/api/1/commons/users';
-    private rootPath2: string = '/api/2/commons';
+    private rootPath2: string = '/api/2';
 
     /**
      *
@@ -43,7 +42,7 @@ export class UserService extends ApiService {
      * @param mobileToken
      */
     login(login: string, passwd: string, mobileToken: string): Observable<Array<any>> {
-        return this.http.post<any>(ENV.hive + this.rootPath + '/user/login', {
+        return this.http.post<any>(ENV.hive + this.rootPath + '/commons/users/user/login', {
             login: login,
             password: passwd,
             mobileToken: mobileToken,
@@ -61,7 +60,7 @@ export class UserService extends ApiService {
      * @returns {Observable<Array<any>>}
      */
     sso(login: string, mobileToken: string): Observable<Array<any>> {
-        return this.http.post<any>(ENV.hive + this.rootPath + '/user/sso', {
+        return this.http.post<any>(ENV.hive + this.rootPath + '/commons/users/user/sso', {
             login: login,
             mobileToken: mobileToken
         }).pipe(
@@ -78,7 +77,7 @@ export class UserService extends ApiService {
         user.captcha = 'empty';
         user.country = this.translate.getBrowserLang();
         user.account.origin = 'mobile';
-        return this.http.put<any>(ENV.hive + this.rootPath2 + '/users/signup/register', user).pipe(
+        return this.http.put<any>(ENV.hive + this.rootPath2 + '/commons/users/signup/register', user).pipe(
             catchError(this.handleError('UserService.login'))
         );
     }
@@ -89,7 +88,7 @@ export class UserService extends ApiService {
      * @returns {Observable<any>}
      */
     usernameTest(login: string) {
-        return this.http.get<any>(ENV.hive + this.rootPath2 + '/multi/signup/test/' + login).pipe(
+        return this.http.get<any>(ENV.hive + this.rootPath2 + '/commons/multi/signup/test/' + login).pipe(
             catchError(this.handleError('UserService.login'))
         );
     }
@@ -100,7 +99,7 @@ export class UserService extends ApiService {
      * @returns {Observable<any>}
      */
     updateUser(user: any) {
-        return this.http.post<any>(ENV.hive + this.rootPath + '/profile', user, this.addHeaderToken()).pipe(
+        return this.http.post<any>(ENV.hive + this.rootPath + '/commons/users/profile', user, this.addHeaderToken()).pipe(
             catchError(this.handleError('UserService.login'))
         );
     }
@@ -110,7 +109,7 @@ export class UserService extends ApiService {
      * @returns {Observable<any>}
      */
     logoff() {
-        return this.http.get<any>(ENV.hive + this.rootPath + '/user/logout', this.addHeaderToken()).pipe(
+        return this.http.get<any>(ENV.hive + this.rootPath + '/commons/users/user/logout', this.addHeaderToken()).pipe(
             catchError(this.handleError('UserService.login'))
         );
     }
@@ -120,7 +119,7 @@ export class UserService extends ApiService {
      * @returns {Observable<any>}
      */
     getCurrentUser() {
-        return this.http.get<any>(ENV.hive + this.rootPath + '/user/current', this.addHeaderToken()).pipe(
+        return this.http.get<any>(ENV.hive + this.rootPath + '/commons/users/user/current', this.addHeaderToken()).pipe(
             catchError(this.handleError('UserService.login'))
         );
     }
@@ -131,7 +130,7 @@ export class UserService extends ApiService {
      * @returns {Observable<any>}
      */
     getEncryptedInfos(path: string) {
-        return this.http.post<any>(ENV.hive + this.rootPath + '/user/encrypt', {path: path}, this.addHeaderToken()).pipe(
+        return this.http.post<any>(ENV.hive + this.rootPath + '/commons/users/user/encrypt', {path: path}, this.addHeaderToken()).pipe(
             catchError(this.handleError('UserService.login'))
         );
     }

@@ -6,6 +6,8 @@ import {createTranslateLoader} from "../../app/app.module";
 import {UserService} from "./user.service";
 import {IonicErrorHandler} from "ionic-angular";
 import {FileTransfer} from "@ionic-native/file-transfer";
+import {MetaService} from "./meta.service";
+import {EventsService} from "./events.service";
 
 @NgModule({
     declarations: [    ],
@@ -23,6 +25,8 @@ import {FileTransfer} from "@ionic-native/file-transfer";
     entryComponents: [ ],
     providers: [
         UserService,
+        MetaService,
+        EventsService,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         FileTransfer
     ]

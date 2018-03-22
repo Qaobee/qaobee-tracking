@@ -62,12 +62,7 @@ export class LoginPage {
     submitLogin(uuid: string) {
         this.userService.login(this.login, this.passwd, uuid).subscribe((result: any) => {
             if (result) {
-                this.authenticationService.isLogged = true;
-                this.authenticationService.token = result.account.token;
-                this.authenticationService.user = result;
-                this.storage.set("login", this.login);
                 this.storage.set("mobileToken", uuid);
-                this.navCtrl.setRoot(HomePage, {user: result});
                 this.eventService.broadcast('user-logged', result);
             }
         });
