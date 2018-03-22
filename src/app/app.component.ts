@@ -11,7 +11,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {AuthenticationService} from "../providers/authentication.service";
 import {Storage} from "@ionic/storage";
 import {UserService} from "../providers/api/user.service";
-import {EventsService} from "../providers/event.service";
+import {EventService} from "../providers/event.service";
 import {ProfilePage} from "../pages/profile/profile"; 
 
 @Component({
@@ -32,7 +32,7 @@ export class MyApp {
      * @param {Storage} storage
      * @param {AuthenticationService} authenticationService
      * @param {TranslateService} translate
-     * @param {EventsService} eventService
+     * @param {EventService} eventService
      */
     constructor(private platform: Platform,
                 private statusBar: StatusBar,
@@ -41,7 +41,7 @@ export class MyApp {
                 private storage: Storage,
                 private authenticationService: AuthenticationService,
                 private translate: TranslateService,
-                private eventService: EventsService) {
+                private eventService: EventService) {
         this.initializeApp();
         this.pages = [];
         translate.setDefaultLang('en');

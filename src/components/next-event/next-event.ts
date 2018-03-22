@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
 
 /**
- * Generated class for the LastEventComponent component.
+ * Generated class for the NextEventComponent component.
  *
  * See https://angular.io/api/core/Component for more info on Angular
  * Components.
  */
 @Component({
-  selector: 'last-event',
-  templateUrl: 'last-event.html'
+  selector: 'next-event',
+  templateUrl: 'next-event.html'
 })
-export class LastEventComponent {
+export class NextEventComponent {
 
   text: string;
 
   constructor() {
-    console.log('Hello LastEventComponent Component');
+    console.log('Hello NextEventComponent Component');
     this.text = 'Hello World';
   }
 

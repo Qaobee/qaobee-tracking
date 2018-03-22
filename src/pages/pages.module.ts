@@ -10,7 +10,6 @@ import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {IonicStorageModule} from "@ionic/storage";
 import {createTranslateLoader} from "../app/app.module";
-import {DatePicker} from "@ionic-native/date-picker";
 
 @NgModule({
     declarations: [
@@ -40,5 +39,6 @@ import {DatePicker} from "@ionic-native/date-picker";
         SignupPage
     ]
 })
+
 export class PageModule {
 }
