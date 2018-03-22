@@ -2,7 +2,7 @@ page-login {
     .cover {
         min-height: 100vh;
         min-width: 100vw;
-        margin:0;
+        margin:0 auto;
         padding:0;
         background: url(../../assets/imgs/rsz_d5d4ex_large.png) no-repeat center fixed;
         -webkit-background-size: cover; /* pour anciens Chrome et Safari */
@@ -10,6 +10,8 @@ page-login {
     }
 
     .overlay {
+        min-height: 100vh;
+        min-width: 100vw;
         background-color: rgba($color: #000000, $alpha: 0.6);
         position: absolute;
         top: 0;
@@ -25,20 +27,9 @@ page-login {
         z-index: 2;
     }
 
-    .login-btn {
-        padding-top: 10%;
-        padding-bottom: 10%;
-        width: 100%;
-        button {
-            margin: auto;
-            display: block;
-            margin-bottom: 10%;
-        }
-        .link {
-            text-decoration: underline;
-            color: color($colors, primary, base);
-            margin-top: 10%;
-        }
+    #subscribeButton, #connectButton {
+        display: block;
+        margin: 50px auto;
     }
 
     .label-ios {
