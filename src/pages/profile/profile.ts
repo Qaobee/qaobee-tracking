@@ -19,6 +19,7 @@ declare var google;
     templateUrl: 'profile.html',
 })
 export class ProfilePage {
+
     imageURI: any;
     imageFileName: any;
     user: any;
@@ -27,6 +28,7 @@ export class ProfilePage {
     GoogleAutocomplete: any = new google.maps.places.AutocompleteService();
     geocoder: any = new google.maps.Geocoder;
     autocompleteItems = [];
+    private birthdate: any;
 
     /**
      *
@@ -52,7 +54,6 @@ export class ProfilePage {
         }
         this.GoogleAutocomplete.getPlacePredictions({input: this.address},
             (predictions, status) => {
-                console.log(status);
                 this.autocompleteItems = [];
                 predictions.forEach((prediction) => {
                     this.autocompleteItems.push(prediction);
@@ -65,14 +66,15 @@ export class ProfilePage {
         this.address = item.description;
         this.geocoder.geocode({'placeId': item.place_id}, (results, status) => {
             if (status === 'OK' && results[0]) {
+                console.log(results[0])
                 this.user.address = {
                     formatedAddress: item.description,
                     place: results[0].address_components[0].long_name + ', ' + results[0].address_components[1].long_name,
                     zipcode: results[0].address_components[6].long_name,
                     city: results[0].address_components[2].long_name,
                     country: results[0].address_components[5].long_name,
-                    lat: results[0].geometry.location.lat,
-                    lng: results[0].geometry.location.lng,
+                    lat: results[0].geometry.location.lat(),
+                    lng: results[0].geometry.location.lng(),
                 };
             }
         })
@@ -143,9 +145,28 @@ export class ProfilePage {
             this.presentToast(err);
         });
     }
+    saveProfile() {
+        if(this.birthdate) {
+            this.user.birthdate = Date.parse(this.birthdate)
+        }
+        let loader = this.loadingCtrl.create({
+            content: 'Uploading...'
+        });
+        loader.present();
+        this.userService.updateUser(this.user).subscribe(r => {
+            this.userService.getCurrentUser().subscribe((u: any) => {
+                this.imageFileName = ENV.hive + '/file/User/' + u.avatar;
+                this.user = u;
+                this.birthdate = new Date(this.user.birthdate);
+                loader.dismiss();
+                this.presentToast("User updated successfully");
+            });
+        })
+    }
 
-    ionViewDidLoad(): void { // tslint:disable-line:no-unused-variable
+    ionViewDidLoad(): void {
         this.user = this.authenticationService.user;
+        this.birthdate = new Date(this.user.birthdate).toISOString();
         if (this.user.address && this.user.address.formatedAddress) {
             this.address = this.user.address.formatedAddress;
         }

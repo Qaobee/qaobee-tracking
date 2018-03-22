@@ -43,7 +43,7 @@
             </ion-item>
             <ion-item>
                 <ion-label floating>Birth date</ion-label>
-                <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="user.birthdate"></ion-datetime>
+                <ion-datetime [(ngModel)]="birthdate"></ion-datetime>
             </ion-item>
 
 
@@ -68,7 +68,7 @@
                 </button>
             </ion-col>
             <ion-col>
-                <button ion-button icon-left clear small>
+                <button ion-button icon-left clear small (click)="saveProfile()">
                     <ion-icon name="checkmark"></ion-icon>
                     <div>Save</div>
                 </button>

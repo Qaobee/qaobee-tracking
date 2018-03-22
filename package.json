@@ -29,7 +29,6 @@
     "@ionic-native/date-picker": "^4.6.0",
     "@ionic-native/file": "^4.6.0",
     "@ionic-native/file-transfer": "^4.6.0",
-    "@ionic-native/geolocation": "^4.6.0",
     "@ionic-native/splash-screen": "4.5.3",
     "@ionic-native/status-bar": "4.5.3",
     "@ionic-native/unique-device-id": "^4.6.0",
@@ -42,7 +41,6 @@
     "cordova-plugin-device": "^2.0.1",
     "cordova-plugin-file": "^6.0.1",
     "cordova-plugin-file-transfer": "^1.7.1",
-    "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^1.1.16",
     "cordova-plugin-splashscreen": "^5.0.2",
@@ -73,7 +71,13 @@
       "cordova-plugin-file": {},
       "cordova-plugin-file-transfer": {},
       "cordova-plugin-geolocation": {},
-      "cordova-plugin-datepicker": {}
+      "cordova-plugin-datepicker": {},
+      "cordova-plugin-googlemaps": {
+        "API_KEY_FOR_ANDROID": "AIzaSyAIrX1gfN5320cePP4N1qkOPAO60K7Lwr4",
+        "API_KEY_FOR_IOS": "AIzaSyDvAgEI0JNhEYqbWVkt8ObEVx7vj5FLxkM",
+        "PLAY_SERVICES_VERSION": "11.8.0",
+        "ANDROID_SUPPORT_V4_VERSION": "24.1.0"
+      }
     },
     "platforms": [
       "browser",

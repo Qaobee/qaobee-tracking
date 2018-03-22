@@ -20,6 +20,9 @@ import {AuthenticationService} from "../providers/authentication.service";
 import {ComponentsModule} from "../components/components.module";
 import {PageModule} from "../pages/pages.module";
 import {APIModule} from "../providers/api/api.module";
+import {Utils} from "../providers/utils";
+import { LOCALE_ID } from '@angular/core';
+import {SettingsService} from "../providers/settings.service";
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -55,7 +58,14 @@ export function createTranslateLoader(http: HttpClient) {
         UniqueDeviceID,
         AuthenticationService,
         EventService,
+        SettingsService,
+        Utils,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
+        {
+            provide: LOCALE_ID,
+            deps: [SettingsService],      //some service handling global settings
+            useFactory: (settingsService) => settingsService.getLanguage()  //returns locale string
+        },
         File,
         Camera
     ]

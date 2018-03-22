@@ -36,13 +36,13 @@ export class EventsService extends ApiService {
             request['link.type'] = type;
         }
         return this.http.post<any>(ENV.hive + this.rootPath + '/sandbox/event/event/list', request, this.addHeaderToken()).pipe(
-            catchError(this.handleError('UserService.login'))
+            catchError(this.handleError('EventsService.getEvents'))
         );
     }
 
     addEvent(event: any) {
         return this.http.post<any>(ENV.hive + this.rootPath + '/sandbox/event/event/add', event, this.addHeaderToken()).pipe(
-            catchError(this.handleError('UserService.login'))
+            catchError(this.handleError('EventsService.addEvent'))
         );
     }
 

@@ -19,7 +19,7 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-      console.log('ionViewDidLoad MenuPage');
+      console.log('ionViewDidLoad HomePage');
   }
 
 }
