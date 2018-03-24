@@ -20,7 +20,7 @@ import {HomePage} from "../pages/home/home";
 })
 export class MyApp {
     @ViewChild(Nav) nav: Nav;
-    rootPage: any = LoginPage;
+    rootPage: any = WelcomePage;
     pages: Array<{ title: string, component: any, icon: string }>;
     private user: any;
 
@@ -90,7 +90,7 @@ export class MyApp {
     }
 
     private buildMenu() {
-        this.translate.get(['Home', 'Login', 'Subscribe']).subscribe(
+        this.translate.get(['menu.Home', 'menu.Login', 'menu.Subscribe']).subscribe(
             value => {
                 this.pages = [
                     {title: value['Home'], component: WelcomePage, icon: 'home'},
@@ -102,7 +102,7 @@ export class MyApp {
     }
 
     private buildLoggedMenu() {
-        this.translate.get(['Home', 'Logout', 'Profile']).subscribe(
+        this.translate.get(['menu.Home', 'menu.Logout', 'menu.Profile']).subscribe(
             value => {
                 this.pages = [
                     {title: value['Home'], component: HomePage, icon: 'home'},

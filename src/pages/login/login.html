@@ -10,7 +10,7 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>Login</ion-title>
+        <ion-title>{{ 'login.TitleNavBar' | translate }}</ion-title>
     </ion-navbar>
 
 </ion-header>
@@ -21,25 +21,25 @@
     <div class="over">
         <ion-list>
             <ion-item padding>
-                <ion-label stacked>{{ 'Username' | translate }}</ion-label>
+                <ion-label stacked>{{ 'login.Username' | translate }}</ion-label>
                 <ion-input type="text" [(ngModel)]="login"></ion-input>
             </ion-item>
 
             <ion-item padding> 
-                <ion-label stacked>{{ 'Password' | translate }}</ion-label>
+                <ion-label stacked>{{ 'login.Password' | translate }}</ion-label>
                 <ion-input type="password" [(ngModel)]="passwd"></ion-input>
             </ion-item>
 
             <ion-item>
                 <button id="connectButton" ion-button icon-left large (tap)="doLogin()" color="danger">
                     <ion-icon name="log-in"></ion-icon>
-                    {{ 'Login' | translate  }}
+                    {{ 'actionButton.Submit' | translate  }}
                 </button>
             </ion-item>
         </ion-list>
 
         <button id="subscribeButton" ion-button icon-left medium (tap)="goToSignup()">
-                {{ 'Subscribe' | translate  }}
+                {{ 'login.Subscribe' | translate  }}
         </button>
     
 </div>
