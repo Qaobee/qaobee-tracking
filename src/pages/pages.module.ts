@@ -5,8 +5,10 @@ import {WelcomePage} from "./welcome/welcome";
 import {HomePage} from "./home/home";
 import {LoginPage} from "./login/login";
 import {SignupPage} from "./signup/signup";
-import {CollectListPage} from './collect-list/collect-list';
-import {PlayerListPage} from './player-list/player-list';
+import { CollectListPage } from './collect-list/collect-list';
+import { PlayerListPage } from './player-list/player-list';
+import { EventListPage } from './event-list/event-list';
+import { SettingsPage } from './settings/settings';
 
 
 import {ComponentsModule} from "../components/components.module";
@@ -23,6 +25,7 @@ import {EventsModule} from "./events/events.module";
         LoginPage,
         PlayerListPage,
         ProfilePage,
+        SettingsPage,
         SignupPage,
         WelcomePage
     ],
@@ -46,6 +49,7 @@ import {EventsModule} from "./events/events.module";
         LoginPage,
         PlayerListPage,
         ProfilePage,
+        SettingsPage,
         SignupPage,
         WelcomePage
     ]

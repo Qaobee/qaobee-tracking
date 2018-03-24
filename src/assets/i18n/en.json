@@ -25,9 +25,14 @@
     "Submit": "Submit"
   },
   "menu": {
-    "Profile": "Profil",
+    "Login": "Signin",
     "Home": "Home",
     "Subscribe": "Signup",
+    "Profile": "Profil",
+    "Events": "Events",
+    "Players": "Players",
+    "Stats": "Stats",
+    "Settings": "Settings",
     "Logout": "Logout"
   },
   "eventsModule": {
