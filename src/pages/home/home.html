@@ -18,54 +18,39 @@
 
 <ion-content>
     <ion-card>
-        <img src="../../assets/imgs/card-amsterdam.png"/>
+        <img src="../../assets/imgs/Qaobee-Tracking.png"/>
         <ion-card-content>
-          <ion-card-title>
-            Qaobee Tracker
-            </ion-card-title>
           
         <ion-row>
             <ion-col>
                 <ion-item text-center>
-                    <button ion-button medium>  
-                            <ion-icon name="calendar"></ion-icon>
-                        </button>
+                    <button ion-button (tap)="goToEventList()">  
+                        <ion-icon name="calendar"></ion-icon>
+                    </button>
+                    <p>Matchs</p>
                 </ion-item>
             </ion-col>
             <ion-col>
                 <ion-item text-center>
-                    <button ion-button medium>  
-                            <ion-icon name="people"></ion-icon>
-                        </button>
+                    <button ion-button (tap)="goToPlayerList()">  
+                        <ion-icon name="people"></ion-icon>
+                    </button>
+                    <p>Joueurs</p>
                 </ion-item>
             </ion-col>
             <ion-col>
                 <ion-item text-center>
-                    <button ion-button medium>  
-                            <ion-icon name="stats"></ion-icon>
-                        </button>
+                    <button ion-button (tap)="goToCollectList()">  
+                        <ion-icon name="stats"></ion-icon>
+                    </button>
+                    <p>Stats</p>
                 </ion-item>
             </ion-col>
           </ion-row>
         </ion-card-content>
-      </ion-card>
-
-      
-      <h1 padding>Match à venir</h1>
-        
-      <ion-list>
-        <ion-item>
-          <ion-thumbnail item-start>
-            <img src="../../assets/imgs/card-amsterdam.png">
-          </ion-thumbnail>
-          <h2>Liffré - Avenir du Ponant 2</h2>
-          <p>24 mars 2018</p>
-          <button ion-button  item-end medium>
-                <ion-icon name="eye"></ion-icon>
-          </button>
-        </ion-item>
-      </ion-list>
-
+    </ion-card>
+  
+    <h1 padding>Match à venir</h1>
     <next-event></next-event>
-    <last-collect></last-collect>
+    <!-- <last-collect></last-collect> -->
 </ion-content>

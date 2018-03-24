@@ -1,11 +1,33 @@
 {
-    "Login": "Login",
-    "Logout": "Logout",
-    "Subscribe": "Subscribe",
-    "Profile": "Profile",
-    "Home": "Home",
-    "Username": "Username",
-    "Password": "Password",
-    "Signup.link": "No account yet? Feel free to signup",
-    "Submit": "Submit"
+    "actionButton" : {
+        "Submit": "Submit",
+        "Cancel": "Cancel",
+        "Search": "Search"
+    },
+
+    "welcome" : {
+        "Login": "Signin",
+        "Subscribe": "Signup"
+    },
+
+    "login" : {
+        "TitleNavBar" : "Identification",
+        "Username": "Login",
+        "Password": "Password",
+        "Login": "Connection"
+    },
+
+    "signup" : {
+        "TitleNavBar" : "Subscription",
+        "Username": "Login",
+        "Password": "Password",
+        "Submit": "Submit"
+    },
+
+    "menu" : {
+        "Profile": "Profil",
+        "Home": "Home",
+        "Subscribe": "Signup",
+        "Logout": "Logout"
+    }
 }
