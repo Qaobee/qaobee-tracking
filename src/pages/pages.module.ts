@@ -5,10 +5,8 @@ import {WelcomePage} from "./welcome/welcome";
 import {HomePage} from "./home/home";
 import {LoginPage} from "./login/login";
 import {SignupPage} from "./signup/signup";
-import { CollectListPage } from './collect-list/collect-list';
-import { PlayerListPage } from './player-list/player-list';
-import { EventListPage } from './event-list/event-list';
-
+import {CollectListPage} from './collect-list/collect-list';
+import {PlayerListPage} from './player-list/player-list';
 
 
 import {ComponentsModule} from "../components/components.module";
@@ -16,11 +14,11 @@ import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {IonicStorageModule} from "@ionic/storage";
 import {createTranslateLoader} from "../app/app.module";
+import {EventsModule} from "./events/events.module";
 
 @NgModule({
     declarations: [
         CollectListPage,
-        EventListPage,
         HomePage,
         LoginPage,
         PlayerListPage,
@@ -29,7 +27,7 @@ import {createTranslateLoader} from "../app/app.module";
         WelcomePage
     ],
     imports: [
-        IonicPageModule.forChild(ProfilePage),
+        IonicPageModule.forChild(HomePage),
         HttpClientModule,
         IonicStorageModule.forRoot(),
         ComponentsModule,
@@ -39,11 +37,11 @@ import {createTranslateLoader} from "../app/app.module";
                 useFactory: (createTranslateLoader),
                 deps: [HttpClient]
             }
-        })
+        }),
+        EventsModule
     ],
     entryComponents: [
         CollectListPage,
-        EventListPage,
         HomePage,
         LoginPage,
         PlayerListPage,

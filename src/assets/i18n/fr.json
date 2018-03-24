@@ -1,33 +1,36 @@
 {
-    "actionButton" : {
-        "Submit": "Valider",
-        "Cancel": "Annuler",
-        "Search": "Rechercher"
-    },
-    
-    "welcome" : {
-        "Login": "Connexion",
-        "Subscribe": "S'inscrire"
-    },
-
-    "login" : {
-        "TitleNavBar" : "Identification",
-        "Username": "Identifiant",
-        "Password": "Mot de passe",
-        "Login": "Connexion",
-        "Subscribe": "S'inscrire"
-    },
-
-    "signup" : {
-        "TitleNavBar" : "Inscription",
-        "Username": "Identifiant",
-        "Password": "Mot de passe"
-    },
-
-    "menu" : {
-        "Profile": "Profile",
-        "Home": "Accueil",
-        "Subscribe": "S'inscrire",
-        "Logout": "Déconnexion"
-    }
+  "actionButton": {
+    "Submit": "Valider",
+    "Cancel": "Annuler",
+    "Search": "Rechercher"
+  },
+  "refresher": {
+    "label": "Glisser pour rafraîchir",
+    "message": "Chargement..."
+  },
+  "welcome": {
+    "Login": "Connexion",
+    "Subscribe": "S'inscrire"
+  },
+  "login": {
+    "TitleNavBar": "Identification",
+    "Username": "Identifiant",
+    "Password": "Mot de passe",
+    "Login": "Connexion",
+    "Subscribe": "S'inscrire"
+  },
+  "signup": {
+    "TitleNavBar": "Inscription",
+    "Username": "Identifiant",
+    "Password": "Mot de passe"
+  },
+  "menu": {
+    "Profile": "Profile",
+    "Home": "Accueil",
+    "Subscribe": "S'inscrire",
+    "Logout": "Déconnexion"
+  },
+  "eventsModule": {
+    "title": "Evenements"
+  }
 }

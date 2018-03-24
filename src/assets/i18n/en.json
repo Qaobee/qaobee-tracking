@@ -1,33 +1,36 @@
 {
-    "actionButton" : {
-        "Submit": "Submit",
-        "Cancel": "Cancel",
-        "Search": "Search"
-    },
-
-    "welcome" : {
-        "Login": "Signin",
-        "Subscribe": "Signup"
-    },
-
-    "login" : {
-        "TitleNavBar" : "Identification",
-        "Username": "Login",
-        "Password": "Password",
-        "Login": "Connection"
-    },
-
-    "signup" : {
-        "TitleNavBar" : "Subscription",
-        "Username": "Login",
-        "Password": "Password",
-        "Submit": "Submit"
-    },
-
-    "menu" : {
-        "Profile": "Profil",
-        "Home": "Home",
-        "Subscribe": "Signup",
-        "Logout": "Logout"
-    }
+  "actionButton": {
+    "Submit": "Submit",
+    "Cancel": "Cancel",
+    "Search": "Search"
+  },
+  "refresher": {
+    "label": "Pull to refresh",
+    "message": "Refreshing..."
+  },
+  "welcome": {
+    "Login": "Signin",
+    "Subscribe": "Signup"
+  },
+  "login": {
+    "TitleNavBar": "Identification",
+    "Username": "Login",
+    "Password": "Password",
+    "Login": "Connection"
+  },
+  "signup": {
+    "TitleNavBar": "Subscription",
+    "Username": "Login",
+    "Password": "Password",
+    "Submit": "Submit"
+  },
+  "menu": {
+    "Profile": "Profil",
+    "Home": "Home",
+    "Subscribe": "Signup",
+    "Logout": "Logout"
+  },
+  "eventsModule": {
+    "title": "Events"
+  }
 }

@@ -25,11 +25,20 @@ export class MetaService extends ApiService {
         super(app, authenticationService, toastCtrl);
     }
 
+    /**
+     *
+     * @returns {Observable<any>}
+     */
     getMeta() {
         return this.http.get<any>(ENV.hive + this.rootPath +  '/commons/users/user/meta', this.addHeaderToken()).pipe(
             catchError(this.handleError('MetaServices.getMeta'))
         );
     }
+
+    /**
+     *
+     * @returns {Observable<any>}
+     */
     getParams() {
         return this.http.get<any>(ENV.hive + this.rootPath + '/commons/settings/get', this.addHeaderToken()).pipe(
             catchError(this.handleError('MetaServices.getParams'))
