@@ -3,15 +3,19 @@ import {Nav, Platform} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 
-import {LoginPage} from '../pages/login/login';
-import {WelcomePage} from '../pages/welcome/welcome';
-import {SignupPage} from '../pages/signup/signup';
+import {LoginPage} from './../pages/login/login';
+import {WelcomePage} from './../pages/welcome/welcome';
+import {SignupPage} from './../pages/signup/signup';
+import { CollectListPage } from './../pages/collect-list/collect-list';
+import { EventListPage } from './../pages/event-list/event-list';
+import { PlayerListPage } from './../pages/player-list/player-list';
+import { SettingsPage } from './../pages/settings/settings';
+
 import {TranslateService} from '@ngx-translate/core';
 import {AuthenticationService} from "../providers/authentication.service";
 import {Storage} from "@ionic/storage";
 import {UserService} from "../providers/api/user.service";
 import {EventService} from "../providers/event.service";
-import {ProfilePage} from "../pages/profile/profile";
 import {MetaService} from "../providers/api/meta.service";
 import {HomePage} from "../pages/home/home";
 
@@ -86,28 +90,35 @@ export class MyApp {
     openPage(page) {
         // Reset the content nav to have just this page
         // we wouldn't want the back button to show in this scenario
-        this.nav.setRoot(page.component);
+        if(page.component===HomePage){
+            this.nav.setRoot(page.component);
+        } else {
+            this.nav.push(page.component);
+        }
+        
     }
 
     private buildMenu() {
         this.translate.get(['menu.Home', 'menu.Login', 'menu.Subscribe']).subscribe(
             value => {
                 this.pages = [
-                    {title: value['Home'], component: WelcomePage, icon: 'home'},
-                    {title: value['Login'], component: LoginPage, icon: 'log-in'},
-                    {title: value['Subscribe'], component: SignupPage, icon: 'log-in'}
+                    {title: value['menu.Home'], component: WelcomePage, icon: 'home'},
+                    {title: value['menu.Login'], component: LoginPage, icon: 'log-in'},
+                    {title: value['menu.Subscribe'], component: SignupPage, icon: 'log-in'}
                 ];
             }
         )
     }
 
     private buildLoggedMenu() {
-        this.translate.get(['menu.Home', 'menu.Logout', 'menu.Profile']).subscribe(
+        this.translate.get(['menu.Home', 'menu.Events', 'menu.Players', 'menu.Stats','menu.Settings',]).subscribe(
             value => {
                 this.pages = [
-                    {title: value['Home'], component: HomePage, icon: 'home'},
-                    {title: value['Profile'], component: ProfilePage, icon: 'contact'},
-                    {title: value['Logout'], component: LoginPage, icon: 'log-out'}
+                    {title: value['menu.Home'], component: HomePage, icon: 'home'},
+                    {title: value['menu.Events'], component: EventListPage, icon: 'calendar'},
+                    {title: value['menu.Players'], component: PlayerListPage, icon: 'people'},
+                    {title: value['menu.Stats'], component: CollectListPage, icon: 'stats'},
+                    {title: value['menu.Settings'], component: SettingsPage, icon: 'settings'}
                 ];
             }
         )

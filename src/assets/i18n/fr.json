@@ -25,9 +25,14 @@
     },
 
     "menu" : {
-        "Profile": "Profile",
         "Home": "Accueil",
         "Subscribe": "S'inscrire",
+        "Login": "Connexion",
+        "Profile": "Profile",
+        "Events": "Evénements",
+        "Players": "Joueurs",
+        "Stats": "Stats",
+        "Settings": "Paramètres",
         "Logout": "Déconnexion"
     }
 }
