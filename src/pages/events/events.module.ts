@@ -7,9 +7,11 @@ import {ComponentsModule} from "../../components/components.module";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {createTranslateLoader} from "../../app/app.module";
 import {App, IonicModule} from "ionic-angular";
+import {EventDetailPage} from "./event-detail/event-detail";
 @NgModule({
     declarations: [
         EventListPage,
+        EventDetailPage,
         KeysPipe
     ],
     imports: [
@@ -27,6 +29,7 @@ import {App, IonicModule} from "ionic-angular";
     ],
     entryComponents: [
         EventListPage,
+        EventDetailPage
     ]
 })
 

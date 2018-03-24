@@ -24,6 +24,7 @@ import {Storage} from "@ionic/storage";
 import {Utils} from "../../../providers/utils";
 import {DatePipe} from "@angular/common";
 import {SettingsService} from "../../../providers/settings.service";
+import {EventDetailPage} from "../event-detail/event-detail";
 
 /**
  * Generated class for the EventListPage page.
@@ -120,17 +121,31 @@ export class EventListPage {
     /**
      *
      * @param event
+     * @param clickEvent
      */
-    goToCollect(event: any) {
+    goToCollect(event: any, clickEvent: any) {
+        console.log('[EventListPage] - goToCollect');
+        clickEvent.stopPropagation();
+        // TODO
+    }
+
+    /**
+     *
+     */
+    addEvent() {
+        console.log('[EventListPage] - addEvent');
         // TODO
     }
 
     /**
      *
      * @param event
+     * @param clickEvent
      */
-    goToDetail(event: any) {
-        // TODO
+    goToDetail(event: any, clickEvent: any) {
+        console.log('[EventListPage] - goToDetail', event);
+        clickEvent.stopPropagation();
+        this.navCtrl.push(EventDetailPage, {event : event});
     }
 
 }

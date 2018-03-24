@@ -31,6 +31,13 @@
     "Logout": "Déconnexion"
   },
   "eventsModule": {
-    "title": "Evenements"
+    "eventsList": {
+      "title": "Evénements"
+    },
+    "detail": {
+      "edit": "Modifier",
+      "trash": "Supprimer",
+      "collect": "Collecter"
+    }
   }
 }
