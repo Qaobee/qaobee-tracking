@@ -5,6 +5,12 @@ import {WelcomePage} from "./welcome/welcome";
 import {HomePage} from "./home/home";
 import {LoginPage} from "./login/login";
 import {SignupPage} from "./signup/signup";
+import { CollectListPage } from './collect-list/collect-list';
+import { PlayerListPage } from './player-list/player-list';
+import { EventListPage } from './event-list/event-list';
+
+
+
 import {ComponentsModule} from "../components/components.module";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
@@ -13,11 +19,14 @@ import {createTranslateLoader} from "../app/app.module";
 
 @NgModule({
     declarations: [
+        CollectListPage,
+        EventListPage,
         HomePage,
-        WelcomePage,
         LoginPage,
-        SignupPage,
+        PlayerListPage,
         ProfilePage,
+        SignupPage,
+        WelcomePage
     ],
     imports: [
         IonicPageModule.forChild(ProfilePage),
@@ -33,10 +42,14 @@ import {createTranslateLoader} from "../app/app.module";
         })
     ],
     entryComponents: [
+        CollectListPage,
+        EventListPage,
         HomePage,
-        WelcomePage,
         LoginPage,
-        SignupPage
+        PlayerListPage,
+        ProfilePage,
+        SignupPage,
+        WelcomePage
     ]
 })
 
