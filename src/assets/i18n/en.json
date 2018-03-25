@@ -1,16 +1,17 @@
 {
-  "actionButton": {
-    "Submit": "Submit",
-    "Cancel": "Cancel",
-    "Search": "Search"
-  },
-  "refresher": {
-    "label": "Pull to refresh",
-    "message": "Refreshing..."
-  },
-  "eventsModule": {
-    "eventsList": {
-      "title": "Events"
+    "actionButton": {
+        "Submit": "Submit",
+        "Cancel": "Cancel",
+        "Search": "Search"
+    },
+    "refresher": {
+        "label": "Pull to refresh",
+        "message": "Refreshing..."
+    },
+    "eventsModule": {
+        "eventsList": {
+        "title": "Events"
+        }
     },
     "welcome" : {
         "Login": "Signin",
@@ -57,5 +58,4 @@
         "titleFound": "Next Match",
         "titleNotFound": "Plan a match"
     }
-  }
 }

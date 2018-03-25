@@ -19,7 +19,7 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams, Refresher} from 'ionic-angular';
 import {AuthenticationService} from "../../../providers/authentication.service";
-import {EventsService} from "../../../providers/api/events.service";
+import {EventsService} from "../../../providers/api/api.events.service";
 import {Storage} from "@ionic/storage";
 import {Utils} from "../../../providers/utils";
 import {DatePipe} from "@angular/common";

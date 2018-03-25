@@ -1,20 +1,17 @@
 {
-  "actionButton": {
-    "Submit": "Valider",
-    "Cancel": "Annuler",
-    "Search": "Rechercher"
-  },
-  "refresher": {
-    "label": "Glisser pour rafraîchir",
-    "message": "Chargement..."
-  },
-  "welcome": {
-    "Login": "Connexion",
-    "Subscribe": "S'inscrire"
-  },
-  "eventsModule": {
-    "eventsList": {
-      "title": "Evénements"
+    "actionButton": {
+        "Submit": "Valider",
+        "Cancel": "Annuler",
+        "Search": "Rechercher"
+    },
+    "refresher": {
+        "label": "Glisser pour rafraîchir",
+        "message": "Chargement..."
+    },
+    "eventsModule": {
+        "eventsList": {
+            "title": "Evénements"
+        }
     },
     "welcome" : {
         "Login": "Connexion",
@@ -61,5 +58,4 @@
         "titleFound": "Prochain match",
         "titleNotFound": "Planifier un match"
     }
-  }
 }
