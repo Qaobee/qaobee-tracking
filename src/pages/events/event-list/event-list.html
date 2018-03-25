@@ -27,7 +27,7 @@
                 <h2>{{ event.participants.teamHome.label }}</h2>
                 <h2>{{ event.participants.teamVisitor.label }}</h2>
                 <p>{{ event.startDate | date:"mediumDate" }} {{ event.startDate | date:"shortTime" }}</p>
-                <button ion-button item-end color="secondary" (click)="goToCollect(e, $event)">
+                <button ion-button item-end color="secondary" (click)="goToCollect(event, $event)">
                     <ion-icon name="stopwatch"></ion-icon>
                 </button>
             </ion-item>

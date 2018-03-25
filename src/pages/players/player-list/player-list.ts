@@ -1,15 +1,27 @@
+/*
+ *  __________________
+ *  Qaobee
+ *  __________________
+ *
+ *  Copyright (c) 2015.  Qaobee
+ *  All Rights Reserved.
+ *
+ *  NOTICE: All information contained here is, and remains
+ *  the property of Qaobee and its suppliers,
+ *  if any. The intellectual and technical concepts contained
+ *  here are proprietary to Qaobee and its suppliers and may
+ *  be covered by U.S. and Foreign Patents, patents in process,
+ *  and are protected by trade secret or copyright law.
+ *  Dissemination of this information or reproduction of this material
+ *  is strictly forbidden unless prior written permission is obtained
+ *  from Qaobee.
+ */
+import { PlayerDetailPage } from './../player-detail/player-detail';
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, Refresher } from 'ionic-angular';
 import {Storage} from "@ionic/storage";
 import { PersonService } from './../../../providers/api/api.person.service';
 import {AuthenticationService} from "../../../providers/authentication.service";
-
-/**
- * Generated class for the PlayerListPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @Component({
   selector: 'page-player-list',
@@ -32,26 +44,49 @@ export class PlayerListPage {
                 private storage: Storage, 
                 private personService: PersonService,
                 private authenticationService: AuthenticationService) {
+      this.storage.get('players').then(players => {
+        if (!players) {
+            this.getPlayers(null);
+        } else {
+          this.playerList = players;
+        }
+      })
+    }
 
-    this.storage.get('players').then(players => {
-      if (!players) {
-          this.personService.getListPersonSandbox(this.authenticationService.meta._id).subscribe(list => {
-            console.log('load',list);
-            this.playerList = list;
-            this.storage.set('players', list);
-          });
-      } else {
-        this.playerList = players;
-      }
-    })
+  /**
+     *
+     * @param {Refresher} refresher
+     */
+  doRefresh(refresher:Refresher) {
+      console.log('[EventListPage] - doRefresh');
+      this.getPlayers(refresher);
   }
 
-  refreshPlayerList() {
+  private getPlayers(refresher:Refresher) {
     this.personService.getListPersonSandbox(this.authenticationService.meta._id).subscribe(list => {
-      console.log('refresh',list);
       this.playerList = list;
       this.storage.set('players', list);
+      if(refresher) {
+        refresher.complete();
+    }
     });
+  }
+
+  /**
+     *
+     */
+    goToAddPlayer() {
+      this.navCtrl.push(PlayerDetailPage);
+  }
+
+  /**
+   *
+   * @param event
+   * @param clickEvent
+   */
+    goToDetail(player: any, clickEvent: any) {
+      clickEvent.stopPropagation();
+      this.navCtrl.push(PlayerDetailPage, {player : player});
   }
 
 }
