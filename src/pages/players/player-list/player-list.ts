@@ -30,6 +30,7 @@ import {AuthenticationService} from "../../../providers/authentication.service";
 export class PlayerListPage {
 
   playerList: any;
+  playerListSize: number;
 
   /**
      * .
@@ -49,6 +50,7 @@ export class PlayerListPage {
             this.getPlayers(null);
         } else {
           this.playerList = players;
+          this.playerListSize = players.length;
         }
       })
     }
@@ -65,6 +67,7 @@ export class PlayerListPage {
   private getPlayers(refresher:Refresher) {
     this.personService.getListPersonSandbox(this.authenticationService.meta._id).subscribe(list => {
       this.playerList = list;
+      this.playerListSize = this.playerList.length;
       this.storage.set('players', list);
       if(refresher) {
         refresher.complete();

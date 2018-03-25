@@ -39,8 +39,8 @@ export class PlayerDetailPage {
     console.log('editPlayer() -> PlayerDetailPage');
   }
 
-  disablePlayer() {
-    console.log('disablePlayer() -> PlayerDetailPage');
+  disactivatePlayer(desactived:String) {
+    console.log('disablePlayer('+desactived+') -> PlayerDetailPage');
   }
 
   goToStats() {

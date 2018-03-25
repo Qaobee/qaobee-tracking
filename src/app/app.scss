@@ -40,6 +40,10 @@ h3 {
   color: color($colors,primary,base);
 }
 
+.enteteLight{
+  background-color: color($colors, light, base);
+}
+
 ion-footer {
   background-color: color($colors, light, base);
 }

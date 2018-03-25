@@ -50,7 +50,17 @@
             "hight": "Taille",
             "hightUnit": "cm",
             "positionType": "Poste",
-            "contact": "Coordonnées"
+            "contact": "Coordonnées",
+            "civilStatus": "Etat Civil",
+            "birthdate": "Date de naissance",
+            "nationality": "Nationalité",
+            "Laterality":"Lateralité",
+            "desactivated": "Joueur désactivé"
+        },
+        "laterality" : {
+            "left":"Gaucher",
+            "right":"Droitier",
+            "ambidextrous": "Ambidextrexe"
         },
         "positionType": {
             "midfielder": "Milieu",

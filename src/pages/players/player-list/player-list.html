@@ -24,15 +24,20 @@
     <ion-list>
 
         <ion-list-header>
-          {{'player.TitlePlayerList' | translate}}
+          <ion-item class="enteteLight">
+            <h1>{{'player.TitlePlayerList' | translate}}</h1>
+            <ion-badge color="danger" item-end>{{playerListSize}}</ion-badge>
+          </ion-item>
         </ion-list-header>
       
-          <ion-item *ngFor="let item of playerList" (click)="goToDetail(item, $event)">
+          <ion-item *ngFor="let item of playerList" (click)="goToDetail(item, $event)" [ngClass]="{'playerDisactivated':item.desactivated}">
             <ion-avatar item-start>
               <img src="../assets/imgs/user.png">
             </ion-avatar>
             <h2>{{item.firstname}} {{item.name}}</h2>
-            <p>{{'player.positionType.'+item.status.positionType | translate}}</p>
+            <p *ngIf="item.desactivated">{{'player.labels.desactivated' | translate}}</p>
+            <p *ngIf="!item.desactivated">{{'player.positionType.'+item.status.positionType | translate}}</p>
+            <ion-badge color="secondary" item-end>{{item.status.squadnumber}}</ion-badge>
           </ion-item>
       
       </ion-list>
