@@ -41,6 +41,8 @@
         "Logout": "Déconnexion"
     },
     "player" : {
+        "TitleNavBar": "Module Joueur",
+        "TitlePlayerList": "Liste des joueurs",
         "positionType": {
             "midfielder": "Milieu",
             "defender": "Défenseur",
