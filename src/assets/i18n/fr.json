@@ -1,15 +1,25 @@
 {
-    "actionButton" : {
-        "Submit": "Valider",
-        "Cancel": "Annuler",
-        "Search": "Rechercher"
+  "actionButton": {
+    "Submit": "Valider",
+    "Cancel": "Annuler",
+    "Search": "Rechercher"
+  },
+  "refresher": {
+    "label": "Glisser pour rafraîchir",
+    "message": "Chargement..."
+  },
+  "welcome": {
+    "Login": "Connexion",
+    "Subscribe": "S'inscrire"
+  },
+  "eventsModule": {
+    "eventsList": {
+      "title": "Evénements"
     },
-    
     "welcome" : {
         "Login": "Connexion",
         "Subscribe": "S'inscrire"
     },
-
     "login" : {
         "TitleNavBar" : "Identification",
         "Username": "Identifiant",
@@ -17,13 +27,11 @@
         "Login": "Connexion",
         "Subscribe": "S'inscrire"
     },
-
     "signup" : {
         "TitleNavBar" : "Inscription",
         "Username": "Identifiant",
         "Password": "Mot de passe"
     },
-
     "menu" : {
         "Home": "Accueil",
         "Subscribe": "S'inscrire",
@@ -35,7 +43,6 @@
         "Settings": "Paramètres",
         "Logout": "Déconnexion"
     },
-
     "player" : {
         "positionType": {
             "midfielder": "Milieu",
@@ -50,9 +57,9 @@
             "left-wingman": "Ailier Gauche"
         }
     },
-
     "nextEvent" : {
         "titleFound": "Prochain match",
         "titleNotFound": "Planifier un match"
     }
+  }
 }

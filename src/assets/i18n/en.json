@@ -1,15 +1,21 @@
 {
-    "actionButton" : {
-        "Submit": "Submit",
-        "Cancel": "Cancel",
-        "Search": "Search"
+  "actionButton": {
+    "Submit": "Submit",
+    "Cancel": "Cancel",
+    "Search": "Search"
+  },
+  "refresher": {
+    "label": "Pull to refresh",
+    "message": "Refreshing..."
+  },
+  "eventsModule": {
+    "eventsList": {
+      "title": "Events"
     },
-
     "welcome" : {
         "Login": "Signin",
         "Subscribe": "Signup"
     },
-
     "login" : {
         "TitleNavBar" : "Identification",
         "Username": "Login",
@@ -17,13 +23,11 @@
         "Login": "Connection",
         "Subscribe": "Signup"
     },
-
     "signup" : {
         "TitleNavBar" : "Subscription",
         "Username": "Login",
         "Password": "Password"
     },
-
     "menu" : {
         "Login": "Signin",
         "Home": "Home",
@@ -35,7 +39,6 @@
         "Settings": "Settings",
         "Logout": "Logout"
     },
-
     "player" : {
         "positionType": {
             "midfielder": "Midfielder",
@@ -50,9 +53,9 @@
             "left-wingman": "Left-wingman"
         }
     },
-
     "nextEvent" : {
         "titleFound": "Next Match",
         "titleNotFound": "Plan a match"
     }
+  }
 }

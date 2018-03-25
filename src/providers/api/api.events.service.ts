@@ -6,6 +6,8 @@ import {Injectable} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
 import {ENV} from "@app/env";
 import {catchError} from "rxjs/operators";
+import {Observable} from "rxjs/Observable";
+import {HttpResponse} from "@angular/common/http/src/response";
 
 @Injectable()
 export class EventsService extends ApiService {
@@ -16,6 +18,7 @@ export class EventsService extends ApiService {
      * @param {ToastController} toastCtrl
      * @param {HttpClient} http
      * @param {TranslateService} translate
+     * @returns {Observable<any>}
      */
     constructor(app: App,
                 authenticationService: AuthenticationService,
@@ -25,7 +28,7 @@ export class EventsService extends ApiService {
         super(app, authenticationService, toastCtrl);
     }
 
-    getEvents(startDate:number, endDate:number, type:string, activityId:string, sandboxId:string) {
+    getEvents(startDate:number, endDate:number, type:string, activityId:string, sandboxId:string): Observable<any> {
         let request = {
             startDate: startDate,
             endDate: endDate,
@@ -40,7 +43,12 @@ export class EventsService extends ApiService {
         );
     }
 
-    addEvent(event: any) {
+    /**
+     *
+     * @param event
+     * @returns {Observable<any>}
+     */
+    addEvent(event: any): Observable<any> {
         return this.http.post<any>(ENV.hive + this.rootPath + '/sandbox/event/event/add', event, this.addHeaderToken()).pipe(
             catchError(this.handleError('EventsService.addEvent'))
         );

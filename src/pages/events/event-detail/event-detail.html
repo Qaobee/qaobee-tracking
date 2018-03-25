@@ -1,0 +1,49 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title *ngIf="event">{{ event.label }}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding *ngIf="event">
+    <ion-card>
+
+        <ion-item>
+            <h1>{{ event.label }}</h1>
+            <p>{{ event.startDate | date:"mediumDate" }} {{ event.startDate | date:"shortTime" }}</p>
+        </ion-item>
+
+        <!-- Map -->
+
+        <ion-card-content>
+            <h2>{{ event.participants.teamHome.label }}</h2>
+            <h2>{{ event.participants.teamVisitor.label }}</h2>
+            <p>{{ event.address.formatedAddress }}</p>
+        </ion-card-content>
+
+        <ion-row>
+            <ion-col>
+                <button ion-button icon-left (click)="goToEdit()">
+                    <ion-icon name="create"></ion-icon>
+                    <div>{{ 'eventsModule.detail.edit' | translate }}</div>
+                </button>
+            </ion-col>
+            <ion-col>
+                <button ion-button icon-left color="danger" (click)="delete()">
+                    <ion-icon name="trash"></ion-icon>
+                    <div>{{ 'eventsModule.detail.trash' | translate }}</div>
+                </button>
+            </ion-col>
+            <ion-col>
+                <button ion-button icon-left color="secondary" (click)="goToCollect()">
+                    <ion-icon name="stopwatch"></ion-icon>
+                    <div>{{ 'eventsModule.detail.collect' | translate }}</div>
+                </button>
+            </ion-col>
+
+        </ion-row>
+
+    </ion-card>
+</ion-content>

@@ -42,7 +42,7 @@ export class NextEventComponent {
             } else {
                 this.getLastEvent(events);
             }
-        })
+        });
     }
 
     private getLastEvent(eventList: any) {

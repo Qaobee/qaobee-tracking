@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{ 'eventsModule.eventsList.title' | translate }}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-fab top right edge>
+        <button ion-fab mini (click)="addEvent()"><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+                pullingIcon="arrow-dropdown"
+                pullingText="{{ 'refresher.label' | translate }}"
+                refreshingSpinner="circles"
+                refreshingText="{{ 'refresher.message' | translate }}">
+        </ion-refresher-content>
+    </ion-refresher>
+    <ion-list *ngIf="eventList">
+        <div *ngFor="let entry of eventList | keys">
+            <ion-item-divider color="light">{{ entry.key }}</ion-item-divider>
+            <ion-item *ngFor="let event of entry.value" (click)="goToDetail(event, $event)">
+                <h4>{{ event.label }}</h4>
+                <h2>{{ event.participants.teamHome.label }}</h2>
+                <h2>{{ event.participants.teamVisitor.label }}</h2>
+                <p>{{ event.startDate | date:"mediumDate" }} {{ event.startDate | date:"shortTime" }}</p>
+                <button ion-button item-end color="secondary" (click)="goToCollect(e, $event)">
+                    <ion-icon name="stopwatch"></ion-icon>
+                </button>
+            </ion-item>
+        </div>
+    </ion-list>
+</ion-content>

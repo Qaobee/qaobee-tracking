@@ -6,10 +6,9 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 import {LoginPage} from './../pages/login/login';
 import {WelcomePage} from './../pages/welcome/welcome';
 import {SignupPage} from './../pages/signup/signup';
-import { CollectListPage } from './../pages/collect-list/collect-list';
-import { EventListPage } from './../pages/event-list/event-list';
-import { PlayerListPage } from './../pages/player-list/player-list';
-import { SettingsPage } from './../pages/settings/settings';
+import {CollectListPage} from './../pages/collect-list/collect-list';
+import {PlayerListPage} from './../pages/player-list/player-list';
+import {SettingsPage} from './../pages/settings/settings';
 
 import {TranslateService} from '@ngx-translate/core';
 import {AuthenticationService} from "../providers/authentication.service";
@@ -18,6 +17,7 @@ import {UserService} from "../providers/api/api.user.service";
 import {EventService} from "../providers/event.service";
 import {MetaService} from "../providers/api/api.meta.service";
 import {HomePage} from "../pages/home/home";
+import {EventListPage} from "../pages/events/event-list/event-list";
 
 @Component({
     templateUrl: 'app.html'

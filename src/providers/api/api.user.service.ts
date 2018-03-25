@@ -40,8 +40,9 @@ export class UserService extends ApiService {
      * @param login
      * @param passwd
      * @param mobileToken
+     * @returns {Observable<any>}
      */
-    login(login: string, passwd: string, mobileToken: string): Observable<Array<any>> {
+    login(login: string, passwd: string, mobileToken: string): Observable<any> {
         return this.http.post<any>(ENV.hive + this.rootPath + '/commons/users/user/login', {
             login: login,
             password: passwd,
@@ -57,14 +58,14 @@ export class UserService extends ApiService {
      *
      * @param {string} login
      * @param {string} mobileToken
-     * @returns {Observable<Array<any>>}
+     * @returns {Observable<any>}
      */
-    sso(login: string, mobileToken: string): Observable<Array<any>> {
+    sso(login: string, mobileToken: string): Observable<any> {
         return this.http.post<any>(ENV.hive + this.rootPath + '/commons/users/user/sso', {
             login: login,
             mobileToken: mobileToken
         }).pipe(
-            catchError(this.handleError('UserService.login'))
+            catchError(this.handleError('UserService.sso'))
         );
     }
 
@@ -73,12 +74,12 @@ export class UserService extends ApiService {
      * @param user
      * @returns {Observable<any>}
      */
-    registerUser(user: any) {
+    registerUser(user: any): Observable<any>  {
         user.captcha = 'empty';
         user.country = this.translate.getBrowserLang();
         user.account.origin = 'mobile';
         return this.http.put<any>(ENV.hive + this.rootPath2 + '/commons/users/signup/register', user).pipe(
-            catchError(this.handleError('UserService.login'))
+            catchError(this.handleError('UserService.registerUser'))
         );
     }
 
@@ -87,9 +88,9 @@ export class UserService extends ApiService {
      * @param {string} login
      * @returns {Observable<any>}
      */
-    usernameTest(login: string) {
+    usernameTest(login: string): Observable<any>  {
         return this.http.get<any>(ENV.hive + this.rootPath2 + '/commons/multi/signup/test/' + login).pipe(
-            catchError(this.handleError('UserService.login'))
+            catchError(this.handleError('UserService.usernameTest'))
         );
     }
 
@@ -98,9 +99,9 @@ export class UserService extends ApiService {
      * @param user
      * @returns {Observable<any>}
      */
-    updateUser(user: any) {
+    updateUser(user: any): Observable<any>  {
         return this.http.post<any>(ENV.hive + this.rootPath + '/commons/users/profile', user, this.addHeaderToken()).pipe(
-            catchError(this.handleError('UserService.login'))
+            catchError(this.handleError('UserService.updateUser'))
         );
     }
 
@@ -108,9 +109,9 @@ export class UserService extends ApiService {
      *
      * @returns {Observable<any>}
      */
-    logoff() {
+    logoff(): Observable<any>  {
         return this.http.get<any>(ENV.hive + this.rootPath + '/commons/users/user/logout', this.addHeaderToken()).pipe(
-            catchError(this.handleError('UserService.login'))
+            catchError(this.handleError('UserService.logoff'))
         );
     }
 
@@ -118,9 +119,9 @@ export class UserService extends ApiService {
      *
      * @returns {Observable<any>}
      */
-    getCurrentUser() {
+    getCurrentUser(): Observable<any>  {
         return this.http.get<any>(ENV.hive + this.rootPath + '/commons/users/user/current', this.addHeaderToken()).pipe(
-            catchError(this.handleError('UserService.login'))
+            catchError(this.handleError('UserService.getCurrentUser'))
         );
     }
 
@@ -129,16 +130,16 @@ export class UserService extends ApiService {
      * @param {string} path
      * @returns {Observable<any>}
      */
-    getEncryptedInfos(path: string) {
+    getEncryptedInfos(path: string): Observable<any>  {
         return this.http.post<any>(ENV.hive + this.rootPath + '/commons/users/user/encrypt', {path: path}, this.addHeaderToken()).pipe(
-            catchError(this.handleError('UserService.login'))
+            catchError(this.handleError('UserService.getEncryptedInfos'))
         );
     }
 
     /**
      *
      * @param {string} filePath
-     * @returns {Observable<any>}
+     * @returns {Promise<FileUploadResult>}
      */
     postAvatar(filePath: string) {
         let options: FileUploadOptions = {
