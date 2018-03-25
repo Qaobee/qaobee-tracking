@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {AuthenticationService} from "../../providers/authentication.service";
-import {PlayerListPage} from '../player-list/player-list';
+import {PlayerListPage} from '../players/player-list/player-list';
 import {EventListPage} from '../events/event-list/event-list';
 import {CollectListPage} from "../collect-list/collect-list";
 

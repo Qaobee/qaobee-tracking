@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {Storage} from "@ionic/storage";
-import { PersonService } from './../../providers/api/api.person.service';
-import {AuthenticationService} from "../../providers/authentication.service";
+import { PersonService } from './../../../providers/api/api.person.service';
+import {AuthenticationService} from "../../../providers/authentication.service";
 
 /**
  * Generated class for the PlayerListPage page.

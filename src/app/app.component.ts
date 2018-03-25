@@ -7,7 +7,7 @@ import {LoginPage} from './../pages/login/login';
 import {WelcomePage} from './../pages/welcome/welcome';
 import {SignupPage} from './../pages/signup/signup';
 import {CollectListPage} from './../pages/collect-list/collect-list';
-import {PlayerListPage} from './../pages/player-list/player-list';
+import {PlayerListPage} from './../pages/players/player-list/player-list';
 import {SettingsPage} from './../pages/settings/settings';
 
 import {TranslateService} from '@ngx-translate/core';
