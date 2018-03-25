@@ -29,5 +29,17 @@ h2, p {
 }
 
 h3 {
-  color: color($colors,secondary,base);
+  color: color($colors,primary,base);
+}
+
+.panel {
+  color: color($colors,dark,base);
+}
+
+.label {
+  color: color($colors,primary,base);
+}
+
+ion-footer {
+  background-color: color($colors, light, base);
 }

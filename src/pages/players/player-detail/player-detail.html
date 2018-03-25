@@ -6,14 +6,82 @@
 
 
 <ion-content padding>
-  <ion-item>
-    <h2 text-center>{{player.firstname}} {{player.name}}</h2>
-    <ion-avatar item-start>
+  <ion-item id="entetePlayer">
+    <h1>{{player.firstname}} {{player.name}}</h1>
+    <ion-avatar item-end>
         <img src="../assets/imgs/user.png">
     </ion-avatar>
   </ion-item>
+  <!-- PositionType-->
   <ion-item>
-      <p>{{player.status.weight}} {{player.status.height}}</p>
-  </ion-item>   
+      <ion-row >
+        <ion-col>
+          <h2 class="panel"><ion-icon name="locate"></ion-icon> - {{'player.labels.positionType' | translate}}</h2>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col text-left><h2>{{'player.positionType.'+player.status.positionType  | translate}}</h2></ion-col>
+      </ion-row>
+    </ion-item>
+
+  <!-- Mesuration-->
+  <ion-item>
+    <ion-row >
+      <ion-col>
+        <h2 class="panel"><ion-icon name="body"></ion-icon> - {{'player.labels.mesuration' | translate}}</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col text-left><h3 class="label">{{'player.labels.weight' | translate}}</h3></ion-col>
+        <ion-col text-left><h3 class="label">{{'player.labels.hight' | translate}}</h3></ion-col>
+    </ion-row>
+    <ion-row>    
+        <ion-col text-left>
+          <h2>{{player.status.weight}} {{'player.labels.weightUnit' | translate}}</h2>
+        </ion-col>
+        <ion-col text-left>
+          <h2>{{player.status.height}} {{'player.labels.hightUnit' | translate}}</h2>
+        </ion-col>
+    </ion-row>
+  </ion-item> 
+  <!-- Contact information-->
+  <ion-item *ngIf="player.contact">
+    <ion-row>
+      <ion-col>
+        <h2 class="panel"><ion-icon name="contact"></ion-icon> - {{'player.labels.contact' | translate}}</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row text-center>
+      <ion-col *ngIf="player.contact.cellphone">
+        <button ion-button small><ion-icon name="call"></ion-icon></button>
+      </ion-col>
+      <ion-col *ngIf="player.contact.email">
+        <button ion-button small><ion-icon name="mail"></ion-icon></button>
+      </ion-col>
+      <ion-col *ngIf="player.address">
+        <button ion-button small><ion-icon name="home"></ion-icon></button>
+      </ion-col>
+    </ion-row>
+  </ion-item> 
 </ion-content>
+
+<ion-footer>
+    <ion-row>
+        <ion-col text-center>
+            <button ion-button (tap)="editPlayer()" outline large>  
+                <ion-icon name="create"></ion-icon>
+            </button>
+        </ion-col>
+        <ion-col text-center>
+            <button ion-button (tap)="disablePlayer()" outline large>  
+                <ion-icon name="close-circle"></ion-icon>
+            </button>
+        </ion-col>
+        <ion-col text-center>
+            <button ion-button (tap)="goToStats()" outline large>  
+                <ion-icon name="stats"></ion-icon>
+            </button>
+        </ion-col>
+    </ion-row>
+</ion-footer>
       

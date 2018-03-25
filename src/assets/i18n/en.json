@@ -43,6 +43,15 @@
     "player" : {
         "TitleNavBar": "Player Module",
         "TitlePlayerList": "Player list",
+        "labels": {
+            "mesuration": "Mesuration",
+            "weight": "Weight",
+            "weightUnit": "Kgs",
+            "hight": "Hight",
+            "hightUnit": "cm",
+            "positionType": "Poste",
+            "contact": "Contact information"
+        },
         "positionType": {
             "midfielder": "Midfielder",
             "defender": "Defender",

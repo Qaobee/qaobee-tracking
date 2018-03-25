@@ -35,4 +35,16 @@ export class PlayerDetailPage {
     console.log('ionViewDidLoad PlayerDetailPage');
   }
 
+  editPlayer() {
+    console.log('editPlayer() -> PlayerDetailPage');
+  }
+
+  disablePlayer() {
+    console.log('disablePlayer() -> PlayerDetailPage');
+  }
+
+  goToStats() {
+    console.log('goToStats() -> PlayerDetailPage');
+  }
+
 }
