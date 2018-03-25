@@ -1,19 +1,19 @@
-<!--
-  Generated template for the CollectListPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-<ion-navbar>
-    <ion-title>player detail</ion-title>
-</ion-navbar>
-
+  <ion-navbar>
+    <ion-title>{{'player.TitleNavBar' | translate}}</ion-title>
+  </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-
+  <ion-item>
+    <h2 text-center>{{player.firstname}} {{player.name}}</h2>
+    <ion-avatar item-start>
+        <img src="../assets/imgs/user.png">
+    </ion-avatar>
+  </ion-item>
+  <ion-item>
+      <p>{{player.status.weight}} {{player.status.height}}</p>
+  </ion-item>   
 </ion-content>
       
