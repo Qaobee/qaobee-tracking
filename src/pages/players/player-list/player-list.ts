@@ -79,11 +79,11 @@ export class PlayerListPage {
       this.navCtrl.push(PlayerDetailPage);
   }
 
-  /**
-   *
-   * @param event
-   * @param clickEvent
-   */
+    /**
+     * 
+     * @param player
+     * @param clickEvent
+     */
     goToDetail(player: any, clickEvent: any) {
       clickEvent.stopPropagation();
       this.navCtrl.push(PlayerDetailPage, {player : player});

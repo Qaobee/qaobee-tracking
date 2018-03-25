@@ -64,10 +64,10 @@ export class LoginPage {
     /** */
     doLogin() {
         this.uniqueDeviceID.get().then((uuid: any) => {
-            console.log(uuid)
+            console.log('[LoginPage] - doLogin - uuid', uuid);
             this.submitLogin(uuid);
         }).catch((error: any) => {
-            console.error(error);
+            console.error('[LoginPage] - doLogin - error',error);
             this.submitLogin("123456-" + this.login);
         });
     }

@@ -77,7 +77,7 @@ export class ProfilePage {
         this.address = item.description;
         this.geocoder.geocode({'placeId': item.place_id}, (results, status) => {
             if (status === 'OK' && results[0]) {
-                console.log(results[0])
+                console.log('[ProfilePage] - selectSearchResult - geocode',results[0]);
                 this.user.address = {
                     formatedAddress: item.description,
                     place: results[0].address_components[0].long_name + ', ' + results[0].address_components[1].long_name,

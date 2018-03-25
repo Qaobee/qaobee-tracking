@@ -40,6 +40,7 @@ export class UserService extends ApiService {
      * @param {ToastController} toastCtrl
      * @param {HttpClient} http
      * @param {TranslateService} translate
+     * @param {FileTransfer} fileTransfer
      * @param {Platform} plt
      */
     constructor(app: App,
