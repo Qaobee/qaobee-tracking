@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {ActionSheetController, LoadingController, ToastController} from 'ionic-angular';
 import {Camera, CameraOptions} from '@ionic-native/camera';
-import {UserService} from "../../providers/api/user.service";
+import {UserService} from "../../providers/api/api.user.service";
 import {ENV} from '@app/env'
 import {AuthenticationService} from "../../providers/authentication.service";
 

@@ -14,9 +14,9 @@ import { SettingsPage } from './../pages/settings/settings';
 import {TranslateService} from '@ngx-translate/core';
 import {AuthenticationService} from "../providers/authentication.service";
 import {Storage} from "@ionic/storage";
-import {UserService} from "../providers/api/user.service";
+import {UserService} from "../providers/api/api.user.service";
 import {EventService} from "../providers/event.service";
-import {MetaService} from "../providers/api/meta.service";
+import {MetaService} from "../providers/api/api.meta.service";
 import {HomePage} from "../pages/home/home";
 
 @Component({
@@ -26,7 +26,7 @@ export class MyApp {
     @ViewChild(Nav) nav: Nav;
     rootPage: any = WelcomePage;
     pages: Array<{ title: string, component: any, icon: string }>;
-    private user: any;
+    user: any;
 
     /**
      *

@@ -6,6 +6,9 @@ import {NextEventComponent} from './next-event/next-event';
 import {LastCollectComponent} from './last-collect/last-collect';
 import {Utils} from "../providers/utils";
 import {APIModule} from "../providers/api/api.module";
+import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {createTranslateLoader} from "../app/app.module";
+import {HttpClient} from "@angular/common/http";
 
 @NgModule({
     declarations: [MenuHeaderComponent,
@@ -13,7 +16,14 @@ import {APIModule} from "../providers/api/api.module";
     LastCollectComponent],
     imports: [
         IonicModule.forRoot(MyApp),
-        APIModule
+        APIModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (createTranslateLoader),
+                deps: [HttpClient]
+            }
+        })
     ],
     exports: [
         MenuHeaderComponent,

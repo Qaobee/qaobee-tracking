@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {UniqueDeviceID} from '@ionic-native/unique-device-id';
 
-import {UserService} from '../../providers/api/user.service';
+import {UserService} from '../../providers/api/api.user.service';
 import {SignupPage} from '../signup/signup';
 import {Storage} from '@ionic/storage';
 import {AuthenticationService} from "../../providers/authentication.service";

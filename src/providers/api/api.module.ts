@@ -3,11 +3,12 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {IonicStorageModule} from "@ionic/storage";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {createTranslateLoader} from "../../app/app.module";
-import {UserService} from "./user.service";
+import {UserService} from "./api.user.service";
 import {IonicErrorHandler} from "ionic-angular";
 import {FileTransfer} from "@ionic-native/file-transfer";
-import {MetaService} from "./meta.service";
-import {EventsService} from "./events.service";
+import {MetaService} from "./api.meta.service";
+import {EventsService} from "./api.events.service";
+import {PersonService} from "./api.person.service";
 
 @NgModule({
     declarations: [    ],
@@ -27,6 +28,7 @@ import {EventsService} from "./events.service";
         UserService,
         MetaService,
         EventsService,
+        PersonService,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         FileTransfer
     ]

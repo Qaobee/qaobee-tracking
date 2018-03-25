@@ -10,47 +10,38 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>{{ user.firstname }} {{ user.name }}</ion-title>
+        <ion-title>Hello {{ (user.firstname) ? user.firstname : user.account.login | uppercase}} !</ion-title> 
     </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
-    <ion-card>
-        <img src="../../assets/imgs/Qaobee-Tracking.png"/>
-        <ion-card-content>
-          
         <ion-row>
-            <ion-col>
-                <ion-item text-center>
-                    <button ion-button (tap)="goToEventList()">  
-                        <ion-icon name="calendar"></ion-icon>
-                    </button>
-                    <p>Matchs</p>
-                </ion-item>
+            <ion-col text-center>
+                <img src="../../assets/imgs/Qaobee-Tracking.png"/>
             </ion-col>
-            <ion-col>
-                <ion-item text-center>
-                    <button ion-button (tap)="goToPlayerList()">  
-                        <ion-icon name="people"></ion-icon>
-                    </button>
-                    <p>Joueurs</p>
-                </ion-item>
-            </ion-col>
-            <ion-col>
-                <ion-item text-center>
-                    <button ion-button (tap)="goToCollectList()">  
-                        <ion-icon name="stats"></ion-icon>
-                    </button>
-                    <p>Stats</p>
-                </ion-item>
-            </ion-col>
-          </ion-row>
-        </ion-card-content>
-    </ion-card>
-  
-    <h1 padding>Match à venir</h1>
+        </ion-row>
     <next-event></next-event>
     <!-- <last-collect></last-collect> -->
 </ion-content>
+
+<ion-footer>
+        <ion-row>
+            <ion-col text-center>
+                <button ion-button (tap)="goToEventList()" outline large>  
+                    <ion-icon name="calendar"></ion-icon>
+                </button>
+            </ion-col>
+            <ion-col text-center>
+                <button ion-button (tap)="goToPlayerList()" outline large>  
+                    <ion-icon name="people"></ion-icon>
+                </button>
+            </ion-col>
+            <ion-col text-center>
+                <button ion-button (tap)="goToCollectList()" outline large>  
+                    <ion-icon name="stats"></ion-icon>
+                </button>
+            </ion-col>
+        </ion-row>
+</ion-footer>

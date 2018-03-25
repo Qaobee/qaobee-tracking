@@ -22,12 +22,12 @@
         <ion-list>
             <ion-item padding>
                 <ion-label stacked>{{ 'login.Username' | translate }}</ion-label>
-                <ion-input type="text" [(ngModel)]="login"></ion-input>
+                <ion-input type="text" [(ngModel)]="login" clearInput></ion-input>
             </ion-item>
 
             <ion-item padding> 
                 <ion-label stacked>{{ 'login.Password' | translate }}</ion-label>
-                <ion-input type="password" [(ngModel)]="passwd"></ion-input>
+                <ion-input type="password" [(ngModel)]="passwd" clearInput></ion-input>
             </ion-item>
 
             <ion-item>

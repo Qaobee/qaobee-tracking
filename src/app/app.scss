@@ -19,3 +19,15 @@
     background-color: color($colors, dark, base);
   }
 }
+
+h1 {
+  color: color($colors,dark,base);
+}
+
+h2, p {
+  color: color($colors,danger,base);
+}
+
+h3 {
+  color: color($colors,secondary,base);
+}

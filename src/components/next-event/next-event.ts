@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
-import {EventsService} from "../../providers/api/events.service";
+import {EventsService} from "../../providers/api/api.events.service";
 import {AuthenticationService} from "../../providers/authentication.service";
 import {Storage} from "@ionic/storage";
 import {Utils} from "../../providers/utils";
+import { compareDates } from 'ionic-angular/util/datetime-util';
 
 /**
  * Generated class for the NextEventComponent component.
@@ -12,7 +13,7 @@ import {Utils} from "../../providers/utils";
  */
 @Component({
     selector: 'next-event',
-    templateUrl: 'next-event.html'
+    templateUrl: 'next-event.html' 
 })
 export class NextEventComponent {
 
@@ -46,8 +47,21 @@ export class NextEventComponent {
 
     private getLastEvent(eventList: any) {
         let events = eventList.sort(this.utils.compareEvents);
+        
         if(events.length > 0) {
-            this.nextEvent = events[0];
+            let valA = events[0].startDate || 0;
+            let valB = new Date() || 0;
+            if (valA > valB) {
+                this.nextEvent = events[0];
+            }
         }
+    }
+
+    goToCreateEvent() {
+        console.log('create event');
+    }
+
+    goToViewEvent() {
+        console.log('create event');
     }
 }

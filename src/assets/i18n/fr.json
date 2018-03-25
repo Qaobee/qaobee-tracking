@@ -34,5 +34,25 @@
         "Stats": "Stats",
         "Settings": "Paramètres",
         "Logout": "Déconnexion"
+    },
+
+    "player" : {
+        "positionType": {
+            "midfielder": "Milieu",
+            "defender": "Défenseur",
+            "forward": "Attaquant",
+            "goalkeeper": "Gardien",
+            "pivot": "Pivot",
+            "center-backcourt": "Demi-centre",
+            "right-backcourt": "Arrière Droit",
+            "left-backcourt": "Arrière Gauche",
+            "right-wingman": "Ailier Droit",
+            "left-wingman": "Ailier Gauche"
+        }
+    },
+
+    "nextEvent" : {
+        "titleFound": "Prochain match",
+        "titleNotFound": "Planifier un match"
     }
 }

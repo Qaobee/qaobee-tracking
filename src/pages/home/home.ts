@@ -12,7 +12,7 @@ import { CollectListPage } from './../collect-list/collect-list';
 })
 export class HomePage {
 
-  private user: any;
+    user: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private authenticationService: AuthenticationService) {
@@ -45,9 +45,4 @@ export class HomePage {
         
         this.navCtrl.push(CollectListPage);
     }
-
-  ionViewDidLoad() {
-      console.log('ionViewDidLoad HomePage');
-  }
-
 }
