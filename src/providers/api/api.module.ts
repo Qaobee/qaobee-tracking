@@ -27,6 +27,8 @@ import {FileTransfer} from "@ionic-native/file-transfer";
 import {MetaService} from "./api.meta.service";
 import {EventsService} from "./api.events.service";
 import {PersonService} from "./api.person.service";
+import {TeamService} from "./api.team.service";
+import {ActivityCfgService} from "./api.activityCfg.service";
 
 @NgModule({
     declarations: [    ],
@@ -47,6 +49,8 @@ import {PersonService} from "./api.person.service";
         MetaService,
         EventsService,
         PersonService,
+        TeamService,
+        ActivityCfgService,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         FileTransfer
     ]

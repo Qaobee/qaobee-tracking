@@ -25,6 +25,7 @@ import {Utils} from "../../../providers/utils";
 import {DatePipe} from "@angular/common";
 import {SettingsService} from "../../../providers/settings.service";
 import {EventDetailPage} from "../event-detail/event-detail";
+import {EventUpsertPage} from "../event-upsert/event-upsert";
 
 /**
  * Generated class for the EventListPage page.
@@ -134,7 +135,7 @@ export class EventListPage {
      */
     addEvent() {
         console.log('[EventListPage] - addEvent');
-        // TODO
+        this.navCtrl.push(EventUpsertPage, {});
     }
 
     /**

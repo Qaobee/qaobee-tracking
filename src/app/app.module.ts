@@ -41,6 +41,7 @@ import {APIModule} from "../providers/api/api.module";
 import {Utils} from "../providers/utils";
 import { LOCALE_ID } from '@angular/core';
 import {SettingsService} from "../providers/settings.service";
+import {LocationService} from "../providers/location.service";
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -77,6 +78,7 @@ export function createTranslateLoader(http: HttpClient) {
         AuthenticationService,
         EventService,
         SettingsService,
+        LocationService,
         Utils,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         {

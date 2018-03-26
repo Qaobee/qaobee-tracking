@@ -22,8 +22,8 @@ import {Camera, CameraOptions} from '@ionic-native/camera';
 import {UserService} from "../../providers/api/api.user.service";
 import {ENV} from '@app/env'
 import {AuthenticationService} from "../../providers/authentication.service";
+import {LocationService} from "../../providers/location.service";
 
-declare var google;
 
 @Component({
     selector: 'page-profile',
@@ -36,8 +36,6 @@ export class ProfilePage {
     user: any;
     address: string;
     root: string = ENV.hive;
-    GoogleAutocomplete: any = new google.maps.places.AutocompleteService();
-    geocoder: any = new google.maps.Geocoder;
     autocompleteItems = [];
     private birthdate: any;
 
@@ -49,48 +47,49 @@ export class ProfilePage {
      * @param {ActionSheetController} actionSheetCtrl
      * @param {AuthenticationService} authenticationService
      * @param {UserService} userService
+     * @param {LocationService} locationService
      */
     constructor(private camera: Camera,
                 private loadingCtrl: LoadingController,
                 private toastCtrl: ToastController,
-                private  actionSheetCtrl: ActionSheetController,
+                private actionSheetCtrl: ActionSheetController,
                 private authenticationService: AuthenticationService,
-                private userService: UserService) {
+                private userService: UserService,
+                private locationService: LocationService) {
     }
 
+    /**
+     *
+     */
     updateSearchResults() {
-        if (!this.address || this.address == '') {
-            this.autocompleteItems = [];
-            return;
-        }
-        this.GoogleAutocomplete.getPlacePredictions({input: this.address},
-            (predictions, status) => {
-                this.autocompleteItems = [];
-                predictions.forEach((prediction) => {
-                    this.autocompleteItems.push(prediction);
-                });
-            });
+        this.locationService.updateSearchResults(this.address, result => {
+            this.autocompleteItems = result;
+        });
     }
 
+    /**
+     *
+     * @param item
+     */
     selectSearchResult(item) {
         this.autocompleteItems = [];
         this.address = item.description;
-        this.geocoder.geocode({'placeId': item.place_id}, (results, status) => {
-            if (status === 'OK' && results[0]) {
-                console.log('[ProfilePage] - selectSearchResult - geocode',results[0]);
-                this.user.address = {
-                    formatedAddress: item.description,
-                    place: results[0].address_components[0].long_name + ', ' + results[0].address_components[1].long_name,
-                    zipcode: results[0].address_components[6].long_name,
-                    city: results[0].address_components[2].long_name,
-                    country: results[0].address_components[5].long_name,
-                    lat: results[0].geometry.location.lat(),
-                    lng: results[0].geometry.location.lng(),
-                };
-            }
-        })
+        this.locationService.selectSearchResult(item, this.address, result => {
+            this.user.address = {
+                formatedAddress: item.description,
+                place: result.address_components[0].long_name + ', ' + result.address_components[1].long_name,
+                zipcode: result.address_components[6].long_name,
+                city: result.address_components[2].long_name,
+                country: result.address_components[5].long_name,
+                lat: result.geometry.location.lat(),
+                lng: result.geometry.location.lng(),
+            };
+        });
     }
 
+    /**
+     *
+     */
     getImage() {
         let actionSheet = this.actionSheetCtrl.create({
             title: 'Choose source',
@@ -127,6 +126,10 @@ export class ProfilePage {
         actionSheet.present();
     }
 
+    /**
+     *
+     * @param {CameraOptions} options
+     */
     captureImage(options: CameraOptions) {
         this.camera.getPicture(options).then((imageData) => {
             this.imageURI = imageData;
@@ -137,6 +140,9 @@ export class ProfilePage {
         });
     }
 
+    /**
+     *
+     */
     uploadFile() {
         let loader = this.loadingCtrl.create({
             content: 'Uploading...'
@@ -156,8 +162,12 @@ export class ProfilePage {
             this.presentToast(err);
         });
     }
+
+    /**
+     *
+     */
     saveProfile() {
-        if(this.birthdate) {
+        if (this.birthdate) {
             this.user.birthdate = Date.parse(this.birthdate)
         }
         let loader = this.loadingCtrl.create({
@@ -175,6 +185,9 @@ export class ProfilePage {
         })
     }
 
+    /**
+     *
+     */
     ionViewDidLoad(): void {
         this.user = this.authenticationService.user;
         this.birthdate = new Date(this.user.birthdate).toISOString();
@@ -183,6 +196,10 @@ export class ProfilePage {
         }
     }
 
+    /**
+     *
+     * @param msg
+     */
     presentToast(msg) {
         let toast = this.toastCtrl.create({
             message: msg,

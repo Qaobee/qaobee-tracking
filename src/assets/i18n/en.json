@@ -1,4 +1,5 @@
 {
+  "country": "CNTR-250-FR-FRA",
   "actionButton": {
     "Submit": "Submit",
     "Cancel": "Cancel",
@@ -9,6 +10,14 @@
     "message": "Refreshing..."
   },
   "eventsModule": {
+    "label": "Label",
+    "teamHome": "My team",
+    "teamVisitor": "Adversary",
+    "type": "Type",
+    "startDate": "Date",
+    "startTime": "Time",
+    "home" : "Home",
+    "outside" : "Outside",
     "eventsList": {
       "title": "Events"
     },

@@ -100,7 +100,7 @@ export class MyApp {
             });
 
             this.eventService.on(EventService.navigation, page => {
-                this.nav.push(page);
+                this.nav.push(page.component, page.options);
             });
         });
     }

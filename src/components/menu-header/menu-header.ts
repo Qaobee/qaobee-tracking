@@ -42,7 +42,7 @@ export class MenuHeaderComponent {
      */
     goToProfile() {
         console.log('[MenuHeaderComponent] - goToProfile');
-        this.eventService.broadcast(EventService.navigation, ProfilePage);
+        this.eventService.broadcast(EventService.navigation, {component: ProfilePage});
     }
 
 }

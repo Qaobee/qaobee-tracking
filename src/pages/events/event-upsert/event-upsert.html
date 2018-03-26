@@ -1,0 +1,91 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title *ngIf="event">{{ event.label }}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding *ngIf="event">
+    <ion-item>
+        <ion-label floating>{{ 'eventsModule.label' | translate }}</ion-label>
+        <ion-input type="text" [(ngModel)]="event.label"></ion-input>
+    </ion-item>
+
+    <ion-row>
+        <ion-col>
+            <ion-item>
+                <ion-label floating>{{ 'eventsModule.startDate' | translate }}</ion-label>
+                <ion-datetime [(ngModel)]="startDate" min="{{minDate}}" max="2100"></ion-datetime>
+            </ion-item>
+        </ion-col>
+        <ion-col>
+            <ion-item>
+                <ion-label floating>{{ 'eventsModule.startTime' | translate }}</ion-label>
+                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A"
+                              [(ngModel)]="startTime"></ion-datetime>
+            </ion-item>
+        </ion-col>
+    </ion-row>
+    <div class="autocomplete">
+        <ion-item>
+            <ion-label floating>Address</ion-label>
+            <ion-input type="text" [(ngModel)]="address" (keyup)="updateSearchResults()"></ion-input>
+        </ion-item>
+        <ion-list>
+            <ion-item *ngFor="let res of autocompleteItems" (click)="selectSearchResult(res)">
+                {{res.description}}
+            </ion-item>
+        </ion-list>
+    </div>
+    <ion-item>
+        <ion-label>{{ 'eventsModule.type' | translate }}</ion-label>
+        <ion-select [(ngModel)]="event.type" interface="popover">
+            <ion-option *ngFor="let t of eventTypes" [value]="t">{{t.label}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>{{ 'eventsModule.teamHome' | translate }}</ion-label>
+        <ion-select [(ngModel)]="event.participants.teamHome" interface="popover">
+            <ion-option *ngFor="let t of teams.myTeams" [value]="t">{{t.label}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>{{ 'eventsModule.teamVisitor' | translate }}</ion-label>
+        <ion-select [(ngModel)]="event.participants.teamVisitor" interface="popover">
+            <ion-option *ngFor="let t of teams.adversaries" [value]="t">{{t.label}}</ion-option>
+        </ion-select>
+    </ion-item>
+    <ion-list radio-group [(ngModel)]="radioHome">
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label>{{ 'eventsModule.home' | translate }}</ion-label>
+                    <ion-radio value="true"></ion-radio>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label>{{ 'eventsModule.outside' | translate }}</ion-label>
+                    <ion-radio value="false"></ion-radio>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </ion-list>
+    <ion-row>
+        <ion-col>
+            <button ion-button icon-left color="danger" (click)="cancel()">
+                <ion-icon name="arrow-back"></ion-icon>
+                <div>{{ 'actionButton.Cancel' | translate }}</div>
+            </button>
+        </ion-col>
+        <ion-col>
+            <button ion-button icon-left color="secondary" (click)="saveEvent()">
+                <ion-icon name="checkmark"></ion-icon>
+                <div>{{ 'actionButton.Submit' | translate }}</div>
+            </button>
+        </ion-col>
+    </ion-row>
+
+</ion-content>

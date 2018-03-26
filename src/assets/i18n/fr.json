@@ -1,4 +1,5 @@
 {
+  "country": "CNTR-250-FR-FRA",
   "actionButton": {
     "Submit": "Valider",
     "Cancel": "Annuler",
@@ -9,6 +10,14 @@
     "message": "Chargement..."
   },
   "eventsModule": {
+    "label": "Libellé",
+    "teamHome": "Mon équipe",
+    "teamVisitor": "Adversaire",
+    "type": "Type",
+    "startDate": "Date",
+    "startTime": "Heure",
+    "home" : "A domicile",
+    "outside" : "A l'extérieur",
     "eventsList": {
       "title": "Evénements"
     },

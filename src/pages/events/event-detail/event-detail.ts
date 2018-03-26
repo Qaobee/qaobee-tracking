@@ -23,6 +23,7 @@ import {EventsService} from "../../../providers/api/api.events.service";
 import {Storage} from "@ionic/storage";
 import {Utils} from "../../../providers/utils";
 import {SettingsService} from "../../../providers/settings.service";
+import {EventUpsertPage} from "../event-upsert/event-upsert";
 
 /**
  * Generated class for the EventListPage page.
@@ -77,7 +78,7 @@ export class EventDetailPage {
      */
     goToEdit() {
         console.log('[EventDetailPage] - goToEdit');
-        // TODO
+        this.navCtrl.push(EventUpsertPage, {event : this.event});
     }
 
     /**

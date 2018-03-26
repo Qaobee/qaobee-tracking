@@ -21,20 +21,30 @@ import {EventsService} from "../../providers/api/api.events.service";
 import {AuthenticationService} from "../../providers/authentication.service";
 import {Storage} from "@ionic/storage";
 import {Utils} from "../../providers/utils";
-import { compareDates } from 'ionic-angular/util/datetime-util';
+import {EventService} from "../../providers/event.service";
+import {EventUpsertPage} from "../../pages/events/event-upsert/event-upsert";
 
 @Component({
     selector: 'next-event',
-    templateUrl: 'next-event.html' 
+    templateUrl: 'next-event.html'
 })
 export class NextEventComponent {
 
     user: any;
     nextEvent: any;
 
+    /**
+     *
+     * @param {EventsService} eventsServices
+     * @param {Storage} storage
+     * @param {AuthenticationService} authenticationService
+     * @param {EventService} eventService
+     * @param {Utils} utils
+     */
     constructor(private eventsServices: EventsService,
                 private storage: Storage,
                 private authenticationService: AuthenticationService,
+                private eventService: EventService,
                 private utils: Utils) {
 
         this.user = this.authenticationService.user;
@@ -48,7 +58,9 @@ export class NextEventComponent {
                     this.authenticationService.meta._id,
                 ).subscribe(eventList => {
                     console.log(eventList);
-                    this.storage.set('events', eventList);
+                    this.storage.set('events', eventList).then(r=> {
+                        console.log('[NextEventComponent] constructor', r);
+                    });
                     this.getLastEvent(eventList);
                 });
             } else {
@@ -59,8 +71,8 @@ export class NextEventComponent {
 
     private getLastEvent(eventList: any) {
         let events = eventList.sort(this.utils.compareEvents);
-        
-        if(events.length > 0) {
+
+        if (events.length > 0) {
             let valA = events[0].startDate || 0;
             let valB = new Date() || 0;
             if (valA > valB) {
@@ -69,11 +81,22 @@ export class NextEventComponent {
         }
     }
 
+    /**
+     *
+     */
     goToCreateEvent() {
-        console.log('create event');
+        console.log('[NextEventComponent] goToCreateEvent');
+        this.eventService.broadcast(EventService.navigation, {component: EventUpsertPage});
     }
 
+    /**
+     *
+     */
     goToViewEvent() {
-        console.log('create event');
+        console.log('[NextEventComponent] goToViewEvent');
+        this.eventService.broadcast(EventService.navigation, {
+            component: EventUpsertPage,
+            options: {event: this.nextEvent}
+        });
     }
 }
