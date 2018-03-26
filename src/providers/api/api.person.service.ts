@@ -33,17 +33,45 @@ export class PersonService extends ApiService {
      * @param {ToastController} toastCtrl
      * @param {HttpClient} http
      */
+
+    private apiUrl: string;
+
     constructor(app: App,
                 authenticationService: AuthenticationService,
                 toastCtrl: ToastController,
                 private http: HttpClient) {
         super(app, authenticationService, toastCtrl);
+        this.apiUrl = ENV.hive + this.rootPath + '/sandbox/effective/person/';
     }
 
     getListPersonSandbox(sandboxId:string) {
         
-        return this.http.get<any>(ENV.hive + this.rootPath + '/sandbox/effective/person/listSandbox/?sandboxId=' + sandboxId, this.addHeaderToken()).pipe(
+        return this.http.get<any>(this.apiUrl+'listSandbox/?sandboxId=' + sandboxId, this.addHeaderToken()).pipe(
             catchError(this.handleError('PersonService.getListPersonSandbox'))
+        );
+    }
+
+    /**
+     *
+     * @function addPerson()
+     * @description add a person 
+     * @param {Person} person : person to add
+     */
+    addPerson(person: any) {
+        return this.http.put<any>(this.apiUrl+'/add', person, this.addHeaderToken()).pipe(
+            catchError(this.handleError('addPerson', person))
+        );
+    }
+
+    /**
+     *
+     * @function updatePerson()
+     * @description add a person 
+     * @param {Person} person : person to update
+     */
+    updatePerson(person: any) {
+        return this.http.put<any>(this.apiUrl+'/update', person, this.addHeaderToken()).pipe(
+            catchError(this.handleError('updatePerson', person))
         );
     }
 }

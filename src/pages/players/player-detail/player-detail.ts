@@ -18,6 +18,7 @@
  */
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { PersonService } from './../../../providers/api/api.person.service';
 
 @Component({
   selector: 'page-player-detail',
@@ -27,7 +28,15 @@ export class PlayerDetailPage {
 
   player:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  /**
+   * 
+   * @param navCtrl 
+   * @param navParams 
+   * @param personService 
+   */
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              private personService: PersonService) {
     this.player = navParams.get('player');
   }
 
@@ -39,8 +48,12 @@ export class PlayerDetailPage {
     console.log('editPlayer() -> PlayerDetailPage');
   }
 
-  disactivatePlayer(desactived:String) {
+  disactivatePlayer(desactived:string) {
     console.log('disablePlayer('+desactived+') -> PlayerDetailPage');
+    this.player.desactivated = desactived;
+    this.personService.updatePerson(this.player).subscribe(person => {
+      console.log('updatePerson('+desactived+') -> PlayerDetailPage');
+    });
   }
 
   goToStats() {
