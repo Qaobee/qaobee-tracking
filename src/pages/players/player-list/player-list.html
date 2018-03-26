@@ -30,13 +30,13 @@
           </ion-item>
         </ion-list-header>
       
-          <ion-item *ngFor="let item of playerList" (click)="goToDetail(item, $event)" [ngClass]="{'playerDisactivated':item.desactivated}">
+          <ion-item *ngFor="let item of playerList" (click)="goToDetail(item, $event)" [ngClass]="{'playerDisactivated':item.desactivated==='true'}">
             <ion-avatar item-start>
               <img src="../assets/imgs/user.png">
             </ion-avatar>
             <h2>{{item.firstname}} {{item.name}}</h2>
-            <p *ngIf="item.desactivated">{{'player.labels.desactivated' | translate}}</p>
-            <p *ngIf="!item.desactivated">{{'player.positionType.'+item.status.positionType | translate}}</p>
+            <p *ngIf="(item.desactivated === 'true')">{{'player.labels.desactivated' | translate}}</p>
+            <p *ngIf="(item.desactivated !== 'true')">{{'player.positionType.'+item.status.positionType | translate}}</p>
             <ion-badge color="secondary" item-end>{{item.status.squadnumber}}</ion-badge>
           </ion-item>
       
