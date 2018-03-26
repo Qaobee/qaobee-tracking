@@ -12,7 +12,9 @@
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
-    "ionic:serve": "ionic-app-scripts serve"
+    "ionic:serve": "ionic-app-scripts serve",
+    "sonar-scanner": "node_modules/sonar-scanner/bin/sonar-scanner",
+    "jsdoc": "/node_modules/.bin/typedoc --out dist/docs --mode modules"
   },
   "dependencies": {
     "@angular/animations": "5.2.9",
@@ -55,6 +57,8 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.8",
+    "sonar-scanner": "^3.0.3",
+    "typedoc": "^0.11.1",
     "typescript": "~2.6.2"
   },
   "description": "An Ionic project",
