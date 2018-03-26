@@ -17,7 +17,9 @@
  *  from Qaobee.
  */
 import {Component, Input} from '@angular/core';
-import { ENV } from '@app/env'
+import {ENV} from '@app/env'
+import {ProfilePage} from "../../pages/profile/profile";
+import {EventService} from "../../providers/event.service";
 
 @Component({
     selector: 'menu-header',
@@ -27,7 +29,20 @@ export class MenuHeaderComponent {
     @Input() user: any;
 
     root: string = ENV.hive;
-    constructor() {
+
+    /**
+     *
+     * @param {EventService} eventService
+     */
+    constructor(private eventService: EventService) {
+    }
+
+    /**
+     *
+     */
+    goToProfile() {
+        console.log('[MenuHeaderComponent] - goToProfile');
+        this.eventService.broadcast(EventService.navigation, ProfilePage);
     }
 
 }

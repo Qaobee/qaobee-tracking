@@ -1,7 +1,11 @@
 <ion-item *ngIf="user">
     <div class="overlay"></div>
     <ion-avatar item-start>
-        <img src="{{ root + '/file/User/' +  user.avatar || '../assets/imgs/user.png' }}">
+        <img src="{{ root + '/file/User/' +  user.avatar || '../assets/imgs/user.png' }}" alt="Avatar">
     </ion-avatar>
     <h2>{{ user.firstname }} {{ user.name }}</h2>
+    <button ion-button outline color="light" menuClose (click)="goToProfile()">
+        <ion-icon name="contact"></ion-icon>
+        {{ "menu.Profile" | translate}}
+    </button>
 </ion-item>

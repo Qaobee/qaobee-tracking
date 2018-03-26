@@ -84,7 +84,7 @@ export class MyApp {
             this.buildMenu();
             this.trySSO();
 
-            this.eventService.on('user-logged', user => {
+            this.eventService.on(EventService.userLogged, user => {
                 this.user = user;
                 this.authenticationService.isLogged = true;
                 this.authenticationService.token = user.account.token;
@@ -92,11 +92,15 @@ export class MyApp {
                 this.storage.set("login", user.account.login);
                 this.buildLoggedMenu();
                 this.metaService.getMeta().subscribe(m => {
-                   if(m) {
-                       this.authenticationService.meta = m;
-                       this.nav.setRoot(HomePage, {user: user});
-                   }
+                    if (m) {
+                        this.authenticationService.meta = m;
+                        this.nav.setRoot(HomePage, {user: user});
+                    }
                 });
+            });
+
+            this.eventService.on(EventService.navigation, page => {
+                this.nav.push(page);
             });
         });
     }
@@ -108,12 +112,12 @@ export class MyApp {
     openPage(page) {
         // Reset the content nav to have just this page
         // we wouldn't want the back button to show in this scenario
-        if(page.component===HomePage){
+        if (page.component === HomePage) {
             this.nav.setRoot(page.component);
         } else {
             this.nav.push(page.component);
         }
-        
+
     }
 
     private buildMenu() {
@@ -129,7 +133,7 @@ export class MyApp {
     }
 
     private buildLoggedMenu() {
-        this.translate.get(['menu.Home', 'menu.Events', 'menu.Players', 'menu.Stats','menu.Settings',]).subscribe(
+        this.translate.get(['menu.Home', 'menu.Events', 'menu.Players', 'menu.Stats', 'menu.Settings',]).subscribe(
             value => {
                 this.pages = [
                     {title: value['menu.Home'], component: HomePage, icon: 'home'},

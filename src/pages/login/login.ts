@@ -81,7 +81,7 @@ export class LoginPage {
         this.userService.login(this.login, this.passwd, uuid).subscribe((result: any) => {
             if (result) {
                 this.storage.set("mobileToken", uuid);
-                this.eventService.broadcast('user-logged', result);
+                this.eventService.broadcast(EventService.userLogged, result);
             }
         });
     }

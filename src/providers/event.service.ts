@@ -21,6 +21,8 @@ import {Subject, Observable} from "rxjs";
 
 @Injectable()
 export class EventService {
+    public static navigation:string = 'navigation';
+    public static userLogged: string = 'user-logged';
     private listeners = {};
     private eventsSubject = new Subject();
     private events;
