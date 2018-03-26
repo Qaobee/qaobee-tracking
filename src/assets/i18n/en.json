@@ -1,82 +1,87 @@
 {
-    "actionButton": {
-        "Submit": "Submit",
-        "Cancel": "Cancel",
-        "Search": "Search"
+  "actionButton": {
+    "Submit": "Submit",
+    "Cancel": "Cancel",
+    "Search": "Search"
+  },
+  "refresher": {
+    "label": "Pull to refresh",
+    "message": "Refreshing..."
+  },
+  "eventsModule": {
+    "eventsList": {
+      "title": "Events"
     },
-    "refresher": {
-        "label": "Pull to refresh",
-        "message": "Refreshing..."
-    },
-    "eventsModule": {
-        "eventsList": {
-        "title": "Events"
-        }
-    },
-    "welcome" : {
-        "Login": "Signin",
-        "Subscribe": "Signup"
-    },
-    "login" : {
-        "TitleNavBar" : "Identification",
-        "Username": "Login",
-        "Password": "Password",
-        "Login": "Connection",
-        "Subscribe": "Signup"
-    },
-    "signup" : {
-        "TitleNavBar" : "Subscription",
-        "Username": "Login",
-        "Password": "Password"
-    },
-    "menu" : {
-        "Login": "Signin",
-        "Home": "Home",
-        "Subscribe": "Signup",
-        "Profile": "Profil",
-        "Events": "Events",
-        "Players": "Players",
-        "Stats": "Stats",
-        "Settings": "Settings",
-        "Logout": "Logout"
-    },
-    "player" : {
-        "TitleNavBar": "Player Module",
-        "TitlePlayerList": "Player list",
-        "labels": {
-            "mesuration": "Mesuration",
-            "weight": "Weight",
-            "weightUnit": "Kgs",
-            "hight": "Hight",
-            "hightUnit": "cm",
-            "positionType": "Poste",
-            "contact": "Contact information",
-            "civilStatus": "Civil status",
-            "birthdate": "Birthdate",
-            "nationality": "Nationality",
-            "Laterality":"Lateralité",
-            "desactivated": "Desactivated Player"
-        },
-        "laterality" : {
-            "left":"Gaucher",
-            "right":"Droitier",
-            "ambidextrous": "Ambidextrexe"
-        },
-        "positionType": {
-            "midfielder": "Midfielder",
-            "defender": "Defender",
-            "forward": "Forward",
-            "goalkeeper": "Goalkeeper",
-            "pivot": "Pivot",
-            "center-backcourt": "Center-backcourt",
-            "right-backcourt": "Right-backcourt",
-            "left-backcourt": "Left-backcourt",
-            "right-wingman": "Right-wingman",
-            "left-wingman": "Left-wingman"
-        }
-    },
-    "nextEvent" : {
-        "titleFound": "Next Match",
-        "titleNotFound": "Plan a match"
+    "detail": {
+      "edit": "Edit",
+      "trash": "Delete",
+      "collect": "Collect"
     }
+  },
+  "welcome": {
+    "Login": "Signin",
+    "Subscribe": "Signup"
+  },
+  "login": {
+    "TitleNavBar": "Identification",
+    "Username": "Login",
+    "Password": "Password",
+    "Login": "Connection",
+    "Subscribe": "Signup"
+  },
+  "signup": {
+    "TitleNavBar": "Subscription",
+    "Username": "Login",
+    "Password": "Password"
+  },
+  "menu": {
+    "Login": "Signin",
+    "Home": "Home",
+    "Subscribe": "Signup",
+    "Profile": "Profil",
+    "Events": "Events",
+    "Players": "Players",
+    "Stats": "Stats",
+    "Settings": "Settings",
+    "Logout": "Logout"
+  },
+  "player": {
+    "TitleNavBar": "Player Module",
+    "TitlePlayerList": "Player list",
+    "labels": {
+      "mesuration": "Mesuration",
+      "weight": "Weight",
+      "weightUnit": "Kgs",
+      "hight": "Hight",
+      "hightUnit": "cm",
+      "positionType": "Poste",
+      "contact": "Contact information",
+      "civilStatus": "Civil status",
+      "birthdate": "Birthdate",
+      "nationality": "Nationality",
+      "Laterality": "Lateralité",
+      "desactivated": "Desactivated Player"
+    },
+    "laterality": {
+      "left": "Gaucher",
+      "right": "Droitier",
+      "ambidextrous": "Ambidextrexe"
+    },
+    "positionType": {
+      "midfielder": "Midfielder",
+      "defender": "Defender",
+      "forward": "Forward",
+      "goalkeeper": "Goalkeeper",
+      "pivot": "Pivot",
+      "center-backcourt": "Center-backcourt",
+      "right-backcourt": "Right-backcourt",
+      "left-backcourt": "Left-backcourt",
+      "right-wingman": "Right-wingman",
+      "left-wingman": "Left-wingman"
+    }
+  },
+  "nextEvent": {
+    "titleFound": "Next Match",
+    "titleNotFound": "Plan a match"
+  }
 }

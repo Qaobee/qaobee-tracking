@@ -1,82 +1,87 @@
 {
-    "actionButton": {
-        "Submit": "Valider",
-        "Cancel": "Annuler",
-        "Search": "Rechercher"
+  "actionButton": {
+    "Submit": "Valider",
+    "Cancel": "Annuler",
+    "Search": "Rechercher"
+  },
+  "refresher": {
+    "label": "Glisser pour rafraîchir",
+    "message": "Chargement..."
+  },
+  "eventsModule": {
+    "eventsList": {
+      "title": "Evénements"
     },
-    "refresher": {
-        "label": "Glisser pour rafraîchir",
-        "message": "Chargement..."
-    },
-    "eventsModule": {
-        "eventsList": {
-            "title": "Evénements"
-        }
-    },
-    "welcome" : {
-        "Login": "Connexion",
-        "Subscribe": "S'inscrire"
-    },
-    "login" : {
-        "TitleNavBar" : "Identification",
-        "Username": "Identifiant",
-        "Password": "Mot de passe",
-        "Login": "Connexion",
-        "Subscribe": "S'inscrire"
-    },
-    "signup" : {
-        "TitleNavBar" : "Inscription",
-        "Username": "Identifiant",
-        "Password": "Mot de passe"
-    },
-    "menu" : {
-        "Home": "Accueil",
-        "Subscribe": "S'inscrire",
-        "Login": "Connexion",
-        "Profile": "Profile",
-        "Events": "Evénements",
-        "Players": "Joueurs",
-        "Stats": "Stats",
-        "Settings": "Paramètres",
-        "Logout": "Déconnexion"
-    },
-    "player" : {
-        "TitleNavBar": "Module Joueur",
-        "TitlePlayerList": "Liste des joueurs",
-        "labels": {
-            "mesuration": "Mensuration",
-            "weight": "Poids",
-            "weightUnit": "Kgs",
-            "hight": "Taille",
-            "hightUnit": "cm",
-            "positionType": "Poste",
-            "contact": "Coordonnées",
-            "civilStatus": "Etat Civil",
-            "birthdate": "Date de naissance",
-            "nationality": "Nationalité",
-            "Laterality":"Lateralité",
-            "desactivated": "Joueur désactivé"
-        },
-        "laterality" : {
-            "left":"Gaucher",
-            "right":"Droitier",
-            "ambidextrous": "Ambidextrexe"
-        },
-        "positionType": {
-            "midfielder": "Milieu",
-            "defender": "Défenseur",
-            "forward": "Attaquant",
-            "goalkeeper": "Gardien",
-            "pivot": "Pivot",
-            "center-backcourt": "Demi-centre",
-            "right-backcourt": "Arrière Droit",
-            "left-backcourt": "Arrière Gauche",
-            "right-wingman": "Ailier Droit",
-            "left-wingman": "Ailier Gauche"
-        }
-    },
-    "nextEvent" : {
-        "titleFound": "Prochain match",
-        "titleNotFound": "Planifier un match"
+    "detail": {
+      "edit": "Modifier",
+      "trash": "Supprimer",
+      "collect": "Collecter"
     }
+  },
+  "welcome": {
+    "Login": "Connexion",
+    "Subscribe": "S'inscrire"
+  },
+  "login": {
+    "TitleNavBar": "Identification",
+    "Username": "Identifiant",
+    "Password": "Mot de passe",
+    "Login": "Connexion",
+    "Subscribe": "S'inscrire"
+  },
+  "signup": {
+    "TitleNavBar": "Inscription",
+    "Username": "Identifiant",
+    "Password": "Mot de passe"
+  },
+  "menu": {
+    "Home": "Accueil",
+    "Subscribe": "S'inscrire",
+    "Login": "Connexion",
+    "Profile": "Profile",
+    "Events": "Evénements",
+    "Players": "Joueurs",
+    "Stats": "Stats",
+    "Settings": "Paramètres",
+    "Logout": "Déconnexion"
+  },
+  "player": {
+    "TitleNavBar": "Module Joueur",
+    "TitlePlayerList": "Liste des joueurs",
+    "labels": {
+      "mesuration": "Mensuration",
+      "weight": "Poids",
+      "weightUnit": "Kgs",
+      "hight": "Taille",
+      "hightUnit": "cm",
+      "positionType": "Poste",
+      "contact": "Coordonnées",
+      "civilStatus": "Etat Civil",
+      "birthdate": "Date de naissance",
+      "nationality": "Nationalité",
+      "Laterality": "Lateralité",
+      "desactivated": "Joueur désactivé"
+    },
+    "laterality": {
+      "left": "Gaucher",
+      "right": "Droitier",
+      "ambidextrous": "Ambidextrexe"
+    },
+    "positionType": {
+      "midfielder": "Milieu",
+      "defender": "Défenseur",
+      "forward": "Attaquant",
+      "goalkeeper": "Gardien",
+      "pivot": "Pivot",
+      "center-backcourt": "Demi-centre",
+      "right-backcourt": "Arrière Droit",
+      "left-backcourt": "Arrière Gauche",
+      "right-wingman": "Ailier Droit",
+      "left-wingman": "Ailier Gauche"
+    }
+  },
+  "nextEvent": {
+    "titleFound": "Prochain match",
+    "titleNotFound": "Planifier un match"
+  }
 }
