@@ -17,6 +17,7 @@
  *  from Qaobee.
  */
 import { PlayerDetailPage } from './../player-detail/player-detail';
+import { PlayerUpsertPage } from './../player-upsert/player-upsert';
 import { Component } from '@angular/core';
 import { NavController, NavParams, Refresher } from 'ionic-angular';
 import {Storage} from "@ionic/storage";
@@ -79,7 +80,7 @@ export class PlayerListPage {
      *
      */
     goToAddPlayer() {
-      this.navCtrl.push(PlayerDetailPage);
+      this.navCtrl.push(PlayerUpsertPage, {mode : 'ADD'});
   }
 
     /**

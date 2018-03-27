@@ -72,8 +72,8 @@
       "desactivated": "Desactivated Player"
     },
     "laterality": {
-      "left": "Gaucher",
-      "right": "Droitier",
+      "right-handed": "Right-handed",
+      "left-handed": "Left-handed",
       "ambidextrous": "Ambidextrexe"
     },
     "positionType": {
