@@ -15,20 +15,21 @@ export class LocationService {
      */
     updateSearchResults(address: any, callback: Function) {
         let autocompleteItems = [];
-        if (!address || address == '') {
+        if (!address || address === '') {
             callback(autocompleteItems);
-        }
-        this.GoogleAutocomplete.getPlacePredictions({input: address}, (predictions, status) => {
+        } else {
+            this.GoogleAutocomplete.getPlacePredictions({input: address}, (predictions, status) => {
 
-            console.log('[LocationService] - updateSearchResults - getPlacePredictions', predictions, status);
-            if (predictions) {
-                autocompleteItems = [];
-                predictions.forEach((prediction) => {
-                    autocompleteItems.push(prediction);
-                });
-                callback(autocompleteItems);
-            }
-        });
+                console.log('[LocationService] - updateSearchResults - getPlacePredictions', predictions, status);
+                if (predictions) {
+                    autocompleteItems = [];
+                    predictions.forEach((prediction) => {
+                        autocompleteItems.push(prediction);
+                    });
+                    callback(autocompleteItems);
+                }
+            });
+        }
     }
 
     /**

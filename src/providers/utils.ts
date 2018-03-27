@@ -24,10 +24,10 @@ export class Utils {
         let valA = a.startDate || 0;
         let valB = b.startDate || 0;
         if (valA > valB) {
-            return -1;
+            return 1;
         }
         if (valA < valB) {
-            return 1;
+            return -1;
         }
         return 0;
     }

@@ -19,11 +19,12 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams, ToastController} from 'ionic-angular';
 import {EventsService} from "../../../providers/api/api.events.service";
-import {SettingsService} from "../../../providers/settings.service";
 import {LocationService} from "../../../providers/location.service";
 import {TeamService} from "../../../providers/api/api.team.service";
 import {AuthenticationService} from "../../../providers/authentication.service";
 import {ActivityCfgService} from "../../../providers/api/api.activityCfg.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Storage} from "@ionic/storage";
 
 /**
  * Generated class for the EventListPage page.
@@ -36,27 +37,29 @@ import {ActivityCfgService} from "../../../providers/api/api.activityCfg.service
     templateUrl: 'event-upsert.html',
 })
 export class EventUpsertPage {
-    // TODO : mandatory fields and controls
-    event: any;
-    startDate: string = new Date().toISOString();
-    startTime: string = new Date().toISOString();
-    address: any;
-    autocompleteItems = [];
-    teams: any = {
+    eventForm: FormGroup;
+    private event: any;
+    private startDate: string = new Date().toISOString();
+    private startTime: string = new Date().toISOString();
+    private address: any;
+    private autocompleteItems = [];
+    private teams: any = {
         myTeams: [],
         adversaries: []
     };
-    eventTypes: any[] = [];
+    private teamVisitor: any;
+    private teamHome: any;
+    private eventTypes: any[] = [];
     minDate: string = new Date().toISOString();
-    radioHome: boolean = true;
 
     /**
      *
      * @param {NavController} navCtrl
      * @param {NavParams} navParams
-     * @param {EventsService} eventsServices
-     * @param {SettingsService} settingsService
+     * @param {EventsService} eventsService
      * @param {ToastController} toastCtrl
+     * @param {FormBuilder} formBuilder
+     * @param {Storage} storage
      * @param {AuthenticationService} authenticationService
      * @param {ActivityCfgService} activityCfgService
      * @param {LocationService} locationService
@@ -64,46 +67,68 @@ export class EventUpsertPage {
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
-                private eventsServices: EventsService,
-                private settingsService: SettingsService,
+                private eventsService: EventsService,
                 private toastCtrl: ToastController,
+                private formBuilder: FormBuilder,
+                private storage: Storage,
                 private authenticationService: AuthenticationService,
                 private activityCfgService: ActivityCfgService,
                 private locationService: LocationService,
                 private teamService: TeamService) {
+
         this.event = navParams.get('event') || {
             participants: {},
             activityId: this.authenticationService.meta.activity._id,
             seasonCode: this.authenticationService.meta.season.code,
         };
         if (this.event && this.event.startDate) {
-            this.startDate = new Date(this.event.startDate).toISOString();
+            this.startDate = new Date(this.event.startDate / 1000).toISOString();
             this.startTime = this.startDate;
             if (this.event.address && this.event.address.formatedAddress) {
                 this.address = this.event.address.formatedAddress;
+                this.eventForm.controls['address'].setValue(this.address);
             }
         }
 
-        teamService.getTeams(authenticationService.meta.effectiveDefault, authenticationService.meta._id, 'all', 'false').subscribe((teams:any[]) => {
+        this.eventForm = this.formBuilder.group({
+            'label': [this.event.label || '', [Validators.required]],
+            'address': [this.address || ''],
+            'startTime': [this.startTime, [Validators.required]],
+            'startDate': [this.startTime, [Validators.required]],
+            'type': [this.event.type, [Validators.required]],
+            'teamVisitor': [this.event.participants.teamVisitor, [Validators.required]],
+            'teamHome': [this.event.participants.teamHome, [Validators.required]],
+            'radioHome': [true, [Validators.required]],
+        });
+
+        this.teamService.getTeams(authenticationService.meta.effectiveDefault, authenticationService.meta._id, 'all', 'false').subscribe((teams: any[]) => {
             if (teams) {
                 this.teams.myTeams = teams;
-                if(teams.length === 1) {
+                if (teams.length === 1 && !this.event.participants.teamHome) {
                     this.event.participants.teamHome = teams[0];
+                    this.teamHome = teams[0];
+                    this.eventForm.controls['teamHome'].setValue(this.teamHome);
                 }
             }
         });
 
-        teamService.getTeams(authenticationService.meta.effectiveDefault, authenticationService.meta._id, 'all', 'true').subscribe((teams:any[]) => {
+        this.teamService.getTeams(authenticationService.meta.effectiveDefault, authenticationService.meta._id, 'all', 'true').subscribe((teams: any[]) => {
             if (teams) {
                 this.teams.adversaries = teams;
-                if(teams.length === 1) {
+                if (teams.length === 1 && !this.event.participants.teamVisitor) {
                     this.event.participants.teamVisitor = teams[0];
+                    this.teamVisitor = teams[0];
+                    this.eventForm.controls['teamVisitor'].setValue(this.teamVisitor);
                 }
             }
         });
-        activityCfgService.getParamFieldList(authenticationService.meta.activity._id, 'listEventType').subscribe((types:any[]) => {
+        this.activityCfgService.getParamFieldList(authenticationService.meta.activity._id, 'listEventType').subscribe((types: any[]) => {
             if (types) {
                 this.eventTypes = types;
+                if (types.length === 1) {
+                    this.event.type = types[0];
+                    this.eventForm.controls['type'].setValue(this.event.type);
+                }
             }
         });
     }
@@ -122,6 +147,11 @@ export class EventUpsertPage {
         this.locationService.updateSearchResults(this.address, result => {
             this.autocompleteItems = result;
         });
+    }
+
+    isValid(field: string) {
+        let formField = this.eventForm.controls[field];
+        return formField.valid || formField.pristine;
     }
 
     /**
@@ -147,9 +177,41 @@ export class EventUpsertPage {
     /**
      *
      */
-    saveEvent() {
-        this.event.startDate = Date.parse(this.startDate + ' ' + this.startTime).valueOf();
-        console.log('[EventUpsertPage] - saveEvent', this.event);
+    saveEvent(formVal) {
+        console.log('[EventUpsertPage] - saveEvent - formVal', formVal);
+        let startDate = new Date(formVal.startDate);
+        let startTime = new Date(formVal.startTime);
+        this.event.startDate = new Date(startDate.getUTCFullYear(), startDate.getUTCMonth(), startDate.getUTCDate(), startTime.getUTCHours(), startTime.getUTCMinutes()).getTime();
+        this.event.endDate = new Date(startDate.getUTCFullYear(), startDate.getUTCMonth(), startDate.getUTCDate(), startTime.getUTCHours() + 1, startTime.getUTCMinutes()).getTime();
+        this.event.link = {
+            linkId: 'AAAA',
+            type: formVal.type.code
+        };
+        this.event.label = formVal.label;
+        this.event.type = formVal.type;
+        this.event.owner = {
+            sandboxId: this.authenticationService.meta._id,
+            effectiveId: this.authenticationService.meta.effectiveDefault,
+            teamId: this.event.participants.teamHome._id
+        };
+        if (formVal.radioHome) {
+            this.event.participants.teamVisitor = formVal.teamVisitor;
+            this.event.participants.teamHome = formVal.teamHome;
+        } else {
+            this.event.participants.teamHome = formVal.teamVisitor;
+            this.event.participants.teamVisitor = formVal.teamHome;
+        }
+        console.log('[EventUpsertPage] - saveEvent - this.event', this.event);
+        this.eventsService.addEvent(this.event).subscribe(r => {
+            console.log('[EventUpsertPage] - saveEvent', r);
+            this.storage.get('events').then(events => {
+                events.push(r);
+                this.storage.set('events', events);
+                this.navCtrl.pop();
+                // TODO i18n
+                this.presentToast('Event created');
+            });
+        });
     }
 
     cancel() {
@@ -161,7 +223,7 @@ export class EventUpsertPage {
      *
      * @param msg
      */
-    presentToast(msg) {
+    private presentToast(msg) {
         let toast = this.toastCtrl.create({
             message: msg,
             duration: 3000,

@@ -16,7 +16,6 @@
  *  is strictly forbidden unless prior written permission is obtained
  *  from Qaobee.
  */
-import { HomePage } from './../home/home';
 import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
 import {UniqueDeviceID} from '@ionic-native/unique-device-id';

@@ -59,6 +59,7 @@ export class EventListPage {
                 private settingsService: SettingsService,
                 private utils: Utils) {
         this.datePipe = new DatePipe(this.settingsService.getLanguage());
+
     }
 
     /**
@@ -66,14 +67,18 @@ export class EventListPage {
      */
     ionViewDidLoad() {
         console.log('[EventListPage] - ionViewDidLoad');
-        this.storage.get('events').then(events => {
-            console.log('[EventListPage] - ionViewDidLoad - events in storage', events);
-            if (!events) {
-                this.getEvents(null);
-            } else {
-                this.populateEvents(events);
-            }
-        });
+        if(this.navParams.get('refresh')) {
+            this.getEvents(null);
+        } else {
+            this.storage.get('events').then(events => {
+                console.log('[EventListPage] - ionViewDidLoad - events in storage', events);
+                if (!events) {
+                    this.getEvents(null);
+                } else {
+                    this.populateEvents(events);
+                }
+            });
+        }
     }
 
     doRefresh(refresher:Refresher) {
@@ -86,6 +91,7 @@ export class EventListPage {
      * @param {Refresher} refresher
      */
     private getEvents(refresher:Refresher) {
+        console.log(this.authenticationService)
         this.eventsServices.getEvents(
             this.authenticationService.meta.season.startDate,
             this.authenticationService.meta.season.endDate,
