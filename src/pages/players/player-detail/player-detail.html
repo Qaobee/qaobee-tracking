@@ -95,12 +95,12 @@
             </button>
         </ion-col>
         <ion-col text-center *ngIf="(player.desactivated !== 'true')">
-            <button ion-button (tap)="disactivatePlayer('true')" outline large>  
+            <button ion-button (tap)="desactivatePlayer('player.confirmDesactivate','true')" outline large>  
                 <ion-icon name="close-circle"></ion-icon>
             </button>
         </ion-col>
         <ion-col text-center *ngIf="(player.desactivated === 'true')">
-            <button ion-button (tap)="disactivatePlayer('false')" outline large>  
+            <button ion-button (tap)="desactivatePlayer('player.confirmActivate','false')" outline large>  
                 <ion-icon name="checkmark-circle"></ion-icon>
             </button>
         </ion-col>

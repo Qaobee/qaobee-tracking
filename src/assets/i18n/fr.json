@@ -87,6 +87,18 @@
       "left-backcourt": "Arrière Gauche",
       "right-wingman": "Ailier Droit",
       "left-wingman": "Ailier Gauche"
+    },
+    "confirmDesactivate": {
+      "title": "Désactivation du joueur",
+      "message":"Confirmez-vous la désactivation du joueur ?",
+      "buttonLabelCancel": "Annuler",
+      "buttonLabelConfirm": "Valider"
+    },
+    "confirmActivate": {
+      "title": "Activation du joueur",
+      "message":"Confirmez-vous l'activation du joueur ?",
+      "buttonLabelCancel": "Annuler",
+      "buttonLabelConfirm": "Valider"
     }
   },
   "nextEvent": {

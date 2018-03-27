@@ -87,6 +87,18 @@
       "left-backcourt": "Left-backcourt",
       "right-wingman": "Right-wingman",
       "left-wingman": "Left-wingman"
+    },
+    "confirmDesactivate": {
+      "title": "Disable Player",
+      "message":"Confirm disable player ?",
+      "buttonLabelCancel": "Cancel",
+      "buttonLabelConfirm": "Ok"
+    },
+    "confirmActivate": {
+      "title": "Enable Player",
+      "message":"Confirm enable player ?",
+      "buttonLabelCancel": "Cancel",
+      "buttonLabelConfirm": "Ok"
     }
   },
   "nextEvent": {

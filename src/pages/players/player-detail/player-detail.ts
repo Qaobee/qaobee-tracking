@@ -17,8 +17,9 @@
  *  from Qaobee.
  */
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { PersonService } from './../../../providers/api/api.person.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'page-player-detail',
@@ -33,10 +34,13 @@ export class PlayerDetailPage {
    * @param navCtrl 
    * @param navParams 
    * @param personService 
+   * @param alertCtrl 
    */
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
-              private personService: PersonService) {
+              private personService: PersonService,
+              private alertCtrl: AlertController,
+              private translateService: TranslateService) {
     this.player = navParams.get('player');
   }
 
@@ -48,12 +52,36 @@ export class PlayerDetailPage {
     console.log('editPlayer() -> PlayerDetailPage');
   }
 
-  disactivatePlayer(desactived:string) {
-    console.log('disablePlayer('+desactived+') -> PlayerDetailPage');
-    this.player.desactivated = desactived;
-    this.personService.updatePerson(this.player).subscribe(person => {
-      console.log('updatePerson('+desactived+') -> PlayerDetailPage');
-    });
+  desactivatePlayer(confirmLabels:string, desactived:string) {
+    this.translateService.get(confirmLabels).subscribe(
+      value => {
+        console.log('labelConfirm',value);
+        let alert = this.alertCtrl.create({
+          title: value.title,
+          message: value.message,
+          buttons: [
+            {
+              text: value.buttonLabelCancel,
+              role: 'cancel',
+              handler: () => {
+                console.log('Cancel clicked');
+              }
+            },
+            {
+              text: value.buttonLabelConfirm,
+              handler: () => {
+                console.log('Buy clicked');
+                this.player.desactivated = desactived;
+                this.personService.updatePerson(this.player).subscribe(person => {
+                  console.log('updatePerson('+desactived+') -> PlayerDetailPage');
+                });
+              }
+            }
+          ]
+        });
+        alert.present();
+      }
+    )
   }
 
   goToStats() {
