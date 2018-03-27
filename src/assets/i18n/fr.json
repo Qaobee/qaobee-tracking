@@ -72,8 +72,8 @@
       "desactivated": "Joueur désactivé"
     },
     "laterality": {
-      "left": "Gaucher",
-      "right": "Droitier",
+      "right-handed": "Droitier",
+      "left-handed": "Gaucher",
       "ambidextrous": "Ambidextrexe"
     },
     "positionType": {

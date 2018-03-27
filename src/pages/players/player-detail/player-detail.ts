@@ -19,6 +19,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { PersonService } from './../../../providers/api/api.person.service';
+import { PlayerUpsertPage } from './../player-upsert/player-upsert';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -35,6 +36,7 @@ export class PlayerDetailPage {
    * @param navParams 
    * @param personService 
    * @param alertCtrl 
+   * @param translateService 
    */
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
@@ -44,18 +46,13 @@ export class PlayerDetailPage {
     this.player = navParams.get('player');
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PlayerDetailPage');
-  }
-
   editPlayer() {
-    console.log('editPlayer() -> PlayerDetailPage');
+    this.navCtrl.push(PlayerUpsertPage, {mode : 'UPDATE'});
   }
 
   desactivatePlayer(confirmLabels:string, desactived:string) {
     this.translateService.get(confirmLabels).subscribe(
       value => {
-        console.log('labelConfirm',value);
         let alert = this.alertCtrl.create({
           title: value.title,
           message: value.message,
@@ -63,18 +60,13 @@ export class PlayerDetailPage {
             {
               text: value.buttonLabelCancel,
               role: 'cancel',
-              handler: () => {
-                console.log('Cancel clicked');
-              }
+              handler: () => {}
             },
             {
               text: value.buttonLabelConfirm,
               handler: () => {
-                console.log('Buy clicked');
                 this.player.desactivated = desactived;
-                this.personService.updatePerson(this.player).subscribe(person => {
-                  console.log('updatePerson('+desactived+') -> PlayerDetailPage');
-                });
+                this.personService.updatePerson(this.player).subscribe(person => {});
               }
             }
           ]

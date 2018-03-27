@@ -5,32 +5,49 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
   <ion-item class="enteteLight">
-    <h1>{{player.firstname}} {{player.name}}</h1>
-    <ion-badge color="danger" item-end>{{player.status.squadnumber}}</ion-badge>
+    <ion-row>
+      <ion-col><ion-avatar>
+          <img src="../assets/imgs/user.png">
+        </ion-avatar></ion-col>
+      <ion-col>
+        <h1>{{player.firstname}} {{player.name}}</h1>
+      </ion-col>
+      <ion-col text-right>
+        <ion-badge color="secondary">{{player.status.squadnumber}}</ion-badge>
+      </ion-col>
+    </ion-row>
   </ion-item>
   <!-- PositionType-->
   <ion-item>
-      <ion-row >
-        <ion-col>
-          <h2 class="panel"><ion-icon name="locate"></ion-icon> - {{'player.labels.positionType' | translate}}</h2>
+    <ion-row >
+      <ion-col>
+        <h2 class="panel"><ion-icon name="locate"></ion-icon>  {{'player.labels.positionType' | translate}}</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col text-left><h2>{{'player.positionType.'+player.status.positionType  | translate}}</h2></ion-col>
+    </ion-row>
+  </ion-item>
+
+  <!-- Laterality-->
+  <ion-item>
+    <ion-row >
+      <ion-col>
+          <h2 class="panel"><ion-icon name="hand"></ion-icon>  {{'player.labels.Laterality' | translate}}</h2>
         </ion-col>
-        <ion-col>
-            <h2 class="panel"><ion-icon name="hand"></ion-icon> - {{'player.labels.Laterality' | translate}}</h2>
-          </ion-col>
-      </ion-row>
-      <ion-row>
-          <ion-col text-left><h2>{{'player.positionType.'+player.status.positionType  | translate}}</h2></ion-col>
-          <ion-col text-left><h2>{{'player.laterality.'+player.status.laterality  | translate}}</h2></ion-col>
-      </ion-row>
-    </ion-item>
+    </ion-row>
+    <ion-row>
+        <ion-col text-left><h2>{{'player.laterality.'+player.status.laterality  | translate}}</h2></ion-col>
+    </ion-row>
+  </ion-item>
 
   <!-- Mesuration-->
   <ion-item>
     <ion-row >
       <ion-col>
-        <h2 class="panel"><ion-icon name="body"></ion-icon> - {{'player.labels.mesuration' | translate}}</h2>
+        <h2 class="panel"><ion-icon name="body"></ion-icon>  {{'player.labels.mesuration' | translate}}</h2>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -50,7 +67,7 @@
   <ion-item>
     <ion-row>
       <ion-col>
-        <h2 class="panel"><ion-icon name="contact"></ion-icon> - {{'player.labels.civilStatus' | translate}}</h2>
+        <h2 class="panel"><ion-icon name="contact"></ion-icon>  {{'player.labels.civilStatus' | translate}}</h2>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -70,18 +87,18 @@
   <ion-item *ngIf="player.contact">
     <ion-row>
       <ion-col>
-        <h2 class="panel"><ion-icon name="contact"></ion-icon> - {{'player.labels.contact' | translate}}</h2>
+        <h2 class="panel"><ion-icon name="book"></ion-icon>  {{'player.labels.contact' | translate}}</h2>
       </ion-col>
     </ion-row>
     <ion-row text-center>
       <ion-col *ngIf="player.contact.cellphone">
-        <button ion-button large><ion-icon name="call"></ion-icon></button>
+        <button ion-button outline small><ion-icon name="call"></ion-icon></button>
       </ion-col>
       <ion-col *ngIf="player.contact.email">
-        <button ion-button large><ion-icon name="mail"></ion-icon></button>
+        <button ion-button outline small><ion-icon name="mail"></ion-icon></button>
       </ion-col>
       <ion-col *ngIf="player.address">
-        <button ion-button large><ion-icon name="home"></ion-icon></button>
+        <button ion-button outline small><ion-icon name="home"></ion-icon></button>
       </ion-col>
     </ion-row>
   </ion-item> 
@@ -90,22 +107,22 @@
 <ion-footer>
     <ion-row>
         <ion-col text-center>
-            <button ion-button (tap)="editPlayer()" outline large>  
+            <button ion-button (tap)="editPlayer()" outline large color="dark">  
                 <ion-icon name="create"></ion-icon>
             </button>
         </ion-col>
         <ion-col text-center *ngIf="(player.desactivated !== 'true')">
-            <button ion-button (tap)="desactivatePlayer('player.confirmDesactivate','true')" outline large>  
+            <button ion-button (tap)="desactivatePlayer('player.confirmDesactivate','true')" outline large color="danger">  
                 <ion-icon name="close-circle"></ion-icon>
             </button>
         </ion-col>
         <ion-col text-center *ngIf="(player.desactivated === 'true')">
-            <button ion-button (tap)="desactivatePlayer('player.confirmActivate','false')" outline large>  
+            <button ion-button (tap)="desactivatePlayer('player.confirmActivate','false')" outline large color="secondary">  
                 <ion-icon name="checkmark-circle"></ion-icon>
             </button>
         </ion-col>
         <ion-col text-center>
-            <button ion-button (tap)="goToStats()" outline large>  
+            <button ion-button (tap)="goToStats()" large color="dark">  
                 <ion-icon name="stats"></ion-icon>
             </button>
         </ion-col>
