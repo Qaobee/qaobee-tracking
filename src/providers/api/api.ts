@@ -55,7 +55,7 @@ export class ApiService {
             if (error.status === 401 && this.excludedOperations.indexOf(operation) === -1) {
                 this.navCtrl.push(LoginPage);
                 this.authenticationService.isLogged = false;
-                return of(result as T);
+                return of(result);
             } else {
                 console.error(error);
                 console.error(`${operation} failed: ${error.message}`);
@@ -67,7 +67,7 @@ export class ApiService {
                     cssClass: 'danger-toast'
                 }).present();
                 // Let the app keep running by returning an empty result.
-                return of(result as T);
+                return of(result);
             }
         };
     }
