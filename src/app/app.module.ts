@@ -17,7 +17,7 @@
  *  from Qaobee.
  */
 import {BrowserModule} from '@angular/platform-browser';
-import {ErrorHandler, NgModule} from '@angular/core';
+import {ErrorHandler, LOCALE_ID, NgModule} from '@angular/core';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {IonicStorageModule} from '@ionic/storage';
@@ -39,7 +39,6 @@ import {ComponentsModule} from "../components/components.module";
 import {PageModule} from "../pages/pages.module";
 import {APIModule} from "../providers/api/api.module";
 import {Utils} from "../providers/utils";
-import { LOCALE_ID } from '@angular/core';
 import {SettingsService} from "../providers/settings.service";
 import {LocationService} from "../providers/location.service";
 

@@ -16,30 +16,23 @@
  *  is strictly forbidden unless prior written permission is obtained
  *  from Qaobee.
  */
-import { PlayerListPage } from './player-list/player-list';
-import { PlayerDetailPage } from './player-detail/player-detail';
-import { PlayerUpsertPage } from './player-upsert/player-upsert';
-
 import {NgModule} from '@angular/core';
-import {HttpClient, HttpClientModule} from "@angular/common/http";
-import {IonicStorageModule} from "@ionic/storage";
-import {ComponentsModule} from "../../components/components.module";
+import {IonicModule} from "ionic-angular";
+import {MyApp} from "../app/app.component";
+import {Utils} from "../providers/utils";
+import {APIModule} from "../providers/api/api.module";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
-import {createTranslateLoader} from "../../app/app.module";
-import {App, IonicModule} from "ionic-angular";
-
+import {createTranslateLoader} from "../app/app.module";
+import {HttpClient} from "@angular/common/http";
+import {KeysPipe} from "./keys.pipe";
 
 @NgModule({
     declarations: [
-        PlayerListPage,
-        PlayerDetailPage,
-        PlayerUpsertPage
+        KeysPipe
     ],
     imports: [
-        HttpClientModule,
-        IonicModule.forRoot(App),
-        IonicStorageModule.forRoot(),
-        ComponentsModule,
+        IonicModule.forRoot(MyApp),
+        APIModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -48,12 +41,12 @@ import {App, IonicModule} from "ionic-angular";
             }
         })
     ],
-    entryComponents: [
-        PlayerListPage,
-        PlayerDetailPage,
-        PlayerUpsertPage
+    exports: [
+        KeysPipe
+    ],
+    providers: [
+        Utils
     ]
 })
-
-export class PlayersModule {
+export class PipesModule {
 }

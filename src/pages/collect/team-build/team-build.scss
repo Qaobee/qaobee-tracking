@@ -1,3 +1,40 @@
-team-build {
+page-team-build {
 
+  #img-background {
+
+    & > img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1;
+      min-height: 15rem;
+    }
+
+    #ground-area {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 5;
+      min-height: 15rem;
+
+      ion-chip {
+        background-color: white;
+        max-width: calc(100vw / 3 - 3rem);
+        &.pivot {
+          background-color: color($colors, primary, base);
+          ion-label {
+            color: color($colors, light, base);
+          }
+        }
+        &.goalkeeper {
+          background-color: color($colors, danger, base);
+          ion-label {
+            color: color($colors, light, base);
+          }
+        }
+      }
+    }
+  }
 }
