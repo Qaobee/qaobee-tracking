@@ -144,7 +144,7 @@ export class EventUpsertPage {
      *
      */
     updateSearchResults() {
-        this.locationService.updateSearchResults(this.address, result => {
+        this.locationService.updateSearchResults(this.eventForm.controls['address'].value, result => {
             this.autocompleteItems = result;
         });
     }
@@ -160,7 +160,7 @@ export class EventUpsertPage {
      */
     selectSearchResult(item) {
         this.autocompleteItems = [];
-        this.address = item.description;
+        this.eventForm.controls['address'].setValue(item.description);
         this.locationService.selectSearchResult(item, this.address, result => {
             this.event.address = {
                 formatedAddress: item.description,

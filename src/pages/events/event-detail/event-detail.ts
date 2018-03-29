@@ -40,21 +40,11 @@ export class EventDetailPage {
 
     /**
      *
-     * @param {NavController} navCtrl
-     * @param {NavParams} navParams
-     * @param {EventsService} eventsServices
-     * @param {Storage} storage
-     * @param {AuthenticationService} authenticationService
-     * @param {SettingsService} settingsService
-     * @param {Utils} utils
+     * @param navCtrl
+     * @param navParams
      */
     constructor(public navCtrl: NavController,
-                public navParams: NavParams,
-                private eventsServices: EventsService,
-                private storage: Storage,
-                private authenticationService: AuthenticationService,
-                private settingsService: SettingsService,
-                private utils: Utils) {
+                public navParams: NavParams) {
         this.event = navParams.get('event');
     }
 
