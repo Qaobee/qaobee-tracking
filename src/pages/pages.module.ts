@@ -33,6 +33,7 @@ import {IonicStorageModule} from "@ionic/storage";
 import {createTranslateLoader} from "../app/app.module";
 import {EventsModule} from "./events/events.module";
 import {PlayersModule} from "./players/players.module";
+import {CollectModule} from "./collect/collect.module";
 
 @NgModule({
     declarations: [
@@ -57,7 +58,8 @@ import {PlayersModule} from "./players/players.module";
             }
         }),
         EventsModule,
-        PlayersModule
+        PlayersModule,
+        CollectModule
     ],
     entryComponents: [
         CollectListPage,

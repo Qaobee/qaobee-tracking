@@ -18,13 +18,6 @@
  */
 import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
-import {AuthenticationService} from "../../../providers/authentication.service";
-import {EventsService} from "../../../providers/api/api.events.service";
-import {Storage} from "@ionic/storage";
-import {Utils} from "../../../providers/utils";
-import {SettingsService} from "../../../providers/settings.service";
-import {EventUpsertPage} from "../event-upsert/event-upsert";
-import {TeamBuildPage} from "../../collect/team-build/team-build";
 
 /**
  * Generated class for the EventListPage page.
@@ -33,10 +26,10 @@ import {TeamBuildPage} from "../../collect/team-build/team-build";
  * Ionic pages and navigation.
  */
 @Component({
-    selector: 'page-event-detail',
-    templateUrl: 'event-detail.html',
+    selector: 'page-team-build',
+    templateUrl: 'team-build.html',
 })
-export class EventDetailPage {
+export class TeamBuildPage {
     event: any;
 
     /**
@@ -53,30 +46,6 @@ export class EventDetailPage {
      *
      */
     ionViewDidLoad() {
-        console.log('[EventDetailPage] - ionViewDidLoad', this.event);
-    }
-
-    /**
-     *
-     */
-    goToCollect() {
-        console.log('[EventDetailPage] - goToCollect');
-        this.navCtrl.push(TeamBuildPage, {event: this.event});
-    }
-
-    /**
-     *
-     */
-    goToEdit() {
-        console.log('[EventDetailPage] - goToEdit');
-        this.navCtrl.push(EventUpsertPage, {event : this.event});
-    }
-
-    /**
-     *
-     */
-    delete() {
-        console.log('[EventDetailPage] - delete');
-        // TODO
+        console.log('[TeamBuildPage] - ionViewDidLoad', this.event);
     }
 }

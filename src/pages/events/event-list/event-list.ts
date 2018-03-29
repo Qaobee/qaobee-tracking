@@ -81,6 +81,10 @@ export class EventListPage {
         }
     }
 
+    /**
+     *
+     * @param refresher
+     */
     doRefresh(refresher:Refresher) {
         console.log('[EventListPage] - doRefresh');
         this.getEvents(refresher);
@@ -91,7 +95,6 @@ export class EventListPage {
      * @param {Refresher} refresher
      */
     private getEvents(refresher:Refresher) {
-        console.log(this.authenticationService)
         this.eventsServices.getEvents(
             this.authenticationService.meta.season.startDate,
             this.authenticationService.meta.season.endDate,
@@ -115,8 +118,9 @@ export class EventListPage {
     private populateEvents(events: any[]) {
         this.eventList = {};
         console.log('[EventListPage] - populateEvents - events', events);
-        events.sort(this.utils.compareEvents).forEach(e => {
-            let startDateStr = this.datePipe.transform(e.startDate, 'shortDate');
+        events.sort(this.utils.compareEvents);
+        events.forEach(e => {
+            let startDateStr = this.datePipe.transform(e.startDate, 'MMMM  - yyyy');
             if (!this.eventList.hasOwnProperty(startDateStr)) {
                 this.eventList[startDateStr] = [];
             }

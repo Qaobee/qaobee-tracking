@@ -20,7 +20,7 @@
         <ion-card-content>
             <h2>{{ event.participants.teamHome.label }}</h2>
             <h2>{{ event.participants.teamVisitor.label }}</h2>
-            <p>{{ event.address.formatedAddress }}</p>
+            <p *ngIf="event.address">{{ event.address.formatedAddress }}</p>
         </ion-card-content>
 
         <ion-row>

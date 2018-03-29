@@ -38,18 +38,18 @@ import {Storage} from "@ionic/storage";
 })
 export class EventUpsertPage {
     eventForm: FormGroup;
-    private event: any;
-    private startDate: string = new Date().toISOString();
-    private startTime: string = new Date().toISOString();
-    private address: any;
-    private autocompleteItems = [];
-    private teams: any = {
+    event: any;
+    startDate: string = new Date().toISOString();
+    startTime: string = new Date().toISOString();
+    address: any;
+    autocompleteItems = [];
+    teams: any = {
         myTeams: [],
         adversaries: []
     };
-    private teamVisitor: any;
-    private teamHome: any;
-    private eventTypes: any[] = [];
+    teamVisitor: any;
+    teamHome: any;
+    eventTypes: any[] = [];
     minDate: string = new Date().toISOString();
 
     /**
@@ -144,7 +144,7 @@ export class EventUpsertPage {
      *
      */
     updateSearchResults() {
-        this.locationService.updateSearchResults(this.address, result => {
+        this.locationService.updateSearchResults(this.eventForm.controls['address'].value, result => {
             this.autocompleteItems = result;
         });
     }
@@ -160,7 +160,7 @@ export class EventUpsertPage {
      */
     selectSearchResult(item) {
         this.autocompleteItems = [];
-        this.address = item.description;
+        this.eventForm.controls['address'].setValue(item.description);
         this.locationService.selectSearchResult(item, this.address, result => {
             this.event.address = {
                 formatedAddress: item.description,
@@ -178,40 +178,42 @@ export class EventUpsertPage {
      *
      */
     saveEvent(formVal) {
-        console.log('[EventUpsertPage] - saveEvent - formVal', formVal);
-        let startDate = new Date(formVal.startDate);
-        let startTime = new Date(formVal.startTime);
-        this.event.startDate = new Date(startDate.getUTCFullYear(), startDate.getUTCMonth(), startDate.getUTCDate(), startTime.getUTCHours(), startTime.getUTCMinutes()).getTime();
-        this.event.endDate = new Date(startDate.getUTCFullYear(), startDate.getUTCMonth(), startDate.getUTCDate(), startTime.getUTCHours() + 1, startTime.getUTCMinutes()).getTime();
-        this.event.link = {
-            linkId: 'AAAA',
-            type: formVal.type.code
-        };
-        this.event.label = formVal.label;
-        this.event.type = formVal.type;
-        this.event.owner = {
-            sandboxId: this.authenticationService.meta._id,
-            effectiveId: this.authenticationService.meta.effectiveDefault,
-            teamId: this.event.participants.teamHome._id
-        };
-        if (formVal.radioHome) {
-            this.event.participants.teamVisitor = formVal.teamVisitor;
-            this.event.participants.teamHome = formVal.teamHome;
-        } else {
-            this.event.participants.teamHome = formVal.teamVisitor;
-            this.event.participants.teamVisitor = formVal.teamHome;
-        }
-        console.log('[EventUpsertPage] - saveEvent - this.event', this.event);
-        this.eventsService.addEvent(this.event).subscribe(r => {
-            console.log('[EventUpsertPage] - saveEvent', r);
-            this.storage.get('events').then(events => {
-                events.push(r);
-                this.storage.set('events', events);
-                this.navCtrl.pop();
-                // TODO i18n
-                this.presentToast('Event created');
+        if(this.eventForm.valid) {
+            console.log('[EventUpsertPage] - saveEvent - formVal', formVal);
+            let startDate = new Date(formVal.startDate);
+            let startTime = new Date(formVal.startTime);
+            this.event.startDate = new Date(startDate.getUTCFullYear(), startDate.getUTCMonth(), startDate.getUTCDate(), startTime.getUTCHours(), startTime.getUTCMinutes()).getTime();
+            this.event.endDate = new Date(startDate.getUTCFullYear(), startDate.getUTCMonth(), startDate.getUTCDate(), startTime.getUTCHours() + 1, startTime.getUTCMinutes()).getTime();
+            this.event.link = {
+                linkId: 'AAAA',
+                type: formVal.type.code
+            };
+            this.event.label = formVal.label;
+            this.event.type = formVal.type;
+            this.event.owner = {
+                sandboxId: this.authenticationService.meta._id,
+                effectiveId: this.authenticationService.meta.effectiveDefault,
+                teamId: this.event.participants.teamHome._id
+            };
+            if (formVal.radioHome) {
+                this.event.participants.teamVisitor = formVal.teamVisitor;
+                this.event.participants.teamHome = formVal.teamHome;
+            } else {
+                this.event.participants.teamHome = formVal.teamVisitor;
+                this.event.participants.teamVisitor = formVal.teamHome;
+            }
+            console.log('[EventUpsertPage] - saveEvent - this.event', this.event);
+            this.eventsService.addEvent(this.event).subscribe(r => {
+                console.log('[EventUpsertPage] - saveEvent', r);
+                this.storage.get('events').then(events => {
+                    events.push(r);
+                    this.storage.set('events', events);
+                    this.navCtrl.pop();
+                    // TODO i18n
+                    this.presentToast('Event created');
+                });
             });
-        });
+        }
     }
 
     cancel() {
