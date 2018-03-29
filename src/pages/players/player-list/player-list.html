@@ -26,7 +26,7 @@
 
     <ion-item *ngFor="let item of playerList" (click)="goToDetail(item, $event)" [ngClass]="{'playerDisactivated':item.desactivated==='true'}">
       <ion-avatar item-start>
-        <img src="../assets/imgs/user.png">
+        <img src="assets/imgs/user.png" alt="player">
       </ion-avatar>
       <h2>{{item.firstname}} {{item.name}}</h2>
       <p *ngIf="(item.desactivated === 'true')">{{'player.labels.desactivated' | translate}}</p>

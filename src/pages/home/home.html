@@ -1,32 +1,20 @@
-<!--
-  Generated template for the MenuPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
     <ion-navbar>
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>Hello {{ (user.firstname) ? user.firstname : user.account.login | uppercase}} !</ion-title> 
     </ion-navbar>
-
 </ion-header>
 
-
 <ion-content>
+    <ion-item color="light">
         <ion-row>
             <ion-col text-center>
-                <img src="../../assets/imgs/Qaobee-Tracking.png"/>
+                <img src="assets/imgs/Qaobee-Tracking.png" alt="home" width="100%" height="100%"/>
             </ion-col>
         </ion-row>
-    <next-event></next-event>
-    <!-- <last-collect></last-collect> -->
-</ion-content>
-
-<ion-footer>
+    
         <ion-row>
             <ion-col text-center>
                 <button ion-button (tap)="goToEventList()" outline large color="dark">  
@@ -44,4 +32,8 @@
                 </button>
             </ion-col>
         </ion-row>
-</ion-footer>
+    </ion-item>
+
+    <next-event></next-event>
+    <!-- <last-collect></last-collect> -->
+</ion-content>

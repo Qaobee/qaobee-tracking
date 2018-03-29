@@ -90,7 +90,7 @@
     },
     "confirmDesactivate": {
       "title": "Disable Player",
-      "message":"Confirm disable player ?",
+      "message":"the player will be not delete, but will do not present on player's list",
       "buttonLabelCancel": "Cancel",
       "buttonLabelConfirm": "Ok"
     },

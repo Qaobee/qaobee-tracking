@@ -1,6 +1,24 @@
 <ion-header>
   <ion-navbar>
     <ion-title>{{'player.TitleNavBarPlayer' | translate}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="goToStats()">
+        <ion-icon name="stats"></ion-icon>
+      </button>
+
+      <button ion-button icon-only (click)="editPlayer()">
+        <ion-icon name="create"></ion-icon>
+      </button>
+
+      <button ion-button icon-only (click)="desactivatePlayer('player.confirmDesactivate','true')" *ngIf="(player.desactivated !== 'true')">
+        <ion-icon name="close-circle"></ion-icon>
+      </button>
+
+      <button ion-button icon-only (click)="desactivatePlayer('player.confirmActivate','false')" *ngIf="(player.desactivated === 'true')">
+        <ion-icon name="checkmark-circle"></ion-icon>
+      </button>
+
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
@@ -9,7 +27,7 @@
   <ion-item class="enteteLight">
     <ion-row>
       <ion-col><ion-avatar>
-          <img src="../assets/imgs/user.png">
+          <img src="assets/imgs/user.png" alt="avatar">
         </ion-avatar></ion-col>
       <ion-col>
         <h1>{{player.firstname}} {{player.name}}</h1>
@@ -19,6 +37,7 @@
       </ion-col>
     </ion-row>
   </ion-item>
+
   <!-- PositionType-->
   <ion-item>
     <ion-row >
@@ -84,7 +103,7 @@
     </ion-row>
   </ion-item>  
   <!-- Contact information-->
-  <ion-item *ngIf="player.contact">
+  <ion-item *ngIf="player.contact" color="light">
     <ion-row>
       <ion-col>
         <h2 class="panel"><ion-icon name="book"></ion-icon>  {{'player.labels.contact' | translate}}</h2>
@@ -103,29 +122,3 @@
     </ion-row>
   </ion-item> 
 </ion-content>
-
-<ion-footer>
-    <ion-row>
-        <ion-col text-center>
-            <button ion-button (tap)="editPlayer()" outline large color="dark">  
-                <ion-icon name="create"></ion-icon>
-            </button>
-        </ion-col>
-        <ion-col text-center *ngIf="(player.desactivated !== 'true')">
-            <button ion-button (tap)="desactivatePlayer('player.confirmDesactivate','true')" outline large color="danger">  
-                <ion-icon name="close-circle"></ion-icon>
-            </button>
-        </ion-col>
-        <ion-col text-center *ngIf="(player.desactivated === 'true')">
-            <button ion-button (tap)="desactivatePlayer('player.confirmActivate','false')" outline large color="secondary">  
-                <ion-icon name="checkmark-circle"></ion-icon>
-            </button>
-        </ion-col>
-        <ion-col text-center>
-            <button ion-button (tap)="goToStats()" large color="dark">  
-                <ion-icon name="stats"></ion-icon>
-            </button>
-        </ion-col>
-    </ion-row>
-</ion-footer>
-      
