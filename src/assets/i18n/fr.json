@@ -55,8 +55,8 @@
     "Logout": "Déconnexion"
   },
   "player": {
-    "TitleNavBar": "Module Joueur",
-    "TitlePlayerList": "Liste des joueurs",
+    "TitleNavBarPlayer": "Joueur",
+    "TitleNavBarPlayerList": "Liste des joueurs",
     "labels": {
       "mesuration": "Mensuration",
       "weight": "Poids",
@@ -90,7 +90,7 @@
     },
     "confirmDesactivate": {
       "title": "Désactivation du joueur",
-      "message":"Confirmez-vous la désactivation du joueur ?",
+      "message":"La désactivation d'un joueur ne le supprime pas, mais il n'apparaîtra plus dans la liste des joueurs sélectionnables ",
       "buttonLabelCancel": "Annuler",
       "buttonLabelConfirm": "Valider"
     },

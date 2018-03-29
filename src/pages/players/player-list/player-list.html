@@ -1,12 +1,12 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{'player.TitleNavBar' | translate}}</ion-title>
+    <ion-title>{{'player.TitleNavBarPlayerList' | translate}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-fab top right edge>
-    <button ion-fab large (click)="goToAddPlayer()" color="dark"><ion-icon name="add"></ion-icon></button>
+  <ion-fab bottom right>
+    <button ion-fab large (tap)="goToAddPlayer()" color="danger"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 
   <ion-refresher (ionRefresh)="doRefresh($event)">
@@ -21,12 +21,12 @@
   <ion-list>
     <ion-item class="enteteLight">
       <ion-badge color="danger" item-start>{{playerListSize}}</ion-badge>
-      <h1>{{'player.TitlePlayerList' | translate}}</h1>
+      <ion-searchbar (ionInput)="searchItems($event)"></ion-searchbar>
     </ion-item>
 
     <ion-item *ngFor="let item of playerList" (click)="goToDetail(item, $event)" [ngClass]="{'playerDisactivated':item.desactivated==='true'}">
       <ion-avatar item-start>
-        <img src="../assets/imgs/user.png">
+        <img src="assets/imgs/user.png" alt="player">
       </ion-avatar>
       <h2>{{item.firstname}} {{item.name}}</h2>
       <p *ngIf="(item.desactivated === 'true')">{{'player.labels.desactivated' | translate}}</p>
