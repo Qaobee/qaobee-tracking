@@ -55,8 +55,8 @@
     "Logout": "Logout"
   },
   "player": {
-    "TitleNavBar": "Player Module",
-    "TitlePlayerList": "Player list",
+    "TitleNavBarPlayer": "Player",
+    "TitleNavBarPlayerList": "Player list",
     "labels": {
       "mesuration": "Mesuration",
       "weight": "Weight",

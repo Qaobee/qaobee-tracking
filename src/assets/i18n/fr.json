@@ -55,8 +55,8 @@
     "Logout": "Déconnexion"
   },
   "player": {
-    "TitleNavBar": "Module Joueur",
-    "TitlePlayerList": "Liste des joueurs",
+    "TitleNavBarPlayer": "Joueur",
+    "TitleNavBarPlayerList": "Liste des joueurs",
     "labels": {
       "mesuration": "Mensuration",
       "weight": "Poids",

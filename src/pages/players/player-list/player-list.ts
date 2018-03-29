@@ -32,6 +32,7 @@ export class PlayerListPage {
 
   playerList: any;
   playerListSize: number;
+  playerListFiltred: any;
 
   /**
      * .
@@ -46,18 +47,11 @@ export class PlayerListPage {
                 private storage: Storage, 
                 private personService: PersonService,
                 private authenticationService: AuthenticationService) {
-      this.storage.get('players').then(players => {
-        if (!players) {
-            this.getPlayers(null);
-        } else {
-          this.playerList = players;
-          this.playerListSize = players.length;
-        }
-      })
+      this.retrievePlayerList();
     }
 
   /**
-     *
+     * FORCE refresh player list from database
      * @param {Refresher} refresher
      */
   doRefresh(refresher:Refresher) {
@@ -65,6 +59,10 @@ export class PlayerListPage {
       this.getPlayers(refresher);
   }
 
+  /**
+   * call personneService for retrieve player list from database
+   * @param refresher 
+   */
   private getPlayers(refresher:Refresher) {
     this.personService.getListPersonSandbox(this.authenticationService.meta._id).subscribe(list => {
       this.playerList = list;
@@ -72,8 +70,52 @@ export class PlayerListPage {
       this.storage.set('players', list);
       if(refresher) {
         refresher.complete();
-    }
+      }
     });
+  }
+
+  /**
+   * if players exist then return list, else, call personneService
+   */
+  private retrievePlayerList() {
+    this.storage.get('players').then(players => {
+      if (!players) {
+          this.getPlayers(null);
+      } else {
+        this.playerList = players;
+        this.playerListSize = players.length;
+      }
+    })
+  }
+
+  /**
+   * Filter player list
+   * @param ev 
+   */
+  searchItems(ev: any) {
+
+    // set val to the value of the ev target
+    var val = ev.target.value;
+    this.playerListFiltred = new Array();
+    
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      
+      // Reset items back to all of the items
+      this.storage.get('players').then(players => {
+        for (let index = 0; index < players.length; index++) {
+          const element = players[index];
+          if(element.name.toLowerCase().indexOf(val.toLowerCase()) > -1 || element.firstname.toLowerCase().indexOf(val.toLowerCase()) > -1){
+            this.playerListFiltred.push(element);
+          }
+        }
+        this.playerList = this.playerListFiltred;
+        this.playerListSize = this.playerListFiltred.length;
+        }
+      );
+    } else {
+      this.retrievePlayerList();
+    }
   }
 
   /**

@@ -57,7 +57,6 @@ export class NextEventComponent {
                     this.authenticationService.meta.activity._id,
                     this.authenticationService.meta._id,
                 ).subscribe(eventList => {
-                    console.log(eventList);
                     this.storage.set('events', eventList).then(r=> {
                         console.log('[NextEventComponent] constructor', r);
                     });
@@ -71,10 +70,11 @@ export class NextEventComponent {
 
     private getLastEvent(eventList: any) {
         let events = eventList.sort(this.utils.compareEvents);
-
+        
         if (events.length > 0) {
             let valA = events[0].startDate || 0;
-            let valB = new Date() || 0;
+            let valB = new Date().getTime() || 0;
+            console.log('getLastEvent', valA >valB);
             if (valA > valB) {
                 this.nextEvent = events[0];
             }
