@@ -38,18 +38,18 @@ import {Storage} from "@ionic/storage";
 })
 export class EventUpsertPage {
     eventForm: FormGroup;
-    private event: any;
-    private startDate: string = new Date().toISOString();
-    private startTime: string = new Date().toISOString();
-    private address: any;
-    private autocompleteItems = [];
-    private teams: any = {
+    event: any;
+    startDate: string = new Date().toISOString();
+    startTime: string = new Date().toISOString();
+    address: any;
+    autocompleteItems = [];
+    teams: any = {
         myTeams: [],
         adversaries: []
     };
-    private teamVisitor: any;
-    private teamHome: any;
-    private eventTypes: any[] = [];
+    teamVisitor: any;
+    teamHome: any;
+    eventTypes: any[] = [];
     minDate: string = new Date().toISOString();
 
     /**
