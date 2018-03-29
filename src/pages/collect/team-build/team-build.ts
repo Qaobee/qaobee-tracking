@@ -113,7 +113,6 @@ export class TeamBuildPage {
             }
         });
 
-        alert.addButton('Cancel');
         alert.addButton({
             text: 'Clear',
             handler: data => {
