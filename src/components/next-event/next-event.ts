@@ -72,12 +72,17 @@ export class NextEventComponent {
         let events = eventList.sort(this.utils.compareEvents);
         
         if (events.length > 0) {
-            let valA = events[0].startDate || 0;
-            let valB = new Date().getTime() || 0;
-            console.log('getLastEvent', valA >valB);
-            if (valA > valB) {
-                this.nextEvent = events[0];
+            for (let index = 0; index < events.length; index++) {
+                let valA = events[index].startDate || 0;
+                let valB = new Date().getTime() || 0;
+                if (valA > valB) {
+                  this.nextEvent = events[index];
+                  break
+              }
             }
+            
+          
+            
         }
     }
 
