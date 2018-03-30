@@ -18,11 +18,6 @@
  */
 import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
-import {AuthenticationService} from "../../../providers/authentication.service";
-import {EventsService} from "../../../providers/api/api.events.service";
-import {Storage} from "@ionic/storage";
-import {Utils} from "../../../providers/utils";
-import {SettingsService} from "../../../providers/settings.service";
 import {EventUpsertPage} from "../event-upsert/event-upsert";
 import {TeamBuildPage} from "../../collect/team-build/team-build";
 
