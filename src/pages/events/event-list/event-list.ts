@@ -144,7 +144,6 @@ export class EventListPage {
      *
      */
     addEvent() {
-        console.log('[EventListPage] - addEvent');
         this.navCtrl.push(EventUpsertPage, {});
     }
 
@@ -154,7 +153,6 @@ export class EventListPage {
      * @param clickEvent
      */
     goToDetail(event: any, clickEvent: any) {
-        console.log('[EventListPage] - goToDetail', event);
         clickEvent.stopPropagation();
         this.navCtrl.push(EventDetailPage, {event : event});
     }

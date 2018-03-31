@@ -56,20 +56,27 @@
   },
   "player": {
     "TitleNavBarPlayer": "Joueur",
+    "TitleNavBarPlayerEdit": "Edition Joueur",
     "TitleNavBarPlayerList": "Liste des joueurs",
     "labels": {
       "mesuration": "Mensuration",
       "weight": "Poids",
       "weightUnit": "Kgs",
-      "hight": "Taille",
-      "hightUnit": "cm",
+      "height": "Taille",
+      "heightUnit": "cm",
       "positionType": "Poste",
       "contact": "Coordonnées",
       "civilStatus": "Etat Civil",
       "birthdate": "Date de naissance",
       "nationality": "Nationalité",
       "Laterality": "Lateralité",
-      "desactivated": "Joueur désactivé"
+      "desactivated": "Joueur désactivé",
+      "name":"Nom",
+      "firstname":"Prénom",
+      "mobile":"Tel. Portable",
+      "address": "Addresse",
+      "email":"E-mail",
+      "squadNumber": "Numéro"
     },
     "laterality": {
       "right-handed": "Droitier",

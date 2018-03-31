@@ -17,12 +17,14 @@
  *  from Qaobee.
  */
 import {Component} from '@angular/core';
+import {NavController} from 'ionic-angular';
 import {EventsService} from "../../providers/api/api.events.service";
 import {AuthenticationService} from "../../providers/authentication.service";
 import {Storage} from "@ionic/storage";
 import {Utils} from "../../providers/utils";
 import {EventService} from "../../providers/event.service";
 import {EventUpsertPage} from "../../pages/events/event-upsert/event-upsert";
+import { EventDetailPage } from './../../pages/events/event-detail/event-detail';
 
 @Component({
     selector: 'next-event',
@@ -41,7 +43,8 @@ export class NextEventComponent {
      * @param {EventService} eventService
      * @param {Utils} utils
      */
-    constructor(private eventsServices: EventsService,
+    constructor(public navCtrl: NavController,
+                private eventsServices: EventsService,
                 private storage: Storage,
                 private authenticationService: AuthenticationService,
                 private eventService: EventService,
@@ -96,12 +99,11 @@ export class NextEventComponent {
 
     /**
      *
+     * @param event
+     * @param clickEvent
      */
-    goToViewEvent() {
-        console.log('[NextEventComponent] goToViewEvent');
-        this.eventService.broadcast(EventService.navigation, {
-            component: EventUpsertPage,
-            options: {event: this.nextEvent}
-        });
-    }
+    goToDetail(event: any, clickEvent: any) {
+      clickEvent.stopPropagation();
+      this.navCtrl.push(EventDetailPage, {event : event});
+  }
 }

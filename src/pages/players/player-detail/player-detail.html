@@ -38,29 +38,21 @@
     </ion-row>
   </ion-item>
 
-  <!-- PositionType-->
+  <!-- PositionType--><!-- Laterality-->
   <ion-item>
-    <ion-row >
-      <ion-col>
-        <h2 class="panel"><ion-icon name="locate"></ion-icon>  {{'player.labels.positionType' | translate}}</h2>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-        <ion-col text-left><h2>{{'player.positionType.'+player.status.positionType  | translate}}</h2></ion-col>
-    </ion-row>
-  </ion-item>
-
-  <!-- Laterality-->
-  <ion-item>
-    <ion-row >
-      <ion-col>
+      <ion-row >
+        <ion-col>
+          <h2 class="panel"><ion-icon name="locate"></ion-icon>  {{'player.labels.positionType' | translate}}</h2>
+        </ion-col>
+        <ion-col>
           <h2 class="panel"><ion-icon name="hand"></ion-icon>  {{'player.labels.Laterality' | translate}}</h2>
         </ion-col>
-    </ion-row>
-    <ion-row>
-        <ion-col text-left><h2>{{'player.laterality.'+player.status.laterality  | translate}}</h2></ion-col>
-    </ion-row>
-  </ion-item>
+      </ion-row>
+      <ion-row>
+          <ion-col text-left><h2>{{'player.positionType.'+player.status.positionType  | translate}}</h2></ion-col>
+          <ion-col text-left><h2>{{'player.laterality.'+player.status.laterality  | translate}}</h2></ion-col>
+      </ion-row>
+    </ion-item>
 
   <!-- Mesuration-->
   <ion-item>
@@ -71,14 +63,14 @@
     </ion-row>
     <ion-row>
         <ion-col text-left><h3 class="label">{{'player.labels.weight' | translate}}</h3></ion-col>
-        <ion-col text-left><h3 class="label">{{'player.labels.hight' | translate}}</h3></ion-col>
+        <ion-col text-left><h3 class="label">{{'player.labels.height' | translate}}</h3></ion-col>
     </ion-row>
     <ion-row>    
         <ion-col text-left>
           <h2>{{player.status.weight}} {{'player.labels.weightUnit' | translate}}</h2>
         </ion-col>
         <ion-col text-left>
-          <h2>{{player.status.height}} {{'player.labels.hightUnit' | translate}}</h2>
+          <h2>{{player.status.height}} {{'player.labels.heightUnit' | translate}}</h2>
         </ion-col>
     </ion-row>
   </ion-item>
@@ -103,7 +95,7 @@
     </ion-row>
   </ion-item>  
   <!-- Contact information-->
-  <ion-item *ngIf="player.contact" color="light">
+  <ion-item *ngIf="player.contact">
     <ion-row>
       <ion-col>
         <h2 class="panel"><ion-icon name="book"></ion-icon>  {{'player.labels.contact' | translate}}</h2>
@@ -117,7 +109,7 @@
         <button ion-button outline small><ion-icon name="mail"></ion-icon></button>
       </ion-col>
       <ion-col *ngIf="player.address">
-        <button ion-button outline small><ion-icon name="home"></ion-icon></button>
+        <button ion-button outline small><ion-icon name="pin"></ion-icon></button>
       </ion-col>
     </ion-row>
   </ion-item> 

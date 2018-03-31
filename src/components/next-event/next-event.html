@@ -1,15 +1,13 @@
 <ion-content>
     <ion-item *ngIf="nextEvent" id="nextEventAreaOn">
-        <h1>{{'nextEvent.titleFound'  | translate}}</h1>
-        <h2>{{ nextEvent.participants.teamHome.label }} <br> {{ nextEvent.participants.teamVisitor.label }}</h2>
+        <h2>{{'nextEvent.titleFound'  | translate}}</h2>
+        <h3>{{ nextEvent.participants.teamHome.label }} <br> {{ nextEvent.participants.teamVisitor.label }}</h3>
         <p>{{ nextEvent.startDate  | date:"mediumDate" }} {{ nextEvent.startDate  | date:"shortTime" }}</p>
-        <button ion-button color="danger" outline item-end large (tap)="goToViewEvent()"><ion-icon name="eye"></ion-icon></button>
+        <button ion-fab color="secondary" item-end large (click)="goToDetail(nextEvent, $event)"><ion-icon name="eye"></ion-icon></button>
     </ion-item>
 
-    <ion-row *ngIf="!nextEvent" id="nextEventAreaOff">
-        <ion-item text-left>
-            <h2 padding>{{ 'nextEvent.titleNotFound'  | translate}}</h2>
-            <button ion-button color="danger" outline item-end large (tap)="goToCreateEvent()"><ion-icon name="add"></ion-icon></button>
-        </ion-item>
-    </ion-row>
+    <ion-item text-left *ngIf="!nextEvent" id="nextEventAreaOff">
+        <h2 padding>{{ 'nextEvent.titleNotFound'  | translate}}</h2>
+        <button ion-button color="danger" outline item-end large (tap)="goToCreateEvent()"><ion-icon name="add"></ion-icon></button>
+    </ion-item>
 </ion-content>

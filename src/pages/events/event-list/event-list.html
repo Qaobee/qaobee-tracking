@@ -7,9 +7,9 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-    <ion-fab top right edge>
-        <button ion-fab mini (click)="addEvent()"><ion-icon name="add"></ion-icon></button>
+<ion-content>
+    <ion-fab bottom right>
+        <button ion-fab large (click)="addEvent()" color="danger"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content
@@ -23,11 +23,10 @@
         <div *ngFor="let entry of eventList | keys">
             <ion-item-divider color="light">{{ entry.key }}</ion-item-divider>
             <ion-item *ngFor="let event of entry.value" (click)="goToDetail(event, $event)">
-                <h4>{{ event.label }}</h4>
-                <h2>{{ event.participants.teamHome.label }}</h2>
-                <h2>{{ event.participants.teamVisitor.label }}</h2>
+                <h2>{{ event.label }}</h2>
+                <h3>{{ event.participants.teamHome.label }} / {{ event.participants.teamVisitor.label }}</h3>
                 <p>{{ event.startDate | date:"mediumDate" }} {{ event.startDate | date:"shortTime" }}</p>
-                <button ion-button item-end color="secondary" (click)="goToCollect(event, $event)">
+                <button ion-button item-end medium color="secondary" (click)="goToCollect(event, $event)">
                     <ion-icon name="stopwatch"></ion-icon>
                 </button>
             </ion-item>

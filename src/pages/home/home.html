@@ -8,32 +8,36 @@
 </ion-header>
 
 <ion-content>
-    <ion-item color="light">
+    <ion-item class="enteteLight">
         <ion-row>
-            <ion-col text-center>
-                <img src="assets/imgs/Qaobee-Tracking.png" alt="home" width="100%" height="100%"/>
-            </ion-col>
-        </ion-row>
-    
-        <ion-row>
-            <ion-col text-center>
-                <button ion-button (tap)="goToEventList()" outline large color="dark">  
-                    <ion-icon name="calendar"></ion-icon>
-                </button>
-            </ion-col>
-            <ion-col text-center>
-                <button ion-button (tap)="goToPlayerList()" outline large color="dark">  
-                    <ion-icon name="people"></ion-icon>
-                </button>
-            </ion-col>
-            <ion-col text-center>
-                <button ion-button (tap)="goToCollectList()" outline large color="dark">  
-                    <ion-icon name="stats"></ion-icon>
-                </button>
-            </ion-col>
-        </ion-row>
+        <ion-col text-center>
+          Agenda
+        </ion-col>
+        <ion-col text-center>
+          Joueurs
+        </ion-col>
+        <ion-col text-center>
+          Stats
+        </ion-col>
+      </ion-row> 
+      <ion-row>
+        <ion-col text-center>
+          <button ion-button (tap)="goToEventList()"  large color="dark">  
+            <ion-icon name="calendar"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col text-center>
+          <button ion-button (tap)="goToPlayerList()"  large color="dark">  
+            <ion-icon name="people"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col text-center>
+          <button ion-button (tap)="goToCollectList()"  large color="dark">  
+            <ion-icon name="stats"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
     </ion-item>
-
     <next-event></next-event>
     <!-- <last-collect></last-collect> -->
 </ion-content>

@@ -56,20 +56,27 @@
   },
   "player": {
     "TitleNavBarPlayer": "Player",
+    "TitleNavBarPlayerEdit": "Player Edit",
     "TitleNavBarPlayerList": "Player list",
     "labels": {
       "mesuration": "Mesuration",
       "weight": "Weight",
       "weightUnit": "Kgs",
-      "hight": "Hight",
-      "hightUnit": "cm",
+      "height": "Hight",
+      "heightUnit": "cm",
       "positionType": "Poste",
       "contact": "Contact information",
       "civilStatus": "Civil status",
       "birthdate": "Birthdate",
       "nationality": "Nationality",
       "Laterality": "Lateralité",
-      "desactivated": "Desactivated Player"
+      "desactivated": "Desactivated Player",
+      "name":"Name",
+      "firstname":"Firstname",
+      "mobile":"Mobile",
+      "address": "Address",
+      "email":"Email",
+      "squadNumber": "Numéro"
     },
     "laterality": {
       "right-handed": "Right-handed",

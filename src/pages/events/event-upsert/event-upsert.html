@@ -7,11 +7,11 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content padding *ngIf="event">
+<ion-content *ngIf="event">
     <form [formGroup]="eventForm" (ngSubmit)="saveEvent(eventForm.value)">
     <ion-item>
         <ion-label floating>{{ 'eventsModule.label' | translate }}</ion-label>
-        <ion-input type="text" formControlName="label" id="label" ></ion-input>
+        <ion-input type="text" formControlName="label" id="label" clearInput></ion-input>
         <p *ngIf="!isValid('label')" danger padding-left>Invalid label</p>
     </ion-item>
 
