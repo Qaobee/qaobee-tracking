@@ -76,7 +76,8 @@
       "mobile":"Mobile",
       "address": "Address",
       "email":"Email",
-      "squadNumber": "Numéro"
+      "squadNumber": "Numéro",
+      "profil":"Profil"
     },
     "laterality": {
       "right-handed": "Right-handed",

@@ -38,6 +38,8 @@ export class PlayerUpsertPage {
   playerForm: FormGroup;
   address: any;
   autocompleteItems = [];
+  maxDate: string = new Date().toISOString();
+  birthdatePlayer: string = new Date().toISOString();
 
   /**
    * 
@@ -55,6 +57,15 @@ export class PlayerUpsertPage {
   {
     this.player = navParams.get('player') || {};
 
+    if (this.player && this.player.birthdate) {
+      console.log('this.player.birthdate',this.player.birthdate);
+      console.log('Jour',new Date(this.player.birthdate).getDate());
+      console.log('mois',new Date(this.player.birthdate).getMonth());
+      console.log('annee',new Date(this.player.birthdate).getFullYear());
+      this.birthdatePlayer = new Date(this.player.birthdate).toISOString();
+      console.log('this.birthdatePlayer',this.birthdatePlayer);
+    }
+
     this.playerForm = this.formBuilder.group({
       'name': [this.player.name || '', [Validators.required]],
       'firstname': [this.player.firstname || '', [Validators.required]],
@@ -62,7 +73,9 @@ export class PlayerUpsertPage {
       'positionType': [this.player.status.positionType, [Validators.required]],
       'laterality': [this.player.status.laterality, [Validators.required]],
       'weight': [this.player.status.weight || '', [Validators.required]],
-      'height': [this.player.status.height || '', [Validators.required]]
+      'height': [this.player.status.height || '', [Validators.required]],
+      'birthdate': [this.birthdatePlayer, [Validators.required]],
+      'nationality': [this.player.nationality || '', [Validators.required]]
     });
 
     this.activityCfgService.getParamFieldList(authenticationService.meta.activity._id, 'listPositionType').subscribe((listPositionType: any[]) => {
