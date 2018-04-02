@@ -17,11 +17,13 @@
  *  from Qaobee.
  */
 import {Component} from '@angular/core';
-import {AlertController, NavController, NavParams} from 'ionic-angular';
+import {AlertController, NavController, NavParams, ToastController} from 'ionic-angular';
 import {PersonService} from "../../../providers/api/api.person.service";
 import {AuthenticationService} from "../../../providers/authentication.service";
 import {Storage} from "@ionic/storage";
 import {ENV} from "@app/env";
+import {SettingsService} from "../../../providers/settings.service";
+import {CollectPage} from "../collect/collect";
 
 /**
  * Generated class for the EventListPage page.
@@ -34,21 +36,22 @@ import {ENV} from "@app/env";
     templateUrl: 'team-build.html',
 })
 export class TeamBuildPage {
+    // TODO : i18n
     root: string = ENV.hive;
     event: any;
     playerList: any[] = [];
     playerListSize: number;
     playerPositions: any = {
-        substitues: []
+        substitutes: []
     };
 
     ground = [
-        [{key: 'pivot', label: 'Pivot'}],
-        [{key: 'left-backcourt', label: 'Back-court'}, {
+        [{key: 'pivot', label: 'Pivot', class: 'pivot'}],
+        [{key: 'left-backcourt', label: 'Back-court', class: ''}, {
             key: 'center-backcourt',
             label: 'Back-court'
         }, {key: 'right-backcourt', label: 'Back-court'}],
-        [{key: 'left-wingman', label: 'Wing-man'}, {key: 'goalkeeper', label: 'Goalkeeper'}, {
+        [{key: 'left-wingman', label: 'Wing-man'}, {key: 'goalkeeper', label: 'Goalkeeper', class: 'goalkeeper'}, {
             key: 'right-wingman',
             label: 'Wing-man'
         }]
@@ -60,15 +63,19 @@ export class TeamBuildPage {
      * @param {NavController} navCtrl
      * @param {NavParams} navParams
      * @param {Storage} storage
+     * @param {ToastController} toastCtrl
      * @param {AlertController} alertCtrl
      * @param {PersonService} personService
+     * @param {SettingsService} settingsService
      * @param {AuthenticationService} authenticationService
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private storage: Storage,
+                private toastCtrl: ToastController,
                 private alertCtrl: AlertController,
                 private personService: PersonService,
+                private settingsService: SettingsService,
                 private authenticationService: AuthenticationService) {
         this.event = navParams.get('event');
         this.storage.get('players').then(players => {
@@ -96,7 +103,9 @@ export class TeamBuildPage {
         alert.setTitle('Choose Player');
         let excludedPlayer = [];
         Object.keys(this.playerPositions).forEach(k => {
-            if (k !== position && this.playerPositions[k] && this.playerPositions[k]._id) {
+            if (Array.isArray(this.playerPositions[k])) {
+                excludedPlayer = excludedPlayer.concat(this.playerPositions[k]);
+            } else if (k !== position && this.playerPositions[k] && this.playerPositions[k]._id) {
                 excludedPlayer.push(this.playerPositions[k])
             }
         });
@@ -125,24 +134,72 @@ export class TeamBuildPage {
             text: 'OK',
             handler: data => {
                 console.log(position, data);
-                this.playerPositions[position] = data;
+                if ('substitutes' === position) {
+                    this.playerPositions[position].push(data);
+                } else {
+                    this.playerPositions[position] = data;
+                }
             }
         });
         alert.present();
     }
 
+    remove(s: any) {
+        this.playerPositions['substitutes'] = this.playerPositions['substitutes'].filter(p => p._id !== s._is);
+    }
+
     /**
      *
      */
+    goToCollect() {
+        console.log('[TeamBuildPage] - goToCollect');
+        let count = 0;
+        Object.keys(this.playerPositions).forEach(k => {
+            if (Array.isArray(this.playerPositions[k])) {
+                count += this.playerPositions[k].length;
+            } else {
+                count++
+            }
+        });
+        if (count < this.settingsService.minPlayers || count > this.settingsService.maxPlayers) {
+            this.presentToast('Your tem must have between ' + this.settingsService.minPlayers + ' and ' + this.settingsService.maxPlayers + ' players');
+        } else {
+            this.navCtrl.push(CollectPage, {players: this.playerPositions, event: this.event});
+        }
+    }
+
     ionViewDidLoad() {
         console.log('[TeamBuildPage] - ionViewDidLoad', this.event);
     }
 
+    /**
+     *
+     * @param {string} avatar
+     * @returns {string}
+     */
     getAvatar(avatar: string) {
         if (avatar && avatar !== 'null') {
             return this.root + '/file/SB_Person/' + avatar;
         } else {
             return '/assets/imgs/user.png';
         }
+    }
+
+    /**
+     *
+     * @param msg
+     */
+    private presentToast(msg) {
+        let toast = this.toastCtrl.create({
+            message: msg,
+            duration: 3000,
+            position: 'bottom'
+        });
+
+        toast.onDidDismiss(() => {
+            console.log('Dismissed toast');
+        });
+
+        toast.present();
     }
 }

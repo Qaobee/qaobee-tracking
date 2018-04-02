@@ -25,6 +25,14 @@ import {registerLocaleData} from "@angular/common";
 export class SettingsService {
     private locale: string;
 
+    minPlayers = 4;
+    maxPlayers = 10;
+    sound = true;
+    vibrations = true;
+    wizzard = true;
+    periodDuration = 30;
+    periodCount = 2;
+
     /**
      *
      * @param {TranslateService} translate
