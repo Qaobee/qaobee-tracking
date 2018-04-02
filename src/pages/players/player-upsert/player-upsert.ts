@@ -39,7 +39,7 @@ export class PlayerUpsertPage {
   address: any;
   autocompleteItems = [];
   maxDate: string = new Date().toISOString();
-  birthdatePlayer: string = new Date().toISOString();
+  birthdatePlayer: string = '';
 
   /**
    * 
@@ -55,16 +55,19 @@ export class PlayerUpsertPage {
               private personService: PersonService,
               private locationService: LocationService)
   {
-    this.player = navParams.get('player') || {};
+    this.player = navParams.get('player') || {
+      status:{},
+      contact:{},
+    };
 
-    if (this.player && this.player.birthdate) {
-      console.log('this.player.birthdate',this.player.birthdate);
-      console.log('Jour',new Date(this.player.birthdate).getDate());
-      console.log('mois',new Date(this.player.birthdate).getMonth());
-      console.log('annee',new Date(this.player.birthdate).getFullYear());
+    if (this.player.birthdate) {
       this.birthdatePlayer = new Date(this.player.birthdate).toISOString();
-      console.log('this.birthdatePlayer',this.birthdatePlayer);
     }
+
+    if (this.player.address && this.player.address.formatedAddress) {
+      this.address = this.player.address.formatedAddress;
+    }
+    
 
     this.playerForm = this.formBuilder.group({
       'name': [this.player.name || '', [Validators.required]],
@@ -72,25 +75,35 @@ export class PlayerUpsertPage {
       'squadnumber': [this.player.status.squadnumber || '', [Validators.required]],
       'positionType': [this.player.status.positionType, [Validators.required]],
       'laterality': [this.player.status.laterality, [Validators.required]],
-      'weight': [this.player.status.weight || '', [Validators.required]],
-      'height': [this.player.status.height || '', [Validators.required]],
-      'birthdate': [this.birthdatePlayer, [Validators.required]],
-      'nationality': [this.player.nationality || '', [Validators.required]]
+      'weight': [this.player.status.weight || ''],
+      'height': [this.player.status.height || ''],
+      'birthdate': [this.birthdatePlayer],
+      'nationality': [this.player.nationality || ''],
+      'mobile': [this.player.contact.cellphone || ''],
+      'email': [this.player.contact.email || ''],
+      'address': [this.address ||'']
     });
 
     this.activityCfgService.getParamFieldList(authenticationService.meta.activity._id, 'listPositionType').subscribe((listPositionType: any[]) => {
       if (listPositionType) {
           this.listPositionType = listPositionType;
-          console.log('this.listPositionType',this.listPositionType);
       }
     });
 
     this.activityCfgService.getParamFieldList(authenticationService.meta.activity._id, 'listLaterality').subscribe((listLaterality: any[]) => {
       if (listLaterality) {
           this.listLaterality = listLaterality;
-          console.log('this.listLaterality',this.listLaterality);
       }
     });
+  }
+
+  /**
+   * Match element in option list from select input
+   * @param e1 
+   * @param e2 
+   */
+  compareOptionSelect(e1: any, e2: any): boolean {
+    return e1 && e2 ? (e1 === e2.code || e1.code === e2.code) : e1 === e2;
   }
 
   isValid(field: string) {
@@ -131,8 +144,8 @@ export class PlayerUpsertPage {
     this.navCtrl.pop();
   }
 
-  validate () {
-    console.log('validate PlayerUpsertPage : ');
+  validate (player:any) {
+    console.log('validate PlayerUpsertPage : ', player);
   }
 
 }

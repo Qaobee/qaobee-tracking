@@ -3,110 +3,132 @@
       <ion-title>{{'player.TitleNavBarPlayerEdit' | translate}}</ion-title>
       <ion-buttons end>
         <button ion-button icon-only (click)="cancel()">
-          <ion-icon name="close"></ion-icon>
+          <ion-icon name="close-circle"></ion-icon>
         </button>
-  
-        <button ion-button icon-only (click)="validate()"> 
-          <ion-icon name="checkmark"></ion-icon>
+        <button ion-button icon-only (click)="validate(playerForm.value)" type="submit" [disabled]="!playerForm.valid"> 
+          <ion-icon name="checkmark-circle"></ion-icon>
         </button>
-  
       </ion-buttons>
     </ion-navbar>
   </ion-header>
   
   
   <ion-content *ngIf="player">
-
-    <form [formGroup]="playerForm" (ngSubmit)="validate(playerForm.value)">
-      <ion-item class="form-group">
-          <ion-label fixed>{{ 'player.labels.name' | translate }}</ion-label>
-          <ion-input type="text" formControlName="name" id="name" clearInput></ion-input>
-          <p *ngIf="!isValid('name')" danger padding-left>Invalid label</p>
-      </ion-item>
-
-      <ion-item class="form-group">
-          <ion-label fixed>{{ 'player.labels.firstname' | translate }}</ion-label>
-          <ion-input type="text" formControlName="firstname" id="firstname" clearInput></ion-input>
-          <p *ngIf="!isValid('firstname')" danger padding-left>Invalid label</p>
-      </ion-item>
-
+    <form [formGroup]="playerForm">
       <ion-item color="light">
-          <h2 class="panel">
-            <ion-icon name="contact"></ion-icon>  
-            {{'player.labels.profil' | translate}}
-          </h2>
-        </ion-item>
+        <h2 class="panel">
+          <ion-icon name="contact"></ion-icon>  
+          {{'player.labels.profil' | translate}}
+        </h2>
+      </ion-item>
+      <ion-row>
+        <ion-col>
+          <ion-item class="form-group">
+              <ion-label floating>{{ 'player.labels.name' | translate }}</ion-label>
+              <ion-input type="text" formControlName="name" id="name" autocomplete="name" clearInput></ion-input>
+              <p *ngIf="!isValid('name')" danger padding-left>Invalid label</p>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item class="form-group">
+              <ion-label floating>{{ 'player.labels.firstname' | translate }}</ion-label>
+              <ion-input type="text" formControlName="firstname" id="firstname" autocomplete="firstname" clearInput></ion-input>
+              <p *ngIf="!isValid('firstname')" danger padding-left>Invalid label</p>
+          </ion-item>
+        </ion-col>
+      </ion-row>
 
       <ion-item class="form-group">
-          <ion-label fixed>{{ 'player.labels.squadNumber' | translate }}</ion-label>
+          <ion-label floating>{{ 'player.labels.squadNumber' | translate }}</ion-label>
           <ion-input type="number" formControlName="squadnumber" id="squadnumber" clearInput></ion-input>
           <p *ngIf="!isValid('squadnumber')" danger padding-left>Invalid label</p>
       </ion-item>
     
   
       <!-- PositionType--><!-- Laterality-->
-      <ion-item>
-        <ion-label>{{ 'player.labels.positionType' | translate }}</ion-label>
-        <ion-select formControlName="positionType" interface="popover" [(ngModel)]="player.status.positionType">
-            <ion-option *ngFor="let t of listPositionType" [value]="t">{{t.label}}</ion-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-label>{{ 'player.labels.Laterality' | translate }}</ion-label>
-        <ion-select formControlName="laterality" interface="popover">
-            <ion-option *ngFor="let t of listLaterality" [value]="t">{{t.label}}</ion-option>
-        </ion-select>
-      </ion-item>
-
-      <!-- Mesuration-->
-      <ion-item class="form-group">
-          <ion-label fixed>{{ 'player.labels.weight' | translate }} ({{'player.labels.weightUnit' | translate}})</ion-label>
-          <ion-input type="number" formControlName="weight" id="weight" clearInput></ion-input>
-          <p *ngIf="!isValid('weight')" danger padding-left>Invalid label</p>
-      </ion-item>
-      <ion-item class="form-group">
-          <ion-label fixed>{{ 'player.labels.height' | translate }} ({{'player.labels.heightUnit' | translate}})</ion-label>
-          <ion-input type="number" formControlName="height" id="height" clearInput></ion-input>
-          <p *ngIf="!isValid('height')" danger padding-left>Invalid label</p>
-      </ion-item>
-
-      <ion-item color="light">
-        <h2 class="panel">
-          <ion-icon name="book"></ion-icon>  
-          {{'player.labels.contact' | translate}}
-        </h2>
-      </ion-item>
-    
-      <!-- Etat Civil-->
-      <ion-item class="form-group">
-          <ion-label fixed>{{ 'player.labels.birthdate' | translate }}</ion-label>
-          <ion-datetime formControlName="birthdate" min="1950" max="maxDate" id="birthdate"></ion-datetime>
-          <p *ngIf="!isValid('birthdate')" danger padding-left>Invalid label</p>
-      </ion-item>
-      <ion-item class="form-group">
-          <ion-label fixed>{{ 'player.labels.nationality' | translate }}</ion-label>
-          <ion-input type="text" formControlName="nationality" id="nationality" clearInput></ion-input>
-          <p *ngIf="!isValid('nationality')" danger padding-left>Invalid label</p>
-      </ion-item>
-    </form>
-    
-    <!-- Contact information-->
-    <ion-item *ngIf="player.contact" color="light">
       <ion-row>
         <ion-col>
-          <h2 class="panel"><ion-icon name="book"></ion-icon>  {{'player.labels.contact' | translate}}</h2>
+          <ion-item>
+            <ion-label floating>{{ 'player.labels.positionType' | translate }}</ion-label>
+            <ion-select formControlName="positionType" interface="popover" [compareWith]="compareOptionSelect">
+                <ion-option *ngFor="let t of listPositionType" [value]="t">{{t.label}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label floating>{{ 'player.labels.Laterality' | translate }}</ion-label>
+            <ion-select formControlName="laterality" interface="popover" [compareWith]="compareOptionSelect">
+              <ion-option *ngFor="let t of listLaterality" [value]="t">{{t.label}}</ion-option>
+            </ion-select>
+          </ion-item>
         </ion-col>
       </ion-row>
-      <ion-row text-center>
-        <ion-col *ngIf="player.contact.cellphone">
-          <button ion-button outline small><ion-icon name="call"></ion-icon></button>
+
+      <!-- Mesuration-->
+      <ion-row>
+        <ion-col>
+          <ion-item class="form-group">
+              <ion-label floating>{{ 'player.labels.weight' | translate }} ({{'player.labels.weightUnit' | translate}})</ion-label>
+              <ion-input type="number" formControlName="weight" id="weight" clearInput></ion-input>
+              <p *ngIf="!isValid('weight')" danger padding-left>Invalid label</p>
+          </ion-item>
         </ion-col>
-        <ion-col *ngIf="player.contact.email">
-          <button ion-button outline small><ion-icon name="mail"></ion-icon></button>
-        </ion-col>
-        <ion-col *ngIf="player.address">
-          <button ion-button outline small><ion-icon name="home"></ion-icon></button>
+        <ion-col>
+          <ion-item class="form-group">
+              <ion-label floating>{{ 'player.labels.height' | translate }} ({{'player.labels.heightUnit' | translate}})</ion-label>
+              <ion-input type="number" formControlName="height" id="height" clearInput></ion-input>
+              <p *ngIf="!isValid('height')" danger padding-left>Invalid label</p>
+          </ion-item>
         </ion-col>
       </ion-row>
-    </ion-item> 
+
+      <!-- Etat Civil-->
+      <ion-row>
+        <ion-col>
+          <ion-item class="form-group">
+              <ion-label floating>{{ 'player.labels.birthdate' | translate }}</ion-label>
+              <ion-datetime formControlName="birthdate" displayFormat="DD/MM/YYYY" min="1950" max="{{maxDate}}" id="birthdate"></ion-datetime>
+              <p *ngIf="!isValid('birthdate')" danger padding-left>Invalid label</p>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item class="form-group">
+              <ion-label floating>{{ 'player.labels.nationality' | translate }}</ion-label>
+              <ion-input type="text" formControlName="nationality" id="nationality" clearInput></ion-input>
+              <p *ngIf="!isValid('nationality')" danger padding-left>Invalid label</p>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    
+      <ion-item color="light">
+          <h2 class="panel">
+            <ion-icon name="book"></ion-icon>  
+            {{'player.labels.contact' | translate}}
+          </h2>
+        </ion-item>
+
+      <!-- Contact information-->
+      <ion-item class="form-group">
+          <ion-label floating>{{ 'player.labels.mobile' | translate }}</ion-label>
+          <ion-input type="tel" formControlName="mobile" id="mobile" autocomplete="tel" clearInput></ion-input>
+          <p *ngIf="!isValid('mobile')" danger padding-left>Invalid label</p>
+      </ion-item>
+      <ion-item class="form-group">
+          <ion-label floating>{{ 'player.labels.email' | translate }}</ion-label>
+          <ion-input type="email" formControlName="email" id="email" autocomplete="email" clearInput></ion-input>
+          <p *ngIf="!isValid('email')" danger padding-left>Invalid label</p>
+      </ion-item>
+      <div class="autocomplete">
+        <ion-item>
+          <ion-label floating>{{ 'player.labels.address' | translate }}</ion-label>
+          <ion-input type="text" formControlName="address" (keyup)="updateSearchResults()" autocomplete="street-address"></ion-input>
+        </ion-item>
+        <ion-list>
+          <ion-item *ngFor="let res of autocompleteItems" (click)="selectSearchResult(res)">
+              {{res.description}}
+          </ion-item>
+        </ion-list>
+      </div>
+    </form>
   </ion-content>

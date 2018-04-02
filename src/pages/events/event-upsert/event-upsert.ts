@@ -86,7 +86,6 @@ export class EventUpsertPage {
             this.startTime = this.startDate;
             if (this.event.address && this.event.address.formatedAddress) {
                 this.address = this.event.address.formatedAddress;
-                this.eventForm.controls['address'].setValue(this.address);
             }
         }
 
@@ -134,10 +133,12 @@ export class EventUpsertPage {
     }
 
     /**
-     *
+     * Match element in option list from select input
+     * @param e1 
+     * @param e2 
      */
-    ionViewDidLoad() {
-        console.log('[EventUpsertPage] - ionViewDidLoad', this.event);
+    compareOptionSelect(e1: any, e2: any): boolean {
+        return e1 && e2 ? (e1 === e2.code || e1.code === e2.code) : e1 === e2;
     }
 
     /**

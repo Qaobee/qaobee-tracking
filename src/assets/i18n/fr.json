@@ -10,14 +10,19 @@
     "message": "Chargement..."
   },
   "eventsModule": {
+    "TitleNavBarEdit": "Edition événement",
     "label": "Libellé",
     "teamHome": "Mon équipe",
     "teamVisitor": "Adversaire",
     "type": "Type",
     "startDate": "Date",
     "startTime": "Heure",
+    "address": "Adresse",
     "home" : "A domicile",
     "outside" : "A l'extérieur",
+    "identity": "Identification",
+    "logistic": "Horaire et lieu",
+    "actors": "Acteurs",
     "eventsList": {
       "title": "Evénements"
     },
@@ -74,7 +79,7 @@
       "name":"Nom",
       "firstname":"Prénom",
       "mobile":"Tel. Portable",
-      "address": "Addresse",
+      "address": "Adresse",
       "email":"E-mail",
       "squadNumber": "Numéro",
       "profil":"Profil"
