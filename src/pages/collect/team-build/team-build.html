@@ -9,13 +9,13 @@
 
 <ion-content>
     <div id="img-background">
-        <img src="assets/imgs/zone_defense.png"/>
+        <img src="assets/imgs/zone_defense.png" alt="Defense area"/>
         <div id="ground-area">
             <ion-row>
                 <ion-col text-center>
                     <ion-chip (click)="showPlayerChooser('pivot')" class="pivot">
                         <ion-avatar *ngIf="playerPositions.pivot">
-                            <img src="{{ getAvatar(playerPositions.pivot.avatar) }}">
+                            <img src="{{ getAvatar(playerPositions.pivot.avatar) }}" alt="avatar">
                         </ion-avatar>
                         <ion-label *ngIf="playerPositions.pivot">{{ playerPositions.pivot.name }}</ion-label>
                         <ion-label *ngIf="!playerPositions.pivot">Pivot</ion-label>
@@ -28,7 +28,7 @@
                 <ion-col text-center>
                     <ion-chip (click)="showPlayerChooser('left-backcourt')">
                         <ion-avatar *ngIf="playerPositions['left-backcourt']">
-                            <img src="{{ getAvatar(playerPositions['left-backcourt'].avatar) }}">
+                            <img src="{{ getAvatar(playerPositions['left-backcourt'].avatar) }}" alt="avatar">
                         </ion-avatar>
                         <ion-label *ngIf="playerPositions['left-backcourt']">{{ playerPositions['left-backcourt'].name}}</ion-label>
                         <ion-label *ngIf="!playerPositions['left-backcourt']">left</ion-label>
@@ -38,7 +38,7 @@
                 <ion-col text-center>
                     <ion-chip (click)="showPlayerChooser('center-backcourt')">
                         <ion-avatar *ngIf="playerPositions['center-backcourt']">
-                            <img src="{{ getAvatar(playerPositions['center-backcourt'].avatar) }}">
+                            <img src="{{ getAvatar(playerPositions['center-backcourt'].avatar) }}" alt="avatar">
                         </ion-avatar>
                         <ion-label *ngIf="playerPositions['center-backcourt']">{{ playerPositions['center-backcourt'].name
                             }}
@@ -50,7 +50,7 @@
                 <ion-col text-center>
                     <ion-chip (click)="showPlayerChooser('right-backcourt')">
                         <ion-avatar *ngIf="playerPositions['right-backcourt']">
-                            <img src="{{ getAvatar(playerPositions['right-backcourt'].avatar) }}">
+                            <img src="{{ getAvatar(playerPositions['right-backcourt'].avatar) }}" alt="avatar">
                         </ion-avatar>
                         <ion-label *ngIf="playerPositions['right-backcourt']">{{ playerPositions['right-backcourt'].name
                             }}
@@ -66,7 +66,7 @@
                 <ion-col text-center>
                     <ion-chip (click)="showPlayerChooser('left-wingman')">
                         <ion-avatar *ngIf="playerPositions['left-wingman']">
-                            <img src="{{ getAvatar(playerPositions['left-wingman'].avatar) }}">
+                            <img src="{{ getAvatar(playerPositions['left-wingman'].avatar) }}" alt="avatar">
                         </ion-avatar>
                         <ion-label *ngIf="playerPositions['left-wingman']">{{ playerPositions['left-wingman'].name }}
                         </ion-label>
@@ -77,7 +77,7 @@
                 <ion-col text-center>
                     <ion-chip (click)="showPlayerChooser('goalkeeper')" class="goalkeeper">
                         <ion-avatar *ngIf="playerPositions['goalkeeper']">
-                            <img src="{{ getAvatar(playerPositions['goalkeeper'].avatar) }}">
+                            <img src="{{ getAvatar(playerPositions['goalkeeper'].avatar) }}" alt="avatar">
                         </ion-avatar>
                         <ion-label *ngIf="playerPositions['goalkeeper']">{{ playerPositions['goalkeeper'].name }}
                         </ion-label>
@@ -88,7 +88,7 @@
                 <ion-col text-center>
                     <ion-chip (click)="showPlayerChooser('right-wingman')">
                         <ion-avatar *ngIf="playerPositions['right-wingman']">
-                            <img src="{{ getAvatar(playerPositions['right-wingman'].avatar) }}">
+                            <img src="{{ getAvatar(playerPositions['right-wingman'].avatar) }}" alt="avatar">
                         </ion-avatar>
                         <ion-label *ngIf="playerPositions['right-wingman']">{{ playerPositions['right-wingman'].name }}
                         </ion-label>
