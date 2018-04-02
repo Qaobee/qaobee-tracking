@@ -2,7 +2,9 @@ page-team-build {
   #substitute-area {
     background-color: color($colors, secondary, base);
     min-height: 18rem;
-
+    ion-chip {
+      background-color: white;
+    }
     h4 {
       color: color($colors, light, base);
     }

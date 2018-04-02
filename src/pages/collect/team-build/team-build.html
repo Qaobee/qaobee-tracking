@@ -16,16 +16,19 @@
                         <ion-avatar>
                             <img [src]="getAvatar(playerPositions[pos.key]?.avatar)" alt="avatar">
                         </ion-avatar>
-                        <ion-label>{{ playerPositions[pos.key]?.name || pos.label }}</ion-label>
-                        <ion-badge>{{ playerPositions[pos.key]?.status.squadnumber || '?' }}</ion-badge>
+                        <ion-label>{{ playerPositions[pos.key]?.name || pos.label }}
+                            <ion-badge>{{ playerPositions[pos.key]?.status.squadnumber || '?' }}</ion-badge>
+                        </ion-label>
                     </ion-chip>
                 </ion-col>
             </ion-row>
         </ion-grid>
         <ion-grid id="substitute-area">
-            <h4 light>Substitutes</h4>
+            <h4>Substitutes</h4>
             <ion-fab right edge>
-                <button ion-fab mini  (click)="showPlayerChooser('substitutes')"><ion-icon name="add"></ion-icon></button>
+                <button ion-fab mini (click)="showSubstituesChooser('substitutes')">
+                    <ion-icon name="add"></ion-icon>
+                </button>
             </ion-fab>
             <ion-row>
                 <ion-col text-center *ngFor="let s of playerPositions['substitutes']" ion-col>
@@ -33,8 +36,9 @@
                         <ion-avatar>
                             <img [src]="getAvatar(s.avatar)" alt="avatar">
                         </ion-avatar>
-                        <ion-label>{{ s.name }}</ion-label>
-                        <ion-badge>{{ s.status.squadnumber }}</ion-badge>
+                        <ion-label>{{ s.name }}
+                            <ion-badge text-end>{{ s.status.squadnumber }}</ion-badge>
+                        </ion-label>
                         <button ion-button clear color="dark" (click)="remove(s)">
                             <ion-icon name="close-circle"></ion-icon>
                         </button>
@@ -44,6 +48,8 @@
         </ion-grid>
     </ion-list>
     <ion-fab bottom right>
-        <button ion-fab mini (click)="goToCollect()"><ion-icon name="stopwatch"></ion-icon></button>
+        <button ion-fab mini (click)="goToCollect()">
+            <ion-icon name="stopwatch"></ion-icon>
+        </button>
     </ion-fab>
 </ion-content>

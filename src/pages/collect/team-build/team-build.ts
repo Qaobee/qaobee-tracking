@@ -99,8 +99,57 @@ export class TeamBuildPage {
     }
 
     showPlayerChooser(position: string) {
+        console.log('showPlayerChooser : this.playerPositions', this.playerPositions)
         let alert = this.alertCtrl.create();
         alert.setTitle('Choose Player');
+        let excludedPlayer = [];
+        Object.keys(this.playerPositions).forEach(k => {
+            if (Array.isArray(this.playerPositions[k])) {
+                excludedPlayer = excludedPlayer.concat(this.playerPositions[k]);
+            } else if (k !== position && this.playerPositions[k] && this.playerPositions[k]._id) {
+                excludedPlayer.push(this.playerPositions[k])
+            }
+        });
+        console.log('showPlayerChooser : excludedPlayer', excludedPlayer)
+        this.playerList.forEach(p => {
+            if (!excludedPlayer.find(item => {
+                return item._id === p._id;
+            })) {
+                alert.addInput({
+                    type: 'radio',
+                    label: p.firstname + ' ' + p.name + ' (' + p.status.squadnumber + ')',
+                    value: p,
+                    checked: this.playerPositions[position] && this.playerPositions[position]._id === p._id,
+                    handler: data => {
+                        console.log(position, data.value);
+                        this.playerPositions[position] = data.value;
+                        alert.dismiss();
+                    }
+                });
+            }
+        });
+
+        alert.addButton({
+            text: 'Clear',
+            handler: data => {
+                console.log(position, data);
+                delete this.playerPositions[position];
+                this.playerList.push(data);
+            }
+        });
+        alert.addButton({
+            text: 'OK',
+            handler: data => {
+                this.playerPositions[position] = data;
+            }
+        });
+        alert.present();
+    }
+
+    showSubstituesChooser(position: string) {
+        console.log('showSubstituesChooser : this.playerPositions', this.playerPositions)
+        let alert = this.alertCtrl.create();
+        alert.setTitle('Choose Players');
         let excludedPlayer = [];
         Object.keys(this.playerPositions).forEach(k => {
             if (Array.isArray(this.playerPositions[k])) {
@@ -114,10 +163,10 @@ export class TeamBuildPage {
                 return item._id === p._id;
             })) {
                 alert.addInput({
-                    type: 'radio',
+                    type: 'checkbox',
                     label: p.firstname + ' ' + p.name + ' (' + p.status.squadnumber + ')',
                     value: p,
-                    checked: this.playerPositions[position] && this.playerPositions[position]._id === p._id
+                    checked: this.playerPositions[position].find(c => c._id === p._id),
                 });
             }
         });
@@ -134,18 +183,15 @@ export class TeamBuildPage {
             text: 'OK',
             handler: data => {
                 console.log(position, data);
-                if ('substitutes' === position) {
-                    this.playerPositions[position].push(data);
-                } else {
-                    this.playerPositions[position] = data;
-                }
+                this.playerPositions[position] = this.playerPositions[position].concat(data);
             }
         });
         alert.present();
     }
 
+
     remove(s: any) {
-        this.playerPositions['substitutes'] = this.playerPositions['substitutes'].filter(p => p._id !== s._is);
+        this.playerPositions['substitutes'] = this.playerPositions['substitutes'].filter(p => p._id !== s._id);
     }
 
     /**
