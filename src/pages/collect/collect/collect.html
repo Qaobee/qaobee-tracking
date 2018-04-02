@@ -8,4 +8,141 @@
 </ion-header>
 
 <ion-content>
+    <ion-list>
+        <ion-grid>
+            <ion-row>
+                <ion-col col-3 class="period" text-center>Period<br />1/2</ion-col>
+                <ion-col col-1 text-center>
+                    <button ion-button small icon-only>
+                        <ion-icon name="play"></ion-icon>
+                    </button>
+                </ion-col>
+                <ion-col class="chrono" col-3 text-center>0:00</ion-col>
+                <ion-col col-1 text-center>
+                    <button ion-button small icon-only>
+                        <ion-icon name="square"></ion-icon>
+                    </button>
+                </ion-col>
+                <ion-col col-3>&nbsp;</ion-col>
+            </ion-row>
+        </ion-grid>
+        <ion-grid>
+            <ion-row>
+                <ion-col>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col class="team" text-center>TeamHome</ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col class="score" text-center>0</ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col text-center class="small">Temps mort</ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col text-center>
+                                <ion-checkbox></ion-checkbox>
+                            </ion-col>
+                            <ion-col text-center>
+                                <ion-checkbox></ion-checkbox>
+                            </ion-col>
+                            <ion-col text-center>
+                                <ion-checkbox></ion-checkbox>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-col>
+                <ion-col>
+                    <ion-list inset class="events-list">
+                        <span class="event">Passe</span>
+                        <span class="event">Passe</span>
+                        <span class="event">Passe</span>
+                        <span class="event">Passe</span>
+                        <span class="event">Passe</span>
+                        <span class="event">Passe</span>
+                        <span class="event">Passe</span>
+                    </ion-list>
+                </ion-col>
+                <ion-col>
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col text-center class="team">TeamVisitor</ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col text-center class="score">0</ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col text-center class="small">Temps mort</ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col text-center>
+                                <ion-checkbox></ion-checkbox>
+                            </ion-col>
+                            <ion-col text-center>
+                                <ion-checkbox></ion-checkbox>
+                            </ion-col>
+                            <ion-col text-center>
+                                <ion-checkbox></ion-checkbox>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
+        <ion-grid id="ground-area">
+            <ion-row *ngFor="let area of ground">
+                <ion-col text-center *ngFor="let pos of area" ion-col>
+                    <ion-item>
+                        <ion-avatar>
+                            <img [src]="getAvatar(playerPositions[pos.key]?.avatar)" alt="avatar">
+                        </ion-avatar>
+                        <ion-label>{{ playerPositions[pos.key]?.name || pos.label }}
+                            <ion-badge>{{ playerPositions[pos.key]?.status.squadnumber || '?' }}</ion-badge>
+                        </ion-label>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
+        <ion-grid>
+            <ion-row>
+                <ion-col text-center>
+                    <ion-fab center middle>
+                        <button ion-fab mini color="danger">
+                            <ion-icon name="medical"></ion-icon>
+                        </button>
+                    </ion-fab>
+                </ion-col>
+                <ion-col text-center>
+                    <ion-fab center middle>
+                        <button ion-fab mini color="yellow">
+                            <ion-icon name="document"></ion-icon>
+                        </button>
+                    </ion-fab>
+                </ion-col>
+                <ion-col text-center>
+                    <ion-fab center middle>
+                        <button ion-fab mini color="warning">
+                            +2
+                        </button>
+                    </ion-fab>
+                </ion-col>
+                <ion-col text-center>
+                    <ion-fab center middle>
+                        <button ion-fab mini color="danger">
+                            <ion-icon name="document"></ion-icon>
+                        </button>
+                    </ion-fab>
+                </ion-col>
+                <ion-col text-center>
+                    <ion-fab center middle>
+                        <button ion-fab mini color="secondary">
+                            <ion-icon name="swap"></ion-icon>
+                        </button>
+                    </ion-fab>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-list>
 </ion-content>

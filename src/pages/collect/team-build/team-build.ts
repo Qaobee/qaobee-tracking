@@ -99,7 +99,7 @@ export class TeamBuildPage {
     }
 
     showPlayerChooser(position: string) {
-        console.log('showPlayerChooser : this.playerPositions', this.playerPositions)
+        console.log('[TeamBuildPage] - showPlayerChooser : this.playerPositions', this.playerPositions)
         let alert = this.alertCtrl.create();
         alert.setTitle('Choose Player');
         let excludedPlayer = [];
@@ -110,7 +110,7 @@ export class TeamBuildPage {
                 excludedPlayer.push(this.playerPositions[k])
             }
         });
-        console.log('showPlayerChooser : excludedPlayer', excludedPlayer)
+        console.log('[TeamBuildPage] - showPlayerChooser : excludedPlayer', excludedPlayer)
         this.playerList.forEach(p => {
             if (!excludedPlayer.find(item => {
                 return item._id === p._id;
@@ -147,7 +147,7 @@ export class TeamBuildPage {
     }
 
     showSubstituesChooser(position: string) {
-        console.log('showSubstituesChooser : this.playerPositions', this.playerPositions)
+        console.log('[TeamBuildPage] - showSubstituesChooser : this.playerPositions', this.playerPositions)
         let alert = this.alertCtrl.create();
         alert.setTitle('Choose Players');
         let excludedPlayer = [];
@@ -207,11 +207,11 @@ export class TeamBuildPage {
                 count++
             }
         });
-        if (count < this.settingsService.minPlayers || count > this.settingsService.maxPlayers) {
-            this.presentToast('Your tem must have between ' + this.settingsService.minPlayers + ' and ' + this.settingsService.maxPlayers + ' players');
-        } else {
+    /*    if (count < this.settingsService.minPlayers || count > this.settingsService.maxPlayers) {
+            this.presentToast('Your team must have between ' + this.settingsService.minPlayers + ' and ' + this.settingsService.maxPlayers + ' players');
+        } else {*/
             this.navCtrl.push(CollectPage, {players: this.playerPositions, event: this.event});
-        }
+       // }
     }
 
     ionViewDidLoad() {

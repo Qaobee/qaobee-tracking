@@ -1,3 +1,46 @@
 page-collect {
+  .period {
+    font-size: 1rem;
+  }
+  .chrono {
+    font-size: 3rem;
+    color: color($colors, danger, base);
+    text-align: center;
+    width: 100%;
+  }
+  .team {
+    font-size: 1rem;
+  }
+  .small {
+    font-size: 1rem;
+  }
+  .score {
+    font-size: 4rem;
+    font-weight: bold;
+    color: color($colors, secondary, base);
+  }
+  .event {
+    font-size: 1rem;
+    line-height: 1.2rem;
+    height: 1.2rem;
+    display: block;
+  }
+  #ground-area {
+    z-index: 5;
+    height: 20rem;
+    width: 100vw;
+    background: url("/assets/imgs/zone_defense.png") no-repeat;
+    background-size: 100vw 18rem;
 
+    ion-item {
+      /* background-color: transparent; */
+      max-width: calc(100vw / 3 - 3rem);
+      margin: auto;
+      border: none;
+      border-radius: 64px;
+      .item-inner {
+        border: none;
+      }
+    }
+  }
 }
