@@ -32,10 +32,11 @@ import {TranslateService} from '@ngx-translate/core';
 import {AuthenticationService} from "../providers/authentication.service";
 import {Storage} from "@ionic/storage";
 import {UserService} from "../providers/api/api.user.service";
-import {EventService} from "../providers/event.service";
+import {MessageBus} from "../providers/event.service";
 import {MetaService} from "../providers/api/api.meta.service";
 import {HomePage} from "../pages/home/home";
 import {EventListPage} from "../pages/events/event-list/event-list";
+import {CollectPage} from "../pages/collect/collect/collect";
 
 @Component({
     templateUrl: 'app.html'
@@ -55,7 +56,7 @@ export class MyApp {
      * @param {Storage} storage
      * @param {AuthenticationService} authenticationService
      * @param {TranslateService} translate
-     * @param {EventService} eventService
+     * @param {MessageBus} eventService
      * @param {MetaService} metaService
      */
     constructor(private platform: Platform,
@@ -65,7 +66,7 @@ export class MyApp {
                 private storage: Storage,
                 private authenticationService: AuthenticationService,
                 private translate: TranslateService,
-                private eventService: EventService,
+                private eventService: MessageBus,
                 private metaService: MetaService) {
         this.initializeApp();
         this.pages = [];
@@ -84,7 +85,7 @@ export class MyApp {
             this.buildMenu();
             this.trySSO();
 
-            this.eventService.on(EventService.userLogged, user => {
+            this.eventService.on(MessageBus.userLogged, user => {
                 this.user = user;
                 this.authenticationService.isLogged = true;
                 this.authenticationService.token = user.account.token;
@@ -94,12 +95,13 @@ export class MyApp {
                 this.metaService.getMeta().subscribe(m => {
                     if (m) {
                         this.authenticationService.meta = m;
-                        this.nav.setRoot(HomePage, {user: user});
+                       // this.nav.setRoot(HomePage, {user: user});
+                        this.nav.setRoot(CollectPage, {user: user});
                     }
                 });
             });
 
-            this.eventService.on(EventService.navigation, page => {
+            this.eventService.on(MessageBus.navigation, page => {
                 this.nav.push(page.component, page.options);
             });
         });
@@ -153,7 +155,7 @@ export class MyApp {
                     this.userService.sso(l, mt).subscribe((result: any) => {
                         if (result) {
                             this.storage.set("mobileToken", mt);
-                            this.eventService.broadcast('user-logged', result);
+                            this.eventService.broadcast(MessageBus.userLogged, result);
                         }
                     });
                 }

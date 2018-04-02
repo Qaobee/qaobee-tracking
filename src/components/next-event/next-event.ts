@@ -22,7 +22,7 @@ import {EventsService} from "../../providers/api/api.events.service";
 import {AuthenticationService} from "../../providers/authentication.service";
 import {Storage} from "@ionic/storage";
 import {Utils} from "../../providers/utils";
-import {EventService} from "../../providers/event.service";
+import {MessageBus} from "../../providers/event.service";
 import {EventUpsertPage} from "../../pages/events/event-upsert/event-upsert";
 import { EventDetailPage } from './../../pages/events/event-detail/event-detail';
 
@@ -40,14 +40,14 @@ export class NextEventComponent {
      * @param {EventsService} eventsServices
      * @param {Storage} storage
      * @param {AuthenticationService} authenticationService
-     * @param {EventService} eventService
+     * @param {MessageBus} eventService
      * @param {Utils} utils
      */
     constructor(public navCtrl: NavController,
                 private eventsServices: EventsService,
                 private storage: Storage,
                 private authenticationService: AuthenticationService,
-                private eventService: EventService,
+                private eventService: MessageBus,
                 private utils: Utils) {
 
         this.user = this.authenticationService.user;
@@ -94,7 +94,7 @@ export class NextEventComponent {
      */
     goToCreateEvent() {
         console.log('[NextEventComponent] goToCreateEvent');
-        this.eventService.broadcast(EventService.navigation, {component: EventUpsertPage});
+        this.eventService.broadcast(MessageBus.navigation, {component: EventUpsertPage});
     }
 
     /**

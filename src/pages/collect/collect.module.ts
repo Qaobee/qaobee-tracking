@@ -8,6 +8,7 @@ import {App, IonicModule} from "ionic-angular";
 import {TeamBuildPage} from "./team-build/team-build";
 import {PipesModule} from "../../pipes/pipes.module";
 import {CollectPage} from "./collect/collect";
+import {HandFSM} from "../../providers/collect/hand.fsm";
 
 @NgModule({
     declarations: [
@@ -27,6 +28,9 @@ import {CollectPage} from "./collect/collect";
             }
         }),
         PipesModule
+    ],
+    providers: [
+        HandFSM
     ],
     entryComponents: [
         TeamBuildPage,

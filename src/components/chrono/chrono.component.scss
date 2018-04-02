@@ -1,0 +1,18 @@
+chrono-component {
+  .chrono {
+    font-size: 3rem;
+    color: color($colors, danger, base);
+    text-align: center;
+    width: 100%;
+  }
+
+  .blink {
+    animation: blinker 1s linear infinite;
+  }
+
+  @keyframes blinker {
+    50% {
+      opacity: 0;
+    }
+  }
+}

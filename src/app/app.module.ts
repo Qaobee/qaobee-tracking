@@ -32,7 +32,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {UniqueDeviceID} from "@ionic-native/unique-device-id";
 
-import {EventService} from "../providers/event.service";
+import {MessageBus} from "../providers/event.service";
 import {AuthenticationService} from "../providers/authentication.service";
 
 import {ComponentsModule} from "../components/components.module";
@@ -75,7 +75,7 @@ export function createTranslateLoader(http: HttpClient) {
         SplashScreen,
         UniqueDeviceID,
         AuthenticationService,
-        EventService,
+        MessageBus,
         SettingsService,
         LocationService,
         Utils,

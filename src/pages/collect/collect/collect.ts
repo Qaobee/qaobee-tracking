@@ -7,6 +7,7 @@ import {ENV} from "@app/env";
 })
 export class CollectPage {
     root: string = ENV.hive;
+    chrono: number = 0;
     playerPositions: any = {
         substitutes: []
     };
