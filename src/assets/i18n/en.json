@@ -10,14 +10,19 @@
     "message": "Refreshing..."
   },
   "eventsModule": {
+    "TitleNavBarEdit": "Event edit",
     "label": "Label",
     "teamHome": "My team",
     "teamVisitor": "Adversary",
     "type": "Type",
     "startDate": "Date",
     "startTime": "Time",
+    "address": "Address",
     "home" : "Home",
     "outside" : "Outside",
+    "identity": "Identity",
+    "logistic": "Date and localisation",
+    "actors": "Actors",
     "eventsList": {
       "title": "Events"
     },

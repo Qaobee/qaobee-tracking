@@ -20,7 +20,7 @@ export class LocationService {
         } else {
             this.GoogleAutocomplete.getPlacePredictions({input: address}, (predictions, status) => {
 
-                console.log('[LocationService] - updateSearchResults - getPlacePredictions', predictions, status);
+                //console.log('[LocationService] - updateSearchResults - getPlacePredictions', predictions, status);
                 if (predictions) {
                     autocompleteItems = [];
                     predictions.forEach((prediction) => {
@@ -41,7 +41,7 @@ export class LocationService {
     selectSearchResult(item: any, address: any, callback: Function) {
         this.geocoder.geocode({'placeId': item.place_id}, (results, status) => {
             if (status === 'OK' && results[0]) {
-                console.log('[LocationService] - selectSearchResult - geocode', results[0]);
+                //console.log('[LocationService] - selectSearchResult - geocode', results[0]);
                 callback(results[0]);
             }
         })
