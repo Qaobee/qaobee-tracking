@@ -76,7 +76,8 @@
       "mobile":"Tel. Portable",
       "address": "Addresse",
       "email":"E-mail",
-      "squadNumber": "Numéro"
+      "squadNumber": "Numéro",
+      "profil":"Profil"
     },
     "laterality": {
       "right-handed": "Droitier",

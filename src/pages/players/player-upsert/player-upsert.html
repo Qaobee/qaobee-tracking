@@ -30,7 +30,12 @@
           <p *ngIf="!isValid('firstname')" danger padding-left>Invalid label</p>
       </ion-item>
 
-      <ion-item color="light"></ion-item>
+      <ion-item color="light">
+          <h2 class="panel">
+            <ion-icon name="contact"></ion-icon>  
+            {{'player.labels.profil' | translate}}
+          </h2>
+        </ion-item>
 
       <ion-item class="form-group">
           <ion-label fixed>{{ 'player.labels.squadNumber' | translate }}</ion-label>
@@ -65,29 +70,26 @@
           <p *ngIf="!isValid('height')" danger padding-left>Invalid label</p>
       </ion-item>
 
-      <ion-item color="light"></ion-item>
+      <ion-item color="light">
+        <h2 class="panel">
+          <ion-icon name="book"></ion-icon>  
+          {{'player.labels.contact' | translate}}
+        </h2>
+      </ion-item>
+    
+      <!-- Etat Civil-->
+      <ion-item class="form-group">
+          <ion-label fixed>{{ 'player.labels.birthdate' | translate }}</ion-label>
+          <ion-datetime formControlName="birthdate" min="1950" max="maxDate" id="birthdate"></ion-datetime>
+          <p *ngIf="!isValid('birthdate')" danger padding-left>Invalid label</p>
+      </ion-item>
+      <ion-item class="form-group">
+          <ion-label fixed>{{ 'player.labels.nationality' | translate }}</ion-label>
+          <ion-input type="text" formControlName="nationality" id="nationality" clearInput></ion-input>
+          <p *ngIf="!isValid('nationality')" danger padding-left>Invalid label</p>
+      </ion-item>
     </form>
-
-    <!-- Etat Civil-->
-    <ion-item>
-      <ion-row>
-        <ion-col>
-          <h2 class="panel"><ion-icon name="contact"></ion-icon>  {{'player.labels.civilStatus' | translate}}</h2>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col text-left><h3 class="label">{{'player.labels.birthdate' | translate}}</h3></ion-col>
-        <ion-col text-left><h3 class="label">{{'player.labels.nationality' | translate}}</h3></ion-col>
-      </ion-row>
-      <ion-row>    
-          <ion-col text-left>
-            <h2>{{ player.birthdate | date:"mediumDate" }}</h2>
-          </ion-col>
-          <ion-col text-left>
-            <h2>{{player.nationality}}</h2>
-          </ion-col>
-      </ion-row>
-    </ion-item>  
+    
     <!-- Contact information-->
     <ion-item *ngIf="player.contact" color="light">
       <ion-row>
