@@ -7,10 +7,12 @@ import {createTranslateLoader} from "../../app/app.module";
 import {App, IonicModule} from "ionic-angular";
 import {TeamBuildPage} from "./team-build/team-build";
 import {PipesModule} from "../../pipes/pipes.module";
+import {CollectPage} from "./collect/collect";
 
 @NgModule({
     declarations: [
-        TeamBuildPage
+        TeamBuildPage,
+        CollectPage
     ],
     imports: [
         HttpClientModule,
@@ -28,6 +30,7 @@ import {PipesModule} from "../../pipes/pipes.module";
     ],
     entryComponents: [
         TeamBuildPage,
+        CollectPage
     ]
 })
 
