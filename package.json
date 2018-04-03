@@ -52,9 +52,9 @@
     "cordova-sqlite-storage": "^2.2.1",
     "ionic-angular": "3.9.2",
     "ionicons": "3.0.0",
+    "node-easy-flow": "^2.0.1",
     "rxjs": "5.5.7",
     "sw-toolbox": "3.6.0",
-    "typestate": "^1.0.5",
     "zone.js": "0.8.20"
   },
   "devDependencies": {

@@ -5,12 +5,15 @@ import { StatType } from "../../model/stat.type";
 import { MessageBus } from "../message-bus.service";
 import { InGamePlayer } from "../../model/ingame.player";
 
-@Injectable
+@Injectable()
 export class StatCollector {
     public STAT = 'collect.stat';
+
+    /**
+     * @param  {MessageBus} privatemessageBus
+     */
     constructor(
         private messageBus: MessageBus) {
-
     }
 
     /**
