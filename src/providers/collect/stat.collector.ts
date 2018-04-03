@@ -1,14 +1,14 @@
-import {Injectable} from "@angular/core";
-import {FSMContext} from "../../model/fsm.context";
-import {CollectStat} from "../../model/collect.stat";
-import {StatType} from "../../model/stat.type";
-import {MessageBus} from "../message-bus.service";
-import {InGamePlayer} from "../../model/ingame.player";
+import { Injectable } from "@angular/core";
+import { FSMContext } from "../../model/fsm.context";
+import { CollectStat } from "../../model/collect.stat";
+import { StatType } from "../../model/stat.type";
+import { MessageBus } from "../message-bus.service";
+import { InGamePlayer } from "../../model/ingame.player";
 
 @Injectable
 export class StatCollector {
     public STAT = 'collect.stat';
-    constructor (
+    constructor(
         private messageBus: MessageBus) {
 
     }
@@ -16,11 +16,11 @@ export class StatCollector {
     /**
      * Build a collectEvent
      * @param {FSMContext} context
-     * @param {string} code
+     * @param {StatType} code
      * @param {string | number} value
      * @returns {CollectStat}
      */
-    eventBuilder(context: FSMContext, code: string, value: string | number): CollectStat {
+    eventBuilder(context: FSMContext, code: StatType, value: string | number): CollectStat {
         let evt: CollectStat = new CollectStat();
         evt.activityId = context.meta.activity._id;
         evt.eventId = context.eventId;
@@ -53,18 +53,22 @@ export class StatCollector {
      */
     makePass(context: FSMContext, playerId: string, otherPlayer: string): void {
         let stat = this.eventBuilder(context, StatType.PASS, otherPlayer);
-        if(playerId) {
+        if (playerId) {
             stat.owners.push(playerId);
         }
         this.messageBus.broadcast(this.STAT, stat);
     }
 
+    /**
+     *
+     * @param {FSMContext} context
+     */
     endCollect(context: FSMContext) {
         if (context.gamePhase) {
             this.switchPhase(context, context.chrono - context.gamePhase.startTime);
         }
 
-        context.players.forEach(rp =>  {
+        context.players.forEach(rp => {
             if (rp.holder) {
                 let lastIn = 0;
                 if (context.lastInMap.hasOwnProperty(rp.playerId)) {
@@ -76,7 +80,7 @@ export class StatCollector {
                 if (context.playTimeMap.hasOwnProperty(rp.playerId)) {
                     totalPlayTime = context.playTimeMap[rp.playerId];
                 }
-                context.playTimeMap[rp.playerId] =  totalPlayTime + playTime;
+                context.playTimeMap[rp.playerId] = totalPlayTime + playTime;
             }
             this.totalPlayTime(context, rp.playerId);
         });
@@ -84,15 +88,233 @@ export class StatCollector {
         this.messageBus.broadcast('upload.stats');
     }
 
+    /**
+     * 
+     * @param {FSMContext} context 
+     * @param {StatType} cardValue 
+     * @param {string} playerId 
+     */
+    card(context: FSMContext, cardValue: StatType, playerId: string) {
+        let stat = this.eventBuilder(context, cardValue, 1);
+        if (playerId != null) {
+            stat.owners.push(playerId);
+        }
+        this.messageBus.broadcast(this.STAT, stat);
+    }
+
+    /**
+     * @param  {FSMContext} context
+     * @param  {number} duration
+     */
     switchPhase(context: FSMContext, duration: number) {
-        // TODO
+        let stat = this.eventBuilder(context, context.gamePhase.code, duration);
+        this.messageBus.broadcast(this.STAT, stat);
     }
-
+    /**
+     * @param  {FSMContext} context
+     * @param  {string} playerId
+     * @param  {number} playTime
+     */
     playTime(context: FSMContext, playerId: string, playTime: number) {
-        // TODO
+        let stat = this.eventBuilder(context, StatType.PLAY_TIME, playTime);
+        if (playerId != null) {
+            stat.owners.push(playerId);
+        }
+        this.messageBus.broadcast(this.STAT, stat);
     }
 
+    /**
+     * @param  {FSMContext} context
+     * @param  {string} playerId
+     */
     totalPlayTime(context: FSMContext, playerId: string) {
-        // TODO
+        let stat = this.eventBuilder(context, StatType.TOTAL_PLAY_TIME, context.playTimeMap[playerId]);
+        if (playerId != null) {
+            stat.owners.push(playerId);
+        }
+        this.messageBus.broadcast(this.STAT, stat);
+    }
+
+    /**
+     * @param  {FSMContext} context
+     * @param  {StatType} code
+     * @param  {string} gameSystem
+     * @param  {string} team
+     */
+    gameSystemChange(context: FSMContext, code: StatType, gameSystem: string, team: string) {
+        let stat = this.eventBuilder(context, code, gameSystem);
+        if (team != null) {
+            stat.owners.push(team);
+        }
+        this.messageBus.broadcast(this.STAT, stat);
+    }
+
+    /**
+     * @param  {FSMContext} context
+     * @param  {StatType} code
+     * @param  {string} area
+     * @param  {string} playerId
+     */
+    ground(context: FSMContext, code: StatType, area: string, playerId: string) {
+        let stat = this.eventBuilder(context, code, area);
+        if (playerId != null) {
+            stat.owners.push(playerId);
+        }
+        this.messageBus.broadcast(this.STAT, stat);
+    }
+
+    /**
+     * @param  {FSMContext} context
+     * @param  {StatType} code
+     * @param  {string} target
+     * @param  {string} playerId
+     */
+    goalTarget(context: FSMContext, code: StatType, target: string, playerId: string) {
+        let stat = this.eventBuilder(context, code, target);
+        if (playerId != null) {
+            stat.owners.push(playerId);
+        }
+        this.messageBus.broadcast(this.STAT, stat);
+    }
+
+    /**
+     * @param  {FSMContext} context
+     * @param  {StatType} action
+     * @param  {string} playerId
+     */
+    makeAction(context: FSMContext, action: StatType, playerId: string) {
+        let stat = this.eventBuilder(context, action, 1);
+        if (playerId != null) {
+            stat.owners.push(playerId);
+        }
+        this.messageBus.broadcast(this.STAT, stat);
+    }
+
+    /**
+     * @param  {FSMContext} context
+     * @param  {string} where
+     * @param  {string} playerId
+     */
+    outside(context: FSMContext, where: string, playerId: string) {
+        let stat = this.eventBuilder(context, StatType.OUTSIDE, where);
+        if (playerId != null) {
+            stat.owners.push(playerId);
+        }
+        this.messageBus.broadcast(this.STAT, stat);
+    }
+
+    /**
+     * @param  {FSMContext} context
+     * @param  {StatType} code
+     * @param  {string} team
+     */
+    deadTime(context: FSMContext, code: StatType, team: string) {
+        let stat = this.eventBuilder(context, code, team);
+        if (team != null) {
+            stat.owners.push(team);
+        }
+    }
+
+    /**
+     * @param  {FSMContext} context
+     * @param  {string} playerId
+     */
+    goalScored(context: FSMContext, playerId: string) {
+        let stat = this.eventBuilder(context, StatType.GOAL_SCORED, 1);
+        if (playerId != null) {
+            stat.owners.push(playerId);
+        }
+        this.messageBus.broadcast(this.STAT, stat);
+    }
+
+    /**
+     * @param  {FSMContext} context
+     * @param  {string} playerId
+     */
+    goalConceded(context: FSMContext, playerId: string) {
+        let stat = this.eventBuilder(context, StatType.GOAL_CONCEDED, 1);
+        if (playerId != null) {
+            stat.owners.push(playerId);
+        }
+        this.messageBus.broadcast(this.STAT, stat);
+    }
+
+    /**
+     * @param  {FSMContext} context
+     * @param  {string} playerId
+     */
+    wound(context: FSMContext, playerId: string) {
+        let stat = this.eventBuilder(context, StatType.WOUND, 1);
+        if (playerId != null) {
+            stat.owners.push(playerId);
+        }
+        this.messageBus.broadcast(this.STAT, stat);
+    }
+
+    /**
+     * @param  {FSMContext} context
+     * @param  {string} playerId
+     */
+    stopShoot(context: FSMContext, playerId: string) {
+        let code = context.gamePhase.attack ? StatType.stopGKAtt : StatType.stopGKDef;
+        let stat = this.eventBuilder(context, code, 1);
+        if (playerId != null) {
+            stat.owners.push(playerId);
+        }
+    }
+
+    /**
+     * @param  {FSMContext} context
+     * @param  {string} pole
+     * @param  {string} playerId
+     */
+    pole(context: FSMContext, pole: string, playerId: string) {
+        let stat = this.eventBuilder(context, StatType.POLE, pole);
+        if (playerId != null) {
+            stat.owners.push(playerId);
+        }
+        this.messageBus.broadcast(this.STAT, stat);
+    }
+
+    /**
+     * @param  {FSMContext} context
+     * @param  {string} playerId
+     * @param  {string} positionType
+     */
+    holder(context: FSMContext, playerId: string, positionType: string) {
+        let stat = this.eventBuilder(context, StatType.HOLDER, positionType);
+        if (playerId != null) {
+            stat.owners.push(playerId);
+        }
+        this.messageBus.broadcast(this.STAT, stat);
+    }
+
+    /**
+     * @param  {FSMContext} context
+     * @param  {string} playerId
+     */
+    substitute(context: FSMContext, playerId: string) {
+        let lastIn = 0;
+        if (context.lastInMap.hasOwnProperty(playerId)) {
+            lastIn = context.lastInMap[playerId];
+        }
+        let stat = this.eventBuilder(context, StatType.SUBSTITUE, context.chrono - lastIn);
+        if (playerId != null) {
+            stat.owners.push(playerId);
+        }
+        this.messageBus.broadcast(this.STAT, stat);
+    }
+
+    /**
+     * @param  {FSMContext} context
+     * @param  {string} playerId
+     * @param  {string} position
+     */
+    positionType(context: FSMContext, playerId: string, position: string) {
+        let stat = this.eventBuilder(context, StatType.POSITION_TYPE, position);
+        if (playerId != null) {
+            stat.owners.push(playerId);
+        }
+        this.messageBus.broadcast(this.STAT, stat);
     }
 }

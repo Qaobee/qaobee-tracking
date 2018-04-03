@@ -1,3 +1,5 @@
+import { StatType } from "./stat.type";
+
 /**
  * Class describing a game phase
  */
@@ -9,7 +11,7 @@ export class GamePhase {
     /**
      * Phase code
      */
-    code:string;
+    code:StatType;
     /**
      * Start time
      */

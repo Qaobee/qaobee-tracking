@@ -90,5 +90,8 @@ export enum StatType {
     /**
      * Orange card type.
      */
-    ORANGE_CARD = 'exclTmp'
+    ORANGE_CARD = 'exclTmp',
+    
+    stopGKDef = 'stopGKDef',
+    stopGKAtt = 'stopGKAtt'
 }
