@@ -24,7 +24,7 @@ import {UserService} from '../../providers/api/api.user.service';
 import {SignupPage} from '../signup/signup';
 import {Storage} from '@ionic/storage';
 import {AuthenticationService} from "../../providers/authentication.service";
-import {MessageBus} from "../../providers/event.service";
+import {MessageBus} from "../../providers/message-bus.service";
 
 /**
  * LoginPage page.

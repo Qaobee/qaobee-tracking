@@ -22,7 +22,7 @@ import {EventsService} from "../../providers/api/api.events.service";
 import {AuthenticationService} from "../../providers/authentication.service";
 import {Storage} from "@ionic/storage";
 import {Utils} from "../../providers/utils";
-import {MessageBus} from "../../providers/event.service";
+import {MessageBus} from "../../providers/message-bus.service";
 import {EventUpsertPage} from "../../pages/events/event-upsert/event-upsert";
 import { EventDetailPage } from './../../pages/events/event-detail/event-detail';
 
