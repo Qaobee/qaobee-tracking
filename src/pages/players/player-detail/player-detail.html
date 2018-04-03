@@ -10,14 +10,6 @@
         <ion-icon name="create"></ion-icon>
       </button>
 
-      <button ion-button icon-only (click)="desactivatePlayer('player.confirmDesactivate','true')" *ngIf="(player.desactivated !== 'true')">
-        <ion-icon name="close-circle"></ion-icon>
-      </button>
-
-      <button ion-button icon-only (click)="desactivatePlayer('player.confirmActivate','false')" *ngIf="(player.desactivated === 'true')">
-        <ion-icon name="checkmark-circle"></ion-icon>
-      </button>
-
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -113,4 +105,17 @@
       </ion-col>
     </ion-row>
   </ion-item> 
+
+  <ion-row>
+    <ion-col text-center>
+      <h3 *ngIf="(player.desactivated !== 'true')">{{'player.confirmDesactivate.title' | translate}}</h3>
+      <button ion-button outline color="danger" (click)="desactivatePlayer('player.confirmDesactivate','true')" *ngIf="(player.desactivated !== 'true')">
+        <ion-icon name="close-circle"></ion-icon>
+      </button>
+      <h3 *ngIf="(player.desactivated === 'true')">{{'player.confirmActivate.title' | translate}}</h3>
+      <button ion-button outline color="secondary" (click)="desactivatePlayer('player.confirmActivate','false')" *ngIf="(player.desactivated === 'true')">
+        <ion-icon name="checkmark-circle"></ion-icon>
+      </button>
+    </ion-col>
+  </ion-row>
 </ion-content>

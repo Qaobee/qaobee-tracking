@@ -1,35 +1,46 @@
 <ion-header>
     <ion-navbar>
-        <button ion-button menuToggle>
-            <ion-icon name="menu"></ion-icon>
-        </button>
         <ion-title *ngIf="event">{{ event.label }}</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="goToEdit()">
+                <ion-icon name="create"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
-<ion-content padding *ngIf="event">
-    <ion-card>
+<ion-content *ngIf="event">
+ <!-- Identity-->
+ <ion-item color="light">
+    <h2 class="panel">
+      <ion-icon name="bookmark"></ion-icon>  
+      {{'eventsModule.identity' | translate}}
+    </h2>
+  </ion-item>     
+  <ion-item>
+      <h1>{{ event.label }}</h1>
+  </ion-item>
+  <ion-item>
+      <h1>{{ event.type.label }}</h1>
+      <p>{{ event.startDate | date:"mediumDate" }} {{ event.startDate | date:"shortTime" }}</p>
+  </ion-item>
 
+      <!-- Map -->
+      <!-- Actors-->
+      <ion-item color="light">
+        <h2 class="panel">
+          <ion-icon name="contacts"></ion-icon>  
+          {{'eventsModule.actors' | translate}}
+        </h2>
+      </ion-item>
+        
         <ion-item>
-            <h1>{{ event.label }}</h1>
-            <p>{{ event.startDate | date:"mediumDate" }} {{ event.startDate | date:"shortTime" }}</p>
-        </ion-item>
-
-        <!-- Map -->
-
-        <ion-card-content>
             <h2>{{ event.participants.teamHome.label }}</h2>
             <h2>{{ event.participants.teamVisitor.label }}</h2>
             <p *ngIf="event.address">{{ event.address.formatedAddress }}</p>
-        </ion-card-content>
+        </ion-item>
 
-        <ion-row>
-            <ion-col>
-                <button ion-button icon-left (click)="goToEdit()">
-                    <ion-icon name="create"></ion-icon>
-                    <div>{{ 'eventsModule.detail.edit' | translate }}</div>
-                </button>
-            </ion-col>
+        <ion-row text-center>
             <ion-col>
                 <button ion-button icon-left color="danger" (click)="delete()">
                     <ion-icon name="trash"></ion-icon>
@@ -42,8 +53,5 @@
                     <div>{{ 'eventsModule.detail.collect' | translate }}</div>
                 </button>
             </ion-col>
-
         </ion-row>
-
-    </ion-card>
 </ion-content>
