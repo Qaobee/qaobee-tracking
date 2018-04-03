@@ -32,7 +32,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {AuthenticationService} from "../providers/authentication.service";
 import {Storage} from "@ionic/storage";
 import {UserService} from "../providers/api/api.user.service";
-import {MessageBus} from "../providers/event.service";
+import {MessageBus} from "../providers/message-bus.service";
 import {MetaService} from "../providers/api/api.meta.service";
 import {HomePage} from "../pages/home/home";
 import {EventListPage} from "../pages/events/event-list/event-list";

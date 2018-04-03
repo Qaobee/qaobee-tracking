@@ -19,7 +19,7 @@
 import {Component, Input} from '@angular/core';
 import {ENV} from '@app/env'
 import {ProfilePage} from "../../pages/profile/profile";
-import {MessageBus} from "../../providers/event.service";
+import {MessageBus} from "../../providers/message-bus.service";
 
 @Component({
     selector: 'menu-header',
