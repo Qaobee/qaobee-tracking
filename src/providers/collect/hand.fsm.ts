@@ -170,7 +170,7 @@ export class HandFSM extends EasyFlow {
             // TODO
             this.messageBus.broadcast('stat-rollback')
             this.saveState(context);
-            context.safeTrigger(leaveGround);
+            context.trigger(leaveGround, context);
         });
 
         whenEnter(GROUND_LEAVED, (context: Context) => {
@@ -178,7 +178,7 @@ export class HandFSM extends EasyFlow {
             // TODO
             this.messageBus.broadcast('stat-rollback')
             this.saveState(context);
-            context.safeTrigger(backDone);
+            context.trigger(backDone, context);
         });
 
         whenEnter(PAUSED, (context: Context) => {
@@ -244,12 +244,12 @@ export class HandFSM extends EasyFlow {
 
         whenEnter(RETURN_TO_SELECTED_PLAYER, (context: Context) => {
             console.debug('[HandFSM] whenEnter', context.state);
-            context.safeTrigger(goToSelectPlayer);
+            context.trigger(goToSelectPlayer, context);
             this.saveState(context);
         });
 
     }
-    
+
     /**
      * @param  {Context} context
      */

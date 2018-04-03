@@ -16,27 +16,27 @@
  *  is strictly forbidden unless prior written permission is obtained
  *  from Qaobee.
  */
-import {Component, ViewChild} from '@angular/core';
-import {Nav, Platform} from 'ionic-angular';
-import {StatusBar} from '@ionic-native/status-bar';
-import {SplashScreen} from '@ionic-native/splash-screen';
+import { Component, ViewChild } from '@angular/core';
+import { Nav, Platform } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
-import {LoginPage} from './../pages/login/login';
-import {WelcomePage} from './../pages/welcome/welcome';
-import {SignupPage} from './../pages/signup/signup';
-import {CollectListPage} from './../pages/collect-list/collect-list';
-import {PlayerListPage} from './../pages/players/player-list/player-list';
-import {SettingsPage} from './../pages/settings/settings';
+import { LoginPage } from './../pages/login/login';
+import { WelcomePage } from './../pages/welcome/welcome';
+import { SignupPage } from './../pages/signup/signup';
+import { CollectListPage } from './../pages/collect-list/collect-list';
+import { PlayerListPage } from './../pages/players/player-list/player-list';
+import { SettingsPage } from './../pages/settings/settings';
 
-import {TranslateService} from '@ngx-translate/core';
-import {AuthenticationService} from "../providers/authentication.service";
-import {Storage} from "@ionic/storage";
-import {UserService} from "../providers/api/api.user.service";
-import {MessageBus} from "../providers/message-bus.service";
-import {MetaService} from "../providers/api/api.meta.service";
-import {HomePage} from "../pages/home/home";
-import {EventListPage} from "../pages/events/event-list/event-list";
-import {CollectPage} from "../pages/collect/collect/collect";
+import { TranslateService } from '@ngx-translate/core';
+import { AuthenticationService } from "../providers/authentication.service";
+import { Storage } from "@ionic/storage";
+import { UserService } from "../providers/api/api.user.service";
+import { MessageBus } from "../providers/message-bus.service";
+import { MetaService } from "../providers/api/api.meta.service";
+import { HomePage } from "../pages/home/home";
+import { EventListPage } from "../pages/events/event-list/event-list";
+import { CollectPage } from "../pages/collect/collect/collect";
 
 @Component({
     templateUrl: 'app.html'
@@ -60,14 +60,14 @@ export class MyApp {
      * @param {MetaService} metaService
      */
     constructor(private platform: Platform,
-                private statusBar: StatusBar,
-                private splashScreen: SplashScreen,
-                private userService: UserService,
-                private storage: Storage,
-                private authenticationService: AuthenticationService,
-                private translate: TranslateService,
-                private eventService: MessageBus,
-                private metaService: MetaService) {
+        private statusBar: StatusBar,
+        private splashScreen: SplashScreen,
+        private userService: UserService,
+        private storage: Storage,
+        private authenticationService: AuthenticationService,
+        private translate: TranslateService,
+        private eventService: MessageBus,
+        private metaService: MetaService) {
         this.initializeApp();
         this.pages = [];
         translate.setDefaultLang('en');
@@ -95,8 +95,7 @@ export class MyApp {
                 this.metaService.getMeta().subscribe(m => {
                     if (m) {
                         this.authenticationService.meta = m;
-                       // this.nav.setRoot(HomePage, {user: user});
-                        this.nav.setRoot(CollectPage, {user: user});
+                        this.nav.setRoot(HomePage, { user: user });
                     }
                 });
             });
@@ -126,9 +125,9 @@ export class MyApp {
         this.translate.get(['menu.Home', 'menu.Login', 'menu.Subscribe']).subscribe(
             value => {
                 this.pages = [
-                    {title: value['menu.Home'], component: WelcomePage, icon: 'home'},
-                    {title: value['menu.Login'], component: LoginPage, icon: 'log-in'},
-                    {title: value['menu.Subscribe'], component: SignupPage, icon: 'log-in'}
+                    { title: value['menu.Home'], component: WelcomePage, icon: 'home' },
+                    { title: value['menu.Login'], component: LoginPage, icon: 'log-in' },
+                    { title: value['menu.Subscribe'], component: SignupPage, icon: 'log-in' }
                 ];
             }
         )
@@ -138,11 +137,11 @@ export class MyApp {
         this.translate.get(['menu.Home', 'menu.Events', 'menu.Players', 'menu.Stats', 'menu.Settings',]).subscribe(
             value => {
                 this.pages = [
-                    {title: value['menu.Home'], component: HomePage, icon: 'home'},
-                    {title: value['menu.Events'], component: EventListPage, icon: 'calendar'},
-                    {title: value['menu.Players'], component: PlayerListPage, icon: 'people'},
-                    {title: value['menu.Stats'], component: CollectListPage, icon: 'stats'},
-                    {title: value['menu.Settings'], component: SettingsPage, icon: 'settings'}
+                    { title: value['menu.Home'], component: HomePage, icon: 'home' },
+                    { title: value['menu.Events'], component: EventListPage, icon: 'calendar' },
+                    { title: value['menu.Players'], component: PlayerListPage, icon: 'people' },
+                    { title: value['menu.Stats'], component: CollectListPage, icon: 'stats' },
+                    { title: value['menu.Settings'], component: SettingsPage, icon: 'settings' }
                 ];
             }
         )
