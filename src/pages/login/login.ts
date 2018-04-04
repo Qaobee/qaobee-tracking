@@ -24,7 +24,7 @@ import {UserService} from '../../providers/api/api.user.service';
 import {SignupPage} from '../signup/signup';
 import {Storage} from '@ionic/storage';
 import {AuthenticationService} from "../../providers/authentication.service";
-import {EventService} from "../../providers/event.service";
+import {MessageBus} from "../../providers/message-bus.service";
 
 /**
  * LoginPage page.
@@ -46,7 +46,7 @@ export class LoginPage {
      * @param {Storage} storage
      * @param {UniqueDeviceID} uniqueDeviceID
      * @param {AuthenticationService} authenticationService
-     * @param {EventService} eventService
+     * @param {MessageBus} eventService
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -54,7 +54,7 @@ export class LoginPage {
                 private storage: Storage,
                 private uniqueDeviceID: UniqueDeviceID,
                 private authenticationService: AuthenticationService,
-                private eventService: EventService) {
+                private eventService: MessageBus) {
         this.storage.get("login").then(l => {
             this.login = l;
         })
@@ -80,7 +80,7 @@ export class LoginPage {
         this.userService.login(this.login, this.passwd, uuid).subscribe((result: any) => {
             if (result) {
                 this.storage.set("mobileToken", uuid);
-                this.eventService.broadcast(EventService.userLogged, result);
+                this.eventService.broadcast(MessageBus.userLogged, result);
             }
         });
     }

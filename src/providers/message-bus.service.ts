@@ -20,7 +20,7 @@ import {Injectable} from "@angular/core";
 import {Subject, Observable} from "rxjs";
 
 @Injectable()
-export class EventService {
+export class MessageBus {
     public static navigation:string = 'navigation';
     public static userLogged: string = 'user-logged';
     private listeners = {};

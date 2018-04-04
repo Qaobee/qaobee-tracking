@@ -9,32 +9,16 @@
 
 <ion-content>
     <ion-list>
-        <ion-grid>
-            <ion-row>
-                <ion-col col-3 class="period" text-center>Period<br />1/2</ion-col>
-                <ion-col col-1 text-center>
-                    <button ion-button small icon-only>
-                        <ion-icon name="play"></ion-icon>
-                    </button>
-                </ion-col>
-                <ion-col class="chrono" col-3 text-center>0:00</ion-col>
-                <ion-col col-1 text-center>
-                    <button ion-button small icon-only>
-                        <ion-icon name="square"></ion-icon>
-                    </button>
-                </ion-col>
-                <ion-col col-3>&nbsp;</ion-col>
-            </ion-row>
-        </ion-grid>
+        <chrono-component [chrono]="chrono" [currentPhase]="currentPhase" ></chrono-component>
         <ion-grid>
             <ion-row>
                 <ion-col>
                     <ion-grid>
                         <ion-row>
-                            <ion-col class="team" text-center>TeamHome</ion-col>
+                            <ion-col class="team" text-center>{{getTeamHomeName()}}</ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-col class="score" text-center>0</ion-col>
+                            <ion-col class="score" text-center>{{ homeScore }}</ion-col>
                         </ion-row>
                         <ion-row>
                             <ion-col text-center class="small">Temps mort</ion-col>
@@ -54,22 +38,16 @@
                 </ion-col>
                 <ion-col>
                     <ion-list inset class="events-list">
-                        <span class="event">Passe</span>
-                        <span class="event">Passe</span>
-                        <span class="event">Passe</span>
-                        <span class="event">Passe</span>
-                        <span class="event">Passe</span>
-                        <span class="event">Passe</span>
-                        <span class="event">Passe</span>
+                        <span class="event" *ngFor="let s of displayedStats">{{ s.code }}</span>
                     </ion-list>
                 </ion-col>
                 <ion-col>
                     <ion-grid>
                         <ion-row>
-                            <ion-col text-center class="team">TeamVisitor</ion-col>
+                            <ion-col text-center class="team">{{getTeamVisitor()}}</ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-col text-center class="score">0</ion-col>
+                            <ion-col text-center class="score">{{visitorScore}}</ion-col>
                         </ion-row>
                         <ion-row>
                             <ion-col text-center class="small">Temps mort</ion-col>
@@ -104,7 +82,7 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
-
+        <ion-item-divider></ion-item-divider>
         <ion-grid>
             <ion-row>
                 <ion-col text-center>
@@ -141,6 +119,34 @@
                             <ion-icon name="swap"></ion-icon>
                         </button>
                     </ion-fab>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <ion-item-divider></ion-item-divider>
+        <ion-grid>
+            <ion-row>
+                <ion-col text-center>
+                    <button ion-button color="light">Attack</button>
+                </ion-col>
+                <ion-col>
+                    <ion-select [(ngModel)]="gameState.homeGameSystem">
+                        <ion-option *ngFor="let gs of gameSystem" value="{{gs}}">{{gs}}</ion-option>
+                    </ion-select>
+                </ion-col>
+                <ion-col text-center>
+                    <ion-fab center middle>
+                        <button ion-fab mini color="danger">
+                            <ion-icon name="stats"></ion-icon>
+                        </button>
+                    </ion-fab>
+                </ion-col>
+                <ion-col>
+                    <ion-select [(ngModel)]="gameState.visitorGameSystem">
+                        <ion-option *ngFor="let gs of gameSystem" value="{{gs}}">{{gs}}</ion-option>
+                    </ion-select>
+                </ion-col>
+                <ion-col text-center>
+                    <button ion-button color="light">Defense</button>
                 </ion-col>
             </ion-row>
         </ion-grid>

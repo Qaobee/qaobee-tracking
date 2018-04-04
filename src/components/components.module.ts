@@ -27,11 +27,15 @@ import {APIModule} from "../providers/api/api.module";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {createTranslateLoader} from "../app/app.module";
 import {HttpClient} from "@angular/common/http";
+import {ChronoComponent} from "./chrono/chrono.component";
 
 @NgModule({
-    declarations: [MenuHeaderComponent,
-    NextEventComponent,
-    LastCollectComponent],
+    declarations: [
+        MenuHeaderComponent,
+        NextEventComponent,
+        LastCollectComponent,
+        ChronoComponent
+    ],
     imports: [
         IonicModule.forRoot(MyApp),
         APIModule,
@@ -46,7 +50,8 @@ import {HttpClient} from "@angular/common/http";
     exports: [
         MenuHeaderComponent,
         NextEventComponent,
-        LastCollectComponent
+        LastCollectComponent,
+        ChronoComponent
     ],
     providers: [
         Utils

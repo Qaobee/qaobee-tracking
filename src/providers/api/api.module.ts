@@ -1,3 +1,4 @@
+import { APIStatsService } from './api.stats';
 /*
  *  __________________
  *  Qaobee
@@ -51,6 +52,7 @@ import {ActivityCfgService} from "./api.activityCfg.service";
         PersonService,
         TeamService,
         ActivityCfgService,
+        APIStatsService,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         FileTransfer
     ]

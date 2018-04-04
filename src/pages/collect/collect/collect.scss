@@ -2,12 +2,7 @@ page-collect {
   .period {
     font-size: 1rem;
   }
-  .chrono {
-    font-size: 3rem;
-    color: color($colors, danger, base);
-    text-align: center;
-    width: 100%;
-  }
+
   .team {
     font-size: 1rem;
   }
@@ -27,7 +22,7 @@ page-collect {
   }
   #ground-area {
     z-index: 5;
-    height: 20rem;
+    height: 18rem;
     width: 100vw;
     background: url("/assets/imgs/zone_defense.png") no-repeat;
     background-size: 100vw 18rem;

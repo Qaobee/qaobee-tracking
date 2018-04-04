@@ -1,0 +1,20 @@
+<ion-grid>
+    <ion-row>
+        <ion-col col-3 class="period" text-center>Period<br/>{{ currentPeriod }}/{{ totalPeriod }}</ion-col>
+        <ion-col col-1 text-center>
+            <button ion-button small icon-only *ngIf="!run" (click)="start()">
+                <ion-icon name="play"></ion-icon>
+            </button>
+            <button ion-button small icon-only *ngIf="run" (click)="pause()">
+                <ion-icon name="pause"></ion-icon>
+            </button>
+        </ion-col>
+        <ion-col col-4 text-center [class]="(run?'chrono':'chrono blink')">{{ (format() | date: 'mm:ss') }}</ion-col>
+        <ion-col col-1 text-center>
+            <button ion-button small icon-only (click)="stop()">
+                <ion-icon name="square"></ion-icon>
+            </button>
+        </ion-col>
+        <ion-col col-3>&nbsp;</ion-col>
+    </ion-row>
+</ion-grid>

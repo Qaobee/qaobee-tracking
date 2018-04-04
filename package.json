@@ -13,8 +13,9 @@
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
-    "sonar": "node_modules/sonar-scanner/bin/sonar-scanner",
-    "jsdoc": "/node_modules/.bin/typedoc --out dist/docs --mode modules"
+    "sonar": "./node_modules/sonar-scanner/bin/sonar-scanner",
+    "doc": "./node_modules/.bin/compodoc --theme material -p tsconfig.json",
+    "doc:serve": "./node_modules/.bin/compodoc --theme material -r 9999 -p tsconfig.json -s"
   },
   "dependencies": {
     "@angular/animations": "5.2.9",
@@ -53,11 +54,13 @@
     "ionic-angular": "3.9.2",
     "ionicons": "3.0.0",
     "moment": "^2.22.0",
+    "node-easy-flow": "git+https://github.com/Giwi/node-easy-flow.git",
     "rxjs": "5.5.7",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.20"
   },
   "devDependencies": {
+    "@compodoc/compodoc": "^1.1.1",
     "@ionic/app-scripts": "3.1.8",
     "sonar-scanner": "^3.0.3",
     "typedoc": "^0.11.1",

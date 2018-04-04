@@ -26,16 +26,13 @@ import {catchError} from "rxjs/operators";
 
 @Injectable()
 export class PersonService extends ApiService {
-    /**
-     *
-     * @param {App} app
-     * @param {AuthenticationService} authenticationService
-     * @param {ToastController} toastCtrl
-     * @param {HttpClient} http
-     */
-
     private apiUrl: string;
-
+    /**
+     * @param  {App} app
+     * @param  {AuthenticationService} authenticationService
+     * @param  {ToastController} toastCtrl
+     * @param  {HttpClient} privatehttp
+     */
     constructor(app: App,
                 authenticationService: AuthenticationService,
                 toastCtrl: ToastController,
@@ -44,8 +41,7 @@ export class PersonService extends ApiService {
         this.apiUrl = ENV.hive + this.rootPath + '/sandbox/effective/person/';
     }
 
-    getListPersonSandbox(sandboxId:string) {
-        
+    getListPersonSandbox(sandboxId:string) {        
         return this.http.get<any>(this.apiUrl+'listSandbox/?sandboxId=' + sandboxId, this.addHeaderToken()).pipe(
             catchError(this.handleError('PersonService.getListPersonSandbox'))
         );
