@@ -5,6 +5,12 @@
     "Cancel": "Annuler",
     "Search": "Rechercher"
   },
+  "format":{
+    "displayDate":"DD/MM/YYYY",
+    "pickerDate":"DD MM YYYY",
+    "displayTime":"HH:mm",
+    "pickerTime":"HH mm"
+  },
   "refresher": {
     "label": "Glisser pour rafraîchir",
     "message": "Chargement..."

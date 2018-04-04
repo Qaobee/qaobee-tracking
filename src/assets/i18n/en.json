@@ -5,6 +5,12 @@
     "Cancel": "Cancel",
     "Search": "Search"
   },
+  "format":{
+    "displayDate":"MM/DD//YYYY",
+    "pickerDate":"DD/MM/YYYY",
+    "displayTime":"HH:mm",
+    "pickerTime":"HH mm"
+  },
   "refresher": {
     "label": "Pull to refresh",
     "message": "Refreshing..."

@@ -23,7 +23,7 @@
       </ion-item>
       <ion-item>
           <ion-label>{{ 'eventsModule.type' | translate }}</ion-label>
-          <ion-select formControlName="type" interface="popover" [compareWith]="compareOptionSelect">
+          <ion-select formControlName="type" interface="popover" [compareWith]="compareOptionTypeEvent">
               <ion-option *ngFor="let t of eventTypes" [value]="t">{{t.label}}</ion-option>
           </ion-select>
       </ion-item>
@@ -44,13 +44,13 @@
         <ion-col>
             <ion-item>
                 <ion-label floating>{{ 'eventsModule.startDate' | translate }}</ion-label>
-                <ion-datetime formControlName="startDate" min="{{minDate}}" max="2100"></ion-datetime>
+                <ion-datetime formControlName="startDate" min="2016" max="2040" displayFormat="{{ 'format.displayDate' | translate }}"></ion-datetime>
             </ion-item>
         </ion-col>
         <ion-col>
             <ion-item>
                 <ion-label floating>{{ 'eventsModule.startTime' | translate }}</ion-label>
-                <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A"
+                <ion-datetime displayFormat="{{ 'format.displayTime' | translate }}" pickerFormat="{{ 'format.pickerTime' | translate }}"
                               formControlName="startTime"></ion-datetime>
             </ion-item>
         </ion-col>
@@ -90,13 +90,13 @@
       </ion-item>
       <ion-item>
           <ion-label>{{ 'eventsModule.teamHome' | translate }}</ion-label>
-          <ion-select formControlName="teamHome" interface="popover" [compareWith]="compareOptionSelect">
+          <ion-select formControlName="teamHome" interface="popover" [compareWith]="compareOptionTeam">
               <ion-option *ngFor="let t of teams.myTeams" [value]="t">{{t.label}}</ion-option>
           </ion-select>
       </ion-item>
       <ion-item>
           <ion-label>{{ 'eventsModule.teamVisitor' | translate }}</ion-label>
-          <ion-select formControlName="teamVisitor" interface="popover" [compareWith]="compareOptionSelect">
+          <ion-select formControlName="teamVisitor" interface="popover" [compareWith]="compareOptionTeam">
               <ion-option *ngFor="let t of teams.adversaries" [value]="t">{{t.label}}</ion-option>
           </ion-select>
       </ion-item>

@@ -1,57 +1,83 @@
 <ion-header>
     <ion-navbar>
-        <ion-title *ngIf="event">{{ event.label }}</ion-title>
+        <ion-title *ngIf="event.type">{{ event.type.label }}</ion-title>
         <ion-buttons end>
             <button ion-button icon-only (click)="goToEdit()">
                 <ion-icon name="create"></ion-icon>
+            </button>
+            <button ion-button icon-only (click)="delete()">
+                <ion-icon name="trash"></ion-icon>
             </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
 
-<ion-content *ngIf="event">
- <!-- Identity-->
- <ion-item color="light">
-    <h2 class="panel">
-      <ion-icon name="bookmark"></ion-icon>  
-      {{'eventsModule.identity' | translate}}
-    </h2>
-  </ion-item>     
-  <ion-item>
+<ion-content *ngIf="event">  
+  <ion-item color="light" text-center>
       <h1>{{ event.label }}</h1>
   </ion-item>
+  
+  <!-- logistic -->
   <ion-item>
-      <h1>{{ event.type.label }}</h1>
-      <p>{{ event.startDate | date:"mediumDate" }} {{ event.startDate | date:"shortTime" }}</p>
+    <ion-row>
+      <ion-col>
+        <h2 class="panel"><ion-icon name="calendar"></ion-icon> {{'eventsModule.startDate' | translate}}</h2>
+      </ion-col>
+      <ion-col>
+        <h2 class="panel"><ion-icon name="time"></ion-icon> {{'eventsModule.startTime' | translate}}</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <h2>{{ event.startDate | date:"mediumDate" }}</h2>
+      </ion-col>
+      <ion-col>
+        <h2>{{ event.startDate | date:"shortTime" }}</h2>
+      </ion-col>
+    </ion-row>
+  </ion-item>
+  <ion-item>
+    <ion-row>
+      <ion-col>
+          <h2 class="panel"><ion-icon name="pin"></ion-icon> {{'eventsModule.address' | translate}}</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="event.address">
+      <ion-col>
+        <h2>{{ event.address.formatedAddress }}</h2>
+      </ion-col>
+    </ion-row>
   </ion-item>
 
-      <!-- Map -->
-      <!-- Actors-->
-      <ion-item color="light">
-        <h2 class="panel">
-          <ion-icon name="contacts"></ion-icon>  
-          {{'eventsModule.actors' | translate}}
-        </h2>
-      </ion-item>
-        
-        <ion-item>
-            <h2>{{ event.participants.teamHome.label }}</h2>
-            <h2>{{ event.participants.teamVisitor.label }}</h2>
-            <p *ngIf="event.address">{{ event.address.formatedAddress }}</p>
-        </ion-item>
+  <!-- Map -->
 
-        <ion-row text-center>
-            <ion-col>
-                <button ion-button icon-left color="danger" (click)="delete()">
-                    <ion-icon name="trash"></ion-icon>
-                    <div>{{ 'eventsModule.detail.trash' | translate }}</div>
-                </button>
-            </ion-col>
-            <ion-col>
-                <button ion-button icon-left color="secondary" (click)="goToCollect()">
-                    <ion-icon name="stopwatch"></ion-icon>
-                    <div>{{ 'eventsModule.detail.collect' | translate }}</div>
-                </button>
-            </ion-col>
-        </ion-row>
+  <!-- Actors-->
+  <ion-item>
+    <ion-row >
+      <ion-col>
+        <h2 class="panel"><ion-icon name="contacts"></ion-icon> {{'eventsModule.actors' | translate}}</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col text-left><h3 class="label">{{'eventsModule.teamHome' | translate}}</h3></ion-col>
+        <ion-col text-left><h3 class="label">{{'eventsModule.teamVisitor' | translate}}</h3></ion-col>
+    </ion-row>
+    <ion-row>    
+        <ion-col text-left>
+          <h2>{{ event.participants.teamHome.label }}</h2>
+        </ion-col>
+        <ion-col text-left>
+            <h2>{{ event.participants.teamVisitor.label }}</h2>
+        </ion-col>
+    </ion-row>
+  </ion-item>
+        
+    <ion-row text-center>
+        <ion-col>
+            <button ion-button icon-left  (click)="goToCollect()">
+                <ion-icon name="stopwatch"></ion-icon>
+                <div>{{ 'eventsModule.detail.collect' | translate }}</div>
+            </button>
+        </ion-col>
+    </ion-row>
 </ion-content>

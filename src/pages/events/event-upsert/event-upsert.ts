@@ -25,6 +25,8 @@ import {AuthenticationService} from "../../../providers/authentication.service";
 import {ActivityCfgService} from "../../../providers/api/api.activityCfg.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Storage} from "@ionic/storage";
+import moment from 'moment';
+
 
 /**
  * Generated class for the EventListPage page.
@@ -82,8 +84,8 @@ export class EventUpsertPage {
             seasonCode: this.authenticationService.meta.season.code,
         };
         if (this.event && this.event.startDate) {
-            this.startDate = new Date(this.event.startDate / 1000).toISOString();
-            this.startTime = this.startDate;
+            this.startDate = moment(this.event.startDate).format("YYYY-MM-DD");
+            this.startTime = moment(this.event.startDate).format("HH:mm");
             if (this.event.address && this.event.address.formatedAddress) {
                 this.address = this.event.address.formatedAddress;
             }
@@ -93,7 +95,7 @@ export class EventUpsertPage {
             'label': [this.event.label || '', [Validators.required]],
             'address': [this.address || ''],
             'startTime': [this.startTime, [Validators.required]],
-            'startDate': [this.startTime, [Validators.required]],
+            'startDate': [this.startDate, [Validators.required]],
             'type': [this.event.type, [Validators.required]],
             'teamVisitor': [this.event.participants.teamVisitor, [Validators.required]],
             'teamHome': [this.event.participants.teamHome, [Validators.required]],
@@ -137,8 +139,18 @@ export class EventUpsertPage {
      * @param e1 
      * @param e2 
      */
-    compareOptionSelect(e1: any, e2: any): boolean {
-        return e1 && e2 ? (e1 === e2.code || e1.code === e2.code) : e1 === e2;
+    compareOptionTypeEvent(e1: any, e2: any): boolean {
+        return e1 && e2 ? e1.code === e2.code : e1 === e2;
+    }
+
+    /**
+     * Match element in option list from select input
+     * @param e1 
+     * @param e2 
+     */
+    compareOptionTeam(e1: any, e2: any): boolean {
+        
+        return e1 && e2 ? e1._id === e2._id : e1 === e2;
     }
 
     /**
@@ -181,10 +193,14 @@ export class EventUpsertPage {
     saveEvent(formVal) {
         if(this.eventForm.valid) {
             console.log('[EventUpsertPage] - saveEvent - formVal', formVal);
-            let startDate = new Date(formVal.startDate);
-            let startTime = new Date(formVal.startTime);
-            this.event.startDate = new Date(startDate.getUTCFullYear(), startDate.getUTCMonth(), startDate.getUTCDate(), startTime.getUTCHours(), startTime.getUTCMinutes()).getTime();
-            this.event.endDate = new Date(startDate.getUTCFullYear(), startDate.getUTCMonth(), startDate.getUTCDate(), startTime.getUTCHours() + 1, startTime.getUTCMinutes()).getTime();
+            let startDate = moment(formVal.startDate,"YYYY-MM-DD");
+            let startTime = moment(formVal.startTime,"HH:mm");
+            startDate.hour(startTime.hour());
+            startDate.minute(startTime.minute());
+
+            this.event.startDate = startDate.unix()*1000;
+            this.event.endDate = startDate.unix()*1000;
+            
             this.event.link = {
                 linkId: 'AAAA',
                 type: formVal.type.code
