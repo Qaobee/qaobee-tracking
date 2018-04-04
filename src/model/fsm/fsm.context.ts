@@ -1,6 +1,5 @@
-import {GamePhase} from "./game.phase";
-import {InGamePlayer} from "./ingame.player";
-
+import { InGamePlayer } from './../ingame.player';
+import { GamePhase } from './../game.phase';
 /**
  * Class describing the FSM context
  */

@@ -1,0 +1,36 @@
+/**
+ * Events
+ */
+export enum FSMEvents {
+    startChrono = 'startChrono',
+    doPause = 'doPause',
+    doAttack = 'doAttack',
+    doDefense = 'doDefense',
+    selectPlayer = 'selectPlayer',
+    groundAtt = 'groundAtt',
+    groundDef = 'groundDef',
+    goalShotAtt = 'goalShotAtt',
+    goalShotDef = 'goalShotDef',
+    poleShotAtt = 'poleShotAtt',
+    poleShotDef = 'poleShotDef',
+    cornerShotAtt = 'cornerShotAtt',
+    cornerShotDef = 'cornerShotDef',
+    stopShootAtt = 'stopShootAtt',
+    stopShootDef = 'stopShootDef',
+    goalScoredAtt = 'goalScoredAtt',
+    goalScoredDef = 'goalScoredDef',
+    outsideAtt = 'outsideAtt',
+    outsideDef = 'outsideDef',
+    timeout = 'timeout',
+    stopTimer = 'stopTimer',
+    sanction = 'sanction',
+    wound = 'wound',
+    goToSelectPlayer = 'goToSelectPlayer',
+    resume = 'resume',
+    restoreGroundState = 'restoreGroundState',
+    restoreGoalState = 'restoreGoalState',
+    leaveGoal = 'leaveGoal',
+    leaveGround = 'leaveGround',
+    backDone = 'backDone',
+    endChrono = 'endChrono'
+}

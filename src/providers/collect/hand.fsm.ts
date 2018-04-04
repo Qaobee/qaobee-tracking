@@ -1,3 +1,6 @@
+import { FSMStates } from './../../model/fsm/fsm.states';
+import { FSMEvents } from './../../model/fsm/fsm.events';
+import { FSMContext } from './../../model/fsm/fsm.context';
 import { GamePhase } from './../../model/game.phase';
 import { StatCollector } from './stat.collector';
 import { StatType } from './../../model/stat.type';
@@ -5,153 +8,110 @@ import { MessageBus } from './../message-bus.service';
 import { Injectable } from "@angular/core";
 import { EasyFlow, from, on, to, finish, whenEnter, Context } from 'node-easy-flow';
 
+
 @Injectable()
 export class HandFSM extends EasyFlow {
+    static SWITCH_PHASE = 'stat-switch-phase';
+    static GAME_STATE = 'stat-game-state';
+    static ROLLBACK = 'stat-rollback';
 
+    context: Context;
     /**
      * @param  {MessageBus} privatemessageBus
      * @param  {StatCollector} statCollector
      */
     constructor(private messageBus: MessageBus, private statCollector: StatCollector) {
         super();
-        // states
-        const
-            PAUSED = 'PAUSED',
-            INIT = 'INIT',
-            GROUND_SELECTED = 'GROUND_SELECTED',
-            GOAL_SELECTED = 'GOAL_SELECTED',
-            SELECTED_PLAYER = 'SELECTED_PLAYER',
-            DEFENSE = 'DEFENSE',
-            GAME_STARTED = 'GAME_STARTED',
-            ATTACK = 'ATTACK',
-            RETURN_TO_SELECTED_PLAYER = 'RETURN_TO_SELECTED_PLAYER',
-            GOAL_LEAVED = 'GOAL_LEAVED',
-            GROUND_LEAVED = 'GROUND_LEAVED',
-            GAME_ENDED = 'GAME_ENDED';
-
-        // events
-        const
-            startChrono = 'startChrono',
-            doPause = 'doPause',
-            doAttack = 'doAttack',
-            doDefense = 'doDefense',
-            selectPlayer = 'selectPlayer',
-            groundAtt = 'groundAtt',
-            groundDef = 'groundDef',
-            goalShotAtt = 'goalShotAtt',
-            goalShotDef = 'goalShotDef',
-            poleShotAtt = 'poleShotAtt',
-            poleShotDef = 'poleShotDef',
-            cornerShotAtt = 'cornerShotAtt',
-            cornerShotDef = 'cornerShotDef',
-            stopShootAtt = 'stopShootAtt',
-            stopShootDef = 'stopShootDef',
-            goalScoredAtt = 'goalScoredAtt',
-            goalScoredDef = 'goalScoredDef',
-            outsideAtt = 'outsideAtt',
-            outsideDef = 'outsideDef',
-            timeout = 'timeout',
-            stopTimer = 'stopTimer',
-            sanction = 'sanction',
-            wound = 'wound',
-            goToSelectPlayer = 'goToSelectPlayer',
-            resume = 'resume',
-            restoreGroundState = 'restoreGroundState',
-            restoreGoalState = 'restoreGoalState',
-            leaveGoal = 'leaveGoal',
-            leaveGround = 'leaveGround',
-            backDone = 'backDone',
-            endChrono = 'endChrono';
 
         // transition definitions
-        from(INIT,
-            on(endChrono, finish(GAME_ENDED)),
-            on(startChrono,
-                to(GAME_STARTED,
-                    on(endChrono, finish(GAME_ENDED)),
-                    on(doPause,
-                        to(PAUSED,
-                            on(endChrono, finish(GAME_ENDED)),
-                            on(stopTimer, to(INIT)),
-                            on(resume, to(GAME_STARTED))
+        from(FSMStates.INIT,
+            on(FSMEvents.endChrono, finish(FSMStates.GAME_ENDED)),
+            on(FSMEvents.startChrono,
+                to(FSMStates.GAME_STARTED,
+                    on(FSMEvents.endChrono, finish(FSMStates.GAME_ENDED)),
+                    on(FSMEvents.doPause,
+                        to(FSMStates.PAUSED,
+                            on(FSMEvents.endChrono, finish(FSMStates.GAME_ENDED)),
+                            on(FSMEvents.stopTimer, to(FSMStates.INIT)),
+                            on(FSMEvents.resume, to(FSMStates.GAME_STARTED))
                         )
                     ),
-                    on(doAttack,
-                        to(ATTACK,
-                            on(endChrono, finish(GAME_ENDED)),
-                            on(timeout, to(PAUSED)),
-                            on(doPause, to(PAUSED)),
-                            on(doDefense, to(DEFENSE)),
-                            on(selectPlayer,
-                                to(SELECTED_PLAYER,
-                                    on(endChrono, finish(GAME_ENDED)),
-                                    on(doPause, to(PAUSED)),
-                                    on(timeout, to(PAUSED)),
-                                    on(outsideAtt, to(DEFENSE)),
-                                    on(sanction, to(DEFENSE)),
-                                    on(doDefense, to(DEFENSE)),
-                                    on(doAttack, to(ATTACK)),
-                                    on(groundDef, to(GROUND_SELECTED)),
-                                    on(selectPlayer,
-                                        to(RETURN_TO_SELECTED_PLAYER,
-                                            on(endChrono, finish(GAME_ENDED)),
-                                            on(goToSelectPlayer, to(SELECTED_PLAYER))
+                    on(FSMEvents.doAttack,
+                        to(FSMStates.ATTACK,
+                            on(FSMEvents.endChrono, finish(FSMStates.GAME_ENDED)),
+                            on(FSMEvents.timeout, to(FSMStates.PAUSED)),
+                            on(FSMEvents.doPause, to(FSMStates.PAUSED)),
+                            on(FSMEvents.doDefense, to(FSMStates.DEFENSE)),
+                            on(FSMEvents.selectPlayer,
+                                to(FSMStates.SELECTED_PLAYER,
+                                    on(FSMEvents.endChrono, finish(FSMStates.GAME_ENDED)),
+                                    on(FSMEvents.doPause, to(FSMStates.PAUSED)),
+                                    on(FSMEvents.timeout, to(FSMStates.PAUSED)),
+                                    on(FSMEvents.outsideAtt, to(FSMStates.DEFENSE)),
+                                    on(FSMEvents.sanction, to(FSMStates.DEFENSE)),
+                                    on(FSMEvents.doDefense, to(FSMStates.DEFENSE)),
+                                    on(FSMEvents.doAttack, to(FSMStates.ATTACK)),
+                                    on(FSMEvents.groundDef, to(FSMStates.GROUND_SELECTED)),
+                                    on(FSMEvents.selectPlayer,
+                                        to(FSMStates.RETURN_TO_SELECTED_PLAYER,
+                                            on(FSMEvents.endChrono, finish(FSMStates.GAME_ENDED)),
+                                            on(FSMEvents.goToSelectPlayer, to(FSMStates.SELECTED_PLAYER))
                                         )
                                     ),
-                                    on(wound, to(RETURN_TO_SELECTED_PLAYER)),
-                                    on(groundAtt,
-                                        to(GROUND_SELECTED,
-                                            on(restoreGroundState, to(SELECTED_PLAYER)),
-                                            on(leaveGround,
-                                                to(GROUND_LEAVED,
-                                                    on(backDone, to(RETURN_TO_SELECTED_PLAYER))
+                                    on(FSMEvents.wound, to(FSMStates.RETURN_TO_SELECTED_PLAYER)),
+                                    on(FSMEvents.groundAtt,
+                                        to(FSMStates.GROUND_SELECTED,
+                                            on(FSMEvents.restoreGroundState, to(FSMStates.SELECTED_PLAYER)),
+                                            on(FSMEvents.leaveGround,
+                                                to(FSMStates.GROUND_LEAVED,
+                                                    on(FSMEvents.backDone, to(FSMStates.RETURN_TO_SELECTED_PLAYER))
                                                 )
                                             ),
-                                            on(endChrono, finish(GAME_ENDED)),
-                                            on(doPause, to(PAUSED)),
-                                            on(timeout, to(PAUSED)),
-                                            on(doAttack, to(ATTACK)),
-                                            on(outsideAtt, to(DEFENSE)),
-                                            on(outsideDef, to(ATTACK)),
-                                            on(doDefense, to(DEFENSE)),
-                                            on(poleShotAtt, to(SELECTED_PLAYER)),
-                                            on(poleShotDef, to(SELECTED_PLAYER)),
-                                            on(goalShotAtt,
-                                                to(GOAL_SELECTED,
-                                                    on(endChrono, finish(GAME_ENDED)),
-                                                    on(restoreGoalState, to(GROUND_SELECTED)),
-                                                    on(leaveGoal,
-                                                        to(GOAL_LEAVED,
-                                                            on(leaveGround, to(GROUND_LEAVED))
+                                            on(FSMEvents.endChrono, finish(FSMStates.GAME_ENDED)),
+                                            on(FSMEvents.doPause, to(FSMStates.PAUSED)),
+                                            on(FSMEvents.timeout, to(FSMStates.PAUSED)),
+                                            on(FSMEvents.doAttack, to(FSMStates.ATTACK)),
+                                            on(FSMEvents.outsideAtt, to(FSMStates.DEFENSE)),
+                                            on(FSMEvents.outsideDef, to(FSMStates.ATTACK)),
+                                            on(FSMEvents.doDefense, to(FSMStates.DEFENSE)),
+                                            on(FSMEvents.poleShotAtt, to(FSMStates.SELECTED_PLAYER)),
+                                            on(FSMEvents.poleShotDef, to(FSMStates.SELECTED_PLAYER)),
+                                            on(FSMEvents.goalShotAtt,
+                                                to(FSMStates.GOAL_SELECTED,
+                                                    on(FSMEvents.endChrono, finish(FSMStates.GAME_ENDED)),
+                                                    on(FSMEvents.restoreGoalState, to(FSMStates.GROUND_SELECTED)),
+                                                    on(FSMEvents.leaveGoal,
+                                                        to(FSMStates.GOAL_LEAVED,
+                                                            on(FSMEvents.leaveGround, to(FSMStates.GROUND_LEAVED))
                                                         )
                                                     ),
-                                                    on(restoreGroundState, to(SELECTED_PLAYER)),
-                                                    on(timeout, to(PAUSED)),
-                                                    on(doPause, to(PAUSED)),
-                                                    on(doDefense, to(DEFENSE)),
-                                                    on(stopShootAtt, to(DEFENSE)),
-                                                    on(goalScoredAtt, to(DEFENSE)),
-                                                    on(cornerShotAtt, to(DEFENSE)),
-                                                    on(doAttack, to(ATTACK)),
-                                                    on(goalScoredDef, to(ATTACK)),
-                                                    on(stopShootDef, to(ATTACK)),
-                                                    on(cornerShotDef, to(ATTACK))
+                                                    on(FSMEvents.restoreGroundState, to(FSMStates.SELECTED_PLAYER)),
+                                                    on(FSMEvents.timeout, to(FSMStates.PAUSED)),
+                                                    on(FSMEvents.doPause, to(FSMStates.PAUSED)),
+                                                    on(FSMEvents.doDefense, to(FSMStates.DEFENSE)),
+                                                    on(FSMEvents.stopShootAtt, to(FSMStates.DEFENSE)),
+                                                    on(FSMEvents.goalScoredAtt, to(FSMStates.DEFENSE)),
+                                                    on(FSMEvents.cornerShotAtt, to(FSMStates.DEFENSE)),
+                                                    on(FSMEvents.doAttack, to(FSMStates.ATTACK)),
+                                                    on(FSMEvents.goalScoredDef, to(FSMStates.ATTACK)),
+                                                    on(FSMEvents.stopShootDef, to(FSMStates.ATTACK)),
+                                                    on(FSMEvents.cornerShotDef, to(FSMStates.ATTACK))
                                                 )
                                             ),
-                                            on(goalShotDef, to(GOAL_SELECTED))
+                                            on(FSMEvents.goalShotDef, to(FSMStates.GOAL_SELECTED))
                                         )
                                     )
                                 )
                             ),
-                            on(doDefense,
-                                to(DEFENSE,
-                                    on(endChrono, finish(GAME_ENDED)),
-                                    on(timeout, to(PAUSED)),
-                                    on(doPause, to(PAUSED)),
-                                    on(doAttack, to(ATTACK)),
-                                    on(outsideDef, to(ATTACK)),
-                                    on(groundDef, to(GROUND_SELECTED)),
-                                    on(selectPlayer, to(SELECTED_PLAYER))
+                            on(FSMEvents.doDefense,
+                                to(FSMStates.DEFENSE,
+                                    on(FSMEvents.endChrono, finish(FSMStates.GAME_ENDED)),
+                                    on(FSMEvents.timeout, to(FSMStates.PAUSED)),
+                                    on(FSMEvents.doPause, to(FSMStates.PAUSED)),
+                                    on(FSMEvents.doAttack, to(FSMStates.ATTACK)),
+                                    on(FSMEvents.outsideDef, to(FSMStates.ATTACK)),
+                                    on(FSMEvents.groundDef, to(FSMStates.GROUND_SELECTED)),
+                                    on(FSMEvents.selectPlayer, to(FSMStates.SELECTED_PLAYER))
                                 )
                             )
                         )
@@ -160,59 +120,57 @@ export class HandFSM extends EasyFlow {
             )
         );
 
-        whenEnter(INIT, (context: Context) => {
+        whenEnter(FSMStates.INIT, (context: Context) => {
             console.debug('[HandFSM] whenEnter', context.state);
             this.saveState(context);
         });
 
-        whenEnter(GOAL_LEAVED, (context: Context) => {
+        whenEnter(FSMStates.GOAL_LEAVED, (context: Context) => {
             console.debug('[HandFSM] whenEnter', context.state);
-            // TODO
-            this.messageBus.broadcast('stat-rollback')
+            this.messageBus.broadcast(HandFSM.ROLLBACK)
             this.saveState(context);
-            context.trigger(leaveGround, context);
+            context.trigger(FSMEvents.leaveGround, context);
         });
 
-        whenEnter(GROUND_LEAVED, (context: Context) => {
+        whenEnter(FSMStates.GROUND_LEAVED, (context: Context) => {
             console.debug('[HandFSM] whenEnter', context.state);
-            // TODO
-            this.messageBus.broadcast('stat-rollback')
+            this.messageBus.broadcast(HandFSM.ROLLBACK)
             this.saveState(context);
-            context.trigger(backDone, context);
+            context.trigger(FSMEvents.backDone, context);
         });
 
-        whenEnter(PAUSED, (context: Context) => {
+        whenEnter(FSMStates.PAUSED, (context: Context) => {
             console.debug('[HandFSM] whenEnter', context.state);
             this.saveState(context);
         });
 
-        whenEnter(GROUND_SELECTED, (context: Context) => {
+        whenEnter(FSMStates.GROUND_SELECTED, (context: Context) => {
             console.debug('[HandFSM] whenEnter', context.state);
             this.saveState(context);
         });
 
-        whenEnter(GOAL_SELECTED, (context: Context) => {
+        whenEnter(FSMStates.GOAL_SELECTED, (context: Context) => {
             console.debug('[HandFSM] whenEnter', context.state);
             this.saveState(context);
         });
 
-        whenEnter(SELECTED_PLAYER, (context: Context) => {
+        whenEnter(FSMStates.SELECTED_PLAYER, (context: Context) => {
             console.debug('[HandFSM] whenEnter', context.state);
             this.saveState(context);
         });
 
-        whenEnter(GAME_ENDED, (context: Context) => {
+        whenEnter(FSMStates.GAME_ENDED, (context: Context) => {
             console.debug('[HandFSM] whenEnter', context.state);
             this.saveState(context);
         });
 
-        whenEnter(GAME_STARTED, (context: Context) => {
+        whenEnter(FSMStates.GAME_STARTED, (context: Context) => {
             console.debug('[HandFSM] whenEnter', context.state);
             context.fsmContext.gameStarted = true;
             this.saveState(context);
         });
 
-        whenEnter(ATTACK, (context: Context) => {
+        whenEnter(FSMStates.ATTACK, (context: Context) => {
             console.debug('[HandFSM] whenEnter', context.state);
             if (context.fsmContext.gamePhase) {
                 this.statCollector.switchPhase(context.fsmContext, context.fsmContext.chrono - context.fsmContext.gamePhase.startTime);
@@ -223,11 +181,10 @@ export class HandFSM extends EasyFlow {
             phase.startTime = context.fsmContext.chrono;
             context.fsmContext.gamePhase = phase;
             this.saveState(context);
-            // TODO
-            this.messageBus.broadcast('stat-switch-phase', { status: true });
+            this.messageBus.broadcast(HandFSM.SWITCH_PHASE, { attack: true });
         });
 
-        whenEnter(DEFENSE, (context: Context) => {
+        whenEnter(FSMStates.DEFENSE, (context: Context) => {
             console.debug('[HandFSM] whenEnter', context.state);
             if (context.fsmContext.gamePhase) {
                 this.statCollector.switchPhase(context.fsmContext, context.fsmContext.chrono - context.fsmContext.gamePhase.startTime);
@@ -238,13 +195,12 @@ export class HandFSM extends EasyFlow {
             phase.startTime = context.fsmContext.chrono;
             context.fsmContext.gamePhase = phase;
             this.saveState(context);
-            // TODO
-            this.messageBus.broadcast('stat-switch-phase', { status: false });
+            this.messageBus.broadcast(HandFSM.SWITCH_PHASE, { attack: false });
         });
 
-        whenEnter(RETURN_TO_SELECTED_PLAYER, (context: Context) => {
+        whenEnter(FSMStates.RETURN_TO_SELECTED_PLAYER, (context: Context) => {
             console.debug('[HandFSM] whenEnter', context.state);
-            context.trigger(goToSelectPlayer, context);
+            context.trigger(FSMEvents.goToSelectPlayer, context);
             this.saveState(context);
         });
 
@@ -254,7 +210,21 @@ export class HandFSM extends EasyFlow {
      * @param  {Context} context
      */
     saveState(context: Context) {
-        // TODO
-        this.messageBus.broadcast('stat-game-state', { state: context.state });
+        this.messageBus.broadcast(HandFSM.GAME_STATE, { state: context.state });
+    }
+
+    /**
+     * @param  {FSMContext} fsmContext
+     * @returns {Context}
+     */
+    start(fsmContext: FSMContext): Context {
+        this.context = super.start({ fsmContext: fsmContext });
+        return this.context;
+    }
+    /**
+     * @param  {FSMEvents} event
+     */
+    trigger(event: FSMEvents) {
+        return super.trigger(event, this.context);
     }
 }
