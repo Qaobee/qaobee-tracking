@@ -9,7 +9,7 @@
     <button ion-fab large (tap)="goToAddPlayer()" color="danger"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 
-  <ion-refresher (ionRefresh)="doRefresh($event)">
+  <ion-refresher (ionRefresh)="getPlayers($event)">
     <ion-refresher-content
             pullingIcon="arrow-dropdown"
             pullingText="{{ 'refresher.label' | translate }}"

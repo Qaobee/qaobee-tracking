@@ -11,7 +11,7 @@
     <ion-fab bottom right>
         <button ion-fab large (click)="addEvent()" color="danger"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
-    <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher (ionRefresh)="getEvents($event)">
         <ion-refresher-content
                 pullingIcon="arrow-dropdown"
                 pullingText="{{ 'refresher.label' | translate }}"
@@ -20,6 +20,10 @@
         </ion-refresher-content>
     </ion-refresher>
     <ion-list *ngIf="eventList">
+        <ion-item class="enteteLight">
+          <ion-badge color="danger" item-start>{{eventListSize}}</ion-badge>
+          <ion-searchbar (ionInput)="searchItems($event)"></ion-searchbar>
+        </ion-item>
         <div *ngFor="let entry of eventList | keys">
             <ion-item-divider color="light">{{ entry.key }}</ion-item-divider>
             <ion-item *ngFor="let event of entry.value" (click)="goToDetail(event, $event)">

@@ -51,15 +51,6 @@ export class PlayerListPage {
     }
 
   /**
-     * FORCE refresh player list from database
-     * @param {Refresher} refresher
-     */
-  doRefresh(refresher:Refresher) {
-      console.log('[EventListPage] - doRefresh');
-      this.getPlayers(refresher);
-  }
-
-  /**
    * call personneService for retrieve player list from database
    * @param refresher 
    */

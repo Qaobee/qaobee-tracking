@@ -20,6 +20,8 @@
     "label": "Libellé",
     "teamHome": "Mon équipe",
     "teamVisitor": "Adversaire",
+    "teamHote": "Club receveur",
+    "teamGuest": "Club visiteur",
     "type": "Type",
     "startDate": "Date",
     "startTime": "Heure",

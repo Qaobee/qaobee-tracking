@@ -40,6 +40,8 @@ import {EventUpsertPage} from "../event-upsert/event-upsert";
 export class EventListPage {
     datePipe: DatePipe;
     eventList: any;
+    eventListSize: number;
+    eventListFiltred: any;
 
     /**
      *
@@ -59,36 +61,56 @@ export class EventListPage {
                 private settingsService: SettingsService,
                 private utils: Utils) {
         this.datePipe = new DatePipe(this.settingsService.getLanguage());
+        
+    }
 
+    ionViewDidEnter(){
+      this.retrieveEventList();
     }
 
     /**
-     *
+     * Filter event list
+     * @param ev 
      */
-    ionViewDidLoad() {
-        console.log('[EventListPage] - ionViewDidLoad');
-        if(this.navParams.get('refresh')) {
-            this.getEvents(null);
-        } else {
-            this.storage.get('events').then(events => {
-                console.log('[EventListPage] - ionViewDidLoad - events in storage', events);
-                if (!events) {
-                    this.getEvents(null);
-                } else {
-                    this.populateEvents(events);
-                }
-            });
-        }
+    searchItems(ev: any) {
+
+      // set val to the value of the ev target
+      var val = ev.target.value;
+      this.eventListFiltred = new Array();
+      
+      // if the value is an empty string don't filter the items
+      if (val && val.trim() != '') {
+        
+        // Reset items back to all of the items
+        this.storage.get('events').then(events => {
+          for (let index = 0; index < events.length; index++) {
+            const element = events[index];
+            if(element.type.label.toLowerCase().indexOf(val.toLowerCase()) > -1 || element.label.toLowerCase().indexOf(val.toLowerCase()) > -1){
+              this.eventListFiltred.push(element);
+            }
+          }
+          this.populateEvents(this.eventListFiltred);
+          this.eventListSize = this.eventListFiltred.length;
+          }
+        );
+      } else {
+        this.retrieveEventList();
+      }
     }
 
     /**
-     *
-     * @param refresher
-     */
-    doRefresh(refresher:Refresher) {
-        console.log('[EventListPage] - doRefresh');
-        this.getEvents(refresher);
-    }
+   * if evnets exist then return list, else, call eventsService
+   */
+  private retrieveEventList() {
+    this.storage.get('events').then(events => {
+      if (!events) {
+          this.getEvents(null);
+      } else {
+        this.populateEvents(events);
+        this.eventListSize = events.length;
+      }
+    })
+  }
 
     /**
      *
@@ -102,7 +124,6 @@ export class EventListPage {
             this.authenticationService.meta.activity._id,
             this.authenticationService.meta._id,
         ).subscribe(eventList => {
-            console.log('[EventListPage] - getEvents - this.eventsServices.getEvents', eventList);
             this.storage.set('events', eventList);
             this.populateEvents(eventList);
             if(refresher) {
@@ -117,7 +138,6 @@ export class EventListPage {
      */
     private populateEvents(events: any[]) {
         this.eventList = {};
-        console.log('[EventListPage] - populateEvents - events', events);
         events.sort(this.utils.compareEvents);
         events.forEach(e => {
             let startDateStr = this.datePipe.transform(e.startDate, 'MMMM  - yyyy');
@@ -126,7 +146,6 @@ export class EventListPage {
             }
             this.eventList[startDateStr].push(e);
         });
-        console.log('[EventListPage] - populateEvents - eventList', this.eventList);
     }
 
     /**
@@ -135,7 +154,6 @@ export class EventListPage {
      * @param clickEvent
      */
     goToCollect(event: any, clickEvent: any) {
-        console.log('[EventListPage] - goToCollect');
         clickEvent.stopPropagation();
         // TODO
     }

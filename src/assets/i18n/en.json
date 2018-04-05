@@ -20,6 +20,8 @@
     "label": "Label",
     "teamHome": "My team",
     "teamVisitor": "Adversary",
+    "teamHote": "Home",
+    "teamGuest": "Visitor",
     "type": "Type",
     "startDate": "Date",
     "startTime": "Time",
