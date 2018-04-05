@@ -36,6 +36,14 @@
       "edit": "Edit",
       "trash": "Delete",
       "collect": "Collect"
+    },
+    "messages": {
+      "updateDone": "Event update done",
+      "createDone": "The event has been created",
+      "deleteDone": "The event has been deleted",
+      "updateFail": "A problem occurs during the event's update",
+      "createFail": "A problem occurs during the event's creation",
+      "deleteFail": "A problem occurs during the event's delete"
     }
   },
   "welcome": {

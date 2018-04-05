@@ -114,7 +114,7 @@ export class EventDetailPage {
      */
     goToEdit() {
         console.log('[EventDetailPage] - goToEdit');
-        this.navCtrl.push(EventUpsertPage, {event : this.event});
+        this.navCtrl.push(EventUpsertPage, {event : this.event, editMode: 'UPDATE'});
     }
 
     /**

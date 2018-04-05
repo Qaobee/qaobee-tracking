@@ -144,7 +144,7 @@ export class EventListPage {
      *
      */
     addEvent() {
-        this.navCtrl.push(EventUpsertPage, {});
+        this.navCtrl.push(EventUpsertPage, {editMode: 'CREATE'});
     }
 
     /**

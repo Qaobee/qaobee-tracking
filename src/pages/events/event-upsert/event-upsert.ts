@@ -17,6 +17,7 @@
  *  from Qaobee.
  */
 import {Component} from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import {NavController, NavParams, ToastController} from 'ionic-angular';
 import {EventsService} from "../../../providers/api/api.events.service";
 import {LocationService} from "../../../providers/location.service";
@@ -39,6 +40,7 @@ import moment from 'moment';
     templateUrl: 'event-upsert.html',
 })
 export class EventUpsertPage {
+    editMode: string;
     eventForm: FormGroup;
     event: any;
     startDate: string = new Date().toISOString();
@@ -76,21 +78,28 @@ export class EventUpsertPage {
                 private authenticationService: AuthenticationService,
                 private activityCfgService: ActivityCfgService,
                 private locationService: LocationService,
-                private teamService: TeamService) {
+                private teamService: TeamService,
+                private translateService: TranslateService) {
 
-        this.event = navParams.get('event') || {
-            participants: {},
-            activityId: this.authenticationService.meta.activity._id,
-            seasonCode: this.authenticationService.meta.season.code,
-        };
-        if (this.event && this.event.startDate) {
-            this.startDate = moment(this.event.startDate).format("YYYY-MM-DD");
-            this.startTime = moment(this.event.startDate).format("HH:mm");
-            if (this.event.address && this.event.address.formatedAddress) {
-                this.address = this.event.address.formatedAddress;
+        //Mode edit CREATE or UPDATE
+        this.editMode = navParams.get('editMode');
+        if(this.editMode && this.editMode==='CREATE') {
+            this.event = {
+                participants: {},
+                activityId: this.authenticationService.meta.activity._id,
+                seasonCode: this.authenticationService.meta.season.code,
+            };
+        } else {
+            this.event = navParams.get('event');
+            if (this.event && this.event.startDate) {
+                this.startDate = moment(this.event.startDate).format("YYYY-MM-DD");
+                this.startTime = moment(this.event.startDate).format("HH:mm");
+                if (this.event.address && this.event.address.formatedAddress) {
+                    this.address = this.event.address.formatedAddress;
+                }
             }
         }
-
+        
         this.eventForm = this.formBuilder.group({
             'label': [this.event.label || '', [Validators.required]],
             'address': [this.address || ''],
@@ -197,9 +206,7 @@ export class EventUpsertPage {
             let startTime = moment(formVal.startTime,"HH:mm");
             startDate.hour(startTime.hour());
             startDate.minute(startTime.minute());
-
             this.event.startDate = startDate.unix()*1000;
-            this.event.endDate = startDate.unix()*1000;
             
             this.event.link = {
                 linkId: 'AAAA',
@@ -219,22 +226,33 @@ export class EventUpsertPage {
                 this.event.participants.teamHome = formVal.teamVisitor;
                 this.event.participants.teamVisitor = formVal.teamHome;
             }
-            console.log('[EventUpsertPage] - saveEvent - this.event', this.event);
             this.eventsService.addEvent(this.event).subscribe(r => {
-                console.log('[EventUpsertPage] - saveEvent', r);
-                this.storage.get('events').then(events => {
+
+                if(this.editMode==='CREATE'){
+                  this.storage.get('events').then(events => {
                     events.push(r);
                     this.storage.set('events', events);
                     this.navCtrl.pop();
-                    // TODO i18n
-                    this.presentToast('Event created');
-                });
+                    this.translateService.get('eventsModule.messages.createDone').subscribe(
+                      value => {
+                        this.presentToast(value);
+                      }
+                    )
+                  });
+                } else {
+                  this.navCtrl.pop();
+                  this.translateService.get('eventsModule.messages.updateDone').subscribe(
+                    value => {
+                      this.presentToast(value);
+                    }
+                  )
+                }
+                
             });
         }
     }
 
     cancel() {
-        console.log('[EventUpsertPage] - cancel');
         this.navCtrl.pop();
     }
 
