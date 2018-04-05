@@ -71,7 +71,12 @@ export class MyApp {
         this.pages = [];
         translate.setDefaultLang('en');
         translate.use(translate.getBrowserLang());
-
+    }
+    /**
+     * @returns Nav
+     */
+    getActiveNav(): Nav {
+        return this.nav;
     }
 
     /** */
