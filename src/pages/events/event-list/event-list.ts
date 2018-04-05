@@ -146,6 +146,7 @@ export class EventListPage {
             }
             this.eventList[startDateStr].push(e);
         });
+        this.eventListSize = events.length;
     }
 
     /**
