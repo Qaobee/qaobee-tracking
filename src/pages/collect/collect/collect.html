@@ -9,29 +9,37 @@
 
 <ion-content>
     <ion-list>
-        <chrono-component [chrono]="chrono" [currentPhase]="currentPhase" ></chrono-component>
+        <chrono-component 
+        [chrono]="fsmContext.chrono" 
+        [currentPhase]="gameState?.currentPhase" 
+        (onStarted)="playButton($event)" 
+        (onPaused)="pauseButton($event)"
+        (onStopped)="stopButton($event)"
+        (onPeriodEnded)="endPeriod($event)"
+        (onGameEnded)="endCollect($event)"
+        ></chrono-component>
         <ion-grid>
             <ion-row>
                 <ion-col>
                     <ion-grid>
                         <ion-row>
-                            <ion-col class="team" text-center>{{getTeamHomeName()}}</ion-col>
+                            <ion-col class="team" text-center>{{ getTeamHomeName() }}</ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-col class="score" text-center>{{ homeScore }}</ion-col>
+                            <ion-col class="score" text-center>{{ gameState.homeScore }}</ion-col>
                         </ion-row>
                         <ion-row>
                             <ion-col text-center class="small">Temps mort</ion-col>
                         </ion-row>
                         <ion-row>
                             <ion-col text-center>
-                                <ion-checkbox></ion-checkbox>
+                                <ion-checkbox (click)="timeoutUs($event)"></ion-checkbox>
                             </ion-col>
                             <ion-col text-center>
-                                <ion-checkbox></ion-checkbox>
+                                <ion-checkbox (click)="timeoutUs($event)"></ion-checkbox>
                             </ion-col>
                             <ion-col text-center>
-                                <ion-checkbox></ion-checkbox>
+                                <ion-checkbox (click)="timeoutUs($event)"></ion-checkbox>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
@@ -44,23 +52,23 @@
                 <ion-col>
                     <ion-grid>
                         <ion-row>
-                            <ion-col text-center class="team">{{getTeamVisitor()}}</ion-col>
+                            <ion-col text-center class="team">{{ getTeamVisitor() }}</ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-col text-center class="score">{{visitorScore}}</ion-col>
+                            <ion-col text-center class="score">{{ gameState.visitorScore }}</ion-col>
                         </ion-row>
                         <ion-row>
                             <ion-col text-center class="small">Temps mort</ion-col>
                         </ion-row>
                         <ion-row>
                             <ion-col text-center>
-                                <ion-checkbox></ion-checkbox>
+                                <ion-checkbox (click)="timeoutThem($event)"></ion-checkbox>
                             </ion-col>
                             <ion-col text-center>
-                                <ion-checkbox></ion-checkbox>
+                                <ion-checkbox (click)="timeoutThem($event)"></ion-checkbox>
                             </ion-col>
                             <ion-col text-center>
-                                <ion-checkbox></ion-checkbox>
+                                <ion-checkbox (click)="timeoutThem($event)"></ion-checkbox>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
@@ -87,28 +95,28 @@
             <ion-row>
                 <ion-col text-center>
                     <ion-fab center middle>
-                        <button ion-fab mini color="danger">
+                        <button ion-fab mini color="danger" (click)="hurtButton($event)">
                             <ion-icon name="medical"></ion-icon>
                         </button>
                     </ion-fab>
                 </ion-col>
                 <ion-col text-center>
                     <ion-fab center middle>
-                        <button ion-fab mini color="yellow">
+                        <button ion-fab mini color="yellow" (click)="yellowCardButton($event)">
                             <ion-icon name="document"></ion-icon>
                         </button>
                     </ion-fab>
                 </ion-col>
                 <ion-col text-center>
                     <ion-fab center middle>
-                        <button ion-fab mini color="warning">
+                        <button ion-fab mini color="warning" (click)="orangeCardButton($event)">
                             +2
                         </button>
                     </ion-fab>
                 </ion-col>
                 <ion-col text-center>
                     <ion-fab center middle>
-                        <button ion-fab mini color="danger">
+                        <button ion-fab mini color="danger" (click)="redCardButton($event)">
                             <ion-icon name="document"></ion-icon>
                         </button>
                     </ion-fab>
@@ -126,7 +134,7 @@
         <ion-grid>
             <ion-row>
                 <ion-col text-center>
-                    <button ion-button color="light">Attack</button>
+                    <button ion-button color="light" (click)="attackButton($event)" [disabled]="!attackEnabled">Attack</button>
                 </ion-col>
                 <ion-col>
                     <ion-select [(ngModel)]="gameState.homeGameSystem">
@@ -135,7 +143,7 @@
                 </ion-col>
                 <ion-col text-center>
                     <ion-fab center middle>
-                        <button ion-fab mini color="danger">
+                        <button ion-fab mini color="danger" (click)="statsButton($event)">
                             <ion-icon name="stats"></ion-icon>
                         </button>
                     </ion-fab>
@@ -146,7 +154,7 @@
                     </ion-select>
                 </ion-col>
                 <ion-col text-center>
-                    <button ion-button color="light">Defense</button>
+                    <button ion-button color="light" (click)="defenseButton($event)" [disabled]="!defenseEnabled">Defense</button>
                 </ion-col>
             </ion-row>
         </ion-grid>

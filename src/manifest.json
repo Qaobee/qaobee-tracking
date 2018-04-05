@@ -1,6 +1,6 @@
 {
-  "name": "Ionic",
-  "short_name": "Ionic",
+  "name": "Qaobee Tracking",
+  "short_name": "com.qaobee.tracking",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{

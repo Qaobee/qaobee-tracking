@@ -1,14 +1,13 @@
+import { FSMContext } from './../../model/fsm/fsm.context';
 import { Injectable } from "@angular/core";
-import { FSMContext } from "../../model/fsm.context";
 import { CollectStat } from "../../model/collect.stat";
 import { StatType } from "../../model/stat.type";
 import { MessageBus } from "../message-bus.service";
-import { InGamePlayer } from "../../model/ingame.player";
 
 @Injectable()
 export class StatCollector {
-    public STAT = 'collect.stat';
-
+    static STAT = 'collect.stat';
+    static UPLOAD_STAT = 'upload.stats';
     /**
      * @param  {MessageBus} privatemessageBus
      */
@@ -59,7 +58,7 @@ export class StatCollector {
         if (playerId) {
             stat.owners.push(playerId);
         }
-        this.messageBus.broadcast(this.STAT, stat);
+        this.messageBus.broadcast(StatCollector.STAT, stat);
     }
 
     /**
@@ -88,7 +87,7 @@ export class StatCollector {
             this.totalPlayTime(context, rp.playerId);
         });
         // TODO
-        this.messageBus.broadcast('upload.stats');
+        this.messageBus.broadcast(StatCollector.UPLOAD_STAT);
     }
 
     /**
@@ -102,7 +101,7 @@ export class StatCollector {
         if (playerId != null) {
             stat.owners.push(playerId);
         }
-        this.messageBus.broadcast(this.STAT, stat);
+        this.messageBus.broadcast(StatCollector.STAT, stat);
     }
 
     /**
@@ -111,7 +110,7 @@ export class StatCollector {
      */
     switchPhase(context: FSMContext, duration: number) {
         let stat = this.eventBuilder(context, context.gamePhase.code, duration);
-        this.messageBus.broadcast(this.STAT, stat);
+        this.messageBus.broadcast(StatCollector.STAT, stat);
     }
     /**
      * @param  {FSMContext} context
@@ -123,7 +122,7 @@ export class StatCollector {
         if (playerId != null) {
             stat.owners.push(playerId);
         }
-        this.messageBus.broadcast(this.STAT, stat);
+        this.messageBus.broadcast(StatCollector.STAT, stat);
     }
 
     /**
@@ -135,7 +134,7 @@ export class StatCollector {
         if (playerId != null) {
             stat.owners.push(playerId);
         }
-        this.messageBus.broadcast(this.STAT, stat);
+        this.messageBus.broadcast(StatCollector.STAT, stat);
     }
 
     /**
@@ -149,7 +148,7 @@ export class StatCollector {
         if (team != null) {
             stat.owners.push(team);
         }
-        this.messageBus.broadcast(this.STAT, stat);
+        this.messageBus.broadcast(StatCollector.STAT, stat);
     }
 
     /**
@@ -163,7 +162,7 @@ export class StatCollector {
         if (playerId != null) {
             stat.owners.push(playerId);
         }
-        this.messageBus.broadcast(this.STAT, stat);
+        this.messageBus.broadcast(StatCollector.STAT, stat);
     }
 
     /**
@@ -177,7 +176,7 @@ export class StatCollector {
         if (playerId != null) {
             stat.owners.push(playerId);
         }
-        this.messageBus.broadcast(this.STAT, stat);
+        this.messageBus.broadcast(StatCollector.STAT, stat);
     }
 
     /**
@@ -190,7 +189,7 @@ export class StatCollector {
         if (playerId != null) {
             stat.owners.push(playerId);
         }
-        this.messageBus.broadcast(this.STAT, stat);
+        this.messageBus.broadcast(StatCollector.STAT, stat);
     }
 
     /**
@@ -203,7 +202,7 @@ export class StatCollector {
         if (playerId != null) {
             stat.owners.push(playerId);
         }
-        this.messageBus.broadcast(this.STAT, stat);
+        this.messageBus.broadcast(StatCollector.STAT, stat);
     }
 
     /**
@@ -227,7 +226,7 @@ export class StatCollector {
         if (playerId != null) {
             stat.owners.push(playerId);
         }
-        this.messageBus.broadcast(this.STAT, stat);
+        this.messageBus.broadcast(StatCollector.STAT, stat);
     }
 
     /**
@@ -239,7 +238,7 @@ export class StatCollector {
         if (playerId != null) {
             stat.owners.push(playerId);
         }
-        this.messageBus.broadcast(this.STAT, stat);
+        this.messageBus.broadcast(StatCollector.STAT, stat);
     }
 
     /**
@@ -251,7 +250,7 @@ export class StatCollector {
         if (playerId != null) {
             stat.owners.push(playerId);
         }
-        this.messageBus.broadcast(this.STAT, stat);
+        this.messageBus.broadcast(StatCollector.STAT, stat);
     }
 
     /**
@@ -276,7 +275,7 @@ export class StatCollector {
         if (playerId != null) {
             stat.owners.push(playerId);
         }
-        this.messageBus.broadcast(this.STAT, stat);
+        this.messageBus.broadcast(StatCollector.STAT, stat);
     }
 
     /**
@@ -289,7 +288,7 @@ export class StatCollector {
         if (playerId != null) {
             stat.owners.push(playerId);
         }
-        this.messageBus.broadcast(this.STAT, stat);
+        this.messageBus.broadcast(StatCollector.STAT, stat);
     }
 
     /**
@@ -305,7 +304,7 @@ export class StatCollector {
         if (playerId != null) {
             stat.owners.push(playerId);
         }
-        this.messageBus.broadcast(this.STAT, stat);
+        this.messageBus.broadcast(StatCollector.STAT, stat);
     }
 
     /**
@@ -318,6 +317,6 @@ export class StatCollector {
         if (playerId != null) {
             stat.owners.push(playerId);
         }
-        this.messageBus.broadcast(this.STAT, stat);
+        this.messageBus.broadcast(StatCollector.STAT, stat);
     }
 }

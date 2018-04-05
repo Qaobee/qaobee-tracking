@@ -25,5 +25,7 @@ export enum StatType {
     stopGKDef = 'stopGKDef',
     stopGKAtt = 'stopGKAtt',
     TIME_ATTACK = 'timeAttack',
-    TIME_DEFENSE = 'timeDefense'
+    TIME_DEFENSE = 'timeDefense',
+    TIMEOUT_THEM = 'timeoutThem',
+    TIMEOUT_US = 'timeoutUs'
 }

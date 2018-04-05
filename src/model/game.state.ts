@@ -4,12 +4,12 @@ export class GameState {
     positions: any = {};
     chrono: number = 0;
     currentPhase: number = 1;
-    playerList: InGamePlayer[];
+    playerList: Array<InGamePlayer> = [];
     homeScore: number = 0;
     visitorScore: number = 0;
     homeTimeout: number = 0;
     visitorTimeout: number = 0;
-    sanctions: any = {};
+    sanctions: any[] = [];
     state: string = 'INIT';
     homeGameSystem: string ='';
     visitorGameSystem: string ='';

@@ -1,3 +1,4 @@
+import { StatCollector } from './../../providers/collect/stat.collector';
 import {NgModule} from '@angular/core';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {IonicStorageModule} from "@ionic/storage";
@@ -27,10 +28,11 @@ import {HandFSM} from "../../providers/collect/hand.fsm";
                 deps: [HttpClient]
             }
         }),
-        PipesModule
+        PipesModule,
     ],
     providers: [
-        HandFSM
+        HandFSM,
+        StatCollector
     ],
     entryComponents: [
         TeamBuildPage,

@@ -1,6 +1,6 @@
 {
   "name": "qaobee-tracking",
-  "app_id": "",
+  "app_id": "com.qaobee.tracking",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
