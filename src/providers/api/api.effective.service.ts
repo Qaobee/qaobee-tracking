@@ -28,7 +28,7 @@ import { Observable } from "rxjs/Observable";
 import moment from 'moment';
 
 @Injectable()
-export class ActivityCfgService extends ApiService {
+export class EffectiveService extends ApiService {
     /**
      *
      * @param {App} app
@@ -45,44 +45,30 @@ export class ActivityCfgService extends ApiService {
     ) {
         super(app, authenticationService, toastCtrl);
     }
-
     /**
-     *
-     * @param {string} activityId
-     * @returns {Observable<any>}
+     * @param  {string} effectiveId
      */
-    get(activityId: string) {
-        return new Observable<any>((observer) => {
-            this.translate.get('country').subscribe(value => {
-                this.http.get<any>(ENV.hive + this.rootPath + '/commons/settings/activitycfg/get?activityId=' + activityId
-                    + '&date=' + moment.utc().valueOf()
-                    + '&countryId=' + value, this.addHeaderToken()).pipe(
-                        catchError(this.handleError('ActivityCfgService.get'))
-                    ).subscribe(data => {
-                        observer.next(data);
-                        observer.complete();
-                    });
-            });
-        });
+    get(effectiveId: string) {
+        return this.http.get<any>(ENV.hive + this.rootPath +  '/sandbox/effective/effective/get?_id=' + effectiveId, this.addHeaderToken()).pipe(
+            catchError(this.handleError('MetaServices.getMeta'))
+        );
     }
-
+    
     /**
-     *
-     * @param {string} activityId
-     * @param {string} params
+     * @param  {string} sandboxconfigId
      */
-    getParamFieldList(activityId: string, params: string) {
-        return new Observable<any>((observer) => {
-            this.translate.get('country').subscribe(value => {
-                this.http.get<any[]>(ENV.hive + this.rootPath + '/commons/settings/activitycfg/params?paramFieldList=' + params
-                    + '&activityId=' + activityId
-                    + '&date=' + moment.utc().valueOf() + '&countryId=' + value, this.addHeaderToken()).pipe(
-                        catchError(this.handleError('ActivityCfgService.getParamFieldList'))
-                    ).subscribe(data => {
-                        observer.next(data);
-                        observer.complete();
-                    });
-            });
-        });
+    getList(sandboxconfigId: string) {
+        return this.http.get<any>(ENV.hive + this.rootPath +  '/sandbox/effective/effective/getList?sandboxId=' + sandboxconfigId, this.addHeaderToken()).pipe(
+            catchError(this.handleError('MetaServices.getMeta'))
+        );
+    }
+    
+    /**
+     * @param  {any} effective
+     */
+    update(effective: any) {
+        return this.http.post<any>(ENV.hive + this.rootPath +  '/sandbox/effective/effective/update', effective, this.addHeaderToken()).pipe(
+            catchError(this.handleError('MetaServices.getMeta'))
+        );
     }
 }
