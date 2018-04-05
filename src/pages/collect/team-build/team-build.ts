@@ -25,8 +25,8 @@ import { ENV } from "@app/env";
 import { SettingsService } from "../../../providers/settings.service";
 import { CollectPage } from "../collect/collect";
 import moment from 'moment';
-import { CollectService } from 'providers/api/api.collect.service';
-import { EffectiveService } from 'providers/api/api.effective.service';
+import { CollectService } from '../../../providers/api/api.collect.service';
+import { EffectiveService } from '../../../providers/api/api.effective.service';
 
 /**
  * Generated class for the EventListPage page.
@@ -285,7 +285,17 @@ export class TeamBuildPage {
                 parametersGame: this.settingsService.getCollectInfos()
             }
 
-            this.navCtrl.push(CollectPage, { players: this.playerPositions, event: this.event, collect: this.collect });
+            this.collectService.addCollect(this.collect).subscribe((c:any)=> {
+                this.collect._id = c._id;
+                this.storage.get('collects').then((collects: any[]) => {
+                    if(!collects) {
+                        collects = [];
+                    }
+                    collects.push(this.collect);
+                    this.storage.set('collects', collects);
+                    this.navCtrl.push(CollectPage, { players: this.playerPositions, event: this.event, collect: this.collect });
+                });
+            });
         }
     }
 

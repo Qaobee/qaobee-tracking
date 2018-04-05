@@ -35,7 +35,7 @@ export class SettingsService {
      * @param {ActivityCfgService} activityCfgService
      */
     constructor(private translate: TranslateService, private storage: Storage, private activityCfgService:ActivityCfgService) {
-        this.locale = translate.getBrowserLang();
+        this.locale = this.translate.getBrowserLang();
         registerLocaleData(localeFr, 'fr');
         registerLocaleData(localeEn, 'en');
         registerLocaleData(localeEn, 'us');
