@@ -53,7 +53,7 @@
   </ion-list>
 
   <!-- empty list -->
-  <ion-item text-left *ngIf="!eventList">
+  <ion-item text-left *ngIf="!eventListSize">
       <h2 padding>{{ 'nextEvent.titleNotFound'  | translate}}</h2>
       <button ion-button color="danger" outline item-end large (tap)="addEvent()"><ion-icon name="add"></ion-icon></button>
   </ion-item>
