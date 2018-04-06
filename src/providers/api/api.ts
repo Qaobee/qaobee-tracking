@@ -18,7 +18,7 @@
  */
 import {Injectable} from "@angular/core";
 import 'rxjs/add/operator/map';
-import {App, NavController, ToastController} from 'ionic-angular';
+import {App, ToastController} from 'ionic-angular';
 import {Observable} from "rxjs/Observable";
 import {of} from "rxjs/observable/of";
 import {HttpHeaders} from "@angular/common/http";

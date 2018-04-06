@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { CollectStat } from "../../model/collect.stat";
 import { StatType } from "../../model/stat.type";
 import { MessageBus } from "../message-bus.service";
+import moment from 'moment';
 
 @Injectable()
 export class StatCollector {
@@ -31,7 +32,7 @@ export class StatCollector {
         evt.code = code;
         evt.owners = context.owners;
         evt.producter = context.connectedUser._id;
-        evt.timer = new Date().valueOf();
+        evt.timer = moment.utc().valueOf();
         if (context.shootSeqId) {
             evt.shootSeqId = context.shootSeqId;
         }

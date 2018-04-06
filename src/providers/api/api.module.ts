@@ -30,6 +30,8 @@ import {EventsService} from "./api.events.service";
 import {PersonService} from "./api.person.service";
 import {TeamService} from "./api.team.service";
 import {ActivityCfgService} from "./api.activityCfg.service";
+import {CollectService} from "./api.collect.service"
+import {EffectiveService} from "./api.effective.service"
 
 @NgModule({
     declarations: [    ],
@@ -53,6 +55,8 @@ import {ActivityCfgService} from "./api.activityCfg.service";
         TeamService,
         ActivityCfgService,
         APIStatsService,
+        CollectService,
+        EffectiveService,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         FileTransfer
     ]

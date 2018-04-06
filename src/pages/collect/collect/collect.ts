@@ -18,6 +18,7 @@ import { NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { MessageBus } from './../../../providers/message-bus.service';
 import { Component } from "@angular/core";
 import { ENV } from "@app/env";
+import moment from 'moment';
 
 @Component({
     selector: 'page-collect',
@@ -33,7 +34,9 @@ export class CollectPage {
     currentEvent: any;
     currentCollect: any;
     playerMap: any;
-    playerList: Array<InGamePlayer> = [];
+    playerList: any = {
+        substitutes: []
+    };
     indicatorsByCode: any = {};
     mapIndicators: any = {};
     possibleActions: any = {};
@@ -61,6 +64,19 @@ export class CollectPage {
         }]
     ];
 
+    
+    /**
+     * @param  {NavParams} publicnavParams
+     * @param  {Storage} privatestorage
+     * @param  {ToastController} privatetoastCtrl
+     * @param  {LoadingController} publicloadingCtrl
+     * @param  {MessageBus} privatemessageBus
+     * @param  {APIStatsService} privatestatAPI
+     * @param  {StatCollector} privatestatCollector
+     * @param  {Utils} privateutils
+     * @param  {AuthenticationService} privateauthenticationService
+     * @param  {HandFSM} privatehandFSM
+     */
     constructor(
         public navParams: NavParams,
         private storage: Storage,
@@ -111,12 +127,18 @@ export class CollectPage {
         // this.initGoalArea();
         // this.initGroundArea();
     }
-
+    
+    /**
+     * 
+     */
     saveSats(): void {
         this.storage.set('stats-' + this.currentEvent._id, this.stats);
         this.saveState();
     }
 
+    /**
+     * 
+     */
     saveState(): void {
         this.gameState.lastInMap = this.fsmContext.lastInMap;
         this.gameState.playTimeMap = this.fsmContext.playTimeMap;
@@ -127,6 +149,7 @@ export class CollectPage {
         this.gameState.positions = this.playerPositions;
         this.storage.set('gameState-' + this.currentEvent._id, this.gameState);
     }
+
     /**
      * 
      */
@@ -187,6 +210,9 @@ export class CollectPage {
         this.initFlowContext();
     }
 
+    /**
+     * 
+     */
     initFlowContext() {
         this.fsmContext.chrono = 0;
         this.fsmContext.eventId = this.currentEvent._id;
@@ -202,6 +228,9 @@ export class CollectPage {
         this.restoreState();
     }
 
+    /**
+     * 
+     */
     restoreState() {
         let loader = this.loadingCtrl.create({
             content: "Please wait..."
@@ -286,7 +315,7 @@ export class CollectPage {
     }
 
     getTeamHomeName(): string {
-        console.debug('[CollectPage] - getTeamHomeName');
+       // console.debug('[CollectPage] - getTeamHomeName');
         if (this.currentEvent.participants.teamHome) {
             return this.currentEvent.participants.teamHome.label || this.NA;
         }
@@ -294,7 +323,7 @@ export class CollectPage {
     }
 
     getTeamHomeId() {
-        console.debug('[CollectPage] - getTeamHomeId');
+      //  console.debug('[CollectPage] - getTeamHomeId');
         if (this.currentEvent.participants.teamHome) {
             return this.currentEvent.participants.teamHome.id || this.NA;
         }
@@ -302,7 +331,7 @@ export class CollectPage {
     }
 
     getTeamVisitor(): string {
-        console.debug('[CollectPage] - getTeamVisitor');
+    //    console.debug('[CollectPage] - getTeamVisitor');
         if (this.currentEvent.participants.teamVisitor) {
             return this.currentEvent.participants.teamVisitor.label || this.NA;
         }
