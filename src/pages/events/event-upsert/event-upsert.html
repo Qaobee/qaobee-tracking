@@ -90,13 +90,13 @@
       </ion-item>
       <ion-item>
           <ion-label>{{ 'eventsModule.teamHome' | translate }}</ion-label>
-          <ion-select formControlName="teamHome" interface="popover" [compareWith]="compareOptionTeam">
+          <ion-select formControlName="myTeam" [compareWith]="compareOptionTeam">
               <ion-option *ngFor="let t of teams.myTeams" [value]="t">{{t.label}}</ion-option>
           </ion-select>
       </ion-item>
       <ion-item>
           <ion-label>{{ 'eventsModule.teamVisitor' | translate }}</ion-label>
-          <ion-select formControlName="teamVisitor" interface="popover" [compareWith]="compareOptionTeam">
+          <ion-select formControlName="adversaryTeam" [compareWith]="compareOptionTeam">
               <ion-option *ngFor="let t of teams.adversaries" [value]="t">{{t.label}}</ion-option>
           </ion-select>
       </ion-item>

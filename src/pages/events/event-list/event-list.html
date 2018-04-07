@@ -27,7 +27,7 @@
   <ion-list *ngIf="eventList">
 
       <!-- filter list -->
-      <ion-item class="enteteLight">
+      <ion-item color="primary">
         <ion-badge color="danger" item-start>{{eventListSize}}</ion-badge>
         <ion-searchbar (ionInput)="searchItems($event)"></ion-searchbar>
       </ion-item>
@@ -45,16 +45,10 @@
               <h2>{{ event.label }}</h2>
               <h3>{{ event.participants.teamHome.label }} / {{ event.participants.teamVisitor.label }}</h3>
               <p>{{ event.startDate | date:"mediumDate" }} {{ event.startDate | date:"shortTime" }}</p>
-              <button ion-button item-end small (click)="goToCollect(event, $event)">
+              <button ion-button item-end large color="danger" clear (click)="goToCollect(event, $event)">
                   <ion-icon name="stopwatch"></ion-icon>
               </button>
           </ion-item>
       </div>
   </ion-list>
-
-  <!-- empty list -->
-  <ion-item text-left *ngIf="!eventListSize">
-      <h2 padding>{{ 'nextEvent.titleNotFound'  | translate}}</h2>
-      <button ion-button color="danger" outline item-end large (tap)="addEvent()"><ion-icon name="add"></ion-icon></button>
-  </ion-item>
 </ion-content>
