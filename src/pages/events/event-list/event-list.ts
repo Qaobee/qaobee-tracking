@@ -20,12 +20,15 @@ import {Component} from '@angular/core';
 import {NavController, NavParams, Refresher} from 'ionic-angular';
 import {AuthenticationService} from "../../../providers/authentication.service";
 import {EventsService} from "../../../providers/api/api.events.service";
+import { CollectService } from './../../../providers/api/api.collect.service';
 import {Storage} from "@ionic/storage";
 import {Utils} from "../../../providers/utils";
 import {DatePipe} from "@angular/common";
 import {SettingsService} from "../../../providers/settings.service";
 import {EventDetailPage} from "../event-detail/event-detail";
 import {EventUpsertPage} from "../event-upsert/event-upsert";
+import {TeamBuildPage} from "../../collect/team-build/team-build";
+import moment from 'moment';
 
 /**
  * Generated class for the EventListPage page.
@@ -59,6 +62,7 @@ export class EventListPage {
                 private storage: Storage,
                 private authenticationService: AuthenticationService,
                 private settingsService: SettingsService,
+                private collectService: CollectService,
                 private utils: Utils) {
         this.datePipe = new DatePipe(this.settingsService.getLanguage());
         
@@ -144,7 +148,15 @@ export class EventListPage {
             if (!this.eventList.hasOwnProperty(startDateStr)) {
                 this.eventList[startDateStr] = [];
             }
-            this.eventList[startDateStr].push(e);
+
+            this.collectService.getCollects(this.authenticationService.meta._id, e._id, e.owner.effectiveId, e.owner.teamId, moment("01/01/2000","DD/MM/YYYY").valueOf(),moment().valueOf()).subscribe(result =>{
+                if(result[0]){
+                    e.isCollected = true;
+                } else {
+                    e.isCollected = false;
+                }
+                this.eventList[startDateStr].push(e);     
+            });
         });
         this.eventListSize = events.length;
     }
@@ -154,15 +166,26 @@ export class EventListPage {
      * @param event
      * @param clickEvent
      */
-    goToCollect(event: any, clickEvent: any) {
+    goToViewEventStat(event: any, clickEvent: any) {
         clickEvent.stopPropagation();
-        // TODO
+        console.log('goToViewEventStat');
+    }
+
+    /**
+     *
+     * @param event
+     * @param clickEvent
+     */
+    goToStartCollect(event: any, clickEvent: any) {
+        clickEvent.stopPropagation();
+        this.navCtrl.push(TeamBuildPage, {event: event});
     }
 
     /**
      *
      */
-    addEvent() {
+    addEvent(clickEvent: any) {
+        clickEvent.stopPropagation();
         this.navCtrl.push(EventUpsertPage, {editMode: 'CREATE'});
     }
 

@@ -106,7 +106,6 @@ export class EventUpsertPage {
                 }
 
                 //Maangement myteam vs adversaryTeam and teamHome Vs teamVisitor
-                console.log('home sweet home',this.event.participants.teamHome._id===this.event.owner.teamId);
                 if(this.event.participants.teamHome._id===this.event.owner.teamId) {
                     this.radioHome = true;
                     this.myTeam = this.event.participants.teamHome;
@@ -202,7 +201,6 @@ export class EventUpsertPage {
         this.autocompleteItems = [];
         this.eventForm.controls['address'].setValue(item.description);
         this.locationService.selectSearchResult(item, this.address, result => {
-            console.log('adresse',result);
             this.event.address = {
                 formatedAddress: item.description,
                 lat: result.geometry.location.lat(),
@@ -212,27 +210,38 @@ export class EventUpsertPage {
     }
 
     /**
-     *
+     * 
+     * @param formVal 
      */
     saveEvent(formVal) {
         if(this.eventForm.valid) {
+            //event label
+            this.event.label = formVal.label;
+
+            //Date event
             let startDate = moment(formVal.startDate,"YYYY-MM-DD");
             let startTime = moment(formVal.startTime,"HH:mm");
             startDate.hour(startTime.hour());
             startDate.minute(startTime.minute());
             this.event.startDate = startDate.unix()*1000;
             
+            //link event
             this.event.link = {
                 linkId: 'AAAA',
                 type: formVal.type.code
             };
-            this.event.label = formVal.label;
+            
+            //eventType
             this.event.type = formVal.type;
+
+            //event owner
             this.event.owner = {
                 sandboxId: this.authenticationService.meta._id,
                 effectiveId: this.authenticationService.meta.effectiveDefault,
                 teamId: formVal.myTeam._id
             };
+
+            //event participants
             if (formVal.radioHome) {
                 this.event.participants.teamVisitor = formVal.adversaryTeam;
                 this.event.participants.teamHome = formVal.myTeam;
@@ -240,6 +249,8 @@ export class EventUpsertPage {
                 this.event.participants.teamHome = formVal.adversaryTeam;
                 this.event.participants.teamVisitor = formVal.myTeam;
             }
+
+            //call API
             this.eventsService.addEvent(this.event).subscribe(r => {
 
                 if(this.editMode==='CREATE'){
@@ -261,7 +272,6 @@ export class EventUpsertPage {
                     }
                   )
                 }
-                
             });
         }
     }
@@ -282,7 +292,6 @@ export class EventUpsertPage {
         });
 
         toast.onDidDismiss(() => {
-            console.log('Dismissed toast');
         });
 
         toast.present();

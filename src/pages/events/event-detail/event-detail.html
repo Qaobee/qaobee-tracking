@@ -1,11 +1,11 @@
 <ion-header>
     <ion-navbar>
         <ion-title *ngIf="event.type">{{ event.type.label }}</ion-title>
-        <ion-buttons end>
+        <ion-buttons end *ngIf="!event.isCollected">
             <button ion-button icon-only (click)="goToEdit()">
                 <ion-icon name="create"></ion-icon>
             </button>
-            <button ion-button icon-only (click)="delete()">
+            <button ion-button icon-only (click)="delete()" >
                 <ion-icon name="trash"></ion-icon>
             </button>
         </ion-buttons>
@@ -75,7 +75,10 @@
         
     <ion-row text-center>
         <ion-col>
-            <button ion-button icon-left  (click)="goToCollect()">
+            <button ion-button icon-only (click)="goToviewEventStat(event, $event)" *ngIf="event.isCollected">
+                <ion-icon name="stats"></ion-icon>
+            </button>
+            <button ion-button icon-left  (click)="goToStartCollect(event, $event)" *ngIf="!event.isCollected">
                 <ion-icon name="stopwatch"></ion-icon>
                 <div>{{ 'eventsModule.detail.collect' | translate }}</div>
             </button>

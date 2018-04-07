@@ -103,9 +103,21 @@ export class EventDetailPage {
 
     /**
      *
+     * @param event
+     * @param clickEvent
      */
-    goToCollect() {
-        console.log('[EventDetailPage] - goToCollect');
+    goToviewEventStat(event: any, clickEvent: any) {
+        clickEvent.stopPropagation();
+        console.log('goToviewEventStat');
+    }
+
+    /**
+     *
+     * @param event
+     * @param clickEvent
+     */
+    goToStartCollect(event: any, clickEvent: any) {
+        clickEvent.stopPropagation();
         this.navCtrl.push(TeamBuildPage, {event: this.event});
     }
 

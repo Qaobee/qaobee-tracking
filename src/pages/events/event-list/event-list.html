@@ -10,7 +10,7 @@
 <ion-content>
   <!-- add button -->
   <ion-fab bottom right>
-      <button ion-fab large (click)="addEvent()" color="danger"><ion-icon name="add"></ion-icon></button>
+      <button ion-fab large (click)="addEvent($event)" color="danger"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
   
   <!-- refresh list -->
@@ -45,9 +45,8 @@
               <h2>{{ event.label }}</h2>
               <h3>{{ event.participants.teamHome.label }} / {{ event.participants.teamVisitor.label }}</h3>
               <p>{{ event.startDate | date:"mediumDate" }} {{ event.startDate | date:"shortTime" }}</p>
-              <button ion-button item-end large color="danger" clear (click)="goToCollect(event, $event)">
-                  <ion-icon name="stopwatch"></ion-icon>
-              </button>
+              <ion-icon item-end name="stopwatch" color="danger" *ngIf="!event.isCollected" (click)="goToStartCollect(event, $event)"></ion-icon>
+              <ion-icon item-end name="stats" color="danger" *ngIf="event.isCollected" (click)="goToViewEventStat(event, $event)"></ion-icon>
           </ion-item>
       </div>
   </ion-list>
