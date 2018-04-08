@@ -8,12 +8,14 @@ import {createTranslateLoader} from "../../app/app.module";
 import {App, IonicModule} from "ionic-angular";
 import {EventDetailPage} from "./event-detail/event-detail";
 import {EventUpsertPage} from "./event-upsert/event-upsert";
+import {EventStatsPage} from "./event-stats/event-stats";
 import {PipesModule} from "../../pipes/pipes.module";
 
 @NgModule({
     declarations: [
         EventListPage,
         EventDetailPage,
+        EventStatsPage,
         EventUpsertPage
     ],
     imports: [
@@ -33,6 +35,7 @@ import {PipesModule} from "../../pipes/pipes.module";
     entryComponents: [
         EventListPage,
         EventDetailPage,
+        EventStatsPage,
         EventUpsertPage
     ]
 })

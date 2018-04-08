@@ -20,6 +20,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { PersonService } from './../../../providers/api/api.person.service';
 import { PlayerUpsertPage } from './../player-upsert/player-upsert';
+import { PlayerStatsPage } from './../player-stats/player-stats';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -77,7 +78,7 @@ export class PlayerDetailPage {
   }
 
   goToStats() {
-    console.log('goToStats() -> PlayerDetailPage');
+    this.navCtrl.push(PlayerStatsPage, {player : this.player});
   }
 
 }

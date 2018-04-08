@@ -77,6 +77,7 @@
   },
   "player": {
     "TitleNavBarPlayer": "Joueur",
+    "TitleNavBarPlayerStats":"Stats Joueur",
     "TitleNavBarPlayerEdit": "Edition Joueur",
     "TitleNavBarPlayerList": "Liste des joueurs",
     "labels": {
