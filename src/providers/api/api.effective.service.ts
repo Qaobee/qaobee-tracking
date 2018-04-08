@@ -62,7 +62,7 @@ export class EffectiveService extends ApiService {
      * @param  {any} effective
      */
     update(effective: any) {
-        return this.http.post<any>(ENV.hive + this.rootPath +  '/sandbox/effective/effective/update', effective, this.addHeaderToken()).pipe(
+        return this.http.put<any>(ENV.hive + this.rootPath +  '/sandbox/effective/effective/update', effective, this.addHeaderToken()).pipe(
             catchError(this.handleError('MetaServices.getMeta'))
         );
     }

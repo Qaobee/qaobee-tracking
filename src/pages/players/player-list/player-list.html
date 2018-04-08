@@ -30,7 +30,7 @@
       </ion-avatar>
       <h2>{{item.firstname}} {{item.name}}</h2>
       <p *ngIf="(item.desactivated === 'true')">{{'player.labels.desactivated' | translate}}</p>
-      <p *ngIf="(item.desactivated !== 'true')">{{'player.positionType.'+item.status.positionType | translate}}</p>
+      <p *ngIf="(item.desactivated !== 'true')">{{item.status.positionType.label}}</p>
       <ion-badge color="secondary" item-end>{{item.status.squadnumber}}</ion-badge>
     </ion-item>  
   </ion-list>

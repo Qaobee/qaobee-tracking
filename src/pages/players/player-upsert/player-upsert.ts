@@ -22,10 +22,13 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Storage } from '@ionic/storage';
-import { PersonService } from './../../../providers/api/api.person.service';
+
 import { ActivityCfgService } from './../../../providers/api/api.activityCfg.service';
-import {LocationService} from "../../../providers/location.service";
-import {AuthenticationService} from "../../../providers/authentication.service";
+import { AuthenticationService } from "../../../providers/authentication.service";
+import { EffectiveService } from './../../../providers/api/api.effective.service';
+import { LocationService } from "../../../providers/location.service";
+import { PersonService } from './../../../providers/api/api.person.service';
+
 import moment from 'moment';
 
 
@@ -57,6 +60,7 @@ export class PlayerUpsertPage {
               private authenticationService: AuthenticationService,
               private personService: PersonService,
               private locationService: LocationService,
+              private effectiveService: EffectiveService,
               private storage: Storage,
               private translateService: TranslateService)
   {
@@ -206,12 +210,33 @@ export class PlayerUpsertPage {
           this.storage.get('players').then(players => {
             players.push(r);
             this.storage.set('players', players);
-            this.navCtrl.pop();
-            this.translateService.get('player.messages.createDone').subscribe(
-              value => {
-                this.presentToast(value);
+
+            this.effectiveService.get(this.authenticationService.meta.effectiveDefault).subscribe(effectiveGet => {
+              console.log('effectiveGet',effectiveGet);
+              let effective: any;
+              effective = effectiveGet;
+              if (effective) {
+                var roleMember = {code: 'player', label: 'Joueur'};
+                var member = {personId: r._id, role: roleMember};
+
+                if (effective) {
+                  effective.members.push(member);
+                } else {
+                  effective.members = [];
+                  effective.members.push(member);
+                }
+
+                /* Update effective members list */
+                this.effectiveService.update(effective).subscribe(effectiveUpdate => {
+                  this.navCtrl.pop();
+                  this.translateService.get('player.messages.createDone').subscribe(
+                    value => {
+                      this.presentToast(value);
+                    }
+                  )
+                });
               }
-            )
+            });
           });
         } else {
           this.navCtrl.pop();

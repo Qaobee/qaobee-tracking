@@ -47,7 +47,7 @@ export class PlayerDetailPage {
   }
 
   editPlayer() {
-    this.navCtrl.push(PlayerUpsertPage, {player : this.player});
+    this.navCtrl.push(PlayerUpsertPage, {editMode:'UPDATE', player : this.player});
   }
 
   desactivatePlayer(confirmLabels:string, desactived:string) {
