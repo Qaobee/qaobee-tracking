@@ -149,9 +149,10 @@ export class EventListPage {
             if (!this.eventList.hasOwnProperty(startDateStr)) {
                 this.eventList[startDateStr] = [];
             }
-
+            // FIXME : a placer dans le détail pour éviter un appel en mitraillette, non?
             this.collectService.getCollects(this.authenticationService.meta._id, e._id, e.owner.effectiveId, e.owner.teamId, moment("01/01/2000","DD/MM/YYYY").valueOf(),moment().valueOf()).subscribe(result =>{
-                if(result[0]){
+                console.debug('[EventListPage] - getCollects', result);
+                if(result[0] && result[0].status !== 'pending'){
                     e.isCollected = true;
                 } else {
                     e.isCollected = false;

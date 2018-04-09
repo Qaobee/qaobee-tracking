@@ -16,10 +16,10 @@
  *  is strictly forbidden unless prior written permission is obtained
  *  from Qaobee.
  */
-import {Component, Input} from '@angular/core';
-import {ENV} from '@app/env'
-import {ProfilePage} from "../../pages/profile/profile";
-import {MessageBus} from "../../providers/message-bus.service";
+import { Component, Input } from '@angular/core';
+import { ENV } from '@app/env'
+import { ProfilePage } from "../../pages/profile/profile";
+import { MessageBus } from "../../providers/message-bus.service";
 
 @Component({
     selector: 'menu-header',
@@ -42,7 +42,18 @@ export class MenuHeaderComponent {
      */
     goToProfile() {
         console.log('[MenuHeaderComponent] - goToProfile');
-        this.eventService.broadcast(MessageBus.navigation, {component: ProfilePage});
+        this.eventService.broadcast(MessageBus.navigation, { component: ProfilePage });
     }
-
+    /**
+    *
+    * @param {string} avatar
+    * @returns {string}
+    */
+    getAvatar(avatar: string) {
+        if (avatar && avatar !== 'null') {
+            return this.root + '/file/User/' + avatar;
+        } else {
+            return '/assets/imgs/user.png';
+        }
+    }
 }
