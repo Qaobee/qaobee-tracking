@@ -135,7 +135,7 @@ export class EventUpsertPage {
                 this.teams.myTeams = teams;
                 if (teams.length === 1 && !this.event.participants.teamHome) {
                     this.event.participants.teamHome = teams[0];
-                    this.eventForm.controls['teamHome'].setValue(teams[0]);
+                    this.eventForm.controls['myTeam'].setValue(teams[0]);
                 }
             }
         });
@@ -146,7 +146,7 @@ export class EventUpsertPage {
                 this.teams.adversaries = teams;
                 if (teams.length === 1 && !this.event.participants.teamVisitor) {
                     this.event.participants.teamVisitor = teams[0];
-                    this.eventForm.controls['teamVisitor'].setValue(teams[0]);
+                    this.eventForm.controls['adversaryTeam'].setValue(teams[0]);
                 }
             }
         });
