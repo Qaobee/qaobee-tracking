@@ -1,3 +1,4 @@
+import { GameState } from './../../../model/game.state';
 /*
  *  __________________
  *  Qaobee
@@ -131,13 +132,17 @@ export class TeamBuildPage {
      * @param  {any[]} collects
      */
     private testCollects(collects: any[]) {
-        Object.keys(collects).forEach(collectId => {
-            if (collects[collectId].eventRef._id === this.event._id) {
-                this.presentToast('Collect in progress');
-                this.collect = collects[collectId];
-                this.goToCollect();
-            }
-        });
+        console.log('[TeamBuildPage] - testCollects', collects);
+        if (collects.length > 0 && collects[0].eventRef._id === this.event._id) {
+            this.storage.get('gameState-' + this.event._id).then((gameState: GameState) => {
+                if (gameState) {
+                    this.presentToast('Collect in progress');
+                    console.log('[TeamBuildPage] - Collect in progress', collects[0]);
+                    this.collect = collects[0];
+                    this.goToResumeCollect();
+                }
+            });
+        }
     }
 
 
@@ -250,6 +255,10 @@ export class TeamBuildPage {
         this.playerPositions['substitutes'] = this.playerPositions['substitutes'].filter(p => p._id !== s._id);
     }
 
+    goToResumeCollect() {
+        console.log('[TeamBuildPage] - goToResumeCollect');
+        this.navCtrl.push(CollectPage, { event: this.event, collect: this.collect });
+    }
     /**
      *
      */
@@ -285,14 +294,15 @@ export class TeamBuildPage {
                 parametersGame: this.settingsService.getCollectInfos()
             }
 
-            this.collectService.addCollect(this.collect).subscribe((c:any)=> {
+            this.collectService.addCollect(this.collect).subscribe((c: any) => {
                 this.collect._id = c._id;
-                this.storage.get('collects').then((collects: any[]) => {
-                    if(!collects) {
-                        collects = [];
+                this.storage.get('collects').then((collects: any) => {
+                    if (!collects) {
+                        collects = {};
                     }
-                    collects.push(this.collect);
+                    collects[this.collect._id] = this.collect;
                     this.storage.set('collects', collects);
+                    console.log('[TeamBuildPage] - goToCollect', { players: this.playerPositions, event: this.event, collect: this.collect } );
                     this.navCtrl.push(CollectPage, { players: this.playerPositions, event: this.event, collect: this.collect });
                 });
             });
