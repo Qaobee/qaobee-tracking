@@ -31,4 +31,8 @@
     <h1>Stats à venir...</h1>
   </ion-item>
 
+  <ion-item *ngFor="let item of stats">
+    <h2>{{item._id.code}} : {{item.value}} </h2>
+  </ion-item>  
+
 </ion-content>

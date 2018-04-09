@@ -21,6 +21,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { PersonService } from './../../../providers/api/api.person.service';
+import { APIStatsService } from './../../../providers/api/api.stats';
+
+import moment from 'moment';
 
 @Component({
   selector: 'page-player-stats',
@@ -29,19 +32,52 @@ import { PersonService } from './../../../providers/api/api.person.service';
 export class PlayerStatsPage {
 
   player: any;
+  stats: any[] = [];
 
   /**
    * 
    * @param navCtrl 
    * @param navParams 
    * @param personService 
+   * @param statsService 
    * @param translateService 
    */
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     private personService: PersonService,
+    private statsService: APIStatsService,
     private translateService: TranslateService) {
+
       this.player = navParams.get('player');
+
+      // goal scored or stopped
+      let indicators = [];
+      let listFieldsGroupBy = ['code'];
+      let ownerId = [this.player._id];
+
+      if (this.player.status.positionType.code === 'goalkeeper') {
+        indicators = ['goalConceded','originShootDef'];
+      } else {
+        indicators = ['goalScored','originShootAtt'];
+      }
+
+      let search = {
+        listIndicators: indicators,
+        listOwners: ownerId,
+        startDate: moment("01/07/2017", "DD/MM/YYYY").valueOf(),
+        endDate: moment("30/06/2018", "DD/MM/YYYY").valueOf(),
+        aggregat: 'COUNT',
+        listFieldsGroupBy: listFieldsGroupBy
+      }
+      console.log('search', search);
+
+      this.statsService.getStatGroupBy(search).subscribe((result: any[]) => {
+        console.log('result', result);
+        for (let index = 0; index < result.length; index++) {
+          this.stats.push(result[index]);
+        }
+        console.log('this.stats', this.stats);
+      });
   }
 
   ionViewDidLoad() {
