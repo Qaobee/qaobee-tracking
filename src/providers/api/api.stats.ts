@@ -19,7 +19,7 @@ import { CollectStat } from './../../model/collect.stat';
  *  from Qaobee.
  */
 import { ApiService } from "./api";
-import { App, ToastController } from "ionic-angular";
+import { App, ToastController, Searchbar } from "ionic-angular";
 import { AuthenticationService } from "../authentication.service";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
@@ -100,6 +100,28 @@ export class APIStatsService extends ApiService {
     getListForEvent(eventId: string) {
         return this.http.get<any>(this.apiUrl + '/sandbox/stats/statistics/?eventId=' + eventId, this.addHeaderToken()).pipe(
             catchError(this.handleError('APIStatsService.getListForEvent'))
+        );
+    }
+
+    /**
+     * Gets stats group by
+     * 
+     * @param  {string} eventId
+     */
+    getStatGroupBy(search: any) {
+        return this.http.post<any>(this.apiUrl + '/sandbox/stats/statistics/getStatGroupBy',search, this.addHeaderToken()).pipe(
+            catchError(this.handleError('APIStatsService.getStatGroupBy'))
+        );
+    }
+
+    /**
+     * Gets stats group by
+     * 
+     * @param  {string} eventId
+     */
+    getListDetailValue(search: any) {
+        return this.http.post<any>(this.apiUrl + '/sandbox/stats/statistics/getListDetailValue',search, this.addHeaderToken()).pipe(
+            catchError(this.handleError('APIStatsService.getListDetailValue'))
         );
     }
 }
