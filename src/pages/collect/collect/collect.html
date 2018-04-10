@@ -9,15 +9,8 @@
 
 <ion-content>
     <ion-list>
-        <chrono-component 
-        [chrono]="fsmContext.chrono" 
-        [currentPhase]="gameState?.currentPhase" 
-        (onStarted)="playButton($event)" 
-        (onPaused)="pauseButton($event)"
-        (onStopped)="stopButton($event)"
-        (onPeriodEnded)="endPeriod($event)"
-        (onGameEnded)="endCollect($event)"
-        ></chrono-component>
+        <chrono-component [chrono]="fsmContext.chrono" [currentPhase]="gameState?.currentPhase" (onStarted)="playButton($event)"
+            (onPaused)="pauseButton($event)" (onStopped)="stopButton($event)" (onPeriodEnded)="endPeriod($event)" (onGameEnded)="endCollect($event)"></chrono-component>
         <ion-grid>
             <ion-row>
                 <ion-col>
@@ -130,17 +123,24 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
-        <ion-item-divider></ion-item-divider>
         <ion-grid>
             <ion-row>
                 <ion-col text-center>
-                    <button ion-button color="light" (click)="attackButton($event)" [disabled]="!attackEnabled">Attack</button>
-                </ion-col>
-                <ion-col>
                     <ion-select [(ngModel)]="gameState.homeGameSystem">
                         <ion-option *ngFor="let gs of gameSystem" value="{{gs}}">{{gs}}</ion-option>
                     </ion-select>
                 </ion-col>
+                <ion-col text-center>
+                    <ion-select [(ngModel)]="gameState.visitorGameSystem">
+                        <ion-option *ngFor="let gs of gameSystem" value="{{gs}}">{{gs}}</ion-option>
+                    </ion-select>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col text-center>
+                    <button ion-button color="light" (click)="attackButton($event)" small [disabled]="!attackEnabled">Attack</button>
+                </ion-col>
+
                 <ion-col text-center>
                     <ion-fab center middle>
                         <button ion-fab mini color="danger" (click)="statsButton($event)">
@@ -148,13 +148,9 @@
                         </button>
                     </ion-fab>
                 </ion-col>
-                <ion-col>
-                    <ion-select [(ngModel)]="gameState.visitorGameSystem">
-                        <ion-option *ngFor="let gs of gameSystem" value="{{gs}}">{{gs}}</ion-option>
-                    </ion-select>
-                </ion-col>
+
                 <ion-col text-center>
-                    <button ion-button color="light" (click)="defenseButton($event)" [disabled]="!defenseEnabled">Defense</button>
+                    <button ion-button color="light" (click)="defenseButton($event)" small [disabled]="!defenseEnabled">Defense</button>
                 </ion-col>
             </ion-row>
         </ion-grid>

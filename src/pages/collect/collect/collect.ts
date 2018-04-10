@@ -33,16 +33,14 @@ export class CollectPage {
     gameState: GameState = new GameState();
     currentEvent: any;
     currentCollect: any;
-    playerMap: any;
-    playerList: any = {
-        substitutes: []
-    };
+    playerMap: any = {};
+    playerList: Array<InGamePlayer> = [];
     indicatorsByCode: any = {};
     mapIndicators: any = {};
     possibleActions: any = {};
     gameSystem: string[] = [];
-    stats: Array<CollectStat>;
-    displayedStats: Array<CollectStat>;
+    stats: Array<CollectStat> = [];
+    displayedStats: Array<CollectStat> = [];
     playerPositions: any = {
         substitutes: []
     };
@@ -64,7 +62,7 @@ export class CollectPage {
         }]
     ];
 
-    
+
     /**
      * @param  {NavParams} publicnavParams
      * @param  {Storage} privatestorage
@@ -90,9 +88,9 @@ export class CollectPage {
         private handFSM: HandFSM
     ) {
         this.currentEvent = navParams.get('event');
-        this.playerList = navParams.get('players') || [];
+        this.playerPositions = navParams.get('players') || {};
         this.currentCollect = navParams.get('collect');
-        console.debug('[CollectPage] - constructor', 'currentEvent', this.currentEvent, 'playerList', this.playerList);
+        console.debug('[CollectPage] - constructor', 'currentEvent', this.currentEvent, 'playerPositions', this.playerPositions, 'currentCollect', this.currentCollect);
         this.getStatisticsConfigAPI();
 
         this.messageBus.on(StatCollector.STAT, stat => {
@@ -127,7 +125,7 @@ export class CollectPage {
         // this.initGoalArea();
         // this.initGroundArea();
     }
-    
+
     /**
      * 
      */
@@ -144,7 +142,9 @@ export class CollectPage {
         this.gameState.playTimeMap = this.fsmContext.playTimeMap;
         this.gameState.chrono = this.fsmContext.chrono;
         this.gameState.playerList = this.playerList;
-        this.gameState.state = this.handFSM.context.state;
+        if (this.handFSM.context) {
+            this.gameState.state = this.handFSM.context.state;
+        }
         // TODO gestion des timeouts
         this.gameState.positions = this.playerPositions;
         this.storage.set('gameState-' + this.currentEvent._id, this.gameState);
@@ -179,6 +179,8 @@ export class CollectPage {
         this.indicatorsByCode = this.utils.groupBy(listIndicators, 'code');
         console.debug('[CollectPage] - updateListIndicators - indicatorsByCode', this.indicatorsByCode);
         this.gameSystem = this.indicatorsByCode.defenseSystemThem[0].listValues;
+        this.gameState.homeGameSystem = this.gameSystem[0];
+        this.gameState.visitorGameSystem = this.gameSystem[0];
         console.debug('[CollectPage] - updateListIndicators - gameSystem', this.gameSystem);
         this.possibleActions = {
             attack: {
@@ -236,6 +238,7 @@ export class CollectPage {
             content: "Please wait..."
         });
         loader.present();
+        this.playerMap = {};
 
         this.storage.get('gameState-' + this.currentEvent._id).then((gameState: GameState) => {
             console.debug('[CollectPage] - restoreState - gameState from storage', gameState);
@@ -246,12 +249,20 @@ export class CollectPage {
                 this.fsmContext.chrono = this.gameState.chrono;
                 this.handFSM.initialState = this.gameState.state;
                 this.playerList = this.gameState.playerList;
-                // FIXME  playerList est une map !!!
-                this.playerList.forEach(p => {
-                    this.playerMap[p.playerId] = p;
+                Object.keys(this.playerList).forEach(k => {
+                    console.debug('[CollectPage] - restoreState - gameState from storage - playerList', k, this.playerList[k]);
+                    if (k === 'substitutes') {
+                        this.playerList[k].forEach(p => {
+                            [p._id] = p;
+                        });
+                    } else {
+                        this.playerMap[this.playerList[k]._id] = this.playerList[k];
+                    }
+
                 });
                 // TODO gestion des timeouts
                 this.playerPositions = this.gameState.positions;
+                this.ground = Object.assign([], this.ground);
                 this.gameState.sanctions.forEach(s => {
                     if (this.playerMap[s.playerId].holder) {
                         this.playerMap[s.playerId].sanction = s.sanction;
@@ -261,29 +272,35 @@ export class CollectPage {
                     this.setStats(stats || []);
                 });
                 this.handFSM.start(this.fsmContext);
-                this.fsmContext.paused = false;
-                this.fsmContext.gameStarted = true;
+                //  this.fsmContext.paused = false;
+                // this.fsmContext.gameStarted = true;
                 this.handFSM.saveState(this.fsmContext);
-                this.messageBus.broadcast(ChronoComponent.PLAY, {});
+                //  this.messageBus.broadcast(ChronoComponent.PLAY, {});
                 loader.dismiss();
                 console.debug('[CollectPage] - restoreState - fetch context', 'fsmContext', this.fsmContext, 'gameState', this.gameState);
             } else {
+                console.debug('[CollectPage] - gameStates - new collect', 'playerPositions', this.playerPositions, 'playerList', this.playerList);
                 this.gameState = new GameState();
                 this.gameState.eventId = this.currentEvent._id;
                 Object.keys(this.playerPositions).forEach(k => {
-                    this.playerPositions[k].forEach(p => {
+                    if (k === 'substitute') {
+                        this.playerPositions[k].forEach(p => {
+                            let inGamePlayer = new InGamePlayer();
+                            inGamePlayer.playerId = p._id;
+                            inGamePlayer.position = k;
+                            this.playerMap[inGamePlayer.playerId] = inGamePlayer;
+                            this.statCollector.substitute(this.fsmContext, p._id);
+                            this.playerList.push(inGamePlayer);
+                        });
+                    } else {
                         let inGamePlayer = new InGamePlayer();
-                        inGamePlayer.playerId = p._id;
+                        inGamePlayer.playerId = this.playerPositions[k]._id;
                         inGamePlayer.position = k;
                         this.playerMap[inGamePlayer.playerId] = inGamePlayer;
-                        if (k !== 'substitute') {
-                            this.statCollector.holder(this.fsmContext, p._id, k);
-                            inGamePlayer.holder = true;
-                        } else {
-                            this.statCollector.substitute(this.fsmContext, p._id);
-                        }
+                        this.statCollector.holder(this.fsmContext, this.playerPositions[k]._id, k);
+                        inGamePlayer.holder = true;
                         this.playerList.push(inGamePlayer);
-                    });
+                    }
                 });
                 this.handFSM.start(this.fsmContext);
                 loader.dismiss();
@@ -306,7 +323,7 @@ export class CollectPage {
      * @returns {string}
      */
     getAvatar(avatar: string) {
-       // console.debug('[CollectPage] - getAvatar', avatar);
+        // console.debug('[CollectPage] - getAvatar', avatar);
         if (avatar && avatar !== 'null') {
             return this.root + '/file/SB_Person/' + avatar;
         } else {
@@ -315,7 +332,7 @@ export class CollectPage {
     }
 
     getTeamHomeName(): string {
-       // console.debug('[CollectPage] - getTeamHomeName');
+        // console.debug('[CollectPage] - getTeamHomeName');
         if (this.currentEvent.participants.teamHome) {
             return this.currentEvent.participants.teamHome.label || this.NA;
         }
@@ -323,7 +340,7 @@ export class CollectPage {
     }
 
     getTeamHomeId() {
-      //  console.debug('[CollectPage] - getTeamHomeId');
+        //  console.debug('[CollectPage] - getTeamHomeId');
         if (this.currentEvent.participants.teamHome) {
             return this.currentEvent.participants.teamHome.id || this.NA;
         }
@@ -331,7 +348,7 @@ export class CollectPage {
     }
 
     getTeamVisitor(): string {
-    //    console.debug('[CollectPage] - getTeamVisitor');
+        //    console.debug('[CollectPage] - getTeamVisitor');
         if (this.currentEvent.participants.teamVisitor) {
             return this.currentEvent.participants.teamVisitor.label || this.NA;
         }
@@ -717,12 +734,12 @@ export class CollectPage {
 
     statsButton(event: any) {
         console.debug('[CollectPage] - statsButton', event);
-       // TODO
+        // TODO
     }
 
     stopButton(event: any) {
         console.debug('[CollectPage] - stopButton', event);
-       // TODO
+        // TODO
     }
 
     uploadStats() {
