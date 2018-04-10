@@ -48,6 +48,11 @@
       "deleteFail": "A problem occurs during the event's delete"
     }
   },
+  "home": {
+    "agenda":"Agenda",
+    "players":"Players",
+    "stats":"Stats"
+  },
   "welcome": {
     "Login": "Signin",
     "Subscribe": "Signup"

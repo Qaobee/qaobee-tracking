@@ -18,10 +18,11 @@
  */
 
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { PersonService } from './../../../providers/api/api.person.service';
 import { APIStatsService } from './../../../providers/api/api.stats';
+import { AuthenticationService } from './../../../providers/authentication.service';
 
 import moment from 'moment';
 
@@ -46,7 +47,8 @@ export class PlayerStatsPage {
     public navParams: NavParams,
     private personService: PersonService,
     private statsService: APIStatsService,
-    private translateService: TranslateService) {
+    private translateService: TranslateService,
+    private authenticationService: AuthenticationService) {
 
       this.player = navParams.get('player');
 
@@ -64,19 +66,19 @@ export class PlayerStatsPage {
       let search = {
         listIndicators: indicators,
         listOwners: ownerId,
-        startDate: moment("01/07/2017", "DD/MM/YYYY").valueOf(),
-        endDate: moment("30/06/2018", "DD/MM/YYYY").valueOf(),
+        startDate: this.authenticationService.meta.season.startDate,
+        endDate: this.authenticationService.meta.season.endDate,
         aggregat: 'COUNT',
         listFieldsGroupBy: listFieldsGroupBy
       }
       console.log('search', search);
 
       this.statsService.getStatGroupBy(search).subscribe((result: any[]) => {
-        console.log('result', result);
         for (let index = 0; index < result.length; index++) {
-          this.stats.push(result[index]);
+          let stat = {"code": result[index]._id.code, "value":result[index].value};
+          this.stats.push(stat);
         }
-        console.log('this.stats', this.stats);
+        console.log(this.stats);
       });
   }
 

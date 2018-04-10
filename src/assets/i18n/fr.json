@@ -48,6 +48,11 @@
       "deleteFail": "La suppression de l'événement a échoué"
     }
   },
+  "home": {
+    "agenda":"Agenda",
+    "players":"Joueurs",
+    "stats":"Stats"
+  },
   "welcome": {
     "Login": "Connexion",
     "Subscribe": "S'inscrire"
