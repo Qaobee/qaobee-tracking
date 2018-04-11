@@ -60,7 +60,7 @@ export class PlayerStatsPage {
       if (this.player.status.positionType.code === 'goalkeeper') {
         indicators = ['goalConceded','originShootDef'];
       } else {
-        indicators = ['goalScored','originShootAtt'];
+        indicators = ['goalScored','originShootAtt','2minutes', 'yellowCard', 'redCard'];
       }
 
       let search = {
@@ -78,7 +78,6 @@ export class PlayerStatsPage {
           let stat = {"code": result[index]._id.code, "value":result[index].value};
           this.stats.push(stat);
         }
-        console.log(this.stats);
       });
   }
 
