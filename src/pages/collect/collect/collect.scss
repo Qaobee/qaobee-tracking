@@ -2,16 +2,21 @@ page-collect {
   .period {
     font-size: 1rem;
   }
-
+  .grid {
+    padding-top: 0;
+  }
   .team {
     font-size: 1rem;
+    padding: 0;
   }
   .small {
     font-size: 1rem;
+    padding: 0;
   }
   .score {
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: bold;
+    padding: 0;
     color: color($colors, secondary, base);
   }
   .event {
@@ -20,13 +25,20 @@ page-collect {
     height: 1.2rem;
     display: block;
   }
+  
+  .btn-list {
+    .col {
+      min-height: 64px;
+    }
+  }
+
   #ground-area {
     z-index: 5;
     height: 18rem;
     width: 100vw;
     background: url("/assets/imgs/zone_defense.png") no-repeat;
     background-size: 100vw 18rem;
-    ion-col {
+    .col {
       min-height: 64px;
     }
   }

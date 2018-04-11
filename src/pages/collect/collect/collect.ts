@@ -14,7 +14,7 @@ import { Utils } from './../../../providers/utils';
 import { AuthenticationService } from './../../../providers/authentication.service';
 import { APIStatsService } from './../../../providers/api/api.stats';
 import { Storage } from '@ionic/storage';
-import { NavParams, ToastController, LoadingController } from 'ionic-angular';
+import { NavParams, ToastController, LoadingController, ActionSheetController } from 'ionic-angular';
 import { MessageBus } from './../../../providers/message-bus.service';
 import { Component } from "@angular/core";
 import { ENV } from "@app/env";
@@ -82,6 +82,7 @@ export class CollectPage {
         private storage: Storage,
         private toastCtrl: ToastController,
         public loadingCtrl: LoadingController,
+        public actionSheetCtrl: ActionSheetController,
         private messageBus: MessageBus,
         private statAPI: APIStatsService,
         private statCollector: StatCollector,
@@ -570,7 +571,7 @@ export class CollectPage {
         this.clearGround();
         this.clearGoal();
         this.hideGoal();
-        this.populateActions('timeDefense');
+        this.populateActions('defense');
     }
 
     hurtButton(event: any) {
@@ -698,28 +699,76 @@ export class CollectPage {
     positiveActionButton(event: any) {
         console.debug('[CollectPage] - positiveActionButton', event);
         if (!this.fsmContext.gamePhase) {
-            // message pour dire de démarer une phase attaque ou défense
+            // TODO i18n
+            this.presentToast('Choose a game phase (attack or defense)');
+        } else if (!this.fsmContext.selectedPlayer) {
+            // TODO i18n
+            this.presentToast('You must select a player');
         } else {
-            // trapper l'événement
+            let buttons = [];
+            this.positiveActions.forEach(a => {
+                buttons.push({
+                    text: a.code,
+                    handler: () => {
+                        this.statCollector.makeAction(this.fsmContext, a.code, this.fsmContext.selectedPlayer);
+                        if (!this.fsmContext.gamePhase.attack && ! 'neutralization' === a.code) {
+                            this.handFSM.trigger(FSMEvents.doAttack);
+                        }
+                    }
+                });
+            });
+            buttons.push({
+                text: 'Cancel',
+                role: 'cancel'
+            });
+            let actionSheet = this.actionSheetCtrl.create({
+                title: 'Select a positive action',
+                buttons: buttons
+            });
+            actionSheet.present();
         }
-        // TODO
     }
-
+    /**
+     * @param  {any} event
+     */
     negativeActionButton(event: any) {
         console.debug('[CollectPage] - negativeActionButton', event);
         if (!this.fsmContext.gamePhase) {
-            // message pour dire de démarer une phase attaque ou défense
+            // TODO i18n
+            this.presentToast('Choose a game phase (attack or defense)');
+        } else if (!this.fsmContext.selectedPlayer) {
+            // TODO i18n
+            this.presentToast('You must select a player');
         } else {
-            // trapper l'événement
+            let buttons = [];
+            this.negativeActions.forEach(a => {
+                buttons.push({
+                    text: a.code,
+                    handler: () => {
+                        this.statCollector.makeAction(this.fsmContext, a.code, this.fsmContext.selectedPlayer);
+                        this.fsmContext.selectedPlayer = undefined;
+                        this.handFSM.trigger(FSMEvents.doDefense);
+                    }
+                });
+            });
+            buttons.push({
+                text: 'Cancel',
+                role: 'cancel'
+            });
+            let actionSheet = this.actionSheetCtrl.create({
+                title: 'Select a negative action',
+                buttons: buttons
+            });
+            actionSheet.present();
         }
-        // TODO
     }
 
     populateActions(phase: string) {
-        console.debug('[CollectPage] - populateActions', event);
+        console.debug('[CollectPage] - populateActions', phase);
         this.positiveActions = this.possibleActions[phase].positive;
         this.negativeActions = this.possibleActions[phase].negative;
         // gérer le goal ???
+        console.debug('[CollectPage] - populateActions', this.positiveActions, this.negativeActions);
 
     }
 

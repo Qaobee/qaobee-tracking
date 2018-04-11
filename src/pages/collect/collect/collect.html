@@ -67,22 +67,44 @@
                     </ion-grid>
                 </ion-col>
             </ion-row>
+            <ion-row class="btn-list">
+                <ion-col text-center>
+                    <ion-fab center middle>
+                        <button ion-fab mini color="green" (click)="positiveActionButton($event)">
+                            <ion-icon name="add"></ion-icon>
+                        </button>
+                    </ion-fab>
+                </ion-col>
+                <ion-col text-center>
+                    <ion-fab center middle *ngIf="fsmContext?.gamePhase" >
+                        <button ion-fab mini color="{{ fsmContext?.gamePhase?.attack?'green':'red' }}" (click)="goalButton($event)">
+                            <ion-icon name="football"></ion-icon>
+                        </button>
+                    </ion-fab>
+                </ion-col>
+                <ion-col text-center>
+                    <ion-fab center middle>
+                        <button ion-fab mini color="red" (click)="negativeActionButton($event)">
+                            <ion-icon name="remove"></ion-icon>
+                        </button>
+                    </ion-fab>
+                </ion-col>
+            </ion-row>
         </ion-grid>
 
         <ion-grid id="ground-area">
             <ion-row *ngFor="let area of ground">
                 <ion-col text-center *ngFor="let pos of area" ion-col>
-                        <ion-fab center middle>
-                                <button ion-fab mini color="{{getColor(playerPositions[pos.key]?._id, pos.class)}}" (click)="doSelectPlayer(playerPositions[pos.key]?._id)">
-                                        {{ playerPositions[pos.key]?.status.squadnumber || '?' }}
-                                </button>
-                            </ion-fab>
+                    <ion-fab center middle>
+                        <button ion-fab mini color="{{getColor(playerPositions[pos.key]?._id, pos.class)}}" (click)="doSelectPlayer(playerPositions[pos.key]?._id)">
+                            {{ playerPositions[pos.key]?.status.squadnumber || '?' }}
+                        </button>
+                    </ion-fab>
                 </ion-col>
             </ion-row>
         </ion-grid>
-        <ion-item-divider></ion-item-divider>
         <ion-grid>
-            <ion-row>
+            <ion-row class="btn-list">
                 <ion-col text-center>
                     <ion-fab center middle>
                         <button ion-fab mini color="danger" (click)="hurtButton($event)">
@@ -119,8 +141,6 @@
                     </ion-fab>
                 </ion-col>
             </ion-row>
-        </ion-grid>
-        <ion-grid>
             <ion-row>
                 <ion-col text-center>
                     <ion-select [(ngModel)]="gameState.homeGameSystem">
@@ -133,7 +153,7 @@
                     </ion-select>
                 </ion-col>
             </ion-row>
-            <ion-row>
+            <ion-row class="btn-list">
                 <ion-col text-center>
                     <button ion-button color="light" (click)="attackButton($event)" small [disabled]="!attackEnabled">Attack</button>
                 </ion-col>
