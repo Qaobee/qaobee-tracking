@@ -217,14 +217,14 @@ export class HandFSM extends EasyFlow {
      * @param  {FSMContext} fsmContext
      * @returns {Context}
      */
-    start(fsmContext: FSMContext): Context {
-        this.context = super.start({ fsmContext: fsmContext });
+    start(fsmContext: FSMContext,  initialState:FSMStates): Context {
+        this.context = super.start({ fsmContext: fsmContext }, initialState);
         return this.context;
     }
     /**
      * @param  {FSMEvents} event
      */
-    trigger(event: FSMEvents) {
+    trigger(event: FSMEvents):boolean {
         return super.trigger(event, this.context);
     }
 }

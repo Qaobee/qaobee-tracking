@@ -39,7 +39,7 @@
                 </ion-col>
                 <ion-col>
                     <ion-list inset class="events-list">
-                        <span class="event" *ngFor="let s of displayedStats">{{ 'collect.indicators.' +  s.code | translate }}</span>
+                        <span class="event" *ngFor="let s of displayedStats">{{ 'collect.indicators.' + s.code | translate }}</span>
                     </ion-list>
                 </ion-col>
                 <ion-col>
@@ -76,7 +76,7 @@
                     </ion-fab>
                 </ion-col>
                 <ion-col text-center>
-                    <ion-fab center middle *ngIf="fsmContext?.gamePhase" >
+                    <ion-fab center middle *ngIf="fsmContext?.gamePhase">
                         <button ion-fab mini color="{{ fsmContext?.gamePhase?.attack?'green':'red' }}" (click)="goalButton($event)">
                             <ion-icon name="football"></ion-icon>
                         </button>
