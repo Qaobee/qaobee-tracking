@@ -3,7 +3,7 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>Collect</ion-title>
+        <ion-title>{{ currentEvent?.label }}</ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -22,7 +22,7 @@
                             <ion-col class="score" text-center>{{ gameState.homeScore }}</ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-col text-center class="small">Temps mort</ion-col>
+                            <ion-col text-center class="small">{{ 'collect.timeout' | translate }}</ion-col>
                         </ion-row>
                         <ion-row>
                             <ion-col text-center>
@@ -39,7 +39,7 @@
                 </ion-col>
                 <ion-col>
                     <ion-list inset class="events-list">
-                        <span class="event" *ngFor="let s of displayedStats">{{ s.code }}</span>
+                        <span class="event" *ngFor="let s of displayedStats">{{ 'collect.indicators.' +  s.code | translate }}</span>
                     </ion-list>
                 </ion-col>
                 <ion-col>
@@ -51,7 +51,7 @@
                             <ion-col text-center class="score">{{ gameState.visitorScore }}</ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-col text-center class="small">Temps mort</ion-col>
+                            <ion-col text-center class="small">{{ 'collect.timeout' | translate }}</ion-col>
                         </ion-row>
                         <ion-row>
                             <ion-col text-center>
@@ -155,7 +155,7 @@
             </ion-row>
             <ion-row class="btn-list">
                 <ion-col text-center>
-                    <button ion-button color="light" (click)="attackButton($event)" small [disabled]="!attackEnabled">Attack</button>
+                    <button ion-button color="light" (click)="attackButton($event)" small [disabled]="!attackEnabled">{{ 'collect.attack' | translate }}</button>
                 </ion-col>
 
                 <ion-col text-center>
@@ -167,7 +167,7 @@
                 </ion-col>
 
                 <ion-col text-center>
-                    <button ion-button color="light" (click)="defenseButton($event)" small [disabled]="!defenseEnabled">Defense</button>
+                    <button ion-button color="light" (click)="defenseButton($event)" small [disabled]="!defenseEnabled">{{ 'collect.defense' | translate }}</button>
                 </ion-col>
             </ion-row>
         </ion-grid>

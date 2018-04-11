@@ -11,7 +11,7 @@ export class ChronoComponent {
     static PAUSE = 'chrono-component-pause';
     static PLAY = 'chrono-component-play';
     static STOP = 'chrono-component-toggle';
-    @Input() chrono: number;
+    @Input() chrono: number = 0;
     @Input() currentPhase: number = 1;
     @Input() run: boolean = false;
 
@@ -23,7 +23,6 @@ export class ChronoComponent {
     @Output() chronoChange: EventEmitter<number> = new EventEmitter();
     @Output() currentPhaseChange: EventEmitter<number> = new EventEmitter();
 
-    timestamp: number = 0;
     totalPeriod: number;
 
     constructor(
@@ -48,23 +47,20 @@ export class ChronoComponent {
 
     start() {
         this.run = true;
-        if (!this.timestamp) {
-            this.timestamp = new Date().valueOf();
-            this.onStarted.emit(this.chrono);
-        }
-        this.chrono = Math.floor((new Date().valueOf() - this.timestamp) / 1000);
+        console.debug('[ChronoComponent] - start', this.chrono);
+        this.onStarted.emit(this.chrono);
         Observable.interval(1000)
             .takeWhile(() => this.run)
             .subscribe(i => {
-                this.chrono = Math.floor((new Date().valueOf() - this.timestamp) / 1000);
+                this.chrono += 1;
                 this.chronoChange.emit(this.chrono);
                 if (this.chrono * 60 > this.settingsService.activityCfg.periodDuration * this.currentPhase) {
-                    // period change
                     if (this.currentPhase === this.settingsService.activityCfg.nbPeriod) {
-                        // game ended
+                        console.debug('[ChronoComponent] - start - game ended', this.chrono);
                         this.stop();
                         this.onGameEnded.emit(this.chrono);
                     } else {
+                        console.debug('[ChronoComponent] - start - period change', this.chrono);
                         this.currentPhase++;
                         this.currentPhaseChange.emit(this.currentPhase);
                         this.pause();
