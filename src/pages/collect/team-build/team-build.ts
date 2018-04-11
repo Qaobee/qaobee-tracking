@@ -296,11 +296,11 @@ export class TeamBuildPage {
 
             this.collectService.addCollect(this.collect).subscribe((c: any) => {
                 this.collect._id = c._id;
-                this.storage.get('collects').then((collects: any) => {
+                this.storage.get('collects').then((collects: any[]) => {
                     if (!collects) {
-                        collects = {};
+                        collects = [];
                     }
-                    collects[this.collect._id] = this.collect;
+                    collects.push(this.collect);
                     this.storage.set('collects', collects);
                     console.log('[TeamBuildPage] - goToCollect', { players: this.playerPositions, event: this.event, collect: this.collect } );
                     this.navCtrl.push(CollectPage, { players: this.playerPositions, event: this.event, collect: this.collect });

@@ -9,7 +9,7 @@
 
 <ion-content>
     <ion-list>
-        <chrono-component [chrono]="fsmContext.chrono" [currentPhase]="gameState?.currentPhase" (onStarted)="playButton($event)"
+        <chrono-component [(chrono)]="fsmContext.chrono" [(currentPhase)]="gameState.currentPhase" (onStarted)="playButton($event)"
             (onPaused)="pauseButton($event)" (onStopped)="stopButton($event)" (onPeriodEnded)="endPeriod($event)" (onGameEnded)="endCollect($event)"></chrono-component>
         <ion-grid>
             <ion-row>
@@ -72,14 +72,11 @@
         <ion-grid id="ground-area">
             <ion-row *ngFor="let area of ground">
                 <ion-col text-center *ngFor="let pos of area" ion-col>
-                    <ion-item>
-                        <ion-avatar>
-                            <img [src]="getAvatar(playerPositions[pos.key]?.avatar)" alt="avatar">
-                        </ion-avatar>
-                        <ion-label>{{ playerPositions[pos.key]?.name || pos.label }}
-                            <ion-badge>{{ playerPositions[pos.key]?.status.squadnumber || '?' }}</ion-badge>
-                        </ion-label>
-                    </ion-item>
+                        <ion-fab center middle>
+                                <button ion-fab mini color="{{getColor(playerPositions[pos.key]?._id, pos.class)}}" (click)="doSelectPlayer(playerPositions[pos.key]?._id)">
+                                        {{ playerPositions[pos.key]?.status.squadnumber || '?' }}
+                                </button>
+                            </ion-fab>
                 </ion-col>
             </ion-row>
         </ion-grid>

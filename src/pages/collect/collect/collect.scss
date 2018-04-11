@@ -26,16 +26,10 @@ page-collect {
     width: 100vw;
     background: url("/assets/imgs/zone_defense.png") no-repeat;
     background-size: 100vw 18rem;
-
-    ion-item {
-      /* background-color: transparent; */
-      max-width: calc(100vw / 3 - 3rem);
-      margin: auto;
-      border: none;
-      border-radius: 64px;
-      .item-inner {
-        border: none;
-      }
+    ion-col {
+      min-height: 64px;
     }
   }
+
+
 }

@@ -51,15 +51,17 @@ export class CollectPage {
     negativeActions: any[] = [];
 
     ground = [
-        [{ key: 'pivot', label: 'Pivot', class: 'pivot' }],
-        [{ key: 'left-backcourt', label: 'Back-court', class: '' }, {
-            key: 'center-backcourt',
-            label: 'Back-court'
-        }, { key: 'right-backcourt', label: 'Back-court' }],
-        [{ key: 'left-wingman', label: 'Wing-man' }, { key: 'goalkeeper', label: 'Goalkeeper', class: 'goalkeeper' }, {
-            key: 'right-wingman',
-            label: 'Wing-man'
-        }]
+        [{ key: 'pivot', label: 'Pivot', class: 'blue-grey' }],
+        [
+            { key: 'left-backcourt', label: 'Back-court', class: 'white' },
+            { key: 'center-backcourt', label: 'Back-court', class: 'white' },
+            { key: 'right-backcourt', label: 'Back-court', class: 'white' }
+        ],
+        [
+            { key: 'left-wingman', label: 'Wing-man', class: 'white' },
+            { key: 'goalkeeper', label: 'Goalkeeper', class: 'red' },
+            { key: 'right-wingman', label: 'Wing-man', class: 'white' }
+        ]
     ];
 
 
@@ -125,6 +127,14 @@ export class CollectPage {
         // this.initGoalArea();
         // this.initGroundArea();
     }
+    getColor(playerId: string, defClass: string) {
+        //  console.debug('[CollectPage] - getColor', playerId, this.fsmContext.selectedPlayer)
+        if (this.fsmContext && this.fsmContext.selectedPlayer && playerId === this.fsmContext.selectedPlayer.playerId) {
+            return 'secondary'
+        } else if (defClass) {
+            return defClass;
+        }
+    }
 
     /**
      * 
@@ -138,6 +148,7 @@ export class CollectPage {
      * 
      */
     saveState(): void {
+        console.debug('[CollectPage] - saveState', this.fsmContext)
         this.gameState.lastInMap = this.fsmContext.lastInMap;
         this.gameState.playTimeMap = this.fsmContext.playTimeMap;
         this.gameState.chrono = this.fsmContext.chrono;
@@ -148,6 +159,7 @@ export class CollectPage {
         // TODO gestion des timeouts
         this.gameState.positions = this.playerPositions;
         this.storage.set('gameState-' + this.currentEvent._id, this.gameState);
+        console.debug('[CollectPage] - saveState', this.gameState)
     }
 
     /**
@@ -249,16 +261,9 @@ export class CollectPage {
                 this.fsmContext.chrono = this.gameState.chrono;
                 this.handFSM.initialState = this.gameState.state;
                 this.playerList = this.gameState.playerList;
-                Object.keys(this.playerList).forEach(k => {
-                    console.debug('[CollectPage] - restoreState - gameState from storage - playerList', k, this.playerList[k]);
-                    if (k === 'substitutes') {
-                        this.playerList[k].forEach(p => {
-                            [p._id] = p;
-                        });
-                    } else {
-                        this.playerMap[this.playerList[k]._id] = this.playerList[k];
-                    }
-
+                this.playerList.forEach(k => {
+                    console.debug('[CollectPage] - restoreState - gameState from storage - playerList', k);
+                    this.playerMap[k.playerId] = k;
                 });
                 // TODO gestion des timeouts
                 this.playerPositions = this.gameState.positions;
@@ -473,8 +478,11 @@ export class CollectPage {
     }
 
     doSelectPlayer(playerId: string) {
-        console.debug('[CollectPage] - doSelectPlayer', playerId);
+        console.debug('[CollectPage] - doSelectPlayer', playerId, this.playerMap, this.playerMap[playerId]);
         this.handFSM.trigger(FSMEvents.selectPlayer);
+        if (this.fsmContext.selectedPlayer) {
+            this.statCollector.makePass(this.fsmContext, this.fsmContext.selectedPlayer.playerId, playerId);
+        }
         this.fsmContext.selectedPlayer = this.playerMap[playerId];
     }
 

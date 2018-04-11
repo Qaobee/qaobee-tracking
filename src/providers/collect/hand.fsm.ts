@@ -129,14 +129,14 @@ export class HandFSM extends EasyFlow {
             console.debug('[HandFSM] whenEnter', context.state);
             this.messageBus.broadcast(HandFSM.ROLLBACK)
             this.saveState(context);
-            context.trigger(FSMEvents.leaveGround, context);
+            this.trigger(FSMEvents.leaveGround);
         });
 
         whenEnter(FSMStates.GROUND_LEAVED, (context: Context) => {
             console.debug('[HandFSM] whenEnter', context.state);
             this.messageBus.broadcast(HandFSM.ROLLBACK)
             this.saveState(context);
-            context.trigger(FSMEvents.backDone, context);
+            this.trigger(FSMEvents.backDone);
         });
 
         whenEnter(FSMStates.PAUSED, (context: Context) => {
@@ -200,7 +200,7 @@ export class HandFSM extends EasyFlow {
 
         whenEnter(FSMStates.RETURN_TO_SELECTED_PLAYER, (context: Context) => {
             console.debug('[HandFSM] whenEnter', context.state);
-            context.trigger(FSMEvents.goToSelectPlayer, context);
+            this.trigger(FSMEvents.goToSelectPlayer);
             this.saveState(context);
         });
 

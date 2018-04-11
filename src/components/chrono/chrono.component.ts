@@ -20,6 +20,8 @@ export class ChronoComponent {
     @Output() onStopped = new EventEmitter<number>();
     @Output() onPeriodEnded = new EventEmitter<number>();
     @Output() onGameEnded = new EventEmitter<number>();
+    @Output() chronoChange: EventEmitter<number> = new EventEmitter();
+    @Output() currentPhaseChange: EventEmitter<number> = new EventEmitter();
 
     timestamp: number = 0;
     totalPeriod: number;
@@ -28,7 +30,7 @@ export class ChronoComponent {
         private messageBus: MessageBus,
         private settingsService: SettingsService
     ) {
-        this.totalPeriod = this.settingsService.activityCfg.nbPeriod;
+        this.totalPeriod = this.settingsService.activityCfg.parametersGame.nbPeriod;
         this.messageBus.on(ChronoComponent.PAUSE, () => {
             this.pause();
         });
@@ -55,6 +57,7 @@ export class ChronoComponent {
             .takeWhile(() => this.run)
             .subscribe(i => {
                 this.chrono = Math.floor((new Date().valueOf() - this.timestamp) / 1000);
+                this.chronoChange.emit(this.chrono);
                 if (this.chrono * 60 > this.settingsService.activityCfg.periodDuration * this.currentPhase) {
                     // period change
                     if (this.currentPhase === this.settingsService.activityCfg.nbPeriod) {
@@ -63,6 +66,7 @@ export class ChronoComponent {
                         this.onGameEnded.emit(this.chrono);
                     } else {
                         this.currentPhase++;
+                        this.currentPhaseChange.emit(this.currentPhase);
                         this.pause();
                         this.onPeriodEnded.emit(this.chrono);
                     }
