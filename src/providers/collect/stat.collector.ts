@@ -23,7 +23,7 @@ export class StatCollector {
      * @param {string | number} value
      * @returns {CollectStat}
      */
-    eventBuilder(context: FSMContext, code: StatType, value: string | number): CollectStat {
+    eventBuilder(context: FSMContext, code: StatType|string, value: string | number): CollectStat {
         let evt: CollectStat = new CollectStat();
         evt.activityId = context.meta.activity._id;
         evt.eventId = context.eventId;
@@ -182,10 +182,10 @@ export class StatCollector {
 
     /**
      * @param  {FSMContext} context
-     * @param  {StatType} action
+     * @param  {string} action
      * @param  {string} playerId
      */
-    makeAction(context: FSMContext, action: StatType, playerId: string) {
+    makeAction(context: FSMContext, action: string, playerId: string) {
         let stat = this.eventBuilder(context, action, 1);
         if (playerId != null) {
             stat.owners.push(playerId);

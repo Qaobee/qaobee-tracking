@@ -142,6 +142,7 @@ export class EventListPage {
      * @param {any[]} events
      */
     private populateEvents(events: any[]) {
+        console.debug('[EventListPage] - populateEvents', events);
         this.eventList = {};
         events.sort(this.utils.compareEvents);
         events.forEach(e => {
@@ -151,7 +152,7 @@ export class EventListPage {
             }
             // FIXME : a placer dans le détail pour éviter un appel en mitraillette, non?
             this.collectService.getCollects(this.authenticationService.meta._id, e._id, e.owner.effectiveId, e.owner.teamId, moment("01/01/2000","DD/MM/YYYY").valueOf(),moment().valueOf()).subscribe(result =>{
-                console.debug('[EventListPage] - getCollects', result);
+                console.debug('[EventListPage] - populateEvents - getCollects', result);
                 if(result[0] && result[0].status !== 'pending'){
                     e.isCollected = true;
                 } else {

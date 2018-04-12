@@ -27,7 +27,7 @@ import {ActivityCfg} from '../model/activity.cfg'
 @Injectable()
 export class SettingsService {
     private locale: string;
-    activityCfg: ActivityCfg = new ActivityCfg();
+    activityCfg: any ={};
     /**
      *
      * @param {TranslateService} translate

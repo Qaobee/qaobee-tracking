@@ -1,15 +1,16 @@
 {
   "country": "CNTR-250-FR-FRA",
+  "loader": "Please wait...",
   "actionButton": {
     "Submit": "Submit",
     "Cancel": "Cancel",
     "Search": "Search"
   },
-  "format":{
-    "displayDate":"MM/DD//YYYY",
-    "pickerDate":"DD/MM/YYYY",
-    "displayTime":"HH:mm",
-    "pickerTime":"HH mm"
+  "format": {
+    "displayDate": "MM/DD//YYYY",
+    "pickerDate": "DD/MM/YYYY",
+    "displayTime": "HH:mm",
+    "pickerTime": "HH mm"
   },
   "refresher": {
     "label": "Pull to refresh",
@@ -26,8 +27,8 @@
     "startDate": "Date",
     "startTime": "Time",
     "address": "Address",
-    "home" : "Home",
-    "outside" : "Outside",
+    "home": "Home",
+    "outside": "Outside",
     "identity": "Identity",
     "logistic": "Date and localisation",
     "actors": "Actors",
@@ -49,9 +50,9 @@
     }
   },
   "home": {
-    "agenda":"Agenda",
-    "players":"Players",
-    "stats":"Stats"
+    "agenda": "Agenda",
+    "players": "Players",
+    "stats": "Stats"
   },
   "welcome": {
     "Login": "Signin",
@@ -82,7 +83,7 @@
   },
   "player": {
     "TitleNavBarPlayer": "Player",
-    "TitleNavBarPlayerStats":"Player's stats",
+    "TitleNavBarPlayerStats": "Player's stats",
     "TitleNavBarPlayerEdit": "Player Edit",
     "TitleNavBarPlayerList": "Player list",
     "labels": {
@@ -98,13 +99,13 @@
       "nationality": "Nationality",
       "Laterality": "Lateralité",
       "desactivated": "Desactivated Player",
-      "name":"Name",
-      "firstname":"Firstname",
-      "mobile":"Mobile",
+      "name": "Name",
+      "firstname": "Firstname",
+      "mobile": "Mobile",
       "address": "Address",
-      "email":"Email",
+      "email": "Email",
       "squadNumber": "Numéro",
-      "profil":"Profil"
+      "profil": "Profil"
     },
     "laterality": {
       "right-handed": "Right-handed",
@@ -125,13 +126,13 @@
     },
     "confirmDesactivate": {
       "title": "Disable Player",
-      "message":"the player will be not delete, but will do not present on player's list",
+      "message": "the player will be not delete, but will do not present on player's list",
       "buttonLabelCancel": "Cancel",
       "buttonLabelConfirm": "Ok"
     },
     "confirmActivate": {
       "title": "Enable Player",
-      "message":"Confirm enable player ?",
+      "message": "Confirm enable player ?",
       "buttonLabelCancel": "Cancel",
       "buttonLabelConfirm": "Ok"
     },
@@ -145,5 +146,85 @@
   "nextEvent": {
     "titleFound": "Next Match",
     "titleNotFound": "Plan a match"
+  },
+  "collect": {
+    "select_game_phase_first": "Choose a game phase (attack or defense)",
+    "ended_popup_title": "Collect is over",
+    "select_player": "You must select a player",
+    "timeout": "Timeout",
+    "goal": "Goal",
+    "stopshoot": "Stop",
+    "attack": "Attack",
+    "defense": "Defense",
+    "positive_actions": "Positive actions",
+    "negative_actions": "Negative actions",
+    "indicators": {
+      "interceptionKo": "Missed interception",
+      "duelLoose": "Lost duel",
+      "badPosition": "Bad position",
+      "neutralization": "Neutralization",
+      "forceDef": "Force",
+      "contre": "Counter",
+      "interceptionOk": "Successful interception",
+      "forceAtt": "Force",
+      "marcher": "Walk",
+      "doubleDribble": "Double dribble",
+      "looseball": "Ball loss",
+      "foot": "Foot",
+      "zone": "Area",
+      "counterAttack": "Counterattack",
+      "shift": "Shift",
+      "duelWon": "Duel won",
+      "passDec": "Decisive pass",
+      "yellowCard": "Yellow card",
+      "redCard": "Red card",
+      "playtime": "Playtime",
+      "totalPlayTime": "Total playtime",
+      "substitue": "Substitute",
+      "holder": "Holder",
+      "injured": "Injured",
+      "eventNotePerson": "Note",
+      "defenseSysUs": "Game system",
+      "defenseSystemThem": "Game system",
+      "timeAttack": "Attack time",
+      "timeDefense": "Defense time",
+      "timeoutUs": "Timeout",
+      "timeoutThem": "Timeout",
+      "wound": "Wound",
+      "passOk": "Pass",
+      "passOkStat": "Pass count",
+      "gameSystem": "Game system",
+      "stopGKAtt": "Goalkeeper stop",
+      "stopGKDef": "Goalkeeper stop",
+      "positionType": "Position",
+      "penaltyObtained": "Penalty",
+      "penaltyConceded": "Penalty",
+      "originShootAtt": "Shot origin",
+      "originShootDef": "Shot origin",
+      "shootAtt": "Shot",
+      "shootDef": "Opponent's shot",
+      "goalScored": "Goal",
+      "goalconceded": "Conceded goal",
+      "stopOk": "Shot stopped",
+      "impactShootAtt": "Shot impact",
+      "impactShootDef": "Shot impact",
+      "pole": "Pole",
+      "outside": "Outside",
+      "exclTmpObtained": "2 minutes",
+      "exclusionTempoObtained": "2 minutes",
+      "playTime": "Playtime"
+    },
+    "positions": {
+      "midfielder": "Midfielder",
+      "defender": "Defender",
+      "forward": "Attacker",
+      "goalkeeper": "Goalkeeper",
+      "pivot": "Pivot",
+      "center_backcourt": "Half-midfielder",
+      "right_backcourt": "Back right",
+      "left_backcourt": "Back left",
+      "right_wingman": "Right winger",
+      "left_wingman": "Left winger"
+    }
   }
 }
