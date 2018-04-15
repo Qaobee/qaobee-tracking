@@ -1,4 +1,3 @@
-import { UserService } from './../../providers/api/api.user.service';
 /*
  *  __________________
  *  Qaobee
