@@ -1,3 +1,4 @@
+import { UserService } from './../../providers/api/api.user.service';
 /*
  *  __________________
  *  Qaobee
@@ -17,7 +18,9 @@
  *  from Qaobee.
  */
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NavController, NavParams } from 'ionic-angular';
+import { UserService } from "../../providers/api/api.user.service";
 
 @Component({
   selector: 'page-signup',
@@ -25,11 +28,64 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class SignupPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  user: any;
+  userForm: FormGroup;
+
+  /**
+   * 
+   * @param navCtrl 
+   * @param navParams 
+   * @param formBuilder 
+   * @param userService 
+   */
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    private formBuilder: FormBuilder,
+    private userService: UserService) {
+
+    this.userForm = this.formBuilder.group({
+      'login': ['', [Validators.required]],
+      'email': ['', [Validators.required, Validators.email]],
+      'password': ['', [Validators.required]],
+      'passwordConfirm': ['', [Validators.required]]
+    }, { validator: this.matchingPasswords('password', 'passwordConfirm') });
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SignupPage');
+  }
+
+  matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
+    return (group: FormGroup): { [key: string]: any } => {
+      let password = group.controls[passwordKey];
+      let confirmPassword = group.controls[confirmPasswordKey];
+
+      if (password.value !== confirmPassword.value) {
+        return {
+          mismatchedPasswords: true
+        };
+      }
+    }
+  }
+
+  createAccount(formVal) {
+    console.log("Bouton submit")
+    if (this.userForm.valid) {
+      this.user.account.login = formVal.login;
+      this.userService.registerUser(this.user).subscribe(r => {
+      
+      })
+    }
+  }
+
+  cancel() {
+    this.navCtrl.pop();
+  }
+
+  isValid(field: string) {
+    let formField = this.userForm.controls[field];
+    return formField.valid || formField.pristine;
   }
 
 }
