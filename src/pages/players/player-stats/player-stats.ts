@@ -34,13 +34,14 @@ export class PlayerStatsPage {
 
   player: any;
   stats: any[] = [];
+
   @ViewChild('barCanvas') barCanvas;
-    @ViewChild('doughnutCanvas') doughnutCanvas;
-    @ViewChild('lineCanvas') lineCanvas;
+  @ViewChild('doughnutCanvas') doughnutCanvas;
+  //@ViewChild('lineCanvas') lineCanvas;
  
-    barChart: any;
-    doughnutChart: any;
-    lineChart: any;
+  barChart: any;
+  doughnutChart: any;
+  //lineChart: any;
   
 
   /**
@@ -79,50 +80,62 @@ export class PlayerStatsPage {
         aggregat: 'COUNT',
         listFieldsGroupBy: listFieldsGroupBy
       }
-      console.log('search', search);
 
       this.statsService.getStatGroupBy(search).subscribe((result: any[]) => {
         for (let index = 0; index < result.length; index++) {
           let stat = {"code": result[index]._id.code, "value":result[index].value};
           this.stats.push(stat);
+          console.log('stat', stat);
         }
       });
   }
 
-  ionViewDidLoad() {
- 
+  ionViewDidEnter() {
     this.barChart = new Chart(this.barCanvas.nativeElement, {
 
         type: 'bar',
         data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            labels: ["0-15", "16-30", "31-45", "46-60"],
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
+              label: "Actions positives",
+              data: [12, 19, 30, 5],
+              backgroundColor: [
+                'rgba(234,83,80,1)',
+                'rgba(234,83,80,1)',
+                'rgba(234,83,80,1)',
+                'rgba(234,83,80,1)'
+              ],
+              borderColor: [
+                'rgba(234,83,80,1)',
+                'rgba(234,83,80,1)',
+                'rgba(234,83,80,1)',
+                'rgba(234,83,80,1)'
+              ],
+              borderWidth: 1
+            },
+            {
+              label: "Actions negatives",
+              data: [6, 25, 20, 15],
+              backgroundColor: [
+                'rgba(236, 239, 241,1)',
+                'rgba(236, 239, 241,1)',
+                'rgba(236, 239, 241,1)',
+                'rgba(236, 239, 241,1)'
+              ],
+              borderColor: [
+                'rgba(236, 239, 241,1)',
+                'rgba(236, 239, 241,1)',
+                'rgba(236, 239, 241,1)',
+                'rgba(236, 239, 241,1)'
+              ],
+              borderWidth: 1
             }]
         },
         options: {
             scales: {
                 yAxes: [{
                     ticks: {
-                        beginAtZero:true
+                        beginAtZero:false
                     }
                 }]
             }
@@ -134,31 +147,25 @@ export class PlayerStatsPage {
  
       type: 'doughnut',
       data: {
-          labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+          labels: ["Buts marqués", "Tirs ratés"],
           datasets: [{
-              label: '# of Votes',
-              data: [12, 19, 3, 5, 2, 3],
+              label: 'nb de buts',
+              data: [this.stats[0].value, (this.stats[1].value-this.stats[0].value)],
               backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)'
+                'rgba(234,83,80,1)',
+                'rgba(236, 239, 241, 1)'
               ],
+              borderWidth: 2,
               hoverBackgroundColor: [
-                  "#FF6384",
-                  "#36A2EB",
-                  "#FFCE56",
-                  "#FF6384",
-                  "#36A2EB",
-                  "#FFCE56"
+                'rgba(234,83,80,1)',
+                'rgba(236, 239, 241, 1)'
               ]
           }]
       }
 
   });
 
+  /*
   this.lineChart = new Chart(this.lineCanvas.nativeElement, {
 
       type: 'line',
@@ -189,7 +196,8 @@ export class PlayerStatsPage {
               }
           ]
       }
-
+      
   });
+  */
   }
 }
