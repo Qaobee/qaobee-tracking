@@ -29,12 +29,12 @@
     </ion-item>
     <ion-item class='form-group'>
       <ion-label floating>{{ 'signup.password' | translate }}</ion-label>
-      <ion-input type="text" formControlName="password" id="password" clearInput></ion-input>
+      <ion-input type="password" formControlName="password" id="password" clearInput></ion-input>
       <p *ngIf="userForm.controls.password.touched && !userForm.controls.password.valid" danger padding-left>Invalid label</p>
     </ion-item>
     <ion-item class='form-group'>
         <ion-label floating>{{ 'signup.passwordConfirm' | translate }}</ion-label>
-        <ion-input type="text" formControlName="passwordConfirm" id="passwordConfirm" clearInput></ion-input>
+        <ion-input type="password" formControlName="passwordConfirm" id="passwordConfirm" clearInput></ion-input>
         <p *ngIf="userForm.hasError('mismatchedPasswords')"> TOTO</p>
       <p  *ngIf="userForm.controls.passwordConfirm.touched && userForm.hasError('mismatchedPasswords') && userForm.controls.password.valid"></p>
     </ion-item>
