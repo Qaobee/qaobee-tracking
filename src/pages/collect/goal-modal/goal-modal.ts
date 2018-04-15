@@ -20,21 +20,21 @@ export class GoalModal {
         LWING: 'light-green'
     }
     private goalMapColors: any = {
-        LUP: 'blue-grey',
-        CUP: 'blue-grey',
-        RUP: 'blue-grey',
-        LMIDDLE: 'blue-grey',
-        RMIDDLE: 'blue-grey',
-        CMIDDLE: 'blue-grey',
-        LDOWN: 'blue-grey',
-        CDOWN: 'blue-grey',
-        RDOWN: 'blue-grey',
-        'left-pole': 'transparent',
-        'right-pole': 'transparent',
-        'top-pole': 'transparent',
-        'outside-top': 'light-green',
-        'outside-left': 'light-green',
-        'outside-right': 'light-green'
+        LUP: { color: 'blue-grey', opacity: 1},
+        CUP: { color: 'blue-grey',opacity: 1},
+        RUP: { color: 'blue-grey',opacity: 1},
+        LMIDDLE: { color: 'blue-grey',opacity: 1},
+        RMIDDLE: { color: 'blue-grey',opacity: 1},
+        CMIDDLE: { color: 'blue-grey',opacity: 1},
+        LDOWN: { color: 'blue-grey',opacity: 1},
+        CDOWN: { color: 'blue-grey',opacity: 1},
+        RDOWN: { color: 'blue-grey',opacity: 1},
+        'left-pole': { color: 'transparent',opacity: 0},
+        'right-pole': { color: 'transparent',opacity: 0},
+        'top-pole': { color: 'transparent',opacity: 0},
+        'outside-top': { color: 'light-green',opacity: 1},
+        'outside-left': { color: 'light-green',opacity: 1},
+        'outside-right': { color: 'light-green',opacity: 1}
     }
 
     constructor() {
@@ -49,6 +49,7 @@ export class GoalModal {
         console.debug('[GoalModal] action', code);
         this.reinitGoal(document.getElementById("goal-map").children[0].children)
         document.getElementById(code).style.fill = this.sassHelper.readProperty('cyan');
+        document.getElementById(code).style['fill-opacity'] = 1;
     }
 
     reinitGround(domList) { 
@@ -64,7 +65,8 @@ export class GoalModal {
         for(let i=0; i < domList.length; i++) {event.target
             let elem = domList[i]
             if (this.goalMapColors[elem.id]) {
-                elem.style.fill = this.sassHelper.readProperty(this.goalMapColors[elem.id]);
+                elem.style.fill = this.sassHelper.readProperty(this.goalMapColors[elem.id].color);
+                elem.style['fill-opacity'] = this.sassHelper.readProperty(this.goalMapColors[elem.id].opacity);
             }
         }
     }
