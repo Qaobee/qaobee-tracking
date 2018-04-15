@@ -1,9 +1,16 @@
 <ion-content>
-    <ion-item *ngIf="nextEvent" id="nextEventAreaOn">
-        <h2>{{'nextEvent.titleFound'  | translate}}</h2>
-        <h3>{{ nextEvent.participants.teamHome.label }} <br> {{ nextEvent.participants.teamVisitor.label }}</h3>
-        <p>{{ nextEvent.startDate  | date:"mediumDate" }} {{ nextEvent.startDate  | date:"shortTime" }}</p>
-        <button ion-fab color="secondary" item-end large (click)="goToDetail(nextEvent, $event)"><ion-icon name="eye"></ion-icon></button>
+    <ion-item *ngIf="nextEvent" id="nextEventAreaOn" (click)="goToDetail(nextEvent, $event)">
+            <h2 class="panel">
+            <ion-icon name="ribbon" *ngIf="nextEvent.type.code==='championship'"></ion-icon>
+            <ion-icon name="trophy" *ngIf="nextEvent.type.code==='cup'"></ion-icon>
+            <ion-icon name="happy" *ngIf="nextEvent.type.code==='friendlyGame'"></ion-icon>
+            {{nextEvent.type.label}}
+            </h2>
+            <h2>{{ nextEvent.label }}</h2>
+            <h3>{{ nextEvent.participants.teamHome.label }} / {{ nextEvent.participants.teamVisitor.label }}</h3>
+            <p>{{ nextEvent.startDate | date:"mediumDate" }} {{ nextEvent.startDate | date:"shortTime" }}</p>
+            <ion-icon item-end name="stopwatch" color="danger" *ngIf="!nextEvent.isCollected" (click)="goToStartCollect(nextEvent, $event)"></ion-icon>
+            <ion-icon item-end name="stats" color="danger" *ngIf="nextEvent.isCollected" (click)="goToViewEventStat(nextEvent, $event)"></ion-icon>
     </ion-item>
 
     <ion-item text-left *ngIf="!nextEvent" id="nextEventAreaOff">

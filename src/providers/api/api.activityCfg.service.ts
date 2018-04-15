@@ -16,15 +16,16 @@
  *  is strictly forbidden unless prior written permission is obtained
  *  from Qaobee.
  */
-import {ApiService} from "./api";
-import {App, ToastController} from "ionic-angular";
-import {AuthenticationService} from "../authentication.service";
-import {HttpClient} from "@angular/common/http";
-import {Injectable} from "@angular/core";
-import {ENV} from "@app/env";
-import {catchError} from "rxjs/operators";
-import {TranslateService} from "@ngx-translate/core";
-import {Observable} from "rxjs/Observable";
+import { ApiService } from "./api";
+import { App, ToastController } from "ionic-angular";
+import { AuthenticationService } from "../authentication.service";
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { ENV } from "@app/env";
+import { catchError } from "rxjs/operators";
+import { TranslateService } from "@ngx-translate/core";
+import { Observable } from "rxjs/Observable";
+import moment from 'moment';
 
 @Injectable()
 export class ActivityCfgService extends ApiService {
@@ -37,10 +38,11 @@ export class ActivityCfgService extends ApiService {
      * @param {HttpClient} http
      */
     constructor(app: App,
-                authenticationService: AuthenticationService,
-                toastCtrl: ToastController,
-                private translate: TranslateService,
-                private http: HttpClient) {
+        authenticationService: AuthenticationService,
+        toastCtrl: ToastController,
+        private translate: TranslateService,
+        private http: HttpClient
+    ) {
         super(app, authenticationService, toastCtrl);
     }
 
@@ -50,9 +52,18 @@ export class ActivityCfgService extends ApiService {
      * @returns {Observable<any>}
      */
     get(activityId: string) {
-        return this.http.get<any>(ENV.hive + this.rootPath + '/commons/settings/activitycfg/get?activityId=' + activityId, this.addHeaderToken()).pipe(
-            catchError(this.handleError('ActivityCfgService.get'))
-        );
+        return new Observable<any>((observer) => {
+            this.translate.get('country').subscribe(value => {
+                this.http.get<any>(ENV.hive + this.rootPath + '/commons/settings/activitycfg/get?activityId=' + activityId
+                    + '&date=' + moment.utc().valueOf()
+                    + '&countryId=' + value, this.addHeaderToken()).pipe(
+                        catchError(this.handleError('ActivityCfgService.get'))
+                    ).subscribe(data => {
+                        observer.next(data);
+                        observer.complete();
+                    });
+            });
+        });
     }
 
     /**
@@ -62,16 +73,16 @@ export class ActivityCfgService extends ApiService {
      */
     getParamFieldList(activityId: string, params: string) {
         return new Observable<any>((observer) => {
-            this.translate.get('country').subscribe(
-                value => {
-                    console.log(value)
-                    this.http.get<any[]>(ENV.hive + this.rootPath + '/commons/settings/activitycfg/params?paramFieldList=' + params + '&activityId=' + activityId + '&date=' + (new Date().getTime()) + '&countryId=' + value, this.addHeaderToken()).pipe(
+            this.translate.get('country').subscribe(value => {
+                this.http.get<any[]>(ENV.hive + this.rootPath + '/commons/settings/activitycfg/params?paramFieldList=' + params
+                    + '&activityId=' + activityId
+                    + '&date=' + moment.utc().valueOf() + '&countryId=' + value, this.addHeaderToken()).pipe(
                         catchError(this.handleError('ActivityCfgService.getParamFieldList'))
                     ).subscribe(data => {
                         observer.next(data);
                         observer.complete();
                     });
-                });
+            });
         });
     }
 }

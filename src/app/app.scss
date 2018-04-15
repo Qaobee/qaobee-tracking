@@ -46,6 +46,20 @@ h3 {
   margin: 0 auto;
 }
 
+.enteteDark{
+  background-color: color($colors, dark, base);
+  padding: 0 auto;
+  margin: 0 auto;
+}
+
+.enteteDark h1 {
+  color : white;
+}
+
+.essentialInfos {
+  font-size: 3em;
+}
+
 ion-footer {
   background-color: color($colors, light, base);
 }

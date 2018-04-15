@@ -1,0 +1,11 @@
+page-player-stats {
+  
+  canvas {
+    border: 1px dotted color($colors,danger,base);
+  }
+
+  .chart-container {
+    position: relative;
+    width: 50vw;
+  }
+}

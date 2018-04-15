@@ -43,16 +43,19 @@ export class EventUpsertPage {
     editMode: string;
     eventForm: FormGroup;
     event: any;
-    startDate: string = new Date().toISOString();
-    startTime: string = new Date().toISOString();
+
+    startDate: string;
+    startTime: string;
     address: any;
     autocompleteItems = [];
     teams: any = {
         myTeams: [],
         adversaries: []
     };
-    teamVisitor: any;
-    teamHome: any;
+    adversaryTeam: any;
+    myTeam: any;
+    radioHome: boolean;
+    
     eventTypes: any[] = [];
     minDate: string = new Date().toISOString();
 
@@ -89,6 +92,10 @@ export class EventUpsertPage {
                 activityId: this.authenticationService.meta.activity._id,
                 seasonCode: this.authenticationService.meta.season.code,
             };
+            this.startDate = moment().format("YYYY-MM-DD");
+            this.startTime = moment().format("HH:mm");
+            this.radioHome = true;
+
         } else {
             this.event = navParams.get('event');
             if (this.event && this.event.startDate) {
@@ -96,6 +103,17 @@ export class EventUpsertPage {
                 this.startTime = moment(this.event.startDate).format("HH:mm");
                 if (this.event.address && this.event.address.formatedAddress) {
                     this.address = this.event.address.formatedAddress;
+                }
+
+                //Maangement myteam vs adversaryTeam and teamHome Vs teamVisitor
+                if(this.event.participants.teamHome._id===this.event.owner.teamId) {
+                    this.radioHome = true;
+                    this.myTeam = this.event.participants.teamHome;
+                    this.adversaryTeam = this.event.participants.teamVisitor;
+                } else {
+                    this.radioHome = false;
+                    this.myTeam = this.event.participants.teamVisitor;
+                    this.adversaryTeam = this.event.participants.teamHome;
                 }
             }
         }
@@ -106,29 +124,29 @@ export class EventUpsertPage {
             'startTime': [this.startTime, [Validators.required]],
             'startDate': [this.startDate, [Validators.required]],
             'type': [this.event.type, [Validators.required]],
-            'teamVisitor': [this.event.participants.teamVisitor, [Validators.required]],
-            'teamHome': [this.event.participants.teamHome, [Validators.required]],
-            'radioHome': [true, [Validators.required]],
+            'myTeam': [this.myTeam, [Validators.required]],
+            'adversaryTeam': [this.adversaryTeam, [Validators.required]],
+            'radioHome': [this.radioHome, [Validators.required]],
         });
 
+        // My team list
         this.teamService.getTeams(authenticationService.meta.effectiveDefault, authenticationService.meta._id, 'all', 'false').subscribe((teams: any[]) => {
             if (teams) {
                 this.teams.myTeams = teams;
                 if (teams.length === 1 && !this.event.participants.teamHome) {
                     this.event.participants.teamHome = teams[0];
-                    this.teamHome = teams[0];
-                    this.eventForm.controls['teamHome'].setValue(this.teamHome);
+                    this.eventForm.controls['myTeam'].setValue(teams[0]);
                 }
             }
         });
 
+        // Adversary team list
         this.teamService.getTeams(authenticationService.meta.effectiveDefault, authenticationService.meta._id, 'all', 'true').subscribe((teams: any[]) => {
             if (teams) {
                 this.teams.adversaries = teams;
                 if (teams.length === 1 && !this.event.participants.teamVisitor) {
                     this.event.participants.teamVisitor = teams[0];
-                    this.teamVisitor = teams[0];
-                    this.eventForm.controls['teamVisitor'].setValue(this.teamVisitor);
+                    this.eventForm.controls['adversaryTeam'].setValue(teams[0]);
                 }
             }
         });
@@ -158,7 +176,6 @@ export class EventUpsertPage {
      * @param e2 
      */
     compareOptionTeam(e1: any, e2: any): boolean {
-        
         return e1 && e2 ? e1._id === e2._id : e1 === e2;
     }
 
@@ -186,10 +203,6 @@ export class EventUpsertPage {
         this.locationService.selectSearchResult(item, this.address, result => {
             this.event.address = {
                 formatedAddress: item.description,
-                place: result.address_components[0].long_name + ', ' + result.address_components[1].long_name,
-                zipcode: result.address_components[6].long_name,
-                city: result.address_components[2].long_name,
-                country: result.address_components[5].long_name,
                 lat: result.geometry.location.lat(),
                 lng: result.geometry.location.lng(),
             };
@@ -197,35 +210,47 @@ export class EventUpsertPage {
     }
 
     /**
-     *
+     * 
+     * @param formVal 
      */
     saveEvent(formVal) {
         if(this.eventForm.valid) {
-            console.log('[EventUpsertPage] - saveEvent - formVal', formVal);
+            //event label
+            this.event.label = formVal.label;
+
+            //Date event
             let startDate = moment(formVal.startDate,"YYYY-MM-DD");
             let startTime = moment(formVal.startTime,"HH:mm");
             startDate.hour(startTime.hour());
             startDate.minute(startTime.minute());
             this.event.startDate = startDate.unix()*1000;
             
+            //link event
             this.event.link = {
                 linkId: 'AAAA',
                 type: formVal.type.code
             };
-            this.event.label = formVal.label;
+            
+            //eventType
             this.event.type = formVal.type;
+
+            //event owner
             this.event.owner = {
                 sandboxId: this.authenticationService.meta._id,
                 effectiveId: this.authenticationService.meta.effectiveDefault,
-                teamId: this.event.participants.teamHome._id
+                teamId: formVal.myTeam._id
             };
+
+            //event participants
             if (formVal.radioHome) {
-                this.event.participants.teamVisitor = formVal.teamVisitor;
-                this.event.participants.teamHome = formVal.teamHome;
+                this.event.participants.teamVisitor = formVal.adversaryTeam;
+                this.event.participants.teamHome = formVal.myTeam;
             } else {
-                this.event.participants.teamHome = formVal.teamVisitor;
-                this.event.participants.teamVisitor = formVal.teamHome;
+                this.event.participants.teamHome = formVal.adversaryTeam;
+                this.event.participants.teamVisitor = formVal.myTeam;
             }
+
+            //call API
             this.eventsService.addEvent(this.event).subscribe(r => {
 
                 if(this.editMode==='CREATE'){
@@ -247,7 +272,6 @@ export class EventUpsertPage {
                     }
                   )
                 }
-                
             });
         }
     }
@@ -268,7 +292,6 @@ export class EventUpsertPage {
         });
 
         toast.onDidDismiss(() => {
-            console.log('Dismissed toast');
         });
 
         toast.present();

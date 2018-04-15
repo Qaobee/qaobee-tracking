@@ -20,10 +20,16 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { NavController, NavParams, ToastController } from 'ionic-angular';
-import { PersonService } from './../../../providers/api/api.person.service';
+import { TranslateService } from '@ngx-translate/core';
+import { Storage } from '@ionic/storage';
+
 import { ActivityCfgService } from './../../../providers/api/api.activityCfg.service';
-import {LocationService} from "../../../providers/location.service";
-import {AuthenticationService} from "../../../providers/authentication.service";
+import { AuthenticationService } from "../../../providers/authentication.service";
+import { EffectiveService } from './../../../providers/api/api.effective.service';
+import { LocationService } from "../../../providers/location.service";
+import { PersonService } from './../../../providers/api/api.person.service';
+
+import moment from 'moment';
 
 
 @Component({
@@ -31,7 +37,7 @@ import {AuthenticationService} from "../../../providers/authentication.service";
   templateUrl: 'player-upsert.html',
 })
 export class PlayerUpsertPage {
-
+  editMode: string;
   player: any;
   listPositionType: any[] = [];
   listLaterality: any[] = [];
@@ -53,21 +59,30 @@ export class PlayerUpsertPage {
               private activityCfgService: ActivityCfgService,
               private authenticationService: AuthenticationService,
               private personService: PersonService,
-              private locationService: LocationService)
+              private locationService: LocationService,
+              private effectiveService: EffectiveService,
+              private storage: Storage,
+              private translateService: TranslateService)
   {
-    this.player = navParams.get('player') || {
-      status:{},
-      contact:{},
-    };
+    this.editMode = navParams.get('editMode');
+    if(this.editMode && this.editMode==='CREATE') {
+      this.player = {
+        status:{},
+        contact:{},
+      };
 
-    if (this.player.birthdate) {
-      this.birthdatePlayer = new Date(this.player.birthdate).toISOString();
-    }
+      this.birthdatePlayer = '';
 
-    if (this.player.address && this.player.address.formatedAddress) {
-      this.address = this.player.address.formatedAddress;
+    } else {
+      this.player = navParams.get('player')
+      if (this.player.birthdate) {
+        this.birthdatePlayer = moment(this.player.birthdate).format("YYYY-MM-DD");
+      }
+
+      if (this.player.address && this.player.address.formatedAddress) {
+          this.address = this.player.address.formatedAddress;
+      }
     }
-    
 
     this.playerForm = this.formBuilder.group({
       'name': [this.player.name || '', [Validators.required]],
@@ -128,15 +143,11 @@ export class PlayerUpsertPage {
     this.autocompleteItems = [];
     this.playerForm.controls['address'].setValue(item.description);
     this.locationService.selectSearchResult(item, this.address, result => {
-        this.player.address = {
-            formatedAddress: item.description,
-            place: result.address_components[0].long_name + ', ' + result.address_components[1].long_name,
-            zipcode: result.address_components[6].long_name,
-            city: result.address_components[2].long_name,
-            country: result.address_components[5].long_name,
-            lat: result.geometry.location.lat(),
-            lng: result.geometry.location.lng(),
-        };
+      this.player.address = {
+          formatedAddress: item.description,
+          lat: result.geometry.location.lat(),
+          lng: result.geometry.location.lng(),
+      };
     });
   }
 
@@ -144,8 +155,116 @@ export class PlayerUpsertPage {
     this.navCtrl.pop();
   }
 
-  validate (player:any) {
-    console.log('validate PlayerUpsertPage : ', player);
+
+  savePlayer (formVal) {
+
+    if(this.playerForm.valid) {
+      //civil status
+      this.player.name = formVal.name;
+      this.player.firstname = formVal.firstname;
+      this.player.birthdate = moment(formVal.birthdate).valueOf();
+      this.player.nationality = formVal.nationality;
+      
+      //status player
+      this.player.status = {};
+      if (formVal.weight) {
+        this.player.status.weight = formVal.weight;
+      }
+      if (formVal.height) {
+        this.player.status.height = formVal.height;
+      }
+      if (formVal.squadnumber) {
+        this.player.status.squadnumber = formVal.squadnumber;
+      }
+      if (formVal.positionType) {
+        this.player.status.positionType = formVal.positionType;
+      }
+      if (formVal.laterality) {
+        this.player.status.laterality = formVal.laterality;
+      }
+
+      //player contact
+      this.player.contact = {};
+      if (formVal.mobile) {
+        this.player.contact.cellphone = formVal.mobile;
+      }
+
+      if (formVal.email) {
+        this.player.contact.email = formVal.email;
+      }
+
+      this.player.address = {};
+      if (formVal.address) {
+          this.player.address.formatedAddress = formVal.address;
+      }
+
+      //sandboxId
+      this.player.sandboxId = this.authenticationService.meta._id;
+
+      console.log('Player',this.player);
+
+      let dataContainer = {person : this.player};
+      this.personService.addPerson(dataContainer).subscribe(r => {
+
+        if(this.editMode==='CREATE'){
+          this.storage.get('players').then(players => {
+            players.push(r);
+            this.storage.set('players', players);
+
+            this.effectiveService.get(this.authenticationService.meta.effectiveDefault).subscribe(effectiveGet => {
+              console.log('effectiveGet',effectiveGet);
+              let effective: any;
+              effective = effectiveGet;
+              if (effective) {
+                var roleMember = {code: 'player', label: 'Joueur'};
+                var member = {personId: r._id, role: roleMember};
+
+                if (effective) {
+                  effective.members.push(member);
+                } else {
+                  effective.members = [];
+                  effective.members.push(member);
+                }
+
+                /* Update effective members list */
+                this.effectiveService.update(effective).subscribe(effectiveUpdate => {
+                  this.navCtrl.pop();
+                  this.translateService.get('player.messages.createDone').subscribe(
+                    value => {
+                      this.presentToast(value);
+                    }
+                  )
+                });
+              }
+            });
+          });
+        } else {
+          this.navCtrl.pop();
+          this.translateService.get('player.messages.updateDone').subscribe(
+            value => {
+              this.presentToast(value);
+            }
+          )
+        }
+      });
+    }
+  }
+
+  /**
+     *
+     * @param msg
+     */
+    private presentToast(msg) {
+      let toast = this.toastCtrl.create({
+          message: msg,
+          duration: 3000,
+          position: 'bottom'
+      });
+
+      toast.onDidDismiss(() => {
+      });
+
+      toast.present();
   }
 
 }

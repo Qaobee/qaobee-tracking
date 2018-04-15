@@ -18,7 +18,7 @@
  */
 import {Injectable} from "@angular/core";
 import 'rxjs/add/operator/map';
-import {App, NavController, ToastController} from 'ionic-angular';
+import {App, ToastController} from 'ionic-angular';
 import {Observable} from "rxjs/Observable";
 import {of} from "rxjs/observable/of";
 import {HttpHeaders} from "@angular/common/http";
@@ -30,7 +30,6 @@ import {AuthenticationService} from "../authentication.service";
  */
 @Injectable()
 export class ApiService {
-    private navCtrl: NavController;
     private excludedOperations: string[] = ['UserService.login'];
     protected rootPath: string = '/api/1/';
     /**
@@ -39,8 +38,7 @@ export class ApiService {
      * @param {AuthenticationService} authenticationService
      * @param {ToastController} toastCtrl
      */
-    constructor(app: App, public authenticationService: AuthenticationService, public toastCtrl: ToastController) {
-        this.navCtrl = app.getActiveNav();
+    constructor(public app: App, public authenticationService: AuthenticationService, public toastCtrl: ToastController) {
     }
 
     /**
@@ -53,7 +51,8 @@ export class ApiService {
         return (error: any): Observable<T> => {
             console.error(operation, error);
             if (error.status === 401 && this.excludedOperations.indexOf(operation) === -1) {
-                this.navCtrl.push(LoginPage);
+                console.debug('[APIService] - handleError',this.app.getRootNav(),  operation, result);
+                this.app.getRootNav().push(LoginPage, {});
                 this.authenticationService.isLogged = false;
                 return of(result);
             } else {

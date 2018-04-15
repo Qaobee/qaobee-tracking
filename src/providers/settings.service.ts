@@ -1,3 +1,5 @@
+import { ActivityCfgService } from './api/api.activityCfg.service';
+import { Storage } from '@ionic/storage';
 /*
  *  __________________
  *  Qaobee
@@ -21,29 +23,42 @@ import {TranslateService} from "@ngx-translate/core";
 import localeFr from '@angular/common/locales/fr';
 import localeEn from '@angular/common/locales/en';
 import {registerLocaleData} from "@angular/common";
+import {ActivityCfg} from '../model/activity.cfg'
 @Injectable()
 export class SettingsService {
     private locale: string;
-
-    minPlayers = 4;
-    maxPlayers = 10;
-    sound = true;
-    vibrations = true;
-    wizzard = true;
-    periodDuration = 30;
-    periodCount = 2;
-
+    activityCfg: any ={};
     /**
      *
      * @param {TranslateService} translate
+     * @param {Storage} storage
+     * @param {ActivityCfgService} activityCfgService
      */
-    constructor(private translate: TranslateService) {
-        this.locale = translate.getBrowserLang();
+    constructor(private translate: TranslateService, private storage: Storage, private activityCfgService:ActivityCfgService) {
+        this.locale = this.translate.getBrowserLang();
         registerLocaleData(localeFr, 'fr');
         registerLocaleData(localeEn, 'en');
         registerLocaleData(localeEn, 'us');
+        this.storage.get('activityCfg').then(activityCfg =>{
+            console.debug('[SettingsService] - from storage', activityCfg);
+            if(!activityCfg) {
+                this.activityCfgService.get('ACT-HAND').subscribe(activityCfgFromAPI => {
+                    console.debug('[SettingsService] - from API', activityCfgFromAPI);
+                    this.storage.set('activityCfg', activityCfgFromAPI);
+                    this.init(activityCfgFromAPI);
+                });
+            } else {
+                this.init(activityCfg);
+            }
+        });
+    }
+    init(activityCfg: any) {
+        this.activityCfg = activityCfg;
     }
 
+    save() {
+
+    }
     /**
      * Get current locale
      *
@@ -51,5 +66,20 @@ export class SettingsService {
      */
     getLanguage() {
         return this.locale;
+    }
+
+    getCollectInfos():any {       
+        return {
+            initialized: true,
+            periodDuration: this.activityCfg.periodDuration,
+            nbMaxPlayers: this.activityCfg.nbMaxPlayers,
+            nbMinPlayers: this.activityCfg.nbMinPlayers,
+            nbPeriod: this.activityCfg.nbPeriod,
+            nbTimeout: this.activityCfg.nbTimeout,
+            timeoutDuration: this.activityCfg.timeoutDuration,
+            yellowCardMax: this.activityCfg.yellowCardMax,
+            exclusionTempo: this.activityCfg.exclusionTempo,
+            halfTimeDuration: this.activityCfg.halfTimeDuration,
+        }
     }
 }

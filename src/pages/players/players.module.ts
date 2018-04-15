@@ -19,6 +19,7 @@
 import { PlayerListPage } from './player-list/player-list';
 import { PlayerDetailPage } from './player-detail/player-detail';
 import { PlayerUpsertPage } from './player-upsert/player-upsert';
+import { PlayerStatsPage } from './player-stats/player-stats';
 
 import {NgModule} from '@angular/core';
 import {HttpClient, HttpClientModule} from "@angular/common/http";
@@ -33,7 +34,8 @@ import {App, IonicModule} from "ionic-angular";
     declarations: [
         PlayerListPage,
         PlayerDetailPage,
-        PlayerUpsertPage
+        PlayerUpsertPage,
+        PlayerStatsPage
     ],
     imports: [
         HttpClientModule,
@@ -51,7 +53,8 @@ import {App, IonicModule} from "ionic-angular";
     entryComponents: [
         PlayerListPage,
         PlayerDetailPage,
-        PlayerUpsertPage
+        PlayerUpsertPage,
+        PlayerStatsPage
     ]
 })
 

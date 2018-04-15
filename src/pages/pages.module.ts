@@ -23,7 +23,6 @@ import {WelcomePage} from "./welcome/welcome";
 import {HomePage} from "./home/home";
 import {LoginPage} from "./login/login";
 import {SignupPage} from "./signup/signup";
-import {CollectListPage} from './collect-list/collect-list';
 import {SettingsPage} from './settings/settings';
 
 import {ComponentsModule} from "../components/components.module";
@@ -37,7 +36,6 @@ import {CollectModule} from "./collect/collect.module";
 
 @NgModule({
     declarations: [
-        CollectListPage,
         HomePage,
         LoginPage,
         ProfilePage,
@@ -62,7 +60,6 @@ import {CollectModule} from "./collect/collect.module";
         CollectModule
     ],
     entryComponents: [
-        CollectListPage,
         HomePage,
         LoginPage,
         ProfilePage,

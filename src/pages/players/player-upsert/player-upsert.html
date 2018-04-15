@@ -5,7 +5,7 @@
         <button ion-button icon-only (click)="cancel()">
           <ion-icon name="close-circle"></ion-icon>
         </button>
-        <button ion-button icon-only (click)="validate(playerForm.value)" type="submit" [disabled]="!playerForm.valid"> 
+        <button ion-button icon-only (click)="savePlayer(playerForm.value)" type="submit" [disabled]="!playerForm.valid"> 
           <ion-icon name="checkmark-circle"></ion-icon>
         </button>
       </ion-buttons>

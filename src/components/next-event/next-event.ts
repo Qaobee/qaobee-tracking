@@ -25,6 +25,7 @@ import {Utils} from "../../providers/utils";
 import {MessageBus} from "../../providers/message-bus.service";
 import {EventUpsertPage} from "../../pages/events/event-upsert/event-upsert";
 import { EventDetailPage } from './../../pages/events/event-detail/event-detail';
+import {TeamBuildPage} from "./../../pages/collect/team-build/team-build";
 
 @Component({
     selector: 'next-event',
@@ -87,6 +88,26 @@ export class NextEventComponent {
           
             
         }
+    }
+
+    /**
+     *
+     * @param event
+     * @param clickEvent
+     */
+    goToViewEventStat(event: any, clickEvent: any) {
+        clickEvent.stopPropagation();
+        console.log('goToViewEventStat');
+    }
+
+    /**
+     *
+     * @param event
+     * @param clickEvent
+     */
+    goToStartCollect(event: any, clickEvent: any) {
+        clickEvent.stopPropagation();
+        this.navCtrl.push(TeamBuildPage, {event: event});
     }
 
     /**

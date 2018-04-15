@@ -113,7 +113,7 @@ export class PlayerListPage {
      *
      */
     goToAddPlayer() {
-      this.navCtrl.push(PlayerUpsertPage, {mode : 'ADD'});
+      this.navCtrl.push(PlayerUpsertPage, {editMode : 'CREATE'});
   }
 
     /**

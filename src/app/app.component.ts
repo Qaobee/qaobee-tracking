@@ -24,7 +24,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginPage } from './../pages/login/login';
 import { WelcomePage } from './../pages/welcome/welcome';
 import { SignupPage } from './../pages/signup/signup';
-import { CollectListPage } from './../pages/collect-list/collect-list';
 import { PlayerListPage } from './../pages/players/player-list/player-list';
 import { SettingsPage } from './../pages/settings/settings';
 
@@ -71,7 +70,12 @@ export class MyApp {
         this.pages = [];
         translate.setDefaultLang('en');
         translate.use(translate.getBrowserLang());
-
+    }
+    /**
+     * @returns Nav
+     */
+    getActiveNav(): Nav {
+        return this.nav;
     }
 
     /** */
@@ -139,7 +143,7 @@ export class MyApp {
                     { title: value['menu.Home'], component: HomePage, icon: 'home' },
                     { title: value['menu.Events'], component: EventListPage, icon: 'calendar' },
                     { title: value['menu.Players'], component: PlayerListPage, icon: 'people' },
-                    { title: value['menu.Stats'], component: CollectListPage, icon: 'stats' },
+                    //{ title: value['menu.Stats'], component: CollectListPage, icon: 'stats' },
                     { title: value['menu.Settings'], component: SettingsPage, icon: 'settings' }
                 ];
             }
