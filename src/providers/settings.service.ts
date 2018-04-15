@@ -23,7 +23,7 @@ import {TranslateService} from "@ngx-translate/core";
 import localeFr from '@angular/common/locales/fr';
 import localeEn from '@angular/common/locales/en';
 import {registerLocaleData} from "@angular/common";
-import {ActivityCfg} from '../model/activity.cfg'
+
 @Injectable()
 export class SettingsService {
     private locale: string;
