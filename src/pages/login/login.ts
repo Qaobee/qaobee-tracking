@@ -23,7 +23,6 @@ import {UniqueDeviceID} from '@ionic-native/unique-device-id';
 import {UserService} from '../../providers/api/api.user.service';
 import {SignupPage} from '../signup/signup';
 import {Storage} from '@ionic/storage';
-import {AuthenticationService} from "../../providers/authentication.service";
 import {MessageBus} from "../../providers/message-bus.service";
 
 /**
@@ -45,7 +44,6 @@ export class LoginPage {
      * @param {UserService} userService
      * @param {Storage} storage
      * @param {UniqueDeviceID} uniqueDeviceID
-     * @param {AuthenticationService} authenticationService
      * @param {MessageBus} eventService
      */
     constructor(public navCtrl: NavController,
@@ -53,7 +51,6 @@ export class LoginPage {
                 private userService: UserService,
                 private storage: Storage,
                 private uniqueDeviceID: UniqueDeviceID,
-                private authenticationService: AuthenticationService,
                 private eventService: MessageBus) {
         this.storage.get("login").then(l => {
             this.login = l;

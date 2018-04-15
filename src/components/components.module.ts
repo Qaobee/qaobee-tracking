@@ -1,3 +1,4 @@
+
 /*
  *  __________________
  *  Qaobee
@@ -28,12 +29,14 @@ import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {createTranslateLoader} from "../app/app.module";
 import {HttpClient} from "@angular/common/http";
 import {ChronoComponent} from "./chrono/chrono.component";
+import { SassHelperComponent } from './sass-helper.component';
 
 @NgModule({
     declarations: [
         MenuHeaderComponent,
         NextEventComponent,
         LastCollectComponent,
+        SassHelperComponent,
         ChronoComponent
     ],
     imports: [
@@ -51,7 +54,8 @@ import {ChronoComponent} from "./chrono/chrono.component";
         MenuHeaderComponent,
         NextEventComponent,
         LastCollectComponent,
-        ChronoComponent
+        ChronoComponent,
+        SassHelperComponent
     ],
     providers: [
         Utils

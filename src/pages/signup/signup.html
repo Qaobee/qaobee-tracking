@@ -1,21 +1,50 @@
-<!--
-  Generated template for the SignupPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar>
+    <ion-title>{{'signup.TitleNavBar' | translate}}</ion-title>
+    <ion-buttons end>
       <button ion-button menuToggle>
-          <ion-icon name="menu"></ion-icon>
-        </button>
-    <ion-title>{{ 'signup.TitleNavBar' | translate }}</ion-title>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
+  <form [formGroup]="userForm">
+    <ion-item color="light">
+      <h4>
+        {{'signup.Title' | translate}}
+      </h4>
+    </ion-item>
+
+    <ion-item class="form-group">
+      <ion-label floating>{{ 'signup.login' | translate }}</ion-label>
+      <ion-input type="text" formControlName="login" id="login" autocomplete="login" clearInput></ion-input>
+      <p *ngIf="!isValid('login')" danger padding-left>Invalid label</p>
+    </ion-item>
+    <ion-item class="form-group">
+      <ion-label floating>{{ 'signup.email' | translate }}</ion-label>
+      <ion-input type="text" formControlName="email" id="email" autocomplete="email" clearInput></ion-input>
+      <p *ngIf="!isValid('email')" danger padding-left>Invalid label</p>
+    </ion-item>
+    <ion-item class='form-group'>
+      <ion-label floating>{{ 'signup.password' | translate }}</ion-label>
+      <ion-input type="password" formControlName="password" id="password" clearInput></ion-input>
+      <p *ngIf="userForm.controls.password.touched && !userForm.controls.password.valid" danger padding-left>Invalid label</p>
+    </ion-item>
+    <ion-item class='form-group'>
+        <ion-label floating>{{ 'signup.passwordConfirm' | translate }}</ion-label>
+        <ion-input type="password" formControlName="passwordConfirm" id="passwordConfirm" clearInput></ion-input>
+        <p *ngIf="userForm.hasError('mismatchedPasswords')"> TOTO</p>
+      <p  *ngIf="userForm.controls.passwordConfirm.touched && userForm.hasError('mismatchedPasswords') && userForm.controls.password.valid"></p>
+    </ion-item>
+  </form>
+
+  <button id="cancelButton" ion-button icon-left medium (tap)="cancel()">
+      {{ 'signup.cancel' | translate  }}
+</button>
+<button id="subscribeButton" ion-button icon-left medium (tap)="createAccount(userForm.value)" type="submit">
+    {{ 'signup.valid' | translate  }}
+</button>
 
 </ion-content>

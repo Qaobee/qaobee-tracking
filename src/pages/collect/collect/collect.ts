@@ -15,10 +15,11 @@ import { Utils } from './../../../providers/utils';
 import { AuthenticationService } from './../../../providers/authentication.service';
 import { APIStatsService } from './../../../providers/api/api.stats';
 import { Storage } from '@ionic/storage';
-import { NavParams, ToastController, LoadingController, ActionSheetController } from 'ionic-angular';
+import { NavParams, ToastController, LoadingController, ActionSheetController, ModalController } from 'ionic-angular';
 import { MessageBus } from './../../../providers/message-bus.service';
 import { Component } from "@angular/core";
 import { ENV } from "@app/env";
+
 import moment from 'moment';
 
 @Component({
@@ -82,6 +83,7 @@ export class CollectPage {
         public navParams: NavParams,
         private storage: Storage,
         private toastCtrl: ToastController,
+        public modalController: ModalController,
         public loadingCtrl: LoadingController,
         public actionSheetCtrl: ActionSheetController,
         private translateService: TranslateService,
@@ -398,16 +400,14 @@ export class CollectPage {
     penaltyButton() {
         console.debug('[CollectPage] - penaltyButton');
         // TODO
-        if (this.fsmContext.gamePhase && this.fsmContext.gamePhase.attack) {
-            this.handFSM.trigger(FSMEvents.groundAtt);
+        if (this.fsmContext.gamePhase && this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.groundAtt)) {
             /*
              handGround.setVisibility(View.INVISIBLE);
             hand_ground.setVisibility(View.INVISIBLE);
             eventHelper.ground(context, "originShootAtt", "PENALTY", context.getSelectedPlayer());
             showGoal();
             */
-        } else if (this.fsmContext.gamePhase && !this.fsmContext.gamePhase.attack) {
-            this.handFSM.trigger(FSMEvents.groundDef);
+        } else if (this.fsmContext.gamePhase && !this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.groundDef)) {
             /*
             handGround.setVisibility(View.INVISIBLE);
             hand_ground.setVisibility(View.INVISIBLE);
@@ -461,24 +461,25 @@ export class CollectPage {
         console.debug('[CollectPage] - stopShootButton');
         let fsmEvent = this.fsmContext.gamePhase.attack ? FSMEvents.stopShootAtt : FSMEvents.stopShootDef;
         let fsmPhase = this.fsmContext.gamePhase.attack ? FSMEvents.doDefense : FSMEvents.doAttack;
-        this.handFSM.trigger(fsmEvent);
-        console.debug('[CollectPage] - stopShootButton - gamePhase', this.fsmContext.gamePhase.attack);
-        if (this.fsmContext.gamePhase.attack) {
-            this.statCollector.stopShoot(this.fsmContext, undefined);
-            this.fsmContext.selectedPlayer = undefined;
-            this.doDefense();
-        } else {
-            this.statCollector.stopShoot(this.fsmContext, this.getGaolkeeperId());
-            this.doSelectGoalKeeper();
-            this.doAttack();
+        if (this.handFSM.trigger(fsmEvent)) {
+            console.debug('[CollectPage] - stopShootButton - gamePhase', this.fsmContext.gamePhase.attack);
+            if (this.fsmContext.gamePhase.attack) {
+                this.statCollector.stopShoot(this.fsmContext, undefined);
+                this.fsmContext.selectedPlayer = undefined;
+                this.doDefense();
+            } else {
+                this.statCollector.stopShoot(this.fsmContext, this.getGaolkeeperId());
+                this.doSelectGoalKeeper();
+                this.doAttack();
+            }
+            this.fsmContext.shootSeqId = undefined;
+            this.handFSM.trigger(fsmPhase);
+            console.debug('[CollectPage] - stopShootButton - fsmContext', this.fsmContext);
+            this.saveState();
+            this.clearGround();
+            this.clearGoal();
+            this.hideGoal();
         }
-        this.fsmContext.shootSeqId = undefined;
-        this.handFSM.trigger(fsmPhase);
-        console.debug('[CollectPage] - stopShootButton - fsmContext', this.fsmContext);
-        this.saveState();
-        this.clearGround();
-        this.clearGoal();
-        this.hideGoal();
     }
 
     /**
@@ -492,22 +493,24 @@ export class CollectPage {
         let fsmEvent = this.fsmContext.gamePhase.attack ? FSMEvents.goalScoredAtt : FSMEvents.goalScoredDef;
         let fsmPhase = this.fsmContext.gamePhase.attack ? FSMEvents.doDefense : FSMEvents.doAttack;
         let wasAttack = this.fsmContext.gamePhase.attack;
-        this.handFSM.trigger(fsmEvent);
-        if (wasAttack) {
-            this.gameState.homeScore++;
-            this.statCollector.goalScored(this.fsmContext, this.fsmContext.selectedPlayer)
-            this.doDefense();
-        } else {
-            this.gameState.visitorScore++;
-            this.statCollector.goalConceded(this.fsmContext, this.fsmContext.selectedPlayer);
-            this.doAttack();
+        if (this.handFSM.trigger(fsmEvent)) {
+            if (wasAttack) {
+                this.gameState.homeScore++;
+                this.statCollector.goalScored(this.fsmContext, this.fsmContext.selectedPlayer)
+                this.doDefense();
+            } else {
+                this.gameState.visitorScore++;
+                this.statCollector.goalConceded(this.fsmContext, this.fsmContext.selectedPlayer);
+                this.doAttack();
+            }
+            this.fsmContext.shootSeqId = undefined;
+            if (this.handFSM.trigger(fsmPhase)) {
+                this.saveState();
+                this.clearGround();
+                this.clearGoal();
+                this.hideGoal();
+            }
         }
-        this.fsmContext.shootSeqId = undefined;
-        this.handFSM.trigger(fsmPhase);
-        this.saveState();
-        this.clearGround();
-        this.clearGoal();
-        this.hideGoal();
     }
 
     /**
@@ -537,13 +540,11 @@ export class CollectPage {
      */
     resume() {
         console.debug('[CollectPage] - resume', this.fsmContext.gamePhase);
-        if (!this.fsmContext.gamePhase) {
-            this.handFSM.trigger(FSMEvents.startChrono);
-        } else if (this.fsmContext.gamePhase.attack) {
-            this.handFSM.trigger(FSMEvents.doAttack);
+        if (!this.fsmContext.gamePhase && this.handFSM.trigger(FSMEvents.startChrono)) {
+            console.debug('[CollectPage] - resume', this.fsmContext.gamePhase);
+        } else if (this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.doAttack)) {
             this.doAttack();
-        } else {
-            this.handFSM.trigger(FSMEvents.doDefense);
+        } else if (this.handFSM.trigger(FSMEvents.doDefense)) {
             this.doDefense();
         }
     }
@@ -557,10 +558,12 @@ export class CollectPage {
             return;
         } else if (this.handFSM.context.state === FSMStates.INIT) {
             this.startCollect();
-            this.handFSM.trigger(FSMEvents.startChrono);
+            if (this.handFSM.trigger(FSMEvents.startChrono))
+                console.debug('[CollectPage] - playButton - startCollect', event);
         } else {
-            this.handFSM.trigger(FSMEvents.resume);
-            this.resume();
+            if (this.handFSM.trigger(FSMEvents.resume)) {
+                this.resume();
+            }
         }
         this.fsmContext.paused = false;
     }
@@ -569,8 +572,9 @@ export class CollectPage {
      */
     pauseButton(event: number) {
         console.debug('[CollectPage] - pauseButton', event);
-        this.handFSM.trigger(FSMEvents.doPause);
-        this.fsmContext.paused = true;
+        if (this.handFSM.trigger(FSMEvents.doPause)) {
+            this.fsmContext.paused = true;
+        }
     }
 
     /**
@@ -590,8 +594,9 @@ export class CollectPage {
      */
     attackButton(event: any) {
         console.debug('[CollectPage] - attackButton', event);
-        this.handFSM.trigger(FSMEvents.doAttack);
-        this.doAttack();
+        if (this.handFSM.trigger(FSMEvents.doAttack)) {
+            this.doAttack();
+        }
     }
 
     /**
@@ -616,8 +621,9 @@ export class CollectPage {
      */
     defenseButton(event: any) {
         console.debug('[CollectPage] - defenseButton', event);
-        this.handFSM.trigger(FSMEvents.doDefense);
-        this.doDefense();
+        if (this.handFSM.trigger(FSMEvents.doDefense)) {
+            this.doDefense();
+        }
     }
 
 
@@ -654,12 +660,13 @@ export class CollectPage {
     orangeCardButton(event: any) {
         console.debug('[CollectPage] - orangeCardButton', event);
         if (this.fsmContext.selectedPlayer && this.playerMap[this.fsmContext.selectedPlayer].sanction !== StatType.ORANGE_CARD) {
-            this.handFSM.trigger(FSMEvents.sanction);
-            this.playerMap[this.fsmContext.selectedPlayer].sanction = StatType.ORANGE_CARD;
-            this.statCollector.card(this.fsmContext, StatType.ORANGE_CARD, this.fsmContext.selectedPlayer);
-            this.gameState.sanctions.push({ playerId: this.fsmContext.selectedPlayer, sanction: StatType.ORANGE_CARD });
-            this.saveState();
-            this.startOrangeCardTimer(this.fsmContext.selectedPlayer);
+            if (this.handFSM.trigger(FSMEvents.sanction)) {
+                this.playerMap[this.fsmContext.selectedPlayer].sanction = StatType.ORANGE_CARD;
+                this.statCollector.card(this.fsmContext, StatType.ORANGE_CARD, this.fsmContext.selectedPlayer);
+                this.gameState.sanctions.push({ playerId: this.fsmContext.selectedPlayer, sanction: StatType.ORANGE_CARD });
+                this.saveState();
+                this.startOrangeCardTimer(this.fsmContext.selectedPlayer);
+            }
         }
     }
 
@@ -690,11 +697,12 @@ export class CollectPage {
     yellowCardButton(event: any) {
         console.debug('[CollectPage] - yellowCardButton', event);
         if (this.fsmContext.selectedPlayer && this.playerMap[this.fsmContext.selectedPlayer].sanction !== StatType.YELLOW_CARD) {
-            this.handFSM.trigger(FSMEvents.sanction);
-            this.playerMap[this.fsmContext.selectedPlayer].sanction = StatType.YELLOW_CARD;
-            this.statCollector.card(this.fsmContext, StatType.YELLOW_CARD, this.fsmContext.selectedPlayer);
-            this.gameState.sanctions.push({ playerId: this.fsmContext.selectedPlayer, sanction: StatType.YELLOW_CARD });
-            this.saveState();
+            if (this.handFSM.trigger(FSMEvents.sanction)) {
+                this.playerMap[this.fsmContext.selectedPlayer].sanction = StatType.YELLOW_CARD;
+                this.statCollector.card(this.fsmContext, StatType.YELLOW_CARD, this.fsmContext.selectedPlayer);
+                this.gameState.sanctions.push({ playerId: this.fsmContext.selectedPlayer, sanction: StatType.YELLOW_CARD });
+                this.saveState();
+            }
         }
     }
     /**
@@ -703,18 +711,18 @@ export class CollectPage {
     redCardButton(event: any) {
         console.debug('[CollectPage] - redCardButton', event);
         if (this.fsmContext.selectedPlayer && this.playerMap[this.fsmContext.selectedPlayer].sanction !== StatType.RED_CARD) {
-            this.handFSM.trigger(FSMEvents.sanction);
-            this.playerMap[this.fsmContext.selectedPlayer].sanction = StatType.RED_CARD;
-            this.statCollector.card(this.fsmContext, StatType.RED_CARD, this.fsmContext.selectedPlayer);
-            this.gameState.sanctions.push({ playerId: this.fsmContext.selectedPlayer, sanction: StatType.RED_CARD });
-            this.playerMap[this.fsmContext.selectedPlayer].holder = false;
-
-            let lastIn = this.fsmContext.lastInMap[this.fsmContext.selectedPlayer] || 0;
-            let totalPlayTime = this.fsmContext.playTimeMap[this.fsmContext.selectedPlayer] || 0;
-            this.fsmContext.playTimeMap[this.fsmContext.selectedPlayer] = totalPlayTime + this.fsmContext.chrono - lastIn;
-            this.statCollector.totalPlayTime(this.fsmContext, this.fsmContext.selectedPlayer);
-            this.saveState();
-            this.startRedCardTimer(this.playerMap[this.fsmContext.selectedPlayer].position);
+            if (this.handFSM.trigger(FSMEvents.sanction)) {
+                this.playerMap[this.fsmContext.selectedPlayer].sanction = StatType.RED_CARD;
+                this.statCollector.card(this.fsmContext, StatType.RED_CARD, this.fsmContext.selectedPlayer);
+                this.gameState.sanctions.push({ playerId: this.fsmContext.selectedPlayer, sanction: StatType.RED_CARD });
+                this.playerMap[this.fsmContext.selectedPlayer].holder = false;
+                let lastIn = this.fsmContext.lastInMap[this.fsmContext.selectedPlayer] || 0;
+                let totalPlayTime = this.fsmContext.playTimeMap[this.fsmContext.selectedPlayer] || 0;
+                this.fsmContext.playTimeMap[this.fsmContext.selectedPlayer] = totalPlayTime + this.fsmContext.chrono - lastIn;
+                this.statCollector.totalPlayTime(this.fsmContext, this.fsmContext.selectedPlayer);
+                this.saveState();
+                this.startRedCardTimer(this.playerMap[this.fsmContext.selectedPlayer].position);
+            }
         }
     }
     /**
@@ -747,11 +755,12 @@ export class CollectPage {
             // uncheck
             return;
         }
-        this.handFSM.trigger(FSMEvents.timeout);
-        this.messageBus.broadcast(ChronoComponent.PAUSE, {});
-        this.statCollector.deadTime(this.fsmContext, StatType.TIMEOUT_THEM, this.getTeamVisitor());
-        this.gameState.visitorTimeout++;
-        this.saveSats();
+        if (this.handFSM.trigger(FSMEvents.timeout)) {
+            this.messageBus.broadcast(ChronoComponent.PAUSE, {});
+            this.statCollector.deadTime(this.fsmContext, StatType.TIMEOUT_THEM, this.getTeamVisitor());
+            this.gameState.visitorTimeout++;
+            this.saveSats();
+        }
     }
     /**
      * @param  {any} event
@@ -763,11 +772,12 @@ export class CollectPage {
             // uncheck
             return;
         }
-        this.handFSM.trigger(FSMEvents.timeout);
-        this.messageBus.broadcast(ChronoComponent.PAUSE, {});
-        this.statCollector.deadTime(this.fsmContext, StatType.TIMEOUT_US, this.getTeamHomeId());
-        this.gameState.homeTimeout++;
-        this.saveSats();
+        if (this.handFSM.trigger(FSMEvents.timeout)) {
+            this.messageBus.broadcast(ChronoComponent.PAUSE, {});
+            this.statCollector.deadTime(this.fsmContext, StatType.TIMEOUT_US, this.getTeamHomeId());
+            this.gameState.homeTimeout++;
+            this.saveSats();
+        }
     }
     /**
      * @param  {any} event
@@ -806,8 +816,8 @@ export class CollectPage {
                     text: this.translations.collect.indicators[a.code],
                     handler: () => {
                         this.statCollector.makeAction(this.fsmContext, a.code, this.fsmContext.selectedPlayer);
-                        if (!this.fsmContext.gamePhase.attack && ! 'neutralization' === a.code) {
-                            this.handFSM.trigger(FSMEvents.doAttack);
+                        if (!this.fsmContext.gamePhase.attack && ! 'neutralization' === a.code && this.handFSM.trigger(FSMEvents.doAttack)) {
+                            console.debug('[CollectPage] - positiveActionButton - action ', a.code);
                         }
                     }
                 });
@@ -840,7 +850,9 @@ export class CollectPage {
                     handler: () => {
                         this.statCollector.makeAction(this.fsmContext, a.code, this.fsmContext.selectedPlayer);
                         this.fsmContext.selectedPlayer = undefined;
-                        this.handFSM.trigger(FSMEvents.doDefense);
+                        if (this.handFSM.trigger(FSMEvents.doDefense)) {
+                            console.debug('[CollectPage] - negativeActionButton - action', a.code);
+                        }
                     }
                 });
             });

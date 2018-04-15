@@ -17,7 +17,7 @@
  *  from Qaobee.
  */
 import {BrowserModule} from '@angular/platform-browser';
-import {ErrorHandler, LOCALE_ID, NgModule} from '@angular/core';
+import {ErrorHandler, LOCALE_ID, NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {IonicStorageModule} from '@ionic/storage';
@@ -67,6 +67,10 @@ export function createTranslateLoader(http: HttpClient) {
         })
     ],
     bootstrap: [IonicApp],
+    schemas: [
+      CUSTOM_ELEMENTS_SCHEMA,
+      NO_ERRORS_SCHEMA
+    ],
     entryComponents: [
         MyApp
     ],

@@ -10,11 +10,12 @@ import {TeamBuildPage} from "./team-build/team-build";
 import {PipesModule} from "../../pipes/pipes.module";
 import {CollectPage} from "./collect/collect";
 import {HandFSM} from "../../providers/collect/hand.fsm";
-
+import { GoalModal } from './goal-modal/goal-modal';
 @NgModule({
     declarations: [
         TeamBuildPage,
-        CollectPage
+        CollectPage,
+        GoalModal
     ],
     imports: [
         HttpClientModule,
@@ -36,7 +37,8 @@ import {HandFSM} from "../../providers/collect/hand.fsm";
     ],
     entryComponents: [
         TeamBuildPage,
-        CollectPage
+        CollectPage,
+        GoalModal
     ]
 })
 
