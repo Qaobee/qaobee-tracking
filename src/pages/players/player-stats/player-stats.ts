@@ -37,12 +37,9 @@ export class PlayerStatsPage {
 
   @ViewChild('barCanvas') barCanvas;
   @ViewChild('doughnutCanvas') doughnutCanvas;
-  //@ViewChild('lineCanvas') lineCanvas;
  
   barChart: any;
   doughnutChart: any;
-  //lineChart: any;
-  
 
   /**
    * 
@@ -92,112 +89,73 @@ export class PlayerStatsPage {
 
   ionViewDidEnter() {
     this.barChart = new Chart(this.barCanvas.nativeElement, {
-
-        type: 'bar',
-        data: {
-            labels: ["0-15", "16-30", "31-45", "46-60"],
-            datasets: [{
-              label: "Actions positives",
-              data: [12, 19, 30, 5],
-              backgroundColor: [
-                'rgba(234,83,80,1)',
-                'rgba(234,83,80,1)',
-                'rgba(234,83,80,1)',
-                'rgba(234,83,80,1)'
-              ],
-              borderColor: [
-                'rgba(234,83,80,1)',
-                'rgba(234,83,80,1)',
-                'rgba(234,83,80,1)',
-                'rgba(234,83,80,1)'
-              ],
-              borderWidth: 1
-            },
-            {
-              label: "Actions negatives",
-              data: [6, 25, 20, 15],
-              backgroundColor: [
-                'rgba(236, 239, 241,1)',
-                'rgba(236, 239, 241,1)',
-                'rgba(236, 239, 241,1)',
-                'rgba(236, 239, 241,1)'
-              ],
-              borderColor: [
-                'rgba(236, 239, 241,1)',
-                'rgba(236, 239, 241,1)',
-                'rgba(236, 239, 241,1)',
-                'rgba(236, 239, 241,1)'
-              ],
-              borderWidth: 1
-            }]
+      type: 'bar',
+      data: {
+        labels: ["15'", "30'", "45'", "60'"],
+        datasets: [{
+          label: "Actions positives",
+          data: [12, 19, 30, 5],
+          backgroundColor: [
+            'rgba(139,195,74,1)',
+            'rgba(139,195,74,1)',
+            'rgba(139,195,74,1)',
+            'rgba(139,195,74,1)'
+          ],
+          borderColor: [
+            'rgba(139,195,74,1)',
+            'rgba(139,195,74,1)',
+            'rgba(139,195,74,1)',
+            'rgba(139,195,74,1)'
+          ],
+          borderWidth: 1
         },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:false
-                    }
-                }]
-            }
-        }
-
+        {
+          label: "Actions negatives",
+          data: [6, 25, 20, 15],
+          backgroundColor: [
+            'rgba(234,83,80,1)',
+            'rgba(234,83,80,1)',
+            'rgba(234,83,80,1)',
+            'rgba(234,83,80,1)'
+          ],
+          borderColor: [
+            'rgba(234,83,80,1)',
+            'rgba(234,83,80,1)',
+            'rgba(234,83,80,1)',
+            'rgba(234,83,80,1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:false
+                  }
+              }]
+          }
+      }
     });
 
     this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
- 
       type: 'doughnut',
       data: {
-          labels: ["Buts marqués", "Tirs ratés"],
-          datasets: [{
-              label: 'nb de buts',
-              data: [this.stats[0].value, (this.stats[1].value-this.stats[0].value)],
-              backgroundColor: [
-                'rgba(234,83,80,1)',
-                'rgba(236, 239, 241, 1)'
-              ],
-              borderWidth: 2,
-              hoverBackgroundColor: [
-                'rgba(234,83,80,1)',
-                'rgba(236, 239, 241, 1)'
-              ]
-          }]
-      }
-
-  });
-
-  /*
-  this.lineChart = new Chart(this.lineCanvas.nativeElement, {
-
-      type: 'line',
-      data: {
-          labels: ["January", "February", "March", "April", "May", "June", "July"],
-          datasets: [
-              {
-                  label: "My First dataset",
-                  fill: false,
-                  lineTension: 0.1,
-                  backgroundColor: "rgba(75,192,192,0.4)",
-                  borderColor: "rgba(75,192,192,1)",
-                  borderCapStyle: 'butt',
-                  borderDash: [],
-                  borderDashOffset: 0.0,
-                  borderJoinStyle: 'miter',
-                  pointBorderColor: "rgba(75,192,192,1)",
-                  pointBackgroundColor: "#fff",
-                  pointBorderWidth: 1,
-                  pointHoverRadius: 5,
-                  pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                  pointHoverBorderColor: "rgba(220,220,220,1)",
-                  pointHoverBorderWidth: 2,
-                  pointRadius: 1,
-                  pointHitRadius: 10,
-                  data: [65, 59, 80, 81, 56, 55, 40],
-                  spanGaps: false,
-              }
+        labels: ["Buts marqués", "Tirs ratés"],
+        datasets: [{
+          label: 'nb de buts',
+          data: [this.stats[0].value, (this.stats[1].value-this.stats[0].value)],
+          backgroundColor: [
+            'rgba(234,83,80,1)',
+            'rgba(236, 239, 241, 1)'
+          ],
+          borderWidth: 2,
+          hoverBackgroundColor: [
+            'rgba(234,83,80,1)',
+            'rgba(236, 239, 241, 1)'
           ]
+        }]
       }
-      
-  });
-  */
+    });
   }
 }

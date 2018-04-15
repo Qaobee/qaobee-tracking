@@ -25,14 +25,81 @@
         <ion-badge color="secondary">{{player.status.squadnumber}}</ion-badge>
       </ion-col>
     </ion-row>
-  </ion-item>
+	</ion-item>
+	
+	<!-- player's use -->
+	<ion-item>
+		<ion-row text-center>
+			<ion-col text-left>
+				<h1>Utilisation du joueur</h1>
+			</ion-col>
+			<ion-col text-right>  
+				<h1>
+					<ion-icon  name="more"></ion-icon>
+				</h1>
+      </ion-col>
+		</ion-row>
+
+		<ion-row text-center class="enteteDark">
+			<ion-col class="borderTable">
+				<h3>Equipe</h3>
+			</ion-col>
+			<ion-col class="borderTable">
+				<h3>Nb match</h3>
+			</ion-col>
+			<ion-col class="borderTable">
+				<h3>Titulaire</h3>
+			</ion-col>
+			<ion-col class="borderTable">
+				<h3>Tps jeu Moy.</h3>
+			</ion-col>
+		</ion-row>
+
+		<ion-item>
+		<ion-row>
+			<ion-col>
+				<h3>Equipe 1</h3>
+			</ion-col>
+			<ion-col text-center>
+				<h2>10</h2>
+			</ion-col>
+			<ion-col text-center>
+				<h2>7</h2>
+			</ion-col>
+			<ion-col text-center>
+				<h2>45'</h2>
+			</ion-col>
+		</ion-row>
+		</ion-item>
+		<ion-item>
+		<ion-row>
+			<ion-col>
+				<h3>Equipe 2</h3>
+			</ion-col>
+			<ion-col text-center>
+				<h2>5</h2>
+			</ion-col>
+			<ion-col text-center>
+				<h2>5</h2>
+			</ion-col>
+			<ion-col text-center>
+				<h2>55'</h2>
+			</ion-col>
+		</ion-row>
+		</ion-item>
+	</ion-item>
 
 	<!-- Shoot's efficiency -->
+	<ion-list no-lines>
 	<ion-item>
     <ion-row text-center>
-      <ion-col>  
-				<h1>Efficacité au tir</h1>
-				<h2 class="essentialInfos">75 %</h2>
+      <ion-col text-left>  
+				<h1>Efficacité au tir : 50 %</h1>
+			</ion-col>
+			<ion-col text-right>  
+				<h1>
+					<ion-icon  name="more"></ion-icon>
+				</h1>
       </ion-col>
 		</ion-row>
 		<ion-row text-center>
@@ -57,13 +124,18 @@
 			</ion-col>
 		</ion-row>
 	</ion-item>
-
-	<!-- player's efficiency -->
+	
+  <!-- player's efficiency -->
 	<ion-item>
 		<ion-row text-center>
-			<ion-col>
+			<ion-col text-left>
 				<h1>Temps fort du joueur</h1>
 			</ion-col>
+			<ion-col text-right>  
+				<h1>
+					<ion-icon  name="more"></ion-icon>
+				</h1>
+      </ion-col>
 		</ion-row>
 		<ion-row text-center>
 			<ion-col>
@@ -71,67 +143,5 @@
 			</ion-col>
 		</ion-row>
 	</ion-item>
-
-	<!-- player's use -->
-	<ion-item>
-		<ion-row text-center>
-			<ion-col>
-				<h1>Utilisation du joueur</h1>
-			</ion-col>
-		</ion-row>
-		<ion-row text-center class="enteteLight">
-			<ion-col>
-				<h3>Equipe</h3>
-			</ion-col>
-			<ion-col>
-				<h3>nb de match</h3>
-			</ion-col>
-			<ion-col>
-				<h3>Titulaire</h3>
-			</ion-col>
-			<ion-col>
-				<h3>Tps de jeu Moy.</h3>
-			</ion-col>
-		</ion-row>
-		<ion-row>
-			<ion-col>
-				<h3>Equipe 1</h3>
-			</ion-col>
-			<ion-col text-center>
-				<h2>10</h2>
-			</ion-col>
-			<ion-col text-center>
-				<h2>7</h2>
-			</ion-col>
-			<ion-col text-center>
-				<h2>45'</h2>
-			</ion-col>
-		</ion-row>
-		<ion-row>
-			<ion-col>
-				<h3>Equipe 2</h3>
-			</ion-col>
-			<ion-col text-center>
-				<h2>5</h2>
-			</ion-col>
-			<ion-col text-center>
-				<h2>5</h2>
-			</ion-col>
-			<ion-col text-center>
-				<h2>55'</h2>
-			</ion-col>
-		</ion-row>
-	</ion-item>
-			
-		
-    <!--
-    <ion-card>
-      <ion-card-header>
-        Line Chart
-      </ion-card-header>
-      <ion-card-content>
-        <canvas #lineCanvas></canvas>
-      </ion-card-content>
-    </ion-card>
-    -->
+</ion-list>
 </ion-content>

@@ -4,6 +4,10 @@ page-player-stats {
     border: 1px dotted color($colors,danger,base);
   }
 
+  .borderTable {
+    border: 1px dotted white;
+  }
+
   .chart-container {
     position: relative;
     width: 50vw;
