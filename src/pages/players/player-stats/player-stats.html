@@ -27,32 +27,104 @@
     </ion-row>
   </ion-item>
 
-  <ion-item text-center>
-    <h1>Stats à venir...</h1>
-  </ion-item>
+	<!-- Shoot's efficiency -->
+	<ion-item>
+    <ion-row text-center>
+      <ion-col>  
+				<h1>Efficacité au tir</h1>
+				<h2 class="essentialInfos">75 %</h2>
+      </ion-col>
+		</ion-row>
+		<ion-row text-center>
+			<ion-col>
+					<canvas #doughnutCanvas class="panel"></canvas>
+			</ion-col>
+		</ion-row>
+    <ion-row text-center>
+			<ion-col>
+				<h3>Buts / match</h3>
+			</ion-col>
+			<ion-col>
+				<h3>Tirs / match</h3>
+			</ion-col>
+		</ion-row>
+		<ion-row text-center>
+			<ion-col>
+				<h2>5,50</h2>
+			</ion-col>
+			<ion-col>
+				<h2>7,55</h2>
+			</ion-col>
+		</ion-row>
+	</ion-item>
 
-  <ion-item *ngFor="let item of stats">
-    <h2>{{item.code}} : {{item.value}} </h2>
-  </ion-item>  
+	<!-- player's efficiency -->
+	<ion-item>
+		<ion-row text-center>
+			<ion-col>
+				<h1>Temps fort du joueur</h1>
+			</ion-col>
+		</ion-row>
+		<ion-row text-center>
+			<ion-col>
+				<canvas #barCanvas></canvas>
+			</ion-col>
+		</ion-row>
+	</ion-item>
 
-    <ion-card>
-      <ion-card-header>
-        Bar Chart
-      </ion-card-header>
-      <ion-card-content>
-        <canvas #barCanvas></canvas>
-      </ion-card-content>
-    </ion-card>
-
-    <ion-card>
-      <ion-card-header>
-        Doughnut Chart
-      </ion-card-header>
-      <ion-card-content>
-        <canvas #doughnutCanvas></canvas>
-      </ion-card-content>
-    </ion-card>
-
+	<!-- player's use -->
+	<ion-item>
+		<ion-row text-center>
+			<ion-col>
+				<h1>Utilisation du joueur</h1>
+			</ion-col>
+		</ion-row>
+		<ion-row text-center class="enteteLight">
+			<ion-col>
+				<h3>Equipe</h3>
+			</ion-col>
+			<ion-col>
+				<h3>nb de match</h3>
+			</ion-col>
+			<ion-col>
+				<h3>Titulaire</h3>
+			</ion-col>
+			<ion-col>
+				<h3>Tps de jeu Moy.</h3>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<h3>Equipe 1</h3>
+			</ion-col>
+			<ion-col text-center>
+				<h2>10</h2>
+			</ion-col>
+			<ion-col text-center>
+				<h2>7</h2>
+			</ion-col>
+			<ion-col text-center>
+				<h2>45'</h2>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<h3>Equipe 2</h3>
+			</ion-col>
+			<ion-col text-center>
+				<h2>5</h2>
+			</ion-col>
+			<ion-col text-center>
+				<h2>5</h2>
+			</ion-col>
+			<ion-col text-center>
+				<h2>55'</h2>
+			</ion-col>
+		</ion-row>
+	</ion-item>
+			
+		
+    <!--
     <ion-card>
       <ion-card-header>
         Line Chart
@@ -61,5 +133,5 @@
         <canvas #lineCanvas></canvas>
       </ion-card-content>
     </ion-card>
-
+    -->
 </ion-content>
