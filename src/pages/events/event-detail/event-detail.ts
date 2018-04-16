@@ -16,19 +16,11 @@
  *  is strictly forbidden unless prior written permission is obtained
  *  from Qaobee.
  */
-import {Component} from '@angular/core';
-import {NavController, NavParams} from 'ionic-angular';
-import {EventUpsertPage} from "../event-upsert/event-upsert";
-import {TeamBuildPage} from "../../collect/team-build/team-build";
-import {
-    GoogleMaps,
-    GoogleMap,
-    GoogleMapsEvent,
-    GoogleMapOptions,
-    CameraPosition,
-    MarkerOptions,
-    Marker
-   } from '@ionic-native/google-maps';
+import { Component } from '@angular/core';
+import { NavController, NavParams } from 'ionic-angular';
+import { EventUpsertPage } from "../event-upsert/event-upsert";
+import { TeamBuildPage } from "../../collect/team-build/team-build";
+import { GoogleMap, GoogleMapOptions, GoogleMaps, GoogleMapsEvent } from '@ionic-native/google-maps';
 
 /**
  * Generated class for the EventListPage page.
@@ -37,103 +29,103 @@ import {
  * Ionic pages and navigation.
  */
 @Component({
-    selector: 'page-event-detail',
-    templateUrl: 'event-detail.html',
+  selector: 'page-event-detail',
+  templateUrl: 'event-detail.html',
 })
 export class EventDetailPage {
-    event: any;
-    map: GoogleMap;
+  event: any;
+  map: GoogleMap;
 
-    /**
-     *
-     * @param navCtrl
-     * @param navParams
-     */
-    constructor(public navCtrl: NavController,
-                public navParams: NavParams) {
-        this.event = navParams.get('event');
-    }
+  /**
+   *
+   * @param navCtrl
+   * @param navParams
+   */
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams) {
+    this.event = navParams.get('event');
+  }
 
-    /**
-     *
-     */
-    ionViewDidLoad() {
-        this.loadMap();
-    }
+  /**
+   *
+   */
+  ionViewDidLoad() {
+    this.loadMap();
+  }
 
-    loadMap() {
+  loadMap() {
 
     let mapOptions: GoogleMapOptions = {
-        camera: {
+      camera: {
         target: {
-            lat: 43.0741904,
-            lng: -89.3809802
+          lat: 43.0741904,
+          lng: -89.3809802
         },
         zoom: 18,
         tilt: 30
-        }
+      }
     };
 
     this.map = GoogleMaps.create('map_canvas', mapOptions);
 
     // Wait the MAP_READY before using any methods.
     this.map.one(GoogleMapsEvent.MAP_READY)
-        .then(() => {
+      .then(() => {
         console.log('Map is ready!');
 
         // Now you can use all methods safely.
         this.map.addMarker({
-            title: 'Ionic',
-            icon: 'blue',
-            animation: 'DROP',
-            position: {
-                lat: 43.0741904,
-                lng: -89.3809802
-            }
-            })
-            .then(marker => {
+          title: 'Ionic',
+          icon: 'blue',
+          animation: 'DROP',
+          position: {
+            lat: 43.0741904,
+            lng: -89.3809802
+          }
+        })
+          .then(marker => {
             marker.on(GoogleMapsEvent.MARKER_CLICK)
-                .subscribe(() => {
+              .subscribe(() => {
                 alert('clicked');
-                });
-            });
+              });
+          });
 
-        });
-    }
+      });
+  }
 
-    /**
-     *
-     * @param event
-     * @param clickEvent
-     */
-    goToviewEventStat(event: any, clickEvent: any) {
-        clickEvent.stopPropagation();
-        console.log('goToviewEventStat');
-    }
+  /**
+   *
+   * @param event
+   * @param clickEvent
+   */
+  goToviewEventStat(event: any, clickEvent: any) {
+    clickEvent.stopPropagation();
+    console.log('goToviewEventStat');
+  }
 
-    /**
-     *
-     * @param event
-     * @param clickEvent
-     */
-    goToStartCollect(event: any, clickEvent: any) {
-        clickEvent.stopPropagation();
-        this.navCtrl.push(TeamBuildPage, {event: this.event});
-    }
+  /**
+   *
+   * @param event
+   * @param clickEvent
+   */
+  goToStartCollect(event: any, clickEvent: any) {
+    clickEvent.stopPropagation();
+    this.navCtrl.push(TeamBuildPage, {event: this.event});
+  }
 
-    /**
-     *
-     */
-    goToEdit() {
-        console.log('[EventDetailPage] - goToEdit');
-        this.navCtrl.push(EventUpsertPage, {event : this.event, editMode: 'UPDATE'});
-    }
+  /**
+   *
+   */
+  goToEdit() {
+    console.log('[EventDetailPage] - goToEdit');
+    this.navCtrl.push(EventUpsertPage, {event: this.event, editMode: 'UPDATE'});
+  }
 
-    /**
-     *
-     */
-    delete() {
-        console.log('[EventDetailPage] - delete');
-        // TODO
-    }
+  /**
+   *
+   */
+  delete() {
+    console.log('[EventDetailPage] - delete');
+    // TODO
+  }
 }

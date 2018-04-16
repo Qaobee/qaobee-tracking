@@ -16,54 +16,54 @@
  *  is strictly forbidden unless prior written permission is obtained
  *  from Qaobee.
  */
-import {Injectable} from "@angular/core";
-import {Subject, Observable} from "rxjs";
+import { Injectable } from "@angular/core";
+import { Subject, Observable } from "rxjs";
 
 @Injectable()
 export class MessageBus {
-    public static navigation:string = 'navigation';
-    public static userLogged: string = 'user-logged';
-    private listeners = {};
-    private eventsSubject = new Subject();
-    private events;
+  public static navigation: string = 'navigation';
+  public static userLogged: string = 'user-logged';
+  private readonly listeners = {};
+  private readonly eventsSubject = new Subject();
+  private events;
 
-    /**
-     *
-     */
-    constructor() {
-        this.listeners = {};
-        this.eventsSubject = new Subject();
+  /**
+   *
+   */
+  constructor() {
+    this.listeners = {};
+    this.eventsSubject = new Subject();
 
-        this.events = Observable.from(this.eventsSubject);
+    this.events = Observable.from(this.eventsSubject);
 
-        this.events.subscribe(
-            ({name, args}) => {
-                if (this.listeners[name]) {
-                    for (let listener of this.listeners[name]) {
-                        listener(...args);
-                    }
-                }
-            });
-    }
-
-    /**
-     *
-     * @param name
-     * @param listener
-     */
-    on(name, listener) {
-        if (!this.listeners[name]) {
-            this.listeners[name] = [];
+    this.events.subscribe(
+      ({name, args}) => {
+        if (this.listeners[name]) {
+          for (let listener of this.listeners[name]) {
+            listener(...args);
+          }
         }
-        this.listeners[name].push(listener);
-    }
+      });
+  }
 
-    /**
-     *
-     * @param name
-     * @param args
-     */
-    broadcast(name, ...args) {
-        this.eventsSubject.next({name, args});
+  /**
+   *
+   * @param name
+   * @param listener
+   */
+  on(name, listener) {
+    if (!this.listeners[name]) {
+      this.listeners[name] = [];
     }
+    this.listeners[name].push(listener);
+  }
+
+  /**
+   *
+   * @param name
+   * @param args
+   */
+  broadcast(name, ...args) {
+    this.eventsSubject.next({name, args});
+  }
 }

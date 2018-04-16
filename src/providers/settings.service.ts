@@ -1,5 +1,3 @@
-import { ActivityCfgService } from './api/api.activityCfg.service';
-import { Storage } from '@ionic/storage';
 /*
  *  __________________
  *  Qaobee
@@ -18,68 +16,73 @@ import { Storage } from '@ionic/storage';
  *  is strictly forbidden unless prior written permission is obtained
  *  from Qaobee.
  */
-import {Injectable} from "@angular/core";
-import {TranslateService} from "@ngx-translate/core";
+import { Injectable } from "@angular/core";
+import { TranslateService } from "@ngx-translate/core";
 import localeFr from '@angular/common/locales/fr';
 import localeEn from '@angular/common/locales/en';
-import {registerLocaleData} from "@angular/common";
+import { registerLocaleData } from "@angular/common";
+import { ActivityCfgService } from './api/api.activityCfg.service';
+import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class SettingsService {
-    private locale: string;
-    activityCfg: any ={};
-    /**
-     *
-     * @param {TranslateService} translate
-     * @param {Storage} storage
-     * @param {ActivityCfgService} activityCfgService
-     */
-    constructor(private translate: TranslateService, private storage: Storage, private activityCfgService:ActivityCfgService) {
-        this.locale = this.translate.getBrowserLang();
-        registerLocaleData(localeFr, 'fr');
-        registerLocaleData(localeEn, 'en');
-        registerLocaleData(localeEn, 'us');
-        this.storage.get('activityCfg').then(activityCfg =>{
-            console.debug('[SettingsService] - from storage', activityCfg);
-            if(!activityCfg) {
-                this.activityCfgService.get('ACT-HAND').subscribe(activityCfgFromAPI => {
-                    console.debug('[SettingsService] - from API', activityCfgFromAPI);
-                    this.storage.set('activityCfg', activityCfgFromAPI);
-                    this.init(activityCfgFromAPI);
-                });
-            } else {
-                this.init(activityCfg);
-            }
+  private readonly locale: string;
+  activityCfg: any = {};
+
+  /**
+   *
+   * @param {TranslateService} translate
+   * @param {Storage} storage
+   * @param {ActivityCfgService} activityCfgService
+   */
+  constructor(private translate: TranslateService, private storage: Storage, private activityCfgService: ActivityCfgService) {
+    this.locale = this.translate.getBrowserLang();
+    registerLocaleData(localeFr, 'fr');
+    registerLocaleData(localeEn, 'en');
+    registerLocaleData(localeEn, 'us');
+    this.storage.get('activityCfg').then(activityCfg => {
+      console.debug('[SettingsService] - from storage', activityCfg);
+      if (!activityCfg) {
+        this.activityCfgService.get('ACT-HAND').subscribe(activityCfgFromAPI => {
+          console.debug('[SettingsService] - from API', activityCfgFromAPI);
+          this.storage.set('activityCfg', activityCfgFromAPI);
+          this.init(activityCfgFromAPI);
         });
-    }
-    init(activityCfg: any) {
-        this.activityCfg = activityCfg;
-    }
+      } else {
+        this.init(activityCfg);
+      }
+    });
+  }
 
-    save() {
+  init(activityCfg: any) {
+    this.activityCfg = activityCfg;
+  }
 
-    }
-    /**
-     * Get current locale
-     *
-     * @returns {string}
-     */
-    getLanguage() {
-        return this.locale;
-    }
+  save() {
 
-    getCollectInfos():any {       
-        return {
-            initialized: true,
-            periodDuration: this.activityCfg.periodDuration,
-            nbMaxPlayers: this.activityCfg.nbMaxPlayers,
-            nbMinPlayers: this.activityCfg.nbMinPlayers,
-            nbPeriod: this.activityCfg.nbPeriod,
-            nbTimeout: this.activityCfg.nbTimeout,
-            timeoutDuration: this.activityCfg.timeoutDuration,
-            yellowCardMax: this.activityCfg.yellowCardMax,
-            exclusionTempo: this.activityCfg.exclusionTempo,
-            halfTimeDuration: this.activityCfg.halfTimeDuration,
-        }
+  }
+
+  /**
+   * Get current locale
+   *
+   * @returns {string}
+   */
+  getLanguage() {
+    return this.locale;
+  }
+
+  getCollectInfos(): any {
+    return {
+      initialized: true,
+      periodDuration: this.activityCfg.periodDuration,
+      nbMaxPlayers: this.activityCfg.nbMaxPlayers,
+      nbMinPlayers: this.activityCfg.nbMinPlayers,
+      nbPeriod: this.activityCfg.nbPeriod,
+      nbTimeout: this.activityCfg.nbTimeout,
+      timeoutDuration: this.activityCfg.timeoutDuration,
+      yellowCardMax: this.activityCfg.yellowCardMax,
+      exclusionTempo: this.activityCfg.exclusionTempo,
+      halfTimeDuration: this.activityCfg.halfTimeDuration,
     }
+  }
 }

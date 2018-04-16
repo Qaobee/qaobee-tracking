@@ -17,8 +17,7 @@
  *  from Qaobee.
  */
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { TranslateService } from '@ngx-translate/core';
+import { NavController, NavParams } from 'ionic-angular';
 
 @Component({
   selector: 'page-event-stats',
@@ -26,19 +25,23 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class EventStatsPage {
 
-  event:any;
+  event: any;
 
-  constructor(public navCtrl: NavController, 
-    public navParams: NavParams,
-    private translateService: TranslateService) {
-      this.event = navParams.get('event');
+  /**
+   *
+   * @param {NavController} navCtrl
+   * @param {NavParams} navParams
+   */
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams) {
+    this.event = navParams.get('event');
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EventStatsPage');
   }
 
-  deleteCollect(){
+  deleteCollect() {
     console.log('deleteCollect EventStatsPage');
   }
 

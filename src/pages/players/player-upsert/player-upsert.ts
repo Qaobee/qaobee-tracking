@@ -18,16 +18,16 @@
  */
 
 import { Component } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Storage } from '@ionic/storage';
 
-import { ActivityCfgService } from './../../../providers/api/api.activityCfg.service';
+import { ActivityCfgService } from '../../../providers/api/api.activityCfg.service';
 import { AuthenticationService } from "../../../providers/authentication.service";
-import { EffectiveService } from './../../../providers/api/api.effective.service';
+import { EffectiveService } from '../../../providers/api/api.effective.service';
 import { LocationService } from "../../../providers/location.service";
-import { PersonService } from './../../../providers/api/api.person.service';
+import { PersonService } from '../../../providers/api/api.person.service';
 
 import moment from 'moment';
 
@@ -48,11 +48,20 @@ export class PlayerUpsertPage {
   birthdatePlayer: string = '';
 
   /**
-   * 
-   * @param navCtrl 
-   * @param navParams 
+   *
+   * @param {NavController} navCtrl
+   * @param {NavParams} navParams
+   * @param {ToastController} toastCtrl
+   * @param {FormBuilder} formBuilder
+   * @param {ActivityCfgService} activityCfgService
+   * @param {AuthenticationService} authenticationService
+   * @param {PersonService} personService
+   * @param {LocationService} locationService
+   * @param {EffectiveService} effectiveService
+   * @param {Storage} storage
+   * @param {TranslateService} translateService
    */
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private toastCtrl: ToastController,
               private formBuilder: FormBuilder,
@@ -62,25 +71,24 @@ export class PlayerUpsertPage {
               private locationService: LocationService,
               private effectiveService: EffectiveService,
               private storage: Storage,
-              private translateService: TranslateService)
-  {
+              private translateService: TranslateService) {
     this.editMode = navParams.get('editMode');
-    if(this.editMode && this.editMode==='CREATE') {
+    if (this.editMode && this.editMode === 'CREATE') {
       this.player = {
-        status:{},
-        contact:{},
+        status: {},
+        contact: {},
       };
 
       this.birthdatePlayer = '';
 
     } else {
-      this.player = navParams.get('player')
+      this.player = navParams.get('player');
       if (this.player.birthdate) {
         this.birthdatePlayer = moment(this.player.birthdate).format("YYYY-MM-DD");
       }
 
       if (this.player.address && this.player.address.formatedAddress) {
-          this.address = this.player.address.formatedAddress;
+        this.address = this.player.address.formatedAddress;
       }
     }
 
@@ -96,26 +104,26 @@ export class PlayerUpsertPage {
       'nationality': [this.player.nationality || ''],
       'mobile': [this.player.contact.cellphone || ''],
       'email': [this.player.contact.email || ''],
-      'address': [this.address ||'']
+      'address': [this.address || '']
     });
 
     this.activityCfgService.getParamFieldList(authenticationService.meta.activity._id, 'listPositionType').subscribe((listPositionType: any[]) => {
       if (listPositionType) {
-          this.listPositionType = listPositionType;
+        this.listPositionType = listPositionType;
       }
     });
 
     this.activityCfgService.getParamFieldList(authenticationService.meta.activity._id, 'listLaterality').subscribe((listLaterality: any[]) => {
       if (listLaterality) {
-          this.listLaterality = listLaterality;
+        this.listLaterality = listLaterality;
       }
     });
   }
 
   /**
    * Match element in option list from select input
-   * @param e1 
-   * @param e2 
+   * @param e1
+   * @param e2
    */
   compareOptionSelect(e1: any, e2: any): boolean {
     return e1 && e2 ? (e1 === e2.code || e1.code === e2.code) : e1 === e2;
@@ -131,7 +139,7 @@ export class PlayerUpsertPage {
    */
   updateSearchResults() {
     this.locationService.updateSearchResults(this.playerForm.controls['address'].value, result => {
-        this.autocompleteItems = result;
+      this.autocompleteItems = result;
     });
   }
 
@@ -144,9 +152,9 @@ export class PlayerUpsertPage {
     this.playerForm.controls['address'].setValue(item.description);
     this.locationService.selectSearchResult(item, this.address, result => {
       this.player.address = {
-          formatedAddress: item.description,
-          lat: result.geometry.location.lat(),
-          lng: result.geometry.location.lng(),
+        formatedAddress: item.description,
+        lat: result.geometry.location.lat(),
+        lng: result.geometry.location.lng(),
       };
     });
   }
@@ -156,15 +164,15 @@ export class PlayerUpsertPage {
   }
 
 
-  savePlayer (formVal) {
+  savePlayer(formVal) {
 
-    if(this.playerForm.valid) {
+    if (this.playerForm.valid) {
       //civil status
       this.player.name = formVal.name;
       this.player.firstname = formVal.firstname;
       this.player.birthdate = moment(formVal.birthdate).valueOf();
       this.player.nationality = formVal.nationality;
-      
+
       //status player
       this.player.status = {};
       if (formVal.weight) {
@@ -195,29 +203,29 @@ export class PlayerUpsertPage {
 
       this.player.address = {};
       if (formVal.address) {
-          this.player.address.formatedAddress = formVal.address;
+        this.player.address.formatedAddress = formVal.address;
       }
 
       //sandboxId
       this.player.sandboxId = this.authenticationService.meta._id;
 
-      console.log('Player',this.player);
+      console.log('Player', this.player);
 
-      let dataContainer = {person : this.player};
+      let dataContainer = {person: this.player};
       this.personService.addPerson(dataContainer).subscribe(r => {
 
-        if(this.editMode==='CREATE'){
+        if (this.editMode === 'CREATE') {
           this.storage.get('players').then(players => {
             players.push(r);
             this.storage.set('players', players);
 
             this.effectiveService.get(this.authenticationService.meta.effectiveDefault).subscribe(effectiveGet => {
-              console.log('effectiveGet',effectiveGet);
+              console.log('effectiveGet', effectiveGet);
               let effective: any;
               effective = effectiveGet;
               if (effective) {
-                var roleMember = {code: 'player', label: 'Joueur'};
-                var member = {personId: r._id, role: roleMember};
+                let roleMember = {code: 'player', label: 'Joueur'};
+                let member = {personId: r._id, role: roleMember};
 
                 if (effective) {
                   effective.members.push(member);
@@ -228,6 +236,7 @@ export class PlayerUpsertPage {
 
                 /* Update effective members list */
                 this.effectiveService.update(effective).subscribe(effectiveUpdate => {
+                  console.debug('[PlayerUpsertPage] - savePlayer - update', effectiveUpdate);
                   this.navCtrl.pop();
                   this.translateService.get('player.messages.createDone').subscribe(
                     value => {
@@ -251,20 +260,20 @@ export class PlayerUpsertPage {
   }
 
   /**
-     *
-     * @param msg
-     */
-    private presentToast(msg) {
-      let toast = this.toastCtrl.create({
-          message: msg,
-          duration: 3000,
-          position: 'bottom'
-      });
+   *
+   * @param msg
+   */
+  private presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
 
-      toast.onDidDismiss(() => {
-      });
+    toast.onDidDismiss(() => {
+    });
 
-      toast.present();
+    toast.present();
   }
 
 }

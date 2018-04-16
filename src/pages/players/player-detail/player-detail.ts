@@ -17,10 +17,10 @@
  *  from Qaobee.
  */
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
-import { PersonService } from './../../../providers/api/api.person.service';
-import { PlayerUpsertPage } from './../player-upsert/player-upsert';
-import { PlayerStatsPage } from './../player-stats/player-stats';
+import { AlertController, NavController, NavParams } from 'ionic-angular';
+import { PersonService } from '../../../providers/api/api.person.service';
+import { PlayerUpsertPage } from '../player-upsert/player-upsert';
+import { PlayerStatsPage } from '../player-stats/player-stats';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -29,17 +29,17 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class PlayerDetailPage {
 
-  player:any;
+  player: any;
 
   /**
-   * 
-   * @param navCtrl 
-   * @param navParams 
-   * @param personService 
-   * @param alertCtrl 
-   * @param translateService 
+   *
+   * @param navCtrl
+   * @param navParams
+   * @param personService
+   * @param alertCtrl
+   * @param translateService
    */
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private personService: PersonService,
               private alertCtrl: AlertController,
@@ -48,10 +48,10 @@ export class PlayerDetailPage {
   }
 
   editPlayer() {
-    this.navCtrl.push(PlayerUpsertPage, {editMode:'UPDATE', player : this.player});
+    this.navCtrl.push(PlayerUpsertPage, {editMode: 'UPDATE', player: this.player});
   }
 
-  desactivatePlayer(confirmLabels:string, desactived:string) {
+  desactivatePlayer(confirmLabels: string, desactived: string) {
     this.translateService.get(confirmLabels).subscribe(
       value => {
         let alert = this.alertCtrl.create({
@@ -61,13 +61,16 @@ export class PlayerDetailPage {
             {
               text: value.buttonLabelCancel,
               role: 'cancel',
-              handler: () => {}
+              handler: () => {
+              }
             },
             {
               text: value.buttonLabelConfirm,
               handler: () => {
                 this.player.desactivated = desactived;
-                this.personService.updatePerson(this.player).subscribe(person => {});
+                this.personService.updatePerson(this.player).subscribe(person => {
+                  console.debug('[PlayerDetailPage] - desactivatePlayer - updatePerson', person);
+                });
               }
             }
           ]
@@ -78,7 +81,7 @@ export class PlayerDetailPage {
   }
 
   goToStats() {
-    this.navCtrl.push(PlayerStatsPage, {player : this.player});
+    this.navCtrl.push(PlayerStatsPage, {player: this.player});
   }
 
 }
