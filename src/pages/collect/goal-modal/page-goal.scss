@@ -1,5 +1,13 @@
 page-goal-modal {
+    
     #ground-map {
         width: 100%; 
+        z-index: 2;
+        position: relative;
+    }
+
+    #goal-map {
+        z-index: 1;
+        position: relative;
     }
 }
