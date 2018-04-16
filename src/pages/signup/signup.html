@@ -22,7 +22,7 @@
         <ion-input type="text" formControlName="login" id="login" autocomplete="login" clearInput></ion-input>
       </ion-item>
       <ion-item class='form-text error' *ngIf="!isValid('login')">
-        <ion-label no-margin stacked>Login invalid</ion-label>
+        <ion-label no-margin stacked>{{ 'signup.error.login' | translate }}</ion-label>
       </ion-item>
 
     <ion-item>
@@ -30,7 +30,7 @@
       <ion-input type="text" formControlName="email" id="email" autocomplete="email" clearInput></ion-input>
     </ion-item>
     <ion-item class='form-text error' *ngIf="!isValid('email')">
-      <ion-label no-margin stacked>E-mail invalid</ion-label>
+      <ion-label no-margin stacked>{{ 'signup.error.email' | translate }}</ion-label>
     </ion-item>
 
     <ion-item class='form-group'>
@@ -38,24 +38,13 @@
       <ion-input type="password" formControlName="password" id="password" clearInput></ion-input>
       <p *ngIf="userForm.controls.password.touched && !userForm.controls.password.valid" danger padding-left>Invalid label</p>
     </ion-item>
-    <!--
-    <ion-item class='form-group'>
-        <ion-label floating>{{ 'signup.passwordConfirm' | translate }}</ion-label>
-        <ion-input type="password" formControlName="passwordConfirm" id="passwordConfirm" clearInput></ion-input>
-        <p *ngIf="userForm.hasError('mismatchedPasswords')"> TOTO</p>
-      <p  *ngIf="userForm.controls.passwordConfirm.touched && userForm.hasError('mismatchedPasswords') && userForm.controls.password.valid"></p>
-    </ion-item> -->
-
-    <ion-item class='form-text error' *ngIf="userForm.controls.password.touched && !userForm.controls.password.valid">
-      <ion-label no-margin stacked wrap-text>Password must be between 6 and 12 characters with at least one capital letter, one small letter, and one digit.</ion-label>
-    </ion-item>
 
     <ion-item>
       <ion-label floating>{{ 'signup.confirmPassword' | translate }}</ion-label>
       <ion-input type="password" [(ngModel)]="confirmPassword" formControlName="confirmPassword" required show-password></ion-input>
     </ion-item>
     <ion-item class='form-text error' *ngIf="userForm.controls.confirmPassword.touched && userForm.hasError('mismatchedPasswords') && userForm.controls.password.valid">
-      <ion-label no-margin stacked>Passwords do not match</ion-label>
+      <ion-label no-margin stacked>{{ 'signup.error.confirmPassword' | translate }}</ion-label>
     </ion-item>
 
   </form>
