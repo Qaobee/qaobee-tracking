@@ -67,8 +67,13 @@
   },
   "signup": {
     "TitleNavBar": "Subscription",
-    "Username": "Login",
-    "Password": "Password"
+    "Title":  "Subscription",
+    "login": "Login",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Re-enter password",
+    "cancel": "Annuler",
+    "valid": "Valider"
   },
   "menu": {
     "Login": "Signin",
