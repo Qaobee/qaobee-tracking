@@ -640,6 +640,7 @@ export class CollectPage {
         this.fsmContext.gamePhase.startTime = this.fsmContext.chrono;
         this.attackEnabled = false;
         this.defenseEnabled = true;
+        this.fsmContext.selectedPlayer = undefined;
         this.populateActions('attack');
     }
 
@@ -665,6 +666,7 @@ export class CollectPage {
         this.fsmContext.gamePhase.startTime = this.fsmContext.chrono;
         this.attackEnabled = true;
         this.defenseEnabled = false;
+        this.fsmContext.selectedPlayer = undefined;
         this.populateActions('defense');
     }
 
