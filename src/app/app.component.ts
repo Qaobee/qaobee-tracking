@@ -99,7 +99,7 @@ export class MyApp {
                 this.metaService.getMeta().subscribe(m => {
                     if (m) {
                         this.authenticationService.meta = m;
-                        this.nav.setRoot(GoalModal, { user: user });
+                        this.nav.setRoot(HomePage, { user: user });
                     }
                 });
             });
