@@ -43,12 +43,12 @@ export class SignupPage {
     private userService: UserService) {
 
     this.userForm = this.formBuilder.group({
-      'login': ['', [Validators.required]],
-      'email': ['', [Validators.required, Validators.email]],
+      'login': ['', Validators.compose([Validators.required, Validators.pattern("'[a-zA-Z0-9_\-]{3,}'")])],
+      'email': ['',  Validators.compose([Validators.required, Validators.email])],
       'password': ['', [Validators.required]],
-      'passwordConfirm': ['', [Validators.required]]
-    }, { validator: this.matchingPasswords('password', 'passwordConfirm') });
-  
+      'confirmPassword': ['', [Validators.required]]
+    }, { validator: this.matchingPasswords('password', 'confirmPassword') });
+
   }
 
   ionViewDidLoad() {
