@@ -50,7 +50,8 @@ export class CollectPage {
     };
     attackEnabled = true;
     defenseEnabled = true;
-
+    timeoutThemState: boolean[] = [false, false, false];
+    timeoutUsState: boolean[] = [false, false, false];
     positiveActions: any[] = [];
     negativeActions: any[] = [];
     translations: any = {};
@@ -172,7 +173,6 @@ export class CollectPage {
         if (this.handFSM.context) {
             this.gameState.state = this.handFSM.context.state;
         }
-        // TODO gestion des timeouts
         this.gameState.positions = this.playerPositions;
         this.storage.set('gameState-' + this.currentEvent._id, this.gameState);
         console.debug('[CollectPage] - saveState', this.gameState)
@@ -281,7 +281,12 @@ export class CollectPage {
                     console.debug('[CollectPage] - restoreState - gameState from storage - playerList', k);
                     this.playerMap[k.playerId] = k;
                 });
-                // TODO gestion des timeouts
+                for(let i=0; i < this.gameState.homeTimeout; i++) {
+                    this.timeoutUsState[i] = true;
+                }
+                for(let i=0; i < this.gameState.visitorTimeout; i++) {
+                    this.timeoutThemState[i] = true;
+                }
                 this.playerPositions = this.gameState.positions;
                 this.ground = Object.assign([], this.ground);
                 this.gameState.sanctions.forEach(s => {
@@ -775,38 +780,45 @@ export class CollectPage {
     }
 
     /**
+     * @param  {number} index
      * @param  {any} event
      */
-    timeoutThem(event: any) {
-        console.debug('[CollectPage] - timeoutThem', event);
-        // TODO bloquer le check
+    timeoutThem(index:number, event: any) {
+        console.debug('[CollectPage] - timeoutThem', index, event);
         if (this.fsmContext.paused) {
-            // uncheck
-            return;
-        }
-        if (this.handFSM.trigger(FSMEvents.timeout)) {
+            this.timeoutThemState[index] = false;
+            event.checked = false;
+        } else if (this.handFSM.trigger(FSMEvents.timeout)) {
             this.messageBus.broadcast(ChronoComponent.PAUSE, {});
             this.statCollector.deadTime(this.fsmContext, StatType.TIMEOUT_THEM, this.getTeamVisitor());
             this.gameState.visitorTimeout++;
+            this.timeoutThemState[index] = true;
             this.saveSats();
+        } else {
+            this.timeoutThemState[index] = false;
+            event.checked = false;
         }
     }
 
     /**
+     * @param  {number} index
      * @param  {any} event
      */
-    timeoutUs(event: any) {
-        console.debug('[CollectPage] - timeoutUs', event);
-        // TODO bloquer le check
+    timeoutUs(index:number, event: any) {
+        console.debug('[CollectPage] - timeoutUs',index, event, this.fsmContext.paused);
         if (this.fsmContext.paused) {
-            // uncheck
-            return;
-        }
-        if (this.handFSM.trigger(FSMEvents.timeout)) {
+            this.timeoutUsState[index] = false;
+            event.checked = false;
+           
+        } else if (this.handFSM.trigger(FSMEvents.timeout)) {
             this.messageBus.broadcast(ChronoComponent.PAUSE, {});
             this.statCollector.deadTime(this.fsmContext, StatType.TIMEOUT_US, this.getTeamHomeId());
             this.gameState.homeTimeout++;
+            this.timeoutUsState[index] = true;
             this.saveSats();
+        } else {
+            this.timeoutUsState[index] = false;
+            event.checked = false;
         }
     }
 
