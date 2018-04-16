@@ -27,5 +27,7 @@ export enum StatType {
     TIME_ATTACK = 'timeAttack',
     TIME_DEFENSE = 'timeDefense',
     TIMEOUT_THEM = 'timeoutThem',
-    TIMEOUT_US = 'timeoutUs'
+    TIMEOUT_US = 'timeoutUs',
+    ORIGIN_SHOOT_ATT = 'originShootAtt',
+    ORIGIN_SHOOT_DEF = 'originShootDef'
 }

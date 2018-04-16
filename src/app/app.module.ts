@@ -18,6 +18,7 @@
  */
 import {BrowserModule} from '@angular/platform-browser';
 import {ErrorHandler, LOCALE_ID, NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {IonicStorageModule} from '@ionic/storage';
@@ -52,6 +53,7 @@ export function createTranslateLoader(http: HttpClient) {
     ],
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         HttpClientModule,
         IonicModule.forRoot(MyApp),
         IonicStorageModule.forRoot(),

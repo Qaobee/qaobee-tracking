@@ -17,7 +17,7 @@ export class FSMContext {
     /**
      * Currently selected player
      */
-    selectedPlayer: any;
+    selectedPlayer: InGamePlayer;
     /**
      * The current relative game play time
      * @type {number}
