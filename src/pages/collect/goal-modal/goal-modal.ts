@@ -106,6 +106,7 @@ export class GoalModal {
      * @param  {ViewController} publicviewCtrl
      */
     constructor(public viewCtrl: ViewController) {
+        console.debug('[GoalModal] constructor');
     }
 
     /**

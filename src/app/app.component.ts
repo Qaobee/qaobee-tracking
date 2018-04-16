@@ -35,7 +35,6 @@ import { MessageBus } from "../providers/message-bus.service";
 import { MetaService } from "../providers/api/api.meta.service";
 import { HomePage } from "../pages/home/home";
 import { EventListPage } from "../pages/events/event-list/event-list";
-import { GoalModal } from '../pages/collect/goal-modal/goal-modal';
 
 @Component({
     templateUrl: 'app.html'

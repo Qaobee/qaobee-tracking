@@ -1,27 +1,29 @@
-import { GoalModal } from './../goal-modal/goal-modal';
-import { TranslateService } from '@ngx-translate/core';
-import { StatType } from './../../../model/stat.type';
-import { Observable } from 'rxjs';
-import { GamePhase } from './../../../model/game.phase';
-import { FSMStates } from './../../../model/fsm/fsm.states';
-import { FSMEvents } from './../../../model/fsm/fsm.events';
-import { FSMContext } from './../../../model/fsm/fsm.context';
-import { StatCollector } from './../../../providers/collect/stat.collector';
-import { ChronoComponent } from './../../../components/chrono/chrono.component';
-import { CollectStat } from './../../../model/collect.stat';
-import { InGamePlayer } from './../../../model/ingame.player';
-import { GameState } from './../../../model/game.state';
-import { HandFSM } from './../../../providers/collect/hand.fsm';
-import { Utils } from './../../../providers/utils';
-import { AuthenticationService } from './../../../providers/authentication.service';
-import { APIStatsService } from './../../../providers/api/api.stats';
+import { Component } from '@angular/core';
+import { ENV } from '@app/env';
 import { Storage } from '@ionic/storage';
-import { NavParams, ToastController, LoadingController, ActionSheetController, ModalController } from 'ionic-angular';
-import { MessageBus } from './../../../providers/message-bus.service';
-import { Component } from "@angular/core";
-import { ENV } from "@app/env";
+import { TranslateService } from '@ngx-translate/core';
 
-import moment from 'moment';
+import {
+    ActionSheetController, LoadingController, ModalController, NavParams, ToastController
+} from 'ionic-angular';
+import { Observable } from 'rxjs';
+
+import { ChronoComponent } from '../../../components/chrono/chrono.component';
+import { CollectStat } from '../../../model/collect.stat';
+import { FSMContext } from '../../../model/fsm/fsm.context';
+import { FSMEvents } from '../../../model/fsm/fsm.events';
+import { FSMStates } from '../../../model/fsm/fsm.states';
+import { GamePhase } from '../../../model/game.phase';
+import { GameState } from '../../../model/game.state';
+import { InGamePlayer } from '../../../model/ingame.player';
+import { StatType } from '../../../model/stat.type';
+import { APIStatsService } from '../../../providers/api/api.stats';
+import { AuthenticationService } from '../../../providers/authentication.service';
+import { HandFSM } from '../../../providers/collect/hand.fsm';
+import { StatCollector } from '../../../providers/collect/stat.collector';
+import { MessageBus } from '../../../providers/message-bus.service';
+import { Utils } from '../../../providers/utils';
+import { GoalModal } from '../goal-modal/goal-modal';
 
 @Component({
     selector: 'page-collect',
@@ -180,7 +182,7 @@ export class CollectPage {
      * 
      */
     getStatisticsConfigAPI() {
-        let listIndicators = this.storage.get('listIndicators').then(list => {
+        this.storage.get('listIndicators').then(list => {
             console.debug('[CollectPage] - getStatisticsConfigAPI - from storage', list);
             if (!list || list.length == 0) {
                 this.statAPI.getListIndicators(this.authenticationService.meta.activity._id, this.authenticationService.meta.season.countryId, ['COLLECTE'])
@@ -329,6 +331,9 @@ export class CollectPage {
         });
     }
 
+    /**
+     * @param  {CollectStat[]} stats
+     */
     setStats(stats: CollectStat[]) {
         console.debug('[CollectPage] - setStats', stats);
         this.stats = stats;
@@ -401,7 +406,7 @@ export class CollectPage {
      */
     showGoal(data: { ground: string, goal: string, scorred: boolean }) {
         console.debug('[CollectPage] - showGoal', data);
-        if(data.goal.startsWith('outside')) {
+        if (data.goal.startsWith('outside')) {
             if (this.fsmContext.gamePhase && this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.outsideAtt)) {
                 this.statCollector.outside(this.fsmContext, data.goal, this.fsmContext.selectedPlayer.playerId);
 
@@ -409,7 +414,7 @@ export class CollectPage {
                 this.statCollector.outside(this.fsmContext, data.goal, this.getGaolkeeperId());
             }
             this.fsmContext.shootSeqId = undefined;
-        } else if(data.goal.endsWith('pole')) {
+        } else if (data.goal.endsWith('pole')) {
             if (this.fsmContext.gamePhase && this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.poleShotAtt)) {
                 this.statCollector.pole(this.fsmContext, data.goal, this.fsmContext.selectedPlayer.playerId);
 
@@ -419,56 +424,54 @@ export class CollectPage {
             this.fsmContext.shootSeqId = undefined;
         } else {
             if (this.fsmContext.gamePhase && this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.goalShotAtt)) {
-                this.statCollector.goalTarget(this.fsmContext, StatType.IMPACT_SHOOD_ATT, data.goal, this.fsmContext.selectedPlayer.playerId);    
+                this.statCollector.goalTarget(this.fsmContext, StatType.IMPACT_SHOOD_ATT, data.goal, this.fsmContext.selectedPlayer.playerId);
                 this.showGoalBtns(data);
             } else if (this.fsmContext.gamePhase && !this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.goalShotDef)) {
-                this.statCollector.goalTarget(this.fsmContext, StatType.IMPACT_SHOOD_DEF, data.goal, this.getGaolkeeperId()); 
+                this.statCollector.goalTarget(this.fsmContext, StatType.IMPACT_SHOOD_DEF, data.goal, this.getGaolkeeperId());
                 this.showGoalBtns(data);
-            }  else {
+            } else {
                 this.handFSM.trigger(FSMEvents.restoreGoalState);
             }
         }
     }
-    
+
     /**
      * 
      */
     showGround() {
         console.debug('[CollectPage] - showGround');
-        let goalModal = this.modalController.create(GoalModal, {});
-        goalModal.onDidDismiss((data: { ground: string, goal: string, scorred: boolean }) => {
-        console.debug('[CollectPage] - showGround', data);
-            if (data) {
-                if (data.ground.startsWith('outside')) {
-                    if (this.fsmContext.gamePhase && this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.outsideAtt)) {
-                        this.statCollector.outside(this.fsmContext, data.ground, this.fsmContext.selectedPlayer.playerId);
-                    } else if (this.fsmContext.gamePhase && !this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.outsideDef)) {
-                        this.statCollector.outside(this.fsmContext, data.ground, this.getGaolkeeperId());
-                        this.handFSM.trigger(FSMEvents.doAttack);
-                    }
-                    this.fsmContext.shootSeqId = undefined;
-                } else {
-                    if (this.fsmContext.gamePhase && this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.groundAtt)) {
-                        this.statCollector.ground(this.fsmContext, StatType.ORIGIN_SHOOT_ATT, data.ground, this.fsmContext.selectedPlayer.playerId);
-                        this.showGoal(data);
-                    } else if (this.fsmContext.gamePhase && !this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.groundDef)) {
-                        this.statCollector.ground(this.fsmContext, StatType.ORIGIN_SHOOT_DEF, data.ground, this.getGaolkeeperId());
-                        this.showGoal(data);
+        if (!this.fsmContext.gamePhase) {
+            this.presentToast(this.translations.collect.select_game_phase_first);
+        } else if (!this.fsmContext.selectedPlayer) {
+            this.presentToast(this.translations.collect.select_player);
+        } else {
+            let goalModal = this.modalController.create(GoalModal, {});
+            goalModal.onDidDismiss((data: { ground: string, goal: string, scorred: boolean }) => {
+                console.debug('[CollectPage] - showGround', data);
+                if (data) {
+                    if (data.ground.startsWith('outside')) {
+                        if (this.fsmContext.gamePhase && this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.outsideAtt)) {
+                            this.statCollector.outside(this.fsmContext, data.ground, this.fsmContext.selectedPlayer.playerId);
+                        } else if (this.fsmContext.gamePhase && !this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.outsideDef)) {
+                            this.statCollector.outside(this.fsmContext, data.ground, this.getGaolkeeperId());
+                            this.handFSM.trigger(FSMEvents.doAttack);
+                        }
+                        this.fsmContext.shootSeqId = undefined;
                     } else {
-                        this.handFSM.trigger(FSMEvents.restoreGoalState);
+                        if (this.fsmContext.gamePhase && this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.groundAtt)) {
+                            this.statCollector.ground(this.fsmContext, StatType.ORIGIN_SHOOT_ATT, data.ground, this.fsmContext.selectedPlayer.playerId);
+                            this.showGoal(data);
+                        } else if (this.fsmContext.gamePhase && !this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.groundDef)) {
+                            this.statCollector.ground(this.fsmContext, StatType.ORIGIN_SHOOT_DEF, data.ground, this.getGaolkeeperId());
+                            this.showGoal(data);
+                        } else {
+                            this.handFSM.trigger(FSMEvents.restoreGoalState);
+                        }
                     }
                 }
-            }
-        });
-        goalModal.present();
-    }
-    
-    /**
-     * 
-     */
-    hideGround() {
-        console.debug('[CollectPage] - hideGround');
-        // TODO
+            });
+            goalModal.present();
+        }
     }
 
     /**
@@ -477,7 +480,7 @@ export class CollectPage {
      */
     showGoalBtns(data: { ground: string, goal: string, scorred: boolean }) {
         console.debug('[CollectPage] - showGoalBtns', data);
-        if(data.scorred) {
+        if (data.scorred) {
             this.goalButton();
         } else {
             this.stopShootButton();
@@ -566,7 +569,7 @@ export class CollectPage {
         console.debug('[CollectPage] - resume', this.fsmContext.gamePhase);
         if (!this.fsmContext.gamePhase && this.handFSM.trigger(FSMEvents.startChrono)) {
             console.debug('[CollectPage] - resume', this.fsmContext.gamePhase);
-        } else if (this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.doAttack)) {
+        } else if (this.fsmContext.gamePhase && this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.doAttack)) {
             this.doAttack();
         } else if (this.handFSM.trigger(FSMEvents.doDefense)) {
             this.doDefense();
@@ -592,6 +595,7 @@ export class CollectPage {
         }
         this.fsmContext.paused = false;
     }
+
     /**
      * @param  {number} event
      */
@@ -930,10 +934,10 @@ export class CollectPage {
         console.debug('[CollectPage] - statsButton', event);
         // TODO
     }
-    
-     /**
-     * @param  {any} event
-     */
+
+    /**
+    * @param  {any} event
+    */
     stopButton(event: any) {
         console.debug('[CollectPage] - stopButton', event);
         // TODO
@@ -944,7 +948,7 @@ export class CollectPage {
         console.debug('[CollectPage] - uploadStats')
         // TODO
     }
-   
+
     /**
     *
     * @param msg

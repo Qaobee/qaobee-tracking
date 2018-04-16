@@ -1,11 +1,13 @@
 <ion-header>
-    <ion-navbar>
-        <button ion-button (click)="dismiss()">
-            <span ion-text color="primary" showWhen="ios">Cancel</span>
-            <ion-icon name="md-close" showWhen="android, windows"></ion-icon>
-        </button>
-        <ion-title>Goal</ion-title>
-    </ion-navbar>
+    <ion-toolbar>
+        <ion-title>{{ 'collect.goal' | translate }}</ion-title>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss()">
+                <span ion-text color="primary" showWhen="ios">Cancel</span>
+                <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 <sass-helper></sass-helper>
 <ion-content>
@@ -112,8 +114,9 @@
         </ion-row>
     </ion-grid>
     <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-        xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" id="ground-map" width="100%" viewBox="0 0 168.1438 50.066772">
-        <g inkscape:label="Calque 1" inkscape:groupmode="layer" id="layer1" transform="translate(-25.979265,-72.711292)" [@groundState]="groundState">
+        xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" id="ground-map" width="100%" viewBox="0 0 168.1438 50.066772"
+        [@groundState]="groundState">
+        <g id="layer1" transform="translate(-25.979265,-72.711292)">
             <path style="fill:#8bc34a;fill-opacity:1;stroke:#ffffff;stroke-width:0.81099999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
                 d="m 138.74089,107.50041 a 92.755978,35.518381 0 0 1 -28.85767,1.80196 92.755978,35.518381 0 0 1 -28.560017,-1.75648 L 68.95135,122.37237 h 82.19911 z"
                 id="CENTER9" inkscape:connector-curvature="0" (click)="ground('CENTER9', $event)">
