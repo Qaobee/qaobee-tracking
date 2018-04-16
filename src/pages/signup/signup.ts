@@ -48,7 +48,7 @@ export class SignupPage {
       'password': ['', [Validators.required]],
       'passwordConfirm': ['', [Validators.required]]
     }, { validator: this.matchingPasswords('password', 'passwordConfirm') });
- 
+  
   }
 
   ionViewDidLoad() {
