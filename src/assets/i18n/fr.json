@@ -231,5 +231,16 @@
       "right_wingman": "Ailier Droit",
       "left_wingman": "Ailier Gauche"
     }
+  },
+  "component": {
+    "stats":{
+      "shoot":{
+        "efficiency":{
+          "label1": "Buts marqués",
+          "label2": "Tirs",
+          "label3": "Nombre de buts"
+        }
+      }
+    }
   }
 }

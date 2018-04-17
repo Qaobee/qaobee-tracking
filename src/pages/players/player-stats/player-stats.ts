@@ -36,10 +36,7 @@ export class PlayerStatsPage {
   stats: any[] = [];
 
   @ViewChild('barCanvas') barCanvas;
-  @ViewChild('doughnutCanvas') doughnutCanvas;
-
   barChart: any;
-  doughnutChart: any;
 
   /**
    *
@@ -136,26 +133,6 @@ export class PlayerStatsPage {
             }
           }]
         }
-      }
-    });
-
-    this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
-      type: 'doughnut',
-      data: {
-        labels: ["Buts marqués", "Tirs ratés"],
-        datasets: [{
-          label: 'nb de buts',
-          data: [this.stats[0].value, (this.stats[1].value - this.stats[0].value)],
-          backgroundColor: [
-            'rgba(139,195,74,0.5)',
-            'rgba(234,83,80,0.8)'
-          ],
-          borderWidth: 2,
-          hoverBackgroundColor: [
-            'rgba(139,195,74,1)',
-            'rgba(234,83,80,1)'
-          ]
-        }]
       }
     });
   }

@@ -231,5 +231,16 @@
       "right_wingman": "Right winger",
       "left_wingman": "Left winger"
     }
+  },
+  "component": {
+    "stats":{
+      "shoot":{
+        "efficiency":{
+          "label1": "Goals",
+          "label2": "Shoots",
+          "label3": "Shoot's stats"
+        }
+      }
+    }
   }
 }
