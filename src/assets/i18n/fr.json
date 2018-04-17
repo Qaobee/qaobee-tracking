@@ -4,7 +4,8 @@
   "actionButton": {
     "Submit": "Valider",
     "Cancel": "Annuler",
-    "Search": "Rechercher"
+    "Search": "Rechercher",
+    "Ok": "Ok"
   },
   "format": {
     "displayDate": "DD/MM/YYYY",
@@ -163,6 +164,7 @@
     "defense": "Défense",
     "positive_actions": "Actions positives",
     "negative_actions": "Actions négatives",
+    "substitution": "Changement de joueur",
     "indicators": {
       "interceptionKo": "Interception ratée",
       "duelLoose": "Duel perdu",

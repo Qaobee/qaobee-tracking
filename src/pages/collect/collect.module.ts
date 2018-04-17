@@ -1,3 +1,4 @@
+import { SubstitutionModal } from './substitution-modal/substitution-modal';
 import { StatCollector } from '../../providers/collect/stat.collector';
 import { NgModule } from '@angular/core';
 import { HttpClient, HttpClientModule } from "@angular/common/http";
@@ -11,12 +12,15 @@ import { PipesModule } from "../../pipes/pipes.module";
 import { CollectPage } from "./collect/collect";
 import { HandFSM } from "../../providers/collect/hand.fsm";
 import { GoalModal } from './goal-modal/goal-modal';
+import { TeamBuildComponent } from '../../components/team-build/team-build';
 
 @NgModule({
   declarations: [
     TeamBuildPage,
     CollectPage,
-    GoalModal
+    GoalModal,
+    SubstitutionModal,
+    TeamBuildComponent
   ],
   imports: [
     HttpClientModule,
@@ -39,7 +43,8 @@ import { GoalModal } from './goal-modal/goal-modal';
   entryComponents: [
     TeamBuildPage,
     CollectPage,
-    GoalModal
+    GoalModal,
+    SubstitutionModal
   ]
 })
 

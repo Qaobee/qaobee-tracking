@@ -10,8 +10,8 @@ import {
 import { ViewController } from 'ionic-angular';
 
 @Component({
-  selector: 'page-goal-modal',
-  templateUrl: 'page-goal.html',
+  selector: 'goal-modal',
+  templateUrl: 'goal-modal.html',
   animations: [
     trigger('goalState', [
       state('inactive', style({

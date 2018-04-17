@@ -4,7 +4,8 @@
   "actionButton": {
     "Submit": "Submit",
     "Cancel": "Cancel",
-    "Search": "Search"
+    "Search": "Search",
+    "Ok": "Ok"
   },
   "format": {
     "displayDate": "MM/DD//YYYY",
@@ -163,6 +164,7 @@
     "defense": "Defense",
     "positive_actions": "Positive actions",
     "negative_actions": "Negative actions",
+    "substitution": "Player substitution",
     "indicators": {
       "interceptionKo": "Missed interception",
       "duelLoose": "Lost duel",

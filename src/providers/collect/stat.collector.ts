@@ -300,10 +300,7 @@ export class StatCollector {
    * @param  {string} playerId
    */
   substitute(context: FSMContext, playerId: string) {
-    let lastIn = 0;
-    if (context.lastInMap.hasOwnProperty(playerId)) {
-      lastIn = context.lastInMap[playerId];
-    }
+    let lastIn = context.lastInMap[playerId] || 0;
     let stat = this.eventBuilder(context, StatType.SUBSTITUE, context.chrono - lastIn);
     if (playerId) {
       stat.owners.push(playerId);
