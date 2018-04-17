@@ -17,7 +17,7 @@
  *  from Qaobee.
  */
 import { Injectable } from "@angular/core";
-
+import _ from "lodash";
 @Injectable()
 export class Utils {
 
@@ -26,7 +26,7 @@ export class Utils {
    * @param  {any} b
    * @returns number
    */
-  compareEvents(a: any, b: any): number {
+  static compareEvents(a: any, b: any): number {
     let valA = a.startDate || 0;
     let valB = b.startDate || 0;
     if (valA > valB) {
@@ -43,7 +43,7 @@ export class Utils {
    * @param  {string} field
    * @returns any
    */
-  groupBy(collection: any[], field: string): any {
+  static groupBy(collection: any[], field: string): any {
     let map = {};
     collection.forEach((obj: any) => {
       let key = obj[field];
@@ -61,7 +61,7 @@ export class Utils {
    * @param  {string[]} excludedkeys
    * @returns any[]
    */
-  filter(array: any[], field: string, excludedkeys: string[]): any[] {
+  static filter(array: any[], field: string, excludedkeys: string[]): any[] {
     let jar = [];
     array.forEach(item => {
       if (excludedkeys.indexOf(item[field]) === -1) {
@@ -75,10 +75,24 @@ export class Utils {
    * Generate a GUID
    * @returns {string}
    */
-  generateGUID(): string {
+  static generateGUID(): string {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
       let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
       return v.toString(16);
+    });
+  }
+
+  /**
+   * Find differences between objects
+   * 
+   * @param  {any} object
+   * @param  {any} base
+   */
+  static objDiff(object: any, base: any) {
+    return _.transform(object, function (result, value, key) {
+      if (!_.isEqual(value, base[key])) {
+        result[key] = (_.isObject(value) && _.isObject(base[key])) ? Utils.objDiff(value, base[key]) : value;
+      }
     });
   }
 }

@@ -1,38 +1,3 @@
 page-team-build {
-  #substitute-area {
-    background-color: color($colors, secondary, base);
-    min-height: 18rem;
-    ion-chip {
-      background-color: white;
-    }
-    h4 {
-      color: color($colors, light, base);
-    }
-  }
-
-  #ground-area {
-    z-index: 5;
-    height: 18rem;
-    width: 100vw;
-    background: url("/assets/imgs/zone_defense.png") no-repeat;
-    background-size: 100vw 18rem;
-
-
-    ion-chip {
-      background-color: white;
-      max-width: calc(100vw / 3 - 2rem);
-      &.pivot {
-        background-color: color($colors, primary, base);
-        ion-label {
-          color: color($colors, light, base);
-        }
-      }
-      &.goalkeeper {
-        background-color: color($colors, danger, base);
-        ion-label {
-          color: color($colors, light, base);
-        }
-      }
-    }
-  }
+  
 }

@@ -1,0 +1,20 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>{{ 'collect.substitution' | translate }}</ion-title>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss()">
+                <span ion-text color="primary" showWhen="ios">{{ 'actionButton.Cancel' | translate }}</span>
+                <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<sass-helper></sass-helper>
+<ion-content>
+    <team-build-component [playerList]="playerList" [(playerPositions)]="playerPositions"></team-build-component>
+    <ion-fab bottom right>
+            <button ion-fab mini (click)="validate()" color="light-green">
+                <ion-icon name="checkmark"></ion-icon>
+            </button>
+        </ion-fab>
+</ion-content>

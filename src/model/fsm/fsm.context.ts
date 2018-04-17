@@ -35,7 +35,7 @@ export class FSMContext {
   /**
    * The players list
    */
-  players: InGamePlayer[];
+  players: InGamePlayer[] = [];
   /**
    * Qaobee user's meta data
    */
@@ -47,19 +47,19 @@ export class FSMContext {
   /**
    * Owners list
    */
-  owners: string[];
+  owners: string[] = [];
   /**
    * Indicators map
    */
-  indicators: any;
+  indicators: any = {};
   /**
    * Playtime map
    */
-  playTimeMap: any;
+  playTimeMap: any = {};
   /**
    * Player last in game time map
    */
-  lastInMap: any;
+  lastInMap: any = {};
   /**
    * Shoot sequence
    */

@@ -1,0 +1,39 @@
+<ion-list>
+    <ion-grid id="ground-area" *ngIf="ground">
+        <ion-row *ngFor="let area of ground">
+            <ion-col text-center *ngFor="let pos of area" ion-col>
+                <ion-chip (click)="showPlayerChooser(pos.key)" [class]="pos.class">
+                    <ion-avatar>
+                        <img [src]="getAvatar(playerPositions[pos.key]?.avatar)" alt="avatar">
+                    </ion-avatar>
+                    <ion-label>{{ playerPositions[pos.key]?.name || pos.label }}
+                        <ion-badge>{{ playerPositions[pos.key]?.status.squadnumber || '?' }}</ion-badge>
+                    </ion-label>
+                </ion-chip>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-grid id="substitute-area">
+        <h4>Substitutes</h4>
+        <ion-fab right edge>
+            <button ion-fab mini (click)="showSubstituesChooser('substitutes')">
+                <ion-icon name="add"></ion-icon>
+            </button>
+        </ion-fab>
+        <ion-row>
+            <ion-col text-center *ngFor="let s of playerPositions['substitutes']" ion-col>
+                <ion-chip>
+                    <ion-avatar>
+                        <img [src]="getAvatar(s.avatar)" alt="avatar">
+                    </ion-avatar>
+                    <ion-label>{{ s.name }}
+                        <ion-badge text-end>{{ s.status.squadnumber }}</ion-badge>
+                    </ion-label>
+                    <button ion-button clear color="dark" (click)="remove(s)">
+                        <ion-icon name="close-circle"></ion-icon>
+                    </button>
+                </ion-chip>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-list>
