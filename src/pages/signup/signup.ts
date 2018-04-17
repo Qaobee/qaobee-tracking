@@ -31,23 +31,23 @@ export class SignupPage {
   userForm: FormGroup;
 
   /**
-   * 
-   * @param navCtrl 
-   * @param navParams 
-   * @param formBuilder 
-   * @param userService 
+   *
+   * @param navCtrl
+   * @param navParams
+   * @param formBuilder
+   * @param userService
    */
   constructor(public navCtrl: NavController,
-    public navParams: NavParams,
-    private formBuilder: FormBuilder,
-    private userService: UserService) {
+              public navParams: NavParams,
+              private formBuilder: FormBuilder,
+              private userService: UserService) {
 
     this.userForm = this.formBuilder.group({
       'login': ['', Validators.compose([Validators.required, Validators.pattern("'[a-zA-Z0-9_\-]{3,}'")])],
-      'email': ['',  Validators.compose([Validators.required, Validators.email])],
+      'email': ['', Validators.compose([Validators.required, Validators.email])],
       'password': ['', [Validators.required]],
       'confirmPassword': ['', [Validators.required]]
-    }, { validator: this.matchingPasswords('password', 'confirmPassword') });
+    }, {validator: this.matchingPasswords('password', 'confirmPassword')});
 
   }
 
@@ -69,11 +69,11 @@ export class SignupPage {
   }
 
   createAccount(formVal) {
-    console.log("Bouton submit")
+    console.log('[SignupPage] - createAccount', formVal);
     if (this.userForm.valid) {
       this.user.account.login = formVal.login;
       this.userService.registerUser(this.user).subscribe(r => {
-      
+        console.log('[SignupPage] - createAccount - registerUser', r);
       })
     }
   }

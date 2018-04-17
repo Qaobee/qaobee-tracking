@@ -16,13 +16,13 @@
  *  is strictly forbidden unless prior written permission is obtained
  *  from Qaobee.
  */
-import { PlayerDetailPage } from './../player-detail/player-detail';
-import { PlayerUpsertPage } from './../player-upsert/player-upsert';
+import { PlayerDetailPage } from '../player-detail/player-detail';
+import { PlayerUpsertPage } from '../player-upsert/player-upsert';
 import { Component } from '@angular/core';
 import { NavController, NavParams, Refresher } from 'ionic-angular';
-import {Storage} from "@ionic/storage";
-import { PersonService } from './../../../providers/api/api.person.service';
-import {AuthenticationService} from "../../../providers/authentication.service";
+import { Storage } from "@ionic/storage";
+import { PersonService } from '../../../providers/api/api.person.service';
+import { AuthenticationService } from "../../../providers/authentication.service";
 
 @Component({
   selector: 'page-player-list',
@@ -35,31 +35,31 @@ export class PlayerListPage {
   playerListFiltred: any;
 
   /**
-     * .
-     * @param {NavController} navCtrl
-     * @param {NavParams} navParams
-     * @param {Storage} storage
-     * @param {PersonService} personService
-     * @param {AuthenticationService} authenticationService
-     */
-    constructor(public navCtrl: NavController, 
-                public navParams: NavParams,
-                private storage: Storage, 
-                private personService: PersonService,
-                private authenticationService: AuthenticationService) {
-      this.retrievePlayerList();
-    }
+   * .
+   * @param {NavController} navCtrl
+   * @param {NavParams} navParams
+   * @param {Storage} storage
+   * @param {PersonService} personService
+   * @param {AuthenticationService} authenticationService
+   */
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private storage: Storage,
+              private personService: PersonService,
+              private authenticationService: AuthenticationService) {
+    this.retrievePlayerList();
+  }
 
   /**
    * call personneService for retrieve player list from database
-   * @param refresher 
+   * @param refresher
    */
-  private getPlayers(refresher:Refresher) {
+  private getPlayers(refresher: Refresher) {
     this.personService.getListPersonSandbox(this.authenticationService.meta._id).subscribe(list => {
       this.playerList = list;
       this.playerListSize = this.playerList.length;
       this.storage.set('players', list);
-      if(refresher) {
+      if (refresher) {
         refresher.complete();
       }
     });
@@ -71,7 +71,7 @@ export class PlayerListPage {
   private retrievePlayerList() {
     this.storage.get('players').then(players => {
       if (!players) {
-          this.getPlayers(null);
+        this.getPlayers(null);
       } else {
         this.playerList = players;
         this.playerListSize = players.length;
@@ -81,27 +81,27 @@ export class PlayerListPage {
 
   /**
    * Filter player list
-   * @param ev 
+   * @param ev
    */
   searchItems(ev: any) {
 
     // set val to the value of the ev target
-    var val = ev.target.value;
-    this.playerListFiltred = new Array();
-    
+    let val = ev.target.value;
+    this.playerListFiltred = [];
+
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
-      
+
       // Reset items back to all of the items
       this.storage.get('players').then(players => {
-        for (let index = 0; index < players.length; index++) {
-          const element = players[index];
-          if(element.name.toLowerCase().indexOf(val.toLowerCase()) > -1 || element.firstname.toLowerCase().indexOf(val.toLowerCase()) > -1){
-            this.playerListFiltred.push(element);
+          for (let index = 0; index < players.length; index++) {
+            const element = players[index];
+            if (element.name.toLowerCase().indexOf(val.toLowerCase()) > -1 || element.firstname.toLowerCase().indexOf(val.toLowerCase()) > -1) {
+              this.playerListFiltred.push(element);
+            }
           }
-        }
-        this.playerList = this.playerListFiltred;
-        this.playerListSize = this.playerListFiltred.length;
+          this.playerList = this.playerListFiltred;
+          this.playerListSize = this.playerListFiltred.length;
         }
       );
     } else {
@@ -110,20 +110,20 @@ export class PlayerListPage {
   }
 
   /**
-     *
-     */
-    goToAddPlayer() {
-      this.navCtrl.push(PlayerUpsertPage, {editMode : 'CREATE'});
+   *
+   */
+  goToAddPlayer() {
+    this.navCtrl.push(PlayerUpsertPage, {editMode: 'CREATE'});
   }
 
-    /**
-     * 
-     * @param player
-     * @param clickEvent
-     */
-    goToDetail(player: any, clickEvent: any) {
-      clickEvent.stopPropagation();
-      this.navCtrl.push(PlayerDetailPage, {player : player});
+  /**
+   *
+   * @param player
+   * @param clickEvent
+   */
+  goToDetail(player: any, clickEvent: any) {
+    clickEvent.stopPropagation();
+    this.navCtrl.push(PlayerDetailPage, {player: player});
   }
 
 }

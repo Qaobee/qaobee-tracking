@@ -26,57 +26,58 @@ import { catchError } from "rxjs/operators";
 
 @Injectable()
 export class CollectService extends ApiService {
-    /**
-     *
-     * @param {App} app
-     * @param {AuthenticationService} authenticationService
-     * @param {ToastController} toastCtrl
-     * @param {HttpClient} http
-     */
-    constructor(app: App,
-        authenticationService: AuthenticationService,
-        toastCtrl: ToastController,
-        private http: HttpClient
-    ) {
-        super(app, authenticationService, toastCtrl);
-    }
+  /**
+   *
+   * @param {App} app
+   * @param {AuthenticationService} authenticationService
+   * @param {ToastController} toastCtrl
+   * @param {HttpClient} http
+   */
+  constructor(app: App,
+              authenticationService: AuthenticationService,
+              toastCtrl: ToastController,
+              private http: HttpClient
+  ) {
+    super(app, authenticationService, toastCtrl);
+  }
 
-    /**
-     * @param  {any} collect
-     */
-    updateCollect(collect: any) {
-        return this.http.post<any>(ENV.hive + this.rootPath +  '/sandbox/stats/collect/update', collect, this.addHeaderToken()).pipe(
-            catchError(this.handleError('MetaServices.getMeta'))
-        );
-    }
+  /**
+   * @param  {any} collect
+   */
+  updateCollect(collect: any) {
+    return this.http.post<any>(ENV.hive + this.rootPath + '/sandbox/stats/collect/update', collect, this.addHeaderToken()).pipe(
+      catchError(this.handleError('MetaServices.getMeta'))
+    );
+  }
 
-    /**
-     * @param  {any} collect
-     */
-    addCollect(collect: any) {
-        return this.http.post<any>(ENV.hive + this.rootPath +  '/sandbox/stats/collect/add', collect, this.addHeaderToken()).pipe(
-            catchError(this.handleError('MetaServices.getMeta'))
-        );
-    }
-    /**
-     * @param  {string} sandboxId
-     * @param  {string} eventId
-     * @param  {string} effectiveId
-     * @param  {string} teamId
-     * @param  {number} startDate
-     * @param  {number} endDate
-     */
-    getCollects(sandboxId: string, eventId:string, effectiveId:string, teamId:string, startDate:number, endDate: number)  {
-        let request = {
-            eventId: eventId,
-            effectiveId: effectiveId,
-            teamId: teamId,
-            sandboxId: sandboxId,
-            startDate: startDate,
-            endDate: endDate            
-        }
-        return this.http.post<any>(ENV.hive + this.rootPath +  '/sandbox/stats/collect/list', request, this.addHeaderToken()).pipe(
-            catchError(this.handleError('MetaServices.getMeta'))
-        );
-    }
+  /**
+   * @param  {any} collect
+   */
+  addCollect(collect: any) {
+    return this.http.post<any>(ENV.hive + this.rootPath + '/sandbox/stats/collect/add', collect, this.addHeaderToken()).pipe(
+      catchError(this.handleError('MetaServices.getMeta'))
+    );
+  }
+
+  /**
+   * @param  {string} sandboxId
+   * @param  {string} eventId
+   * @param  {string} effectiveId
+   * @param  {string} teamId
+   * @param  {number} startDate
+   * @param  {number} endDate
+   */
+  getCollects(sandboxId: string, eventId: string, effectiveId: string, teamId: string, startDate: number, endDate: number) {
+    let request = {
+      eventId: eventId,
+      effectiveId: effectiveId,
+      teamId: teamId,
+      sandboxId: sandboxId,
+      startDate: startDate,
+      endDate: endDate
+    };
+    return this.http.post<any>(ENV.hive + this.rootPath + '/sandbox/stats/collect/list', request, this.addHeaderToken()).pipe(
+      catchError(this.handleError('MetaServices.getMeta'))
+    );
+  }
 }

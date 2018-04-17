@@ -67,8 +67,13 @@
   },
   "signup": {
     "TitleNavBar": "Inscription",
-    "Username": "Identifiant",
-    "Password": "Mot de passe"
+    "Title":  "Inscription",
+    "login": "Identifiant",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "confirmPassword": "Re-saisir le mot de passe",
+    "cancel": "Annuler",
+    "valid": "Valider"
   },
   "menu": {
     "Home": "Accueil",
@@ -204,7 +209,7 @@
       "shootAtt": "Tir",
       "shootDef": "Tir adverse",
       "goalScored": "But marqué",
-      "goalconceded": "But encaissé",
+      "goalConceded": "But encaissé",
       "stopOk": "Tir arreté",
       "impactShootAtt": "Impact de tir",
       "impactShootDef": "Impact de tir",

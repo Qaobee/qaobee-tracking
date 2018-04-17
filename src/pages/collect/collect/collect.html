@@ -25,14 +25,14 @@
                             <ion-col text-center class="small">{{ 'collect.timeout' | translate }}</ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-col text-center>
-                                <ion-checkbox (click)="timeoutUs($event)"></ion-checkbox>
+                            <ion-col text-center >
+                                <ion-checkbox (ionChange)="timeoutUs(0, $event)" [(ngModel)]="timeoutUsState[0]"></ion-checkbox>
                             </ion-col>
                             <ion-col text-center>
-                                <ion-checkbox (click)="timeoutUs($event)"></ion-checkbox>
+                                <ion-checkbox (ionChange)="timeoutUs(1, $event)" [(ngModel)]="timeoutUsState[1]"></ion-checkbox>
                             </ion-col>
-                            <ion-col text-center>
-                                <ion-checkbox (click)="timeoutUs($event)"></ion-checkbox>
+                            <ion-col text-center1>
+                                <ion-checkbox (ionChange)="timeoutUs(2, $event)" [(ngModel)]="timeoutUsState[2]"></ion-checkbox>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
@@ -54,14 +54,8 @@
                             <ion-col text-center class="small">{{ 'collect.timeout' | translate }}</ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-col text-center>
-                                <ion-checkbox (click)="timeoutThem($event)"></ion-checkbox>
-                            </ion-col>
-                            <ion-col text-center>
-                                <ion-checkbox (click)="timeoutThem($event)"></ion-checkbox>
-                            </ion-col>
-                            <ion-col text-center>
-                                <ion-checkbox (click)="timeoutThem($event)"></ion-checkbox>
+                            <ion-col text-center *ngFor="let state of timeoutThemState;let i = index">
+                                <ion-checkbox (click)="timeoutThem(i, $event)" checked="state"></ion-checkbox>
                             </ion-col>
                         </ion-row>
                     </ion-grid>
@@ -77,7 +71,7 @@
                 </ion-col>
                 <ion-col text-center>
                     <ion-fab center middle *ngIf="fsmContext?.gamePhase">
-                        <button ion-fab mini color="{{ fsmContext?.gamePhase?.attack?'green':'red' }}" (click)="goalButton($event)">
+                        <button ion-fab mini color="{{ fsmContext?.gamePhase?.attack?'green':'red' }}" (click)="showGround($event)">
                             <ion-icon name="football"></ion-icon>
                         </button>
                     </ion-fab>

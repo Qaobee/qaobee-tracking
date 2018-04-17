@@ -26,48 +26,50 @@ import {catchError} from "rxjs/operators";
 
 @Injectable()
 export class PersonService extends ApiService {
-    private apiUrl: string;
-    /**
-     * @param  {App} app
-     * @param  {AuthenticationService} authenticationService
-     * @param  {ToastController} toastCtrl
-     * @param  {HttpClient} privatehttp
-     */
-    constructor(app: App,
-                authenticationService: AuthenticationService,
-                toastCtrl: ToastController,
-                private http: HttpClient) {
-        super(app, authenticationService, toastCtrl);
-        this.apiUrl = ENV.hive + this.rootPath + '/sandbox/effective/person/';
-    }
+  private apiUrl: string;
 
-    getListPersonSandbox(sandboxId:string) {        
-        return this.http.get<any>(this.apiUrl+'listSandbox/?sandboxId=' + sandboxId, this.addHeaderToken()).pipe(
-            catchError(this.handleError('PersonService.getListPersonSandbox'))
-        );
-    }
+  /**
+   *
+   * @param {App} app
+   * @param {AuthenticationService} authenticationService
+   * @param {ToastController} toastCtrl
+   * @param {HttpClient} http
+   */
+  constructor(app: App,
+              authenticationService: AuthenticationService,
+              toastCtrl: ToastController,
+              private http: HttpClient) {
+    super(app, authenticationService, toastCtrl);
+    this.apiUrl = ENV.hive + this.rootPath + '/sandbox/effective/person/';
+  }
 
-    /**
-     *
-     * @function addPerson()
-     * @description add a person 
-     * @param {Person} person : person to add
-     */
-    addPerson(person: any) {
-        return this.http.put<any>(this.apiUrl+'/add', person, this.addHeaderToken()).pipe(
-            catchError(this.handleError('addPerson', person))
-        );
-    }
+  getListPersonSandbox(sandboxId: string) {
+    return this.http.get<any>(this.apiUrl + 'listSandbox/?sandboxId=' + sandboxId, this.addHeaderToken()).pipe(
+      catchError(this.handleError('PersonService.getListPersonSandbox'))
+    );
+  }
 
-    /**
-     *
-     * @function updatePerson()
-     * @description add a person 
-     * @param {Person} person : person to update
-     */
-    updatePerson(person: any) {
-        return this.http.put<any>(this.apiUrl+'/update', person, this.addHeaderToken()).pipe(
-            catchError(this.handleError('updatePerson', person))
-        );
-    }
+  /**
+   *
+   * @function addPerson()
+   * @description add a person
+   * @param {any} person : person to add
+   */
+  addPerson(person: any) {
+    return this.http.put<any>(this.apiUrl + '/add', person, this.addHeaderToken()).pipe(
+      catchError(this.handleError('addPerson', person))
+    );
+  }
+
+  /**
+   *
+   * @function updatePerson()
+   * @description add a person
+   * @param {any} person : person to update
+   */
+  updatePerson(person: any) {
+    return this.http.put<any>(this.apiUrl + '/update', person, this.addHeaderToken()).pipe(
+      catchError(this.handleError('updatePerson', person))
+    );
+  }
 }

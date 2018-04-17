@@ -67,8 +67,13 @@
   },
   "signup": {
     "TitleNavBar": "Subscription",
-    "Username": "Login",
-    "Password": "Password"
+    "Title":  "Subscription",
+    "login": "Login",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Re-enter password",
+    "cancel": "Annuler",
+    "valid": "Valider"
   },
   "menu": {
     "Login": "Signin",
@@ -204,7 +209,7 @@
       "shootAtt": "Shot",
       "shootDef": "Opponent's shot",
       "goalScored": "Goal",
-      "goalconceded": "Conceded goal",
+      "goalConceded": "Conceded goal",
       "stopOk": "Shot stopped",
       "impactShootAtt": "Shot impact",
       "impactShootDef": "Shot impact",
