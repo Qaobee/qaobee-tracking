@@ -236,9 +236,11 @@
     "stats":{
       "shoot":{
         "efficiency":{
-          "label1": "Buts marqués",
-          "label2": "Tirs",
-          "label3": "Nombre de buts"
+          "title":"Efficacité",
+          "goal": "Buts marqués",
+          "shoot": "Tirs",
+          "goalAverage": "Buts / match",
+          "shootAverage": "Tirs / match"
         }
       }
     }

@@ -1,6 +1,6 @@
 <ion-row text-center>
   <ion-col text-left>  
-    <h1 >Efficacité 50 %</h1>
+    <h1 >{{'component.stats.shoot.efficiency.title' | translate}} {{efficiencyAverage}} %</h1>
   </ion-col>
   <ion-col text-right>  
     <h1>
@@ -15,17 +15,17 @@
 </ion-row>
 <ion-row text-center>
   <ion-col>
-    <h3>Buts / match</h3>
+    <h3>{{'component.stats.shoot.efficiency.goalAverage' | translate}}</h3>
   </ion-col>
   <ion-col>
-    <h3>Tirs / match</h3>
+    <h3>{{'component.stats.shoot.efficiency.shootAverage' | translate}}</h3>
   </ion-col>
 </ion-row>
 <ion-row text-center>
   <ion-col>
-    <h2>5,50</h2>
+    <h2>{{goalAverage}}</h2>
   </ion-col>
   <ion-col>
-    <h2>7,55</h2>
+    <h2>{{shootAverage}}</h2>
   </ion-col>
 </ion-row>

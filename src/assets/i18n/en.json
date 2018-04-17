@@ -236,9 +236,11 @@
     "stats":{
       "shoot":{
         "efficiency":{
-          "label1": "Goals",
-          "label2": "Shoots",
-          "label3": "Shoot's stats"
+          "title":"Efficiency",
+          "goal": "Goals",
+          "shoot": "Shoots",
+          "goalAverage": "Goals / match",
+          "shootAverage": "Shoots / match"
         }
       }
     }
