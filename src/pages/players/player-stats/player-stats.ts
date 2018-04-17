@@ -96,10 +96,10 @@ export class PlayerStatsPage {
           label: "Actions positives",
           data: [12, 19, 30, 5],
           backgroundColor: [
-            'rgba(139,195,74,1)',
-            'rgba(139,195,74,1)',
-            'rgba(139,195,74,1)',
-            'rgba(139,195,74,1)'
+            'rgba(139,195,74,0.5)',
+            'rgba(139,195,74,0.5)',
+            'rgba(139,195,74,0.5)',
+            'rgba(139,195,74,0.5)'
           ],
           borderColor: [
             'rgba(139,195,74,1)',
@@ -113,10 +113,10 @@ export class PlayerStatsPage {
           label: "Actions negatives",
           data: [6, 25, 20, 15],
           backgroundColor: [
-            'rgba(234,83,80,1)',
-            'rgba(234,83,80,1)',
-            'rgba(234,83,80,1)',
-            'rgba(234,83,80,1)'
+            'rgba(234,83,80,0.8)',
+            'rgba(234,83,80,0.8)',
+            'rgba(234,83,80,0.8)',
+            'rgba(234,83,80,0.8)'
           ],
           borderColor: [
             'rgba(234,83,80,1)',
@@ -146,13 +146,13 @@ export class PlayerStatsPage {
           label: 'nb de buts',
           data: [this.stats[0].value, (this.stats[1].value-this.stats[0].value)],
           backgroundColor: [
-            'rgba(234,83,80,1)',
-            'rgba(236, 239, 241, 1)'
+            'rgba(139,195,74,0.5)',
+            'rgba(234,83,80,0.8)'
           ],
           borderWidth: 2,
           hoverBackgroundColor: [
-            'rgba(234,83,80,1)',
-            'rgba(236, 239, 241, 1)'
+            'rgba(139,195,74,1)',
+            'rgba(234,83,80,1)'
           ]
         }]
       }

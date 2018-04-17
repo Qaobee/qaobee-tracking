@@ -30,6 +30,7 @@ import {createTranslateLoader} from "../app/app.module";
 import {HttpClient} from "@angular/common/http";
 import {ChronoComponent} from "./chrono/chrono.component";
 import { SassHelperComponent } from './sass-helper.component';
+import { StatsShootEfficiencyComponent } from './stats-shoot-efficiency/stats-shoot-efficiency';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,8 @@ import { SassHelperComponent } from './sass-helper.component';
         NextEventComponent,
         LastCollectComponent,
         SassHelperComponent,
-        ChronoComponent
+        ChronoComponent,
+    StatsShootEfficiencyComponent
     ],
     imports: [
         IonicModule.forRoot(MyApp),
@@ -55,7 +57,8 @@ import { SassHelperComponent } from './sass-helper.component';
         NextEventComponent,
         LastCollectComponent,
         ChronoComponent,
-        SassHelperComponent
+        SassHelperComponent,
+    StatsShootEfficiencyComponent
     ],
     providers: [
         Utils
