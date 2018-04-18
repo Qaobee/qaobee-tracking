@@ -368,7 +368,7 @@ export class CollectPage {
    * @param {string} avatar
    * @returns {string}
    */
-  getAvatar(avatar: string) {
+  getAvatar(avatar: string): string {
     if (avatar && avatar !== 'null') {
       return this.root + '/file/SB_Person/' + avatar;
     } else {
@@ -944,6 +944,22 @@ export class CollectPage {
     // gérer le goal ???
     console.debug('[CollectPage] - populateActions', this.positiveActions, this.negativeActions);
 
+  }
+
+  /**
+   * @param  {any} event
+   */
+  visitorGameSystem(event: any) {
+    this.statCollector.gameSystemChange(this.fsmContext, StatType.GAME_SYSTEM, this.gameState.visitorGameSystem, this.getTeamVisitor());
+    this.saveState();
+  }
+
+  /**
+   * @param  {any} event
+   */
+  homeGameSystem(event: any) {
+    this.statCollector.gameSystemChange(this.fsmContext, StatType.GAME_SYSTEM, this.gameState.visitorGameSystem, this.getTeamHomeId());
+    this.saveState();
   }
 
   /**
