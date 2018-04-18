@@ -184,7 +184,7 @@ export class TeamBuildPage {
         }],
         parametersGame: this.settingsService.getParametersGame()
       };
-
+      console.log('[TeamBuildPage] - goToCollect -collect', this.collect);
       this.collectService.addCollect(this.collect).subscribe((c: any) => {
         this.collect._id = c._id;
         this.storage.get('collects').then((collects: any[]) => {
@@ -196,7 +196,8 @@ export class TeamBuildPage {
           console.log('[TeamBuildPage] - goToCollect', {
             players: this.playerPositions,
             event: this.event,
-            collect: this.collect
+            collect: this.collect,
+            playerList: this.playerList
           });
           this.navCtrl.push(CollectPage, { players: this.playerPositions, event: this.event, collect: this.collect, playerList: this.playerList });
         });

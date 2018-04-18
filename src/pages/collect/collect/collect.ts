@@ -302,24 +302,24 @@ export class CollectPage {
         loader.dismiss();
         console.debug('[CollectPage] - restoreState - fetch context', 'fsmContext', this.fsmContext, 'gameState', this.gameState);
       } else {
-        console.debug('[CollectPage] - gameStates - new collect', 'playerPositions', this.playerPositions, 'playerList', this.playerList);
+        console.debug('[CollectPage] - restoreState - new collect', 'playerPositions', this.playerPositions, 'playerList', this.playerList);
         this.gameState = new GameState();
         this.gameState.eventId = this.currentEvent._id;
-        this.fillPlayers(this.playerPositions);
+        this.fillPlayers({});
         this.handFSM.start(this.fsmContext, FSMStates.INIT);
         loader.dismiss();
         this.saveSats();
-        console.debug('[CollectPage] - gameStates - new collect', 'fsmContext', this.fsmContext, 'gameState', this.gameState);
+        console.debug('[CollectPage] - restoreState - new collect', 'fsmContext', this.fsmContext, 'gameState', this.gameState);
       }
     });
   }
 
   /**
-   * 
+   * @param  {any} playerPositions
    */
   fillPlayers(playerPositions: any) {
     this.playerList = [];
-    let diff = Utils.objDiff(playerPositions, this.playerPositions);
+    let diff = Utils.objDiff(this.playerPositions, playerPositions);
     console.debug('[CollectPage] - fillPlayers - diff', diff);
 
     Object.keys(diff).forEach(k => {
@@ -575,7 +575,7 @@ export class CollectPage {
     if (!this.fsmContext.gamePhase) {
       this.presentToast(this.translations.collect.select_game_phase_first);
     } else if (this.handFSM.trigger(FSMEvents.selectPlayer)) {
-      if (this.fsmContext.selectedPlayer) {
+      if (this.fsmContext.selectedPlayer && this.fsmContext.gamePhase.attack) {
         this.statCollector.makePass(this.fsmContext, this.fsmContext.selectedPlayer.playerId, playerId);
       }
       this.fsmContext.selectedPlayer = this.playerMap[playerId];
