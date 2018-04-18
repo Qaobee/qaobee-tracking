@@ -9,7 +9,7 @@ import { ActivityCfgService } from './api/api.activityCfg.service';
 @Injectable()
 export class SettingsService {
   readonly locale: string;
-  activityCfg: { periodDuration: number, nbMaxPlayers: number, nbMinPlayers: number, nbPeriod: number, nbTimeout: number, timeoutDuration: number, yellowCardMax: number, exclusionTempo: number, halfTimeDuration: number };
+  private activityCfg: any;
   /**
    *
    * @param {TranslateService} translate
@@ -56,5 +56,13 @@ export class SettingsService {
    */
   getLanguage(): string {
     return this.locale;
+  }
+
+  getParametersGame(): { periodDuration: number, nbMaxPlayers: number, nbMinPlayers: number, nbPeriod: number, nbTimeout: number, timeoutDuration: number, yellowCardMax: number, exclusionTempo: number, halfTimeDuration: number } {
+    return this.activityCfg.parametersGame;
+  }
+
+  getActivityConfig(): any {
+    return this.activityCfg;
   }
 }

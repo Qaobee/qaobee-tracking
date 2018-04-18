@@ -29,7 +29,7 @@ export class ChronoComponent {
     private messageBus: MessageBus,
     private settingsService: SettingsService
   ) {
-    this.totalPeriod = this.settingsService.activityCfg.nbPeriod;
+    this.totalPeriod = this.settingsService.getParametersGame().nbPeriod;
     this.messageBus.on(ChronoComponent.PAUSE, () => {
       this.pause();
     });
@@ -54,8 +54,8 @@ export class ChronoComponent {
       .subscribe(() => {
         this.chrono += 1;
         this.chronoChange.emit(this.chrono);
-        if (this.chrono * 60 > this.settingsService.activityCfg.periodDuration * this.currentPhase) {
-          if (this.currentPhase === this.settingsService.activityCfg.nbPeriod) {
+        if (this.chrono * 60 > this.settingsService.getParametersGame().periodDuration * this.currentPhase) {
+          if (this.currentPhase === this.settingsService.getParametersGame().nbPeriod) {
             console.debug('[ChronoComponent] - start - game ended', this.chrono);
             this.stop();
             this.onGameEnded.emit(this.chrono);

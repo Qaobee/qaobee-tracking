@@ -152,6 +152,8 @@ export class TeamBuildPage {
     console.log('[TeamBuildPage] - goToCollect');
     let playerIds = [];
     let count = 0;
+
+    this.settingsService.init();
     Object.keys(this.playerPositions).forEach(k => {
       if (Array.isArray(this.playerPositions[k])) {
         count += this.playerPositions[k].length;
@@ -164,9 +166,9 @@ export class TeamBuildPage {
       }
     });
 
-    console.log('[TeamBuildPage] - goToCollect - count', this.settingsService.activityCfg.nbMinPlayers, count, this.settingsService.activityCfg.nbMaxPlayers);
-    if (count < this.settingsService.activityCfg.nbMinPlayers || count > this.settingsService.activityCfg.nbMaxPlayers) {
-      this.translateService.get('collect.team-build.team-limits', { min: this.settingsService.activityCfg.nbMinPlayers, max: this.settingsService.activityCfg.nbMaxPlayers }).subscribe(t => {
+    console.log('[TeamBuildPage] - goToCollect - count', this.settingsService.getParametersGame().nbMinPlayers, count, this.settingsService.getParametersGame().nbMaxPlayers);
+    if (count < this.settingsService.getParametersGame().nbMinPlayers || count > this.settingsService.getParametersGame().nbMaxPlayers) {
+      this.translateService.get('collect.team-build.team-limits', { min: this.settingsService.getParametersGame().nbMinPlayers, max: this.settingsService.getParametersGame().nbMaxPlayers }).subscribe(t => {
         this.presentToast(t);
       })
     } else {
@@ -180,7 +182,7 @@ export class TeamBuildPage {
         }, {
           indicators: ['all']
         }],
-        parametersGame: this.settingsService.activityCfg
+        parametersGame: this.settingsService.getParametersGame()
       };
 
       this.collectService.addCollect(this.collect).subscribe((c: any) => {
