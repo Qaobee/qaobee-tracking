@@ -30,6 +30,7 @@ export class HandFSM extends EasyFlow {
       on(FSMEvents.endChrono, finish(FSMStates.GAME_ENDED)),
       on(FSMEvents.startChrono,
         to(FSMStates.GAME_STARTED,
+          on(FSMEvents.doDefense, to(FSMStates.DEFENSE)),
           on(FSMEvents.endChrono, finish(FSMStates.GAME_ENDED)),
           on(FSMEvents.doPause,
             to(FSMStates.PAUSED,
