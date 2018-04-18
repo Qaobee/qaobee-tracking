@@ -4,14 +4,14 @@
             <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>{{ 'collect.team-build.title' | translate }}</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="goToCollect()">
+                <ion-icon name="stopwatch"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
     <team-build-component [playerList]="playerList" [(playerPositions)]="playerPositions"></team-build-component>
-    <ion-fab bottom right>
-        <button ion-fab mini (click)="goToCollect()">
-            <ion-icon name="stopwatch"></ion-icon>
-        </button>
-    </ion-fab>
 </ion-content>
