@@ -19,7 +19,6 @@
 import { NgModule } from '@angular/core';
 import { IonicModule } from "ionic-angular";
 import { MyApp } from "../app/app.component";
-import { Utils } from "../providers/utils";
 import { APIModule } from "../providers/api/api.module";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { createTranslateLoader } from "../app/app.module";
@@ -45,7 +44,6 @@ import { KeysPipe } from "./keys.pipe";
     KeysPipe
   ],
   providers: [
-    Utils
   ]
 })
 export class PipesModule {

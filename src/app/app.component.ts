@@ -1,4 +1,3 @@
-import { SettingsService } from './../providers/settings.service';
 /*
  *  __________________
  *  Qaobee
@@ -55,7 +54,6 @@ export class MyApp {
    * @param {Storage} storage
    * @param {AuthenticationService} authenticationService
    * @param {TranslateService} translate
-   * @param {SettingsService} settingsService
    * @param {MessageBus} eventService
    * @param {MetaService} metaService
    */
@@ -66,7 +64,6 @@ export class MyApp {
               private storage: Storage,
               private authenticationService: AuthenticationService,
               private translate: TranslateService,
-              private settingsService: SettingsService,
               private eventService: MessageBus,
               private metaService: MetaService) {
     this.initializeApp();
@@ -84,7 +81,6 @@ export class MyApp {
       this.splashScreen.hide();
       this.buildMenu();
       this.trySSO();
-      this.settingsService.init();
 
       this.eventService.on(MessageBus.userLogged, user => {
         this.user = user;
