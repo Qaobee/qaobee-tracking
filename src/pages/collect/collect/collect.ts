@@ -56,16 +56,16 @@ export class CollectPage {
   translations: any = {};
 
   ground = [
-    [{ key: 'pivot', label: 'Pivot', class: 'blue-grey' }],
+    [{ key: 'pivot', label: 'pivot', class: 'blue-grey' }],
     [
-      { key: 'left-backcourt', label: 'Back-court', class: 'white' },
-      { key: 'center-backcourt', label: 'Back-court', class: 'white' },
-      { key: 'right-backcourt', label: 'Back-court', class: 'white' }
+      { key: 'left-backcourt', label: 'left_backcourt', class: 'white' },
+      { key: 'center-backcourt', label: 'center_backcourt', class: 'white' },
+      { key: 'right-backcourt', label: 'right_backcourt', class: 'white' }
     ],
     [
-      { key: 'left-wingman', label: 'Wing-man', class: 'white' },
-      { key: 'goalkeeper', label: 'Goalkeeper', class: 'red' },
-      { key: 'right-wingman', label: 'Wing-man', class: 'white' }
+      { key: 'left-wingman', label: 'left_wingman', class: 'white' },
+      { key: 'goalkeeper', label: 'goalkeeper', class: 'red' },
+      { key: 'right-wingman', label: 'right_wingman', class: 'white' }
     ]
   ];
 

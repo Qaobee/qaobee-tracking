@@ -22,6 +22,7 @@ import { PersonService } from "../../../providers/api/api.person.service";
 import { AuthenticationService } from "../../../providers/authentication.service";
 import { Storage } from "@ionic/storage";
 import { ENV } from "@app/env";
+import { TranslateService } from '@ngx-translate/core';
 import { SettingsService } from "../../../providers/settings.service";
 import { CollectPage } from "../collect/collect";
 import moment from 'moment';
@@ -34,7 +35,6 @@ import { GameState } from '../../../model/game.state';
   templateUrl: 'team-build.html',
 })
 export class TeamBuildPage {
-  // TODO : i18n
   root: string = ENV.hive;
   event: any;
   playerList: any[] = [];
@@ -54,6 +54,7 @@ export class TeamBuildPage {
    * @param {PersonService} personService
    * @param {SettingsService} settingsService
    * @param {AuthenticationService} authenticationService
+   * @param {TranslateService} translateService
    * @param {CollectService} collectService
    * @param {EffectiveService} effectiveService
    */
@@ -64,6 +65,7 @@ export class TeamBuildPage {
     private personService: PersonService,
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
+    private translateService: TranslateService,
     private collectService: CollectService,
     private effectiveService: EffectiveService,
   ) {
@@ -118,10 +120,12 @@ export class TeamBuildPage {
     if (collects.length > 0 && collects[0].eventRef._id === this.event._id) {
       this.storage.get('gameState-' + this.event._id).then((gameState: GameState) => {
         if (gameState) {
-          this.presentToast('Collect in progress');
-          console.log('[TeamBuildPage] - Collect in progress', collects[0]);
-          this.collect = collects[0];
-          this.goToResumeCollect();
+          this.translateService.get('collect.team-build.collect-in-progress').subscribe(t => {
+            this.presentToast(t);
+            console.log('[TeamBuildPage] - Collect in progress', collects[0]);
+            this.collect = collects[0];
+            this.goToResumeCollect();
+          });
         }
       });
     }
@@ -146,7 +150,6 @@ export class TeamBuildPage {
    */
   goToCollect() {
     console.log('[TeamBuildPage] - goToCollect');
-
     let playerIds = [];
     let count = 0;
     Object.keys(this.playerPositions).forEach(k => {
@@ -160,8 +163,12 @@ export class TeamBuildPage {
         count++
       }
     });
+
+    console.log('[TeamBuildPage] - goToCollect - count', this.settingsService.activityCfg.nbMinPlayers, count, this.settingsService.activityCfg.nbMaxPlayers);
     if (count < this.settingsService.activityCfg.nbMinPlayers || count > this.settingsService.activityCfg.nbMaxPlayers) {
-      this.presentToast('Your team must have between ' + this.settingsService.activityCfg.nbMinPlayers + ' and ' + this.settingsService.activityCfg.nbMaxPlayers + ' players');
+      this.translateService.get('collect.team-build.team-limits', { min: this.settingsService.activityCfg.nbMinPlayers, max: this.settingsService.activityCfg.nbMaxPlayers }).subscribe(t => {
+        this.presentToast(t);
+      })
     } else {
       this.collect = {
         status: 'pending',
@@ -173,7 +180,7 @@ export class TeamBuildPage {
         }, {
           indicators: ['all']
         }],
-        parametersGame: this.settingsService.getCollectInfos()
+        parametersGame: this.settingsService.activityCfg
       };
 
       this.collectService.addCollect(this.collect).subscribe((c: any) => {

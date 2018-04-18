@@ -6,15 +6,15 @@
                     <ion-avatar>
                         <img [src]="getAvatar(playerPositions[pos.key]?.avatar)" alt="avatar">
                     </ion-avatar>
-                    <ion-label>{{ playerPositions[pos.key]?.name || pos.label }}
-                        <ion-badge>{{ playerPositions[pos.key]?.status.squadnumber || '?' }}</ion-badge>
+                    <ion-label>{{ playerPositions[pos.key]?.name || 'collect.positions.' + pos.label | translate }}
+                        <ion-badge>{{ playerPositions[pos.key]?.status.squadnumber || '' }}</ion-badge>
                     </ion-label>
                 </ion-chip>
             </ion-col>
         </ion-row>
     </ion-grid>
     <ion-grid id="substitute-area">
-        <h4>Substitutes</h4>
+        <h4>{{ 'collect.team-build.substitutes' | translate }}</h4>
         <ion-fab right edge>
             <button ion-fab mini (click)="showSubstituesChooser('substitutes')">
                 <ion-icon name="add"></ion-icon>

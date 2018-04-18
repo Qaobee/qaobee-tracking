@@ -29,7 +29,7 @@ export class ChronoComponent {
     private messageBus: MessageBus,
     private settingsService: SettingsService
   ) {
-    this.totalPeriod = this.settingsService.activityCfg.parametersGame.nbPeriod;
+    this.totalPeriod = this.settingsService.activityCfg.nbPeriod;
     this.messageBus.on(ChronoComponent.PAUSE, () => {
       this.pause();
     });
