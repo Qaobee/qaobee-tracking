@@ -83,6 +83,15 @@ export class PlayerUpsertPage {
 
     } else {
       this.player = navParams.get('player');
+      
+      if(!this.player.contact) {
+        this.player.contact = {};
+      }
+
+      if(!this.player.status) {
+        this.player.status = {};
+      }
+
       if (this.player.birthdate) {
         this.birthdatePlayer = moment(this.player.birthdate).format("YYYY-MM-DD");
       }
@@ -106,6 +115,7 @@ export class PlayerUpsertPage {
       'email': [this.player.contact.email || ''],
       'address': [this.address || '']
     });
+
 
     this.activityCfgService.getParamFieldList(authenticationService.meta.activity._id, 'listPositionType').subscribe((listPositionType: any[]) => {
       if (listPositionType) {
