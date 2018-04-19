@@ -155,6 +155,7 @@
     "titleNotFound": "Planifier un match"
   },
   "collect": {
+    "period": "Période",
     "select_game_phase_first": "Veuillez sélectionner une phase de jeu (attaque ou défense)",
     "ended_popup_title": "Collecte terminée",
     "select_player": "Veuillez sélectionner un joueur",

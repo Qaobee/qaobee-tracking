@@ -155,6 +155,7 @@
     "titleNotFound": "Plan a match"
   },
   "collect": {
+    "period": "Period",
     "team-build": {
       "title": "Team build",
       "substitutes": "Substitutes",
