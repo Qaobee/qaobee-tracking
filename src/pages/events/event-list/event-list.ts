@@ -56,7 +56,6 @@ export class EventListPage {
    * @param {AuthenticationService} authenticationService
    * @param {SettingsService} settingsService
    * @param {CollectService} collectService
-   * @param {Utils} utils
    */
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -64,8 +63,7 @@ export class EventListPage {
               private storage: Storage,
               private authenticationService: AuthenticationService,
               private settingsService: SettingsService,
-              private collectService: CollectService,
-              private utils: Utils) {
+              private collectService: CollectService) {
     this.datePipe = new DatePipe(this.settingsService.getLanguage());
 
   }
@@ -145,7 +143,7 @@ export class EventListPage {
   private populateEvents(events: any[]) {
     console.debug('[EventListPage] - populateEvents', events);
     this.eventList = {};
-    events.sort(this.utils.compareEvents);
+    events.sort(Utils.compareEvents);
     events.forEach(e => {
       let startDateStr = this.datePipe.transform(e.startDate, 'MMMM  - yyyy');
       if (!this.eventList.hasOwnProperty(startDateStr)) {

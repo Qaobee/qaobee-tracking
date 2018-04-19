@@ -43,14 +43,12 @@ export class NextEventComponent {
    * @param {Storage} storage
    * @param {AuthenticationService} authenticationService
    * @param {MessageBus} eventService
-   * @param {Utils} utils
    */
   constructor(public navCtrl: NavController,
               private eventsServices: EventsService,
               private storage: Storage,
               private authenticationService: AuthenticationService,
-              private eventService: MessageBus,
-              private utils: Utils) {
+              private eventService: MessageBus) {
 
     this.user = this.authenticationService.user;
     this.storage.get('events').then(events => {
@@ -74,7 +72,7 @@ export class NextEventComponent {
   }
 
   private getLastEvent(eventList: any) {
-    let events = eventList.sort(this.utils.compareEvents);
+    let events = eventList.sort(Utils.compareEvents);
 
     if (events.length > 0) {
       for (let index = 0; index < events.length; index++) {

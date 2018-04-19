@@ -5,7 +5,8 @@
     "Submit": "Valider",
     "Cancel": "Annuler",
     "Search": "Rechercher",
-    "Ok": "Ok"
+    "Ok": "Ok",
+    "Clear": "Effacer"
   },
   "format": {
     "displayDate": "DD/MM/YYYY",
@@ -165,6 +166,14 @@
     "positive_actions": "Actions positives",
     "negative_actions": "Actions négatives",
     "substitution": "Changement de joueur",
+    "team-build" : {
+      "title": "Composition d'équipe",
+      "substitutes": "Remplaçants",
+      "player-choose": "Choisissez un joueur",
+      "players-choose": "Choisissez les joueurs",
+      "collect-in-progress": "Collecte en cours",
+      "team-limits": "Votre équipe doit avoir entre {{min}} et {{max}} joueurs."
+    },
     "indicators": {
       "interceptionKo": "Interception ratée",
       "duelLoose": "Duel perdu",

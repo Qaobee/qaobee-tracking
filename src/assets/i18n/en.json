@@ -5,7 +5,8 @@
     "Submit": "Submit",
     "Cancel": "Cancel",
     "Search": "Search",
-    "Ok": "Ok"
+    "Ok": "Ok",
+    "Clear": "Clear"
   },
   "format": {
     "displayDate": "MM/DD//YYYY",
@@ -68,7 +69,7 @@
   },
   "signup": {
     "TitleNavBar": "Subscription",
-    "Title":  "Subscription",
+    "Title": "Subscription",
     "login": "Login",
     "email": "Email",
     "password": "Password",
@@ -154,6 +155,14 @@
     "titleNotFound": "Plan a match"
   },
   "collect": {
+    "team-build": {
+      "title": "Team build",
+      "substitutes": "Substitutes",
+      "player-choose": "Choose player",
+      "players-choose": "Choose players",
+      "collect-in-progress": "Collect in progress",
+      "team-limits": "Your team must have between {{min}} and {{max}} players"
+    },
     "select_game_phase_first": "Choose a game phase (attack or defense)",
     "ended_popup_title": "Collect is over",
     "select_player": "You must select a player",
@@ -235,10 +244,10 @@
     }
   },
   "component": {
-    "stats":{
-      "shoot":{
-        "efficiency":{
-          "title":"Efficiency",
+    "stats": {
+      "shoot": {
+        "efficiency": {
+          "title": "Efficiency",
           "goal": "Goals",
           "shoot": "Shoots",
           "goalAverage": "Goals / match",

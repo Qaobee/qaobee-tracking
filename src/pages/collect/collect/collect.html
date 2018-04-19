@@ -25,7 +25,7 @@
                             <ion-col text-center class="small">{{ 'collect.timeout' | translate }}</ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-col text-center >
+                            <ion-col text-center>
                                 <ion-checkbox (ionChange)="timeoutUs(0, $event)" [(ngModel)]="timeoutUsState[0]"></ion-checkbox>
                             </ion-col>
                             <ion-col text-center>
@@ -89,7 +89,7 @@
         <ion-grid id="ground-area">
             <ion-row *ngFor="let area of ground">
                 <ion-col text-center *ngFor="let pos of area" ion-col>
-                    <ion-fab center middle>
+                    <ion-fab center middle *ngIf="playerPositions[pos.key]">
                         <button ion-fab mini color="{{getColor(playerPositions[pos.key]?._id, pos.class)}}" (click)="doSelectPlayer(playerPositions[pos.key]?._id)">
                             {{ playerPositions[pos.key]?.status.squadnumber || '?' }}
                         </button>
@@ -137,13 +137,15 @@
             </ion-row>
             <ion-row>
                 <ion-col text-center>
-                    <ion-select [(ngModel)]="gameState.homeGameSystem">
-                        <ion-option *ngFor="let gs of gameSystem" value="{{gs}}">{{gs}}</ion-option>
+                    <ion-select [(ngModel)]="gameState.homeGameSystem" (ionChange)="homeGameSystem($event)" okText="{{ 'actionButton.Ok' | translate }}"
+                        cancelText="{{ 'actionButton.Cancel' | translate }}">
+                        <ion-option *ngFor="let gs of gameSystem" [value]="gs">{{gs}}</ion-option>
                     </ion-select>
                 </ion-col>
                 <ion-col text-center>
-                    <ion-select [(ngModel)]="gameState.visitorGameSystem">
-                        <ion-option *ngFor="let gs of gameSystem" value="{{gs}}">{{gs}}</ion-option>
+                    <ion-select [(ngModel)]="gameState.visitorGameSystem" (ionChange)="visitorGameSystem($event)" okText="{{ 'actionButton.Ok' | translate }}"
+                        cancelText="{{ 'actionButton.Cancel' | translate }}">
+                        <ion-option *ngFor="let gs of gameSystem" [value]="gs">{{gs}}</ion-option>
                     </ion-select>
                 </ion-col>
             </ion-row>
