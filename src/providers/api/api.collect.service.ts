@@ -68,6 +68,7 @@ export class CollectService extends ApiService {
    * @param  {number} endDate
    */
   getCollects(sandboxId: string, eventId: string, effectiveId: string, teamId: string, startDate: number, endDate: number) {
+    // FIXME : cette requête ne ramenera jamais une liste mais un seule collecte, car il n'y a qu'une collecte par eventId. L'argument eventId suffit à lui seul
     let request = {
       eventId: eventId,
       effectiveId: effectiveId,
@@ -77,6 +78,16 @@ export class CollectService extends ApiService {
       endDate: endDate
     };
     return this.http.post<any>(ENV.hive + this.rootPath + '/sandbox/stats/collect/list', request, this.addHeaderToken()).pipe(
+      catchError(this.handleError('MetaServices.getMeta'))
+    );
+  }
+
+  /**
+   * 
+   * @param search
+   */
+  getCollectList(search: any) {
+    return this.http.post<any>(ENV.hive + this.rootPath + '/sandbox/stats/collect/list', search, this.addHeaderToken()).pipe(
       catchError(this.handleError('MetaServices.getMeta'))
     );
   }

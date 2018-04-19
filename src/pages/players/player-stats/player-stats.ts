@@ -22,6 +22,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { PersonService } from '../../../providers/api/api.person.service';
 import { APIStatsService } from '../../../providers/api/api.stats';
+import { CollectService } from './../../../providers/api/api.collect.service';
 import { AuthenticationService } from '../../../providers/authentication.service';
 
 import { Chart } from 'chart.js';
@@ -34,6 +35,7 @@ export class PlayerStatsPage {
 
   player: any;
   ownerId: any[] = [];
+  numberMatch: number = 1;
   stats: any[] = [];
 
   @ViewChild('barCanvas') barCanvas;
@@ -52,11 +54,37 @@ export class PlayerStatsPage {
               public navParams: NavParams,
               private personService: PersonService,
               private statsService: APIStatsService,
+              private collectService: CollectService,
               private translateService: TranslateService,
               private authenticationService: AuthenticationService) {
 
     this.player = navParams.get('player');
     this.ownerId.push(this.player._id);
+
+    this.searchPlayerUse();
+
+  }
+
+  searchPlayerUse() {
+    
+    let indicators = ['holder', 'substitue', 'totalPlayTime'];
+    let listFieldsGroupBy = ['code','eventId'];
+    
+    let search = {
+      listIndicators: indicators,
+      listOwners: this.ownerId,
+      startDate: this.authenticationService.meta.season.startDate,
+      endDate: this.authenticationService.meta.season.endDate,
+      aggregat: 'SUM',
+      listFieldsGroupBy: listFieldsGroupBy
+    };
+    console.log('search ========> ',search);
+    this.statsService.getStatGroupBy(search).subscribe((result: any[]) => {
+      if(result.length>0){
+        console.log('result ========> ',result);
+        this.numberMatch = 2;    
+      }
+    });
   }
 
   ionViewDidEnter() {
