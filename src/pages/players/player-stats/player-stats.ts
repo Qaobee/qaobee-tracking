@@ -35,7 +35,9 @@ export class PlayerStatsPage {
 
   player: any;
   ownerId: any[] = [];
-  numberMatch: number = 1;
+  numberMatch: number = 0;
+  numberHolder: number = 0;
+  avgPlaytime: number = 0;
   stats: any[] = [];
 
   @ViewChild('barCanvas') barCanvas;
@@ -67,10 +69,39 @@ export class PlayerStatsPage {
 
   searchPlayerUse() {
     
-    let indicators = ['holder', 'substitue', 'totalPlayTime'];
-    let listFieldsGroupBy = ['code','eventId'];
+    // holder vs substitue
+    let indicators = ['holder', 'substitue'];
+    let listFieldsGroupBy = ['code'];
     
     let search = {
+      listIndicators: indicators,
+      listOwners: this.ownerId,
+      startDate: this.authenticationService.meta.season.startDate,
+      endDate: this.authenticationService.meta.season.endDate,
+      aggregat: 'COUNT',
+      listFieldsGroupBy: listFieldsGroupBy
+    };
+    
+    this.statsService.getStatGroupBy(search).subscribe((result: any[]) => {
+      if(result.length>0){
+        for (let index = 0; index < result.length; index++) {
+          const element = result[index];
+
+          if(element._id.code==='holder'){
+            this.numberHolder = element.value;
+            this.numberMatch = this.numberMatch + element.value;
+          }
+          if(element._id.code==='substitue'){
+            this.numberMatch = this.numberMatch + element.value;
+          }
+        }  
+      }
+    });
+
+    //Total playtime
+    indicators = ['totalPlayTime'];
+    
+    search = {
       listIndicators: indicators,
       listOwners: this.ownerId,
       startDate: this.authenticationService.meta.season.startDate,
@@ -78,11 +109,10 @@ export class PlayerStatsPage {
       aggregat: 'SUM',
       listFieldsGroupBy: listFieldsGroupBy
     };
-    console.log('search ========> ',search);
+    
     this.statsService.getStatGroupBy(search).subscribe((result: any[]) => {
       if(result.length>0){
-        console.log('result ========> ',result);
-        this.numberMatch = 2;    
+        this.avgPlaytime = result[0].value;
       }
     });
   }

@@ -76,7 +76,7 @@ export class StatsShootEfficiencyComponent {
 
     this.statsService.getStatGroupBy(search).subscribe((result: any[]) => {
       if(result.length>0){
-        this.efficiencyAverage = this.precisionRound((result[0].value/result[1].value)*100,-1);
+        this.efficiencyAverage = this.precisionRound((result[0].value/result[1].value)*100,2);
         this.goalAverage = this.precisionRound(result[0].value/this.numberMatch,2);
         this.shootAverage = this.precisionRound(result[1].value/this.numberMatch,2);
 
