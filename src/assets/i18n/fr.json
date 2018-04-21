@@ -245,6 +245,7 @@
   },
   "component": {
     "stats":{
+      "statsNotFound":"Aucunes Stats trouvées",
       "detail": "Plus de détails",
       "shoot":{
         "efficiency":{

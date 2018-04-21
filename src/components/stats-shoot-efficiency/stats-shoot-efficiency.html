@@ -3,7 +3,12 @@
     <h1 >{{efficiencyLabel}}</h1>
   </ion-col>
 </ion-row>
-<ion-row text-center>
+<ion-row text-center *ngIf="statsNotFound">
+  <ion-col>
+    <h2>{{'component.stats.statsNotFound' | translate}}</h2>
+  </ion-col>
+</ion-row>
+<ion-row text-center *ngIf="!statsNotFound">
   <ion-col class="bigText">
     {{efficiencyAverage}} %
   </ion-col>

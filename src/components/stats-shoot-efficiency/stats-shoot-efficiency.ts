@@ -40,6 +40,7 @@ export class StatsShootEfficiencyComponent {
   
   @ViewChild('doughnutCanvas') doughnutCanvas;
   doughnutChart: any;
+  statsNotFound: boolean = false;
   efficiencyAverage: number = 0;
   goalAverage: number = 0;
   shootAverage: number = 0;
@@ -48,6 +49,7 @@ export class StatsShootEfficiencyComponent {
   efficiencyLabel: string ='';
   goalAverageLabel: string ='';
   shootAverageLabel: string ='';
+
 
   /**
    * 
@@ -90,28 +92,28 @@ export class StatsShootEfficiencyComponent {
       listFieldsGroupBy: listFieldsGroupBy
     };
 
-    this.statsService.getStatGroupBy(search).subscribe((result: any[]) => {
-      if(result.length>0){
-        //average efficiency
-        if (this.positionType === 'goalkeeper') {
-          this.efficiencyAverage = Utils.precisionRound((1-(result[0].value/result[1].value))*100,2);
-          this.goalTotal = result[0].value;
-          this.shootTotal = result[1].value;
-        } else {
-          this.efficiencyAverage = Utils.precisionRound((result[0].value/result[1].value)*100,2);
-          this.goalTotal = result[0].value;
-          this.shootTotal = result[1].value-result[0].value;
-        }
+    this.translateService.get(labels).subscribe(
+      value => {
+        this.efficiencyLabel = value.title;
+        this.goalAverageLabel = value.goalAverage;
+        this.shootAverageLabel = value.shootAverage;
 
-        //average shoot, goal, stop
-        this.goalAverage = Utils.precisionRound(result[0].value/this.numberMatch,2);
-        this.shootAverage = Utils.precisionRound(result[1].value/this.numberMatch,2);
+        this.statsService.getStatGroupBy(search).subscribe((result: any[]) => {
+          if(result.length>0){
+            //average efficiency
+            if (this.positionType === 'goalkeeper') {
+              this.efficiencyAverage = Utils.precisionRound((1-(result[0].value/result[1].value))*100,2);
+              this.goalTotal = result[0].value;
+              this.shootTotal = result[1].value;
+            } else {
+              this.efficiencyAverage = Utils.precisionRound((result[0].value/result[1].value)*100,2);
+              this.goalTotal = result[0].value;
+              this.shootTotal = result[1].value-result[0].value;
+            }
 
-        this.translateService.get(labels).subscribe(
-          value => {
-            this.efficiencyLabel = value.title;
-            this.goalAverageLabel = value.goalAverage;
-            this.shootAverageLabel = value.shootAverage;
+            //average shoot, goal, stop
+            this.goalAverage = Utils.precisionRound(result[0].value/this.numberMatch,2);
+            this.shootAverage = Utils.precisionRound(result[1].value/this.numberMatch,2);
 
             this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
               type: 'doughnut',
@@ -132,9 +134,30 @@ export class StatsShootEfficiencyComponent {
                 }]
               }
             });    
+          } else {
+            this.statsNotFound = true;
+            this.doughnutChart = new Chart(this.doughnutCanvas.nativeElement, {
+              type: 'doughnut',
+              data: {
+                labels: [value.goal, value.shoot],
+                datasets: [{
+                  
+                  data: [this.goalTotal, this.shootTotal],
+                  backgroundColor: [
+                    'rgba(139,195,74,0.5)',
+                    'rgba(234,83,80,0.8)'
+                  ],
+                  borderWidth: 2,
+                  hoverBackgroundColor: [
+                    'rgba(139,195,74,1)',
+                    'rgba(234,83,80,1)'
+                  ]
+                }]
+              }
+            });  
           }
-        )
-      }
+        }
+      )
     });
   }
 }

@@ -64,10 +64,18 @@ export class PlayerStatsPage {
     this.player = navParams.get('player');
     this.ownerId.push(this.player._id);
 
-    this.searchPlayerUse();
-
   }
 
+  /**
+   * 
+   */
+  ionViewDidEnter(){
+    this.searchPlayerUse();
+  }
+
+  /**
+   * 
+   */
   searchPlayerUse() {
     
     // holder vs substitue
@@ -95,29 +103,31 @@ export class PlayerStatsPage {
           if(element._id.code==='substitue'){
             this.numberMatch = this.numberMatch + element.value;
           }
-        }  
-      }
-    });
+        }
 
-    //Total playtime
-    indicators = ['totalPlayTime'];
-    
-    search = {
-      listIndicators: indicators,
-      listOwners: this.ownerId,
-      startDate: this.authenticationService.meta.season.startDate,
-      endDate: this.authenticationService.meta.season.endDate,
-      aggregat: 'SUM',
-      listFieldsGroupBy: listFieldsGroupBy
-    };
-    
-    this.statsService.getStatGroupBy(search).subscribe((result: any[]) => {
-      if(result.length>0){
-        this.avgPlaytime = Utils.precisionRound(result[0].value/(60*this.numberMatch),-1);
+        //Total playtime
+        indicators = ['totalPlayTime'];
+        
+        search = {
+          listIndicators: indicators,
+          listOwners: this.ownerId,
+          startDate: this.authenticationService.meta.season.startDate,
+          endDate: this.authenticationService.meta.season.endDate,
+          aggregat: 'SUM',
+          listFieldsGroupBy: listFieldsGroupBy
+        };
+        
+        this.statsService.getStatGroupBy(search).subscribe((result: any[]) => {
+          if(result.length>0){
+            console.log(result);
+            console.log(this.numberMatch);
+            this.avgPlaytime = Utils.precisionRound(result[0].value/(60*this.numberMatch),-1);
+          }
+        });
       }
     });
   }
-
+  /*
   ionViewDidEnter() {
     this.barChart = new Chart(this.barCanvas.nativeElement, {
       type: 'bar',
@@ -169,4 +179,5 @@ export class PlayerStatsPage {
       }
     });
   }
+  */
 }
