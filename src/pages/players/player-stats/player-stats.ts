@@ -24,6 +24,7 @@ import { PersonService } from '../../../providers/api/api.person.service';
 import { APIStatsService } from '../../../providers/api/api.stats';
 import { CollectService } from './../../../providers/api/api.collect.service';
 import { AuthenticationService } from '../../../providers/authentication.service';
+import { Utils } from './../../../providers/utils';
 
 import { Chart } from 'chart.js';
 
@@ -112,7 +113,7 @@ export class PlayerStatsPage {
     
     this.statsService.getStatGroupBy(search).subscribe((result: any[]) => {
       if(result.length>0){
-        this.avgPlaytime = result[0].value;
+        this.avgPlaytime = Utils.precisionRound(result[0].value/(60*this.numberMatch),-1);
       }
     });
   }

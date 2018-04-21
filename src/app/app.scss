@@ -46,6 +46,13 @@ h3 {
   margin: 0 auto;
 }
 
+.enteteDefault{
+  background-color: color($colors, primary, base);
+  padding: 0 auto;
+  margin: 0 auto;
+  color : white;
+}
+
 .enteteDark{
   background-color: color($colors, dark, base);
   padding: 0 auto;
