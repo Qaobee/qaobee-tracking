@@ -17,7 +17,7 @@
  *  from Qaobee.
  */
 
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { PersonService } from '../../../providers/api/api.person.service';
@@ -25,8 +25,6 @@ import { APIStatsService } from '../../../providers/api/api.stats';
 import { CollectService } from './../../../providers/api/api.collect.service';
 import { AuthenticationService } from '../../../providers/authentication.service';
 import { Utils } from './../../../providers/utils';
-
-import { Chart } from 'chart.js';
 
 @Component({
   selector: 'page-player-stats',
@@ -40,9 +38,6 @@ export class PlayerStatsPage {
   numberHolder: number = 0;
   avgPlaytime: number = 0;
   stats: any[] = [];
-
-  @ViewChild('barCanvas') barCanvas;
-  barChart: any;
 
   /**
    *
@@ -119,65 +114,10 @@ export class PlayerStatsPage {
         
         this.statsService.getStatGroupBy(search).subscribe((result: any[]) => {
           if(result.length>0){
-            console.log(result);
-            console.log(this.numberMatch);
             this.avgPlaytime = Utils.precisionRound(result[0].value/(60*this.numberMatch),-1);
           }
         });
       }
     });
   }
-  /*
-  ionViewDidEnter() {
-    this.barChart = new Chart(this.barCanvas.nativeElement, {
-      type: 'bar',
-      data: {
-        labels: ["15'", "30'", "45'", "60'"],
-        datasets: [{
-          label: "Actions positives",
-          data: [12, 19, 30, 5],
-          backgroundColor: [
-            'rgba(139,195,74,0.5)',
-            'rgba(139,195,74,0.5)',
-            'rgba(139,195,74,0.5)',
-            'rgba(139,195,74,0.5)'
-          ],
-          borderColor: [
-            'rgba(139,195,74,1)',
-            'rgba(139,195,74,1)',
-            'rgba(139,195,74,1)',
-            'rgba(139,195,74,1)'
-          ],
-          borderWidth: 1
-        },
-        {
-          label: "Actions negatives",
-          data: [6, 25, 20, 15],
-          backgroundColor: [
-            'rgba(234,83,80,0.8)',
-            'rgba(234,83,80,0.8)',
-            'rgba(234,83,80,0.8)',
-            'rgba(234,83,80,0.8)'
-          ],
-          borderColor: [
-            'rgba(234,83,80,1)',
-            'rgba(234,83,80,1)',
-            'rgba(234,83,80,1)',
-            'rgba(234,83,80,1)'
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: false
-            }
-          }]
-        }
-      }
-    });
-  }
-  */
 }

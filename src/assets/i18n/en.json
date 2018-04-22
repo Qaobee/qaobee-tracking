@@ -264,6 +264,13 @@
             "shootAverage": "Avg. goals / match"
           }
         } 
+      },
+      "highlights":{
+        "quarter":{
+          "title":"Performances",
+          "actionsOk": "Good actions",
+          "actionsKo": "Bad actions"
+        }
       }
     }
   }

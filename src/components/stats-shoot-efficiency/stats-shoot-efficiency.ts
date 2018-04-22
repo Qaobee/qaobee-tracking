@@ -17,10 +17,8 @@
  *  from Qaobee.
  */
 
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component, Input, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { PersonService } from './../../providers/api/api.person.service';
 import { APIStatsService } from './../../providers/api/api.stats';
 import { AuthenticationService } from './../../providers/authentication.service';
 import { Utils } from "../../providers/utils";
@@ -53,17 +51,11 @@ export class StatsShootEfficiencyComponent {
 
   /**
    * 
-   * @param navCtrl 
-   * @param navParams 
-   * @param personService 
    * @param statsService 
    * @param translateService 
    * @param authenticationService 
    */
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              private personService: PersonService,
-              private statsService: APIStatsService,
+  constructor(private statsService: APIStatsService,
               private translateService: TranslateService,
               private authenticationService: AuthenticationService) {
   }

@@ -26,6 +26,7 @@ import { NavController, NavParams } from 'ionic-angular';
 export class EventStatsPage {
 
   event: any;
+  ownerId: any[] = []
 
   /**
    *
@@ -35,6 +36,7 @@ export class EventStatsPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams) {
     this.event = navParams.get('event');
+    this.ownerId.push(this.event._id);
   }
 
   ionViewDidLoad() {

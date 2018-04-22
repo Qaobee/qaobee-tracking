@@ -264,6 +264,13 @@
             "shootAverage": "Moy. buts / match"
           }  
         }
+      },
+      "highlights":{
+        "quarter":{
+          "title":"Performances",
+          "actionsOk": "Actions positives",
+          "actionsKo": "Actions négatives"
+        }
       }
     }
   }

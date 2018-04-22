@@ -35,11 +35,6 @@
 					[numberMatch]="numberMatch" 
 					[positionType]="player.status.positionType.code">
 				</stats-shoot-efficiency>
-				<ion-row text-right class="enteteLight">
-					<ion-col>
-							{{'component.stats.detail' | translate}} <ion-icon  name="eye"></ion-icon>
-					</ion-col>
-				</ion-row>
 		</ion-item>
 
 		<!-- player's use -->
@@ -84,21 +79,7 @@
 	
 		<!-- player's efficiency -->
 		<ion-item>
-			<ion-row text-center>
-				<ion-col>
-					<h1>Régularité</h1>
-				</ion-col>
-			</ion-row>
-			<ion-row text-center>
-				<ion-col>
-					<canvas #barCanvas></canvas>
-				</ion-col>
-			</ion-row>
-			<ion-row text-right class="enteteLight">
-				<ion-col>
-						{{'component.stats.detail' | translate}} <ion-icon  name="eye"></ion-icon>
-				</ion-col>
-			</ion-row>
+			<stats-highligths-by-quarter [ownerId]="ownerId"></stats-highligths-by-quarter>
 		</ion-item>
 	</ion-list>
 </ion-content>

@@ -34,3 +34,8 @@
     <h2>{{shootAverage}}</h2>
   </ion-col>
 </ion-row>
+<ion-row text-right class="enteteLight" *ngIf="!statsNotFound">
+  <ion-col>
+      {{'component.stats.detail' | translate}} <ion-icon  name="eye"></ion-icon>
+  </ion-col>
+</ion-row>

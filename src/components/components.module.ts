@@ -31,6 +31,7 @@ import {HttpClient} from "@angular/common/http";
 import {ChronoComponent} from "./chrono/chrono.component";
 import { SassHelperComponent } from './sass-helper.component';
 import { StatsShootEfficiencyComponent } from './stats-shoot-efficiency/stats-shoot-efficiency';
+import { StatsHighligthsByQuarterComponent } from './stats-highligths-by-quarter/stats-highligths-by-quarter';
 
 @NgModule({
     declarations: [
@@ -39,7 +40,8 @@ import { StatsShootEfficiencyComponent } from './stats-shoot-efficiency/stats-sh
         LastCollectComponent,
         SassHelperComponent,
         ChronoComponent,
-    StatsShootEfficiencyComponent
+    StatsShootEfficiencyComponent,
+    StatsHighligthsByQuarterComponent
     ],
     imports: [
         IonicModule.forRoot(MyApp),
@@ -58,7 +60,8 @@ import { StatsShootEfficiencyComponent } from './stats-shoot-efficiency/stats-sh
         LastCollectComponent,
         ChronoComponent,
         SassHelperComponent,
-    StatsShootEfficiencyComponent
+    StatsShootEfficiencyComponent,
+    StatsHighligthsByQuarterComponent
     ],
     providers: [
         Utils
