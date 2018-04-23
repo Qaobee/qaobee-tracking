@@ -13,14 +13,33 @@
 </ion-header>
 
 <ion-content *ngIf="event">  
-  <ion-item color="light" text-center>
-      <h2>{{ event.label }}</h2>
+  <ion-item class="enteteLight" text-center>
+      <h1>{{ event.label }}</h1>
   </ion-item>
 
   <ion-item text-center>
-    <h1>Stats à venir...</h1>
+    <ion-row text-center>
+      <ion-col>
+        <h1> Score</h1>
+      </ion-col>
+    </ion-row>
+    <ion-row text-center class="enteteDefault">
+      <ion-col>
+        {{event.participants.teamHome.label}}
+      </ion-col>
+      <ion-col>
+          {{event.participants.teamVisitor.label}}
+      </ion-col>
+    </ion-row>
+    <ion-row text-center>
+      <ion-col>
+        <h1>{{scoreHome}}</h1> 
+      </ion-col>
+      <ion-col>
+        <h1>{{scoreVisitor}}</h1>
+      </ion-col>
+    </ion-row>
   </ion-item>
-
   <ion-item>
     <stats-highligths-by-quarter [ownerId]="ownerId"></stats-highligths-by-quarter>
 </ion-item>

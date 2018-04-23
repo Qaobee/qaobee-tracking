@@ -32,6 +32,7 @@
       <p *ngIf="(item.desactivated === 'true')">{{'player.labels.desactivated' | translate}}</p>
       <p *ngIf="(item.desactivated !== 'true')">{{item.status.positionType.label}}</p>
       <ion-badge color="secondary" item-end>{{item.status.squadnumber}}</ion-badge>
+      <ion-icon item-end name="stats" color="danger" (click)="goToStats(item, $event)"></ion-icon>
     </ion-item>  
   </ion-list>
 </ion-content>

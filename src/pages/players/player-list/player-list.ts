@@ -23,6 +23,7 @@ import { NavController, NavParams, Refresher } from 'ionic-angular';
 import { Storage } from "@ionic/storage";
 import { PersonService } from '../../../providers/api/api.person.service';
 import { AuthenticationService } from "../../../providers/authentication.service";
+import { PlayerStatsPage } from '../player-stats/player-stats';
 
 @Component({
   selector: 'page-player-list',
@@ -124,6 +125,14 @@ export class PlayerListPage {
   goToDetail(player: any, clickEvent: any) {
     clickEvent.stopPropagation();
     this.navCtrl.push(PlayerDetailPage, {player: player});
+  }
+
+  /**
+   * 
+   */
+  goToStats(player: any, clickEvent: any) {
+    clickEvent.stopPropagation();
+    this.navCtrl.push(PlayerStatsPage, {player: player});
   }
 
 }

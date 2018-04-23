@@ -18,6 +18,9 @@
  */
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { APIStatsService } from './../../../providers/api/api.stats';
+import { AuthenticationService } from './../../../providers/authentication.service';
+import { CollectService } from './../../../providers/api/api.collect.service';
 
 @Component({
   selector: 'page-event-stats',
@@ -26,7 +29,11 @@ import { NavController, NavParams } from 'ionic-angular';
 export class EventStatsPage {
 
   event: any;
-  ownerId: any[] = []
+  collect: any;
+  ownerId: any[] = [];
+  scoreHome: number = 0;
+  scoreVisitor: number = 0;
+  statsNotFound: boolean = false;
 
   /**
    *
@@ -34,9 +41,82 @@ export class EventStatsPage {
    * @param {NavParams} navParams
    */
   constructor(public navCtrl: NavController,
-              public navParams: NavParams) {
+              public navParams: NavParams,
+              private collectService: CollectService,
+              private authenticationService: AuthenticationService,
+              private statsService: APIStatsService) {
     this.event = navParams.get('event');
     this.ownerId.push(this.event._id);
+    this.retriveCollects(this.event);
+    this.getStats();
+  }
+
+  /**
+   * 
+   * @param event 
+   */
+  private retriveCollects(event: any[]) {
+    
+      this.collectService.getCollects(
+        this.authenticationService.meta._id,
+        this.event._id, null, null,
+        this.authenticationService.meta.season.startDate,
+        this.authenticationService.meta.season.endDate
+      ).subscribe((collects: any[]) => {
+        if(collects.length>0) {
+          this.collect = collects[0];
+          console.log('collect',collects[0]);
+        }
+      });
+  }
+
+  /**
+   * 
+   */
+  getStats(){
+    //actions negatives                    
+    let indicators = ['neutralization', 'forceDef', 'contre', 'interceptionOk', 
+                        'stopGKDef', 'penaltyObtained', 'exclTmpObtained', 'shift', 
+                        'duelWon', 'passDec', 'goalScored', 'penaltyConceded', 
+                        'interceptionKo', 'duelLoose', 'badPosition', 'forceAtt', 
+                        'marcher', 'doubleDribble', 'looseball', 'foot', 'zone', 
+                        'stopGKAtt', 'goalConceded' ];
+    let search = {
+      listIndicators: indicators,
+      listOwners: this.ownerId,
+      startDate: this.authenticationService.meta.season.startDate,
+      endDate: this.authenticationService.meta.season.endDate,
+      aggregat: 'COUNT'
+    };
+
+    //get actions negatives
+    this.statsService.getListDetailValue(search).subscribe((result: any[]) => {
+      if(result.length>0){
+        this.statsNotFound = false;
+        console.log('result',result);
+        let goalConceded = 0;
+        let goalScored = 0;
+        for (let index = 0; index < result.length; index++) {
+          const element = result[index];
+          if(element.code==='goalConceded'){
+            goalConceded = goalConceded +1
+          }
+
+          if(element.code==='goalScored'){
+            goalScored = goalScored +1
+          }
+        }
+
+        // Gestion score en fonction match à domicile ou extérieur
+        if(this.event.participants.teamHome.adversary){
+          this.scoreHome = goalConceded;
+          this.scoreVisitor = goalScored;
+        } else {
+          this.scoreVisitor = goalConceded;
+          this.scoreHome = goalScored;
+        }
+      } 
+    })
   }
 
   ionViewDidLoad() {
