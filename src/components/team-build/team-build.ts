@@ -16,7 +16,7 @@ export class TeamBuildComponent {
   @Input() playerPositions: any = {
     substitutes: []
   };
-  @Input() sanctions: { playerId: string, sanction: StatType }[] = [];
+  @Input() sanctions: { playerId: string, sanction: StatType, time: number, position: string, done: boolean }[] = [];
 
   @Output() playerPositionsChange: EventEmitter<any> = new EventEmitter();
 
@@ -29,7 +29,7 @@ export class TeamBuildComponent {
     ],
     [
       { key: 'left-backcourt', label: 'left_backcourt', class: 'white' },
-      { key: 'goalkeeper', label: 'goalkeeper', class: 'red' },
+      { key: 'goalkeeper', label: 'goalkeeper', class: 'indigo' },
       { key: 'right-backcourt', label: 'right_backcourt', class: 'white' }
     ]
   ];
@@ -58,55 +58,59 @@ export class TeamBuildComponent {
    */
   showPlayerChooser(position: string) {
     console.log('[TeamBuildPage] - showPlayerChooser - playerPositions', this.playerPositions);
-    let alert = this.alertCtrl.create();
-    alert.setTitle(this.translations['collect.team-build']['player-choose']);
-    let excludedPlayer = [];
-    Object.keys(this.playerPositions).forEach(k => {
-      if (Array.isArray(this.playerPositions[k])) {
-        excludedPlayer = excludedPlayer.concat(this.playerPositions[k]);        
-      } else if (k !== position && this.playerPositions[k] && this.playerPositions[k]._id) {
-        excludedPlayer.push(this.playerPositions[k]);
-      }
-    });
-    console.log('[TeamBuildPage] - showPlayerChooser - sanctions', this.sanctions);
-    console.log('[TeamBuildPage] - showPlayerChooser - excludedPlayer', excludedPlayer);
-    console.log('[TeamBuildPage] - showPlayerChooser - playerList', this.playerList);
-    this.playerList.forEach(p => {
-      if (!excludedPlayer.find(item => {
-        return item._id === p._id;
-      }) && !this.sanctions[p._id]) {
-        alert.addInput({
-          type: 'radio',
-          label: p.firstname + ' ' + p.name + ' (' + p.status.squadnumber + ')',
-          value: p,
-          checked: this.playerPositions[position] && this.playerPositions[position]._id === p._id,
-          handler: data => {
-            console.log(position, data.value);
-            this.playerPositions[position] = data.value;
-            alert.dismiss();
-          }
-        });
-      }
-    });
-
-    alert.addButton({
-      text: this.translations.actionButton.Clear,
-      handler: data => {
-        console.debug('[TeamBuildPage] - showPlayerChooser - clear', position, data);
-        delete this.playerPositions[position];
-        if (data) {
-          this.playerList.push(data);
+    if (this.hasRedCard(position)) {
+      return;
+    } else {
+      let alert = this.alertCtrl.create();
+      alert.setTitle(this.translations['collect.team-build']['player-choose']);
+      let excludedPlayer = [];
+      Object.keys(this.playerPositions).forEach(k => {
+        if (Array.isArray(this.playerPositions[k])) {
+          excludedPlayer = excludedPlayer.concat(this.playerPositions[k]);
+        } else if (k !== position && this.playerPositions[k] && this.playerPositions[k]._id) {
+          excludedPlayer.push(this.playerPositions[k]);
         }
-      }
-    });
-    alert.addButton({
-      text: this.translations.actionButton.Ok,
-      handler: data => {
-        console.debug('[TeamBuildPage] - showPlayerChooser - add', position, data);
-        this.playerPositions[position] = data;
-      }
-    });
-    alert.present();
+      });
+      console.log('[TeamBuildPage] - showPlayerChooser - sanctions', this.sanctions);
+      console.log('[TeamBuildPage] - showPlayerChooser - excludedPlayer', excludedPlayer);
+      console.log('[TeamBuildPage] - showPlayerChooser - playerList', this.playerList);
+      this.playerList.forEach(p => {
+        if (!excludedPlayer.find(item => {
+          return item._id === p._id;
+        }) && !this.sanctions[p._id]) {
+          alert.addInput({
+            type: 'radio',
+            label: p.firstname + ' ' + p.name + ' (' + p.status.squadnumber + ')',
+            value: p,
+            checked: this.playerPositions[position] && this.playerPositions[position]._id === p._id,
+            handler: data => {
+              console.log(position, data.value);
+              this.playerPositions[position] = data.value;
+              alert.dismiss();
+            }
+          });
+        }
+      });
+
+      alert.addButton({
+        text: this.translations.actionButton.Clear,
+        handler: data => {
+          console.debug('[TeamBuildPage] - showPlayerChooser - clear', position, data);
+          delete this.playerPositions[position];
+          if (data) {
+            this.playerList.push(data);
+          }
+        }
+      });
+      alert.addButton({
+        text: this.translations.actionButton.Ok,
+        handler: data => {
+          console.debug('[TeamBuildPage] - showPlayerChooser - add', position, data);
+          this.playerPositions[position] = data;
+        }
+      });
+      alert.present();
+    }
   }
 
   showSubstituesChooser(position: string) {
@@ -121,6 +125,11 @@ export class TeamBuildComponent {
         excludedPlayer.push(this.playerPositions[k])
       }
     });
+    this.sanctions.forEach(p => {
+      if (p.sanction === StatType.RED_CARD) {
+        excludedPlayer.concat(this.playerList.filter(f => f._id === p.playerId));
+      }
+    });
     this.playerList.forEach(p => {
       if (!excludedPlayer.find(item => {
         return item._id === p._id;
@@ -129,7 +138,7 @@ export class TeamBuildComponent {
           type: 'checkbox',
           label: p.firstname + ' ' + p.name + ' (' + p.status.squadnumber + ')',
           value: p,
-          checked: this.playerPositions[position].find(c => c._id === p._id),
+          checked: this.playerPositions[position]?this.playerPositions[position].find(c => c._id === p._id):false,
         });
       }
     });
@@ -175,7 +184,36 @@ export class TeamBuildComponent {
   /**
  * @param  {string} playerId
  */
-  hasSanction(playerId: string) {
-    return _.findIndex(this.sanctions, o => { return o.playerId == playerId; }) > -1;
+  hasOrangeCard(playerId: string) {
+    return _.findIndex(this.sanctions, o => { return o.playerId === playerId && o.sanction === StatType.ORANGE_CARD; }) > -1;
+  }
+
+  /**
+   * @param  {string} position
+   */
+  hasRedCard(position: string) {
+    return _.findIndex(this.sanctions, o => { return o.sanction === StatType.RED_CARD && o.position === position && !o.done }) > -1;
+  }
+
+  /**
+   * @param  {string} playerId
+   */
+  hasYellowCard(playerId: string): boolean {
+    return _.findIndex(this.sanctions, o => {
+      return o.playerId === playerId && o.sanction === StatType.YELLOW_CARD;
+    }) > -1;
+  }
+  
+  /**
+   * @param  {any} pos
+   */
+  getColor(pos: any) {
+    if (this.hasRedCard(pos.key)) {
+      return 'red';
+    } else if (this.playerPositions[pos.key] && this.hasYellowCard(this.playerPositions[pos.key]._id)) {
+      return 'yellow';
+    } else {
+      return pos.class;
+    }
   }
 }

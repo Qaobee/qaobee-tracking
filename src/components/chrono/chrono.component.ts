@@ -60,7 +60,7 @@ export class ChronoComponent {
     this.run = true;
     console.debug('[ChronoComponent] - start', this.chrono);
     this.onStarted.emit(this.chrono);
-    Observable.interval(1000)
+    Observable.interval(1000).timeInterval()
       .takeWhile(() => this.run)
       .subscribe(() => {
         this.chrono += 1;

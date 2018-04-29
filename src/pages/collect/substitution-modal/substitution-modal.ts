@@ -1,3 +1,4 @@
+import { StatType } from './../../../model/stat.type';
 import { NavParams, ViewController } from 'ionic-angular';
 import { Component } from '@angular/core';
 @Component({
@@ -6,6 +7,7 @@ import { Component } from '@angular/core';
 })
 export class SubstitutionModal {
     playerList: any[];
+    sanctions: { playerId: string, sanction: StatType, time: number, position: string }[];
     playerPositions: any = {
         substitutes: []
     };
@@ -18,7 +20,8 @@ export class SubstitutionModal {
     constructor(public viewCtrl: ViewController, private params: NavParams) {
         this.playerList = this.params.get('playerList');
         this.playerPositions = this.params.get('playerPositions');
-        console.debug('[SubstitutionModal] - constructor', this.playerList, this.playerPositions);
+        this.sanctions = this.params.get('sanctions');
+        console.debug('[SubstitutionModal] - constructor', this.playerList, this.playerPositions, this.sanctions);
     }
 
     /**

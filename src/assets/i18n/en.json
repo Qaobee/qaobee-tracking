@@ -227,8 +227,7 @@
       "impactShootDef": "Shot impact",
       "pole": "Pole",
       "outside": "Outside",
-      "exclTmpObtained": "2 minutes",
-      "exclusionTempoObtained": "2 minutes",
+      "exclTmp": "2 minutes",
       "playTime": "Playtime"
     },
     "positions": {

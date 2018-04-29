@@ -65,7 +65,7 @@ export class CollectPage {
     ],
     [
       { key: 'left-backcourt', label: 'left_backcourt', class: 'white' },
-      { key: 'goalkeeper', label: 'goalkeeper', class: 'red' },
+      { key: 'goalkeeper', label: 'goalkeeper', class: 'indigo' },
       { key: 'right-backcourt', label: 'right_backcourt', class: 'white' }
     ]
   ];
@@ -149,6 +149,8 @@ export class CollectPage {
   getColor(playerId: string, defClass: string) {
     if (this.fsmContext && this.fsmContext.selectedPlayer && playerId === this.fsmContext.selectedPlayer.playerId) {
       return 'green';
+    } else if (this.hasYellowCard(playerId)) {
+      return 'yellow';
     } else if (defClass) {
       return defClass;
     }
@@ -158,6 +160,7 @@ export class CollectPage {
    *
    */
   saveSats(): void {
+    console.debug('[CollectPage] - saveSats', this.stats);
     this.storage.set('stats-' + this.currentEvent._id, this.stats);
     this.saveState();
   }
@@ -208,8 +211,6 @@ export class CollectPage {
     this.indicatorsByCode = Utils.groupBy(listIndicators, 'code');
     console.debug('[CollectPage] - updateListIndicators - indicatorsByCode', this.indicatorsByCode);
     this.gameSystem = this.indicatorsByCode.defenseSystemThem[0].listValues;
-    this.gameState.homeGameSystem = this.gameSystem[0];
-    this.gameState.visitorGameSystem = this.gameSystem[0];
     console.debug('[CollectPage] - updateListIndicators - gameSystem', this.gameSystem);
     this.possibleActions = {
       attack: {
@@ -296,13 +297,16 @@ export class CollectPage {
             this.playerMap[s.playerId].sanction = s.sanction;
           }
         });
+        this.checkSanctions();
         this.storage.get('stats-' + this.currentEvent._id).then((stats: CollectStat[]) => {
+          console.debug('[CollectPage] - restoreState - fetch stats', stats);
           this.setStats(stats || []);
+
+          this.handFSM.start(this.fsmContext, FSMStates.PAUSED);
+          this.handFSM.saveState(this.fsmContext);
+          loader.dismiss();
+          console.debug('[CollectPage] - restoreState - fetch context', 'fsmContext', this.fsmContext, 'gameState', this.gameState);
         });
-        this.handFSM.start(this.fsmContext, FSMStates.PAUSED);
-        this.handFSM.saveState(this.fsmContext);
-        loader.dismiss();
-        console.debug('[CollectPage] - restoreState - fetch context', 'fsmContext', this.fsmContext, 'gameState', this.gameState);
       } else {
         console.debug('[CollectPage] - restoreState - new collect', 'playerPositions', this.playerPositions, 'playerList', this.playerList);
         this.gameState = new GameState();
@@ -327,7 +331,7 @@ export class CollectPage {
     console.debug('[CollectPage] - fillPlayers - difference', difference, this.playerPositions, playerPositions);
     Object.keys(difference).forEach(k => {
       if (k === 'substitutes') {
-        if(difference[k] instanceof Object) {
+        if (difference[k] instanceof Object) {
           difference[k] = Array.prototype.slice.call(difference[k]);
         }
         this.playerPositions[k] = difference[k];
@@ -721,32 +725,55 @@ export class CollectPage {
    */
   orangeCardButton(event: any) {
     console.debug('[CollectPage] - orangeCardButton', event, this.fsmContext.selectedPlayer);
-    if (this.fsmContext.selectedPlayer && this.playerMap[this.fsmContext.selectedPlayer.playerId].sanction !== StatType.ORANGE_CARD) {
-      let player = _.cloneDeep(this.fsmContext.selectedPlayer);
+    let selectedPlayer = _.cloneDeep(this.fsmContext.selectedPlayer);
+    if (selectedPlayer && this.playerMap[selectedPlayer.playerId].sanction !== StatType.ORANGE_CARD) {
       if (this.handFSM.trigger(FSMEvents.sanction)) {
-        console.debug('[CollectPage] - orangeCardButton - after trigger', player);
-        this.playerMap[player.playerId].sanction = StatType.ORANGE_CARD;
-        this.statCollector.card(this.fsmContext, StatType.ORANGE_CARD, player.playerId);
-        this.gameState.sanctions.push({ playerId: player, sanction: StatType.ORANGE_CARD });
-        let p = _.cloneDeep(this.playerPositions[player.position]);
-        delete this.playerPositions[player.position];
+        console.debug('[CollectPage] - orangeCardButton - after trigger', selectedPlayer);
+        this.playerMap[selectedPlayer.playerId].sanction = StatType.ORANGE_CARD;
+        this.statCollector.card(this.fsmContext, StatType.ORANGE_CARD, selectedPlayer.playerId);
+        this.gameState.sanctions.push({
+          playerId: selectedPlayer.playerId,
+          sanction: StatType.ORANGE_CARD,
+          time: this.fsmContext.chrono,
+          position: selectedPlayer.position,
+          done: false
+        });
+        let p = _.cloneDeep(this.playerPositions[selectedPlayer.position]);
+        delete this.playerPositions[selectedPlayer.position];
         this.playerPositions.substitutes.push(p);
         this.saveState();
-        this.startOrangeCardTimer(player, p);
       }
     }
   }
 
 
-  startOrangeCardTimer(player: InGamePlayer, originalPlayer: any) {
-    console.debug('[CollectPage] - startYellowCardTimer', player.playerId);
-    Observable.interval(1000 * 2 * 60 * 2)
-      .subscribe(() => {
-        this.gameState.sanctions = this.gameState.sanctions.filter(s => {
-          return s.playerId !== player.playerId;
-        });
-        this.saveState();
+  checkSanctions() {
+    Observable.interval(1000).timeInterval().subscribe(() => {
+      this.gameState.sanctions.forEach(s => {
+        switch (s.sanction) {
+          case StatType.ORANGE_CARD:
+            if (this.fsmContext.chrono >= s.time + 2 * 60 * 1000) {
+              this.gameState.sanctions = this.gameState.sanctions.filter(p => {
+                return p.playerId !== s.playerId;
+              });
+              this.saveState();
+            }
+            break; 
+            case StatType.RED_CARD:
+            if (this.fsmContext.chrono >= s.time + 2 * 60 * 1000) {
+              this.gameState.sanctions.filter(p => {
+                return p.playerId !== s.playerId;
+              }).forEach(s => {
+                s.done = true;
+              });
+              this.saveState();
+            }
+            break;
+          default:
+            break;
+        }
       });
+    });
   }
 
   /**
@@ -763,46 +790,65 @@ export class CollectPage {
    */
   yellowCardButton(event: any) {
     console.debug('[CollectPage] - yellowCardButton', event);
-    if (this.fsmContext.selectedPlayer && this.playerMap[this.fsmContext.selectedPlayer.playerId].sanction !== StatType.YELLOW_CARD) {
+    let selectedPlayer = _.cloneDeep(this.fsmContext.selectedPlayer);
+    console.debug('[CollectPage] - yellowCardButton', selectedPlayer, this.playerMap[selectedPlayer.playerId]);
+    if (selectedPlayer && this.playerMap[selectedPlayer.playerId].sanction !== StatType.YELLOW_CARD) {
       if (this.handFSM.trigger(FSMEvents.sanction)) {
-        this.playerMap[this.fsmContext.selectedPlayer.playerId].sanction = StatType.YELLOW_CARD;
-        this.statCollector.card(this.fsmContext, StatType.YELLOW_CARD, this.fsmContext.selectedPlayer.playerId);
-        this.gameState.sanctions.push({ playerId: this.fsmContext.selectedPlayer, sanction: StatType.YELLOW_CARD });
+        console.debug('[CollectPage] - yellowCardButton', selectedPlayer);
+        this.playerMap[selectedPlayer.playerId].sanction = StatType.YELLOW_CARD;
+        this.statCollector.card(this.fsmContext, StatType.YELLOW_CARD, selectedPlayer.playerId);
+        this.gameState.sanctions.push({
+          playerId: selectedPlayer.playerId,
+          sanction: StatType.YELLOW_CARD,
+          time: this.fsmContext.chrono,
+          position: selectedPlayer.position,
+          done: false
+        });
         this.saveState();
       }
+    } else if (selectedPlayer) {
+      this.redCardButton(event, selectedPlayer);
     }
   }
+
+  /**
+   * @param  {string} playerId
+   */
+  hasYellowCard(playerId: string): boolean {
+    let found = _.findIndex(this.gameState.sanctions, o => {
+      return o.playerId === playerId && o.sanction === StatType.YELLOW_CARD;
+    }) > -1;
+    return found;
+  }
+
 
   /**
    * @param  {any} event
    */
-  redCardButton(event: any) {
-    console.debug('[CollectPage] - redCardButton', event);
-    if (this.fsmContext.selectedPlayer && this.playerMap[this.fsmContext.selectedPlayer.playerId].sanction !== StatType.RED_CARD) {
+  redCardButton(event: any, player: InGamePlayer) {
+    console.debug('[CollectPage] - redCardButton', event, this.fsmContext.selectedPlayer);
+    let selectedPlayer = player ? player : _.cloneDeep(this.fsmContext.selectedPlayer);
+    if (selectedPlayer && this.playerMap[selectedPlayer.playerId].sanction !== StatType.RED_CARD) {
       if (this.handFSM.trigger(FSMEvents.sanction)) {
-        this.playerMap[this.fsmContext.selectedPlayer.playerId].sanction = StatType.RED_CARD;
-        this.statCollector.card(this.fsmContext, StatType.RED_CARD, this.fsmContext.selectedPlayer.playerId);
-        this.gameState.sanctions.push({ playerId: this.fsmContext.selectedPlayer, sanction: StatType.RED_CARD });
-        this.playerMap[this.fsmContext.selectedPlayer.playerId].holder = false;
-        let lastIn = this.fsmContext.lastInMap[this.fsmContext.selectedPlayer.playerId] || 0;
-        let totalPlayTime = this.fsmContext.playTimeMap[this.fsmContext.selectedPlayer.playerId] || 0;
-        this.fsmContext.playTimeMap[this.fsmContext.selectedPlayer.playerId] = totalPlayTime + this.fsmContext.chrono - lastIn;
-        this.statCollector.totalPlayTime(this.fsmContext, this.fsmContext.selectedPlayer.playerId);
+        console.debug('[CollectPage] - redCardButton', event, selectedPlayer);
+        this.playerMap[selectedPlayer.playerId].sanction = StatType.RED_CARD;
+        this.statCollector.card(this.fsmContext, StatType.RED_CARD, selectedPlayer.playerId);
+        this.gameState.sanctions.push({
+          playerId: selectedPlayer.playerId,
+          sanction: StatType.RED_CARD,
+          time: this.fsmContext.chrono,
+          position: selectedPlayer.position,
+          done: false
+        });
+        this.playerMap[selectedPlayer.playerId].holder = false;
+        let lastIn = this.fsmContext.lastInMap[selectedPlayer.playerId] || 0;
+        let totalPlayTime = this.fsmContext.playTimeMap[selectedPlayer.playerId] || 0;
+        this.fsmContext.playTimeMap[selectedPlayer.playerId] = totalPlayTime + this.fsmContext.chrono - lastIn;
+        this.statCollector.totalPlayTime(this.fsmContext, selectedPlayer.playerId);
+        delete this.playerPositions[selectedPlayer.position];
         this.saveState();
-        this.startRedCardTimer(this.playerMap[this.fsmContext.selectedPlayer.playerId].position);
       }
     }
-  }
-
-  /**
-   * @param  {string} position
-   */
-  startRedCardTimer(position: string) {
-    console.debug('[CollectPage] - startRedCardTimer', position);
-    Observable.interval(1000 * 60 * 2)
-      .subscribe(i => {
-        // TODO
-      });
   }
 
 

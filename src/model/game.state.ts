@@ -1,3 +1,4 @@
+import { StatType } from './stat.type';
 import { InGamePlayer } from './ingame.player';
 export class GameState {
     eventId: string ='';
@@ -9,7 +10,7 @@ export class GameState {
     visitorScore: number = 0;
     homeTimeout: number = 0;
     visitorTimeout: number = 0;
-    sanctions: any[] = [];
+    sanctions: { playerId: string, sanction: StatType, time: number, position: string, done: boolean }[] = [];
     state: string = 'INIT';
     homeGameSystem: string ='';
     visitorGameSystem: string ='';
