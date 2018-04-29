@@ -246,13 +246,31 @@
   },
   "component": {
     "stats": {
+      "statsNotFound":"Stats not found",
+      "detail": "More details",
       "shoot": {
-        "efficiency": {
-          "title": "Efficiency",
-          "goal": "Goals",
-          "shoot": "Shoots",
-          "goalAverage": "Goals / match",
-          "shootAverage": "Shoots / match"
+        "efficiency":{ 
+          "player": {
+            "title": "Efficiency's shoot",
+            "goal": "Goals",
+            "shoot": "Shoots",
+            "goalAverage": "Avg. goals / match",
+            "shootAverage": "Avg. shoots / match"
+          },
+          "goalkeeper":{
+            "title": "Efficiency's stop",
+            "goal": "Stops",
+            "shoot": "Goals",
+            "goalAverage": "Avg. stops / match",
+            "shootAverage": "Avg. goals / match"
+          }
+        } 
+      },
+      "highlights":{
+        "quarter":{
+          "title":"Performances",
+          "actionsOk": "Good actions",
+          "actionsKo": "Bad actions"
         }
       }
     }

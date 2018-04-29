@@ -246,13 +246,31 @@
   },
   "component": {
     "stats":{
+      "statsNotFound":"Aucunes Stats trouvées",
+      "detail": "Plus de détails",
       "shoot":{
         "efficiency":{
-          "title":"Efficacité",
-          "goal": "Buts marqués",
-          "shoot": "Tirs",
-          "goalAverage": "Buts / match",
-          "shootAverage": "Tirs / match"
+          "player":{
+            "title":"Efficacité au tir",
+            "goal": "Buts",
+            "shoot": "Tirs",
+            "goalAverage": "Moy. buts / match",
+            "shootAverage": "Moy. tirs / match"
+          },
+          "goalkeeper": {
+            "title":"Pourcentage d'arrêts",
+            "goal": "Arrêts",
+            "shoot": "Buts",
+            "goalAverage": "Moy. arrêts / match",
+            "shootAverage": "Moy. buts / match"
+          }  
+        }
+      },
+      "highlights":{
+        "quarter":{
+          "title":"Performances",
+          "actionsOk": "Actions positives",
+          "actionsKo": "Actions négatives"
         }
       }
     }

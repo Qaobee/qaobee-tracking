@@ -27,29 +27,25 @@
     </ion-row>
 	</ion-item>
 
-	<ion-list>
+	<ion-list *ngIf="numberMatch>0" >
 		<!-- player's shoot efficiency -->
 		<ion-item>
-				<stats-shoot-efficiency [ownerId]="ownerId" [numberMatch]=3></stats-shoot-efficiency>
+				<stats-shoot-efficiency 
+					[ownerId]="ownerId" 
+					[numberMatch]="numberMatch" 
+					[positionType]="player.status.positionType.code">
+				</stats-shoot-efficiency>
 		</ion-item>
 
 		<!-- player's use -->
 		<ion-item>
 			<ion-row text-center>
-				<ion-col text-left>
+				<ion-col>
 					<h1>Utilisation</h1>
-				</ion-col>
-				<ion-col text-right>  
-					<h1>
-						<ion-icon  name="eye"></ion-icon>
-					</h1>
 				</ion-col>
 			</ion-row>
 	
 			<ion-row text-center class="enteteDark">
-				<ion-col class="borderTable">
-					<h3>Equipe</h3>
-				</ion-col>
 				<ion-col class="borderTable">
 					<h3>Nb match</h3>
 				</ion-col>
@@ -60,34 +56,22 @@
 					<h3>Tps jeu Moy.</h3>
 				</ion-col>
 			</ion-row>
-	
-			<ion-row text-center class="enteteLight">
-				<ion-col class="borderTable">
-					<h3>Equipe 1</h3>
-				</ion-col>
-				<ion-col class="borderTable">
-					<h2>10</h2>
-				</ion-col>
-				<ion-col class="borderTable">
-					<h2>7</h2>
-				</ion-col>
-				<ion-col class="borderTable">
-					<h2>45'</h2>
-				</ion-col>
-			</ion-row>
 			
 			<ion-row text-center class="enteteLight">
 				<ion-col class="borderTable">
-					<h3>Equipe 2</h3>
+					<h2>{{numberMatch}}</h2>
 				</ion-col>
 				<ion-col class="borderTable">
-					<h2>10</h2>
+					<h2>{{numberHolder}}</h2>
 				</ion-col>
 				<ion-col class="borderTable">
-					<h2>7</h2>
+					<h2>{{avgPlaytime}} '</h2>
 				</ion-col>
-				<ion-col class="borderTable">
-					<h2>45'</h2>
+			</ion-row>
+
+			<ion-row text-right class="enteteLight">
+				<ion-col>
+						{{'component.stats.detail' | translate}} <ion-icon  name="eye"></ion-icon>
 				</ion-col>
 			</ion-row>
 
@@ -95,21 +79,7 @@
 	
 		<!-- player's efficiency -->
 		<ion-item>
-			<ion-row text-center>
-				<ion-col text-left>
-					<h1>Régularité</h1>
-				</ion-col>
-				<ion-col text-right>  
-					<h1>
-						<ion-icon  name="eye"></ion-icon>
-					</h1>
-				</ion-col>
-			</ion-row>
-			<ion-row text-center>
-				<ion-col>
-					<canvas #barCanvas></canvas>
-				</ion-col>
-			</ion-row>
+			<stats-highligths-by-quarter [ownerId]="ownerId"></stats-highligths-by-quarter>
 		</ion-item>
 	</ion-list>
 </ion-content>

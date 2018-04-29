@@ -17,14 +17,14 @@
  *  from Qaobee.
  */
 
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { PersonService } from '../../../providers/api/api.person.service';
 import { APIStatsService } from '../../../providers/api/api.stats';
+import { CollectService } from './../../../providers/api/api.collect.service';
 import { AuthenticationService } from '../../../providers/authentication.service';
-
-import { Chart } from 'chart.js';
+import { Utils } from './../../../providers/utils';
 
 @Component({
   selector: 'page-player-stats',
@@ -34,10 +34,10 @@ export class PlayerStatsPage {
 
   player: any;
   ownerId: any[] = [];
+  numberMatch: number = 0;
+  numberHolder: number = 0;
+  avgPlaytime: number = 0;
   stats: any[] = [];
-
-  @ViewChild('barCanvas') barCanvas;
-  barChart: any;
 
   /**
    *
@@ -52,61 +52,71 @@ export class PlayerStatsPage {
               public navParams: NavParams,
               private personService: PersonService,
               private statsService: APIStatsService,
+              private collectService: CollectService,
               private translateService: TranslateService,
               private authenticationService: AuthenticationService) {
 
     this.player = navParams.get('player');
     this.ownerId.push(this.player._id);
+
   }
 
-  ionViewDidEnter() {
-    this.barChart = new Chart(this.barCanvas.nativeElement, {
-      type: 'bar',
-      data: {
-        labels: ["15'", "30'", "45'", "60'"],
-        datasets: [{
-          label: "Actions positives",
-          data: [12, 19, 30, 5],
-          backgroundColor: [
-            'rgba(139,195,74,0.5)',
-            'rgba(139,195,74,0.5)',
-            'rgba(139,195,74,0.5)',
-            'rgba(139,195,74,0.5)'
-          ],
-          borderColor: [
-            'rgba(139,195,74,1)',
-            'rgba(139,195,74,1)',
-            'rgba(139,195,74,1)',
-            'rgba(139,195,74,1)'
-          ],
-          borderWidth: 1
-        },
-        {
-          label: "Actions negatives",
-          data: [6, 25, 20, 15],
-          backgroundColor: [
-            'rgba(234,83,80,0.8)',
-            'rgba(234,83,80,0.8)',
-            'rgba(234,83,80,0.8)',
-            'rgba(234,83,80,0.8)'
-          ],
-          borderColor: [
-            'rgba(234,83,80,1)',
-            'rgba(234,83,80,1)',
-            'rgba(234,83,80,1)',
-            'rgba(234,83,80,1)'
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: false
-            }
-          }]
+  /**
+   * 
+   */
+  ionViewDidEnter(){
+    this.searchPlayerUse();
+  }
+
+  /**
+   * 
+   */
+  searchPlayerUse() {
+    
+    // holder vs substitue
+    let indicators = ['holder', 'substitue'];
+    let listFieldsGroupBy = ['code'];
+    
+    let search = {
+      listIndicators: indicators,
+      listOwners: this.ownerId,
+      startDate: this.authenticationService.meta.season.startDate,
+      endDate: this.authenticationService.meta.season.endDate,
+      aggregat: 'COUNT',
+      listFieldsGroupBy: listFieldsGroupBy
+    };
+    
+    this.statsService.getStatGroupBy(search).subscribe((result: any[]) => {
+      if(result.length>0){
+        for (let index = 0; index < result.length; index++) {
+          const element = result[index];
+
+          if(element._id.code==='holder'){
+            this.numberHolder = element.value;
+            this.numberMatch = this.numberMatch + element.value;
+          }
+          if(element._id.code==='substitue'){
+            this.numberMatch = this.numberMatch + element.value;
+          }
         }
+
+        //Total playtime
+        indicators = ['totalPlayTime'];
+        
+        search = {
+          listIndicators: indicators,
+          listOwners: this.ownerId,
+          startDate: this.authenticationService.meta.season.startDate,
+          endDate: this.authenticationService.meta.season.endDate,
+          aggregat: 'SUM',
+          listFieldsGroupBy: listFieldsGroupBy
+        };
+        
+        this.statsService.getStatGroupBy(search).subscribe((result: any[]) => {
+          if(result.length>0){
+            this.avgPlaytime = Utils.precisionRound(result[0].value/(60*this.numberMatch),-1);
+          }
+        });
       }
     });
   }

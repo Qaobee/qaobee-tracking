@@ -1,11 +1,16 @@
-<ion-row text-center>
-  <ion-col text-left>  
-    <h1 >{{'component.stats.shoot.efficiency.title' | translate}} {{efficiencyAverage}} %</h1>
+<ion-row>
+  <ion-col text-center>  
+    <h1 >{{efficiencyLabel}}</h1>
   </ion-col>
-  <ion-col text-right>  
-    <h1>
-      <ion-icon  name="eye"></ion-icon>
-    </h1>
+</ion-row>
+<ion-row text-center *ngIf="statsNotFound">
+  <ion-col>
+    <h2>{{'component.stats.statsNotFound' | translate}}</h2>
+  </ion-col>
+</ion-row>
+<ion-row text-center *ngIf="!statsNotFound">
+  <ion-col class="bigText">
+    {{efficiencyAverage}} %
   </ion-col>
 </ion-row>
 <ion-row text-center>
@@ -15,10 +20,10 @@
 </ion-row>
 <ion-row text-center>
   <ion-col>
-    <h3>{{'component.stats.shoot.efficiency.goalAverage' | translate}}</h3>
+    <h3>{{goalAverageLabel}}</h3>
   </ion-col>
   <ion-col>
-    <h3>{{'component.stats.shoot.efficiency.shootAverage' | translate}}</h3>
+    <h3>{{shootAverageLabel}}</h3>
   </ion-col>
 </ion-row>
 <ion-row text-center>
@@ -27,5 +32,10 @@
   </ion-col>
   <ion-col>
     <h2>{{shootAverage}}</h2>
+  </ion-col>
+</ion-row>
+<ion-row text-right class="enteteLight" *ngIf="!statsNotFound">
+  <ion-col>
+      {{'component.stats.detail' | translate}} <ion-icon  name="eye"></ion-icon>
   </ion-col>
 </ion-row>
