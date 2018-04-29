@@ -22,6 +22,7 @@ import { MessageBus } from '../../../providers/message-bus.service';
 import { Utils } from '../../../providers/utils';
 import { GoalModal } from '../goal-modal/goal-modal';
 import { SubstitutionModal } from '../substitution-modal/substitution-modal';
+import { diff } from 'deep-object-diff';
 
 @Component({
   selector: 'page-collect',
@@ -58,14 +59,14 @@ export class CollectPage {
   ground = [
     [{ key: 'pivot', label: 'pivot', class: 'blue-grey' }],
     [
-      { key: 'left-backcourt', label: 'left_backcourt', class: 'white' },
+      { key: 'left-wingman', label: 'left_wingman', class: 'white' },
       { key: 'center-backcourt', label: 'center_backcourt', class: 'white' },
-      { key: 'right-backcourt', label: 'right_backcourt', class: 'white' }
+      { key: 'right-wingman', label: 'right_wingman', class: 'white' }
     ],
     [
-      { key: 'left-wingman', label: 'left_wingman', class: 'white' },
+      { key: 'left-backcourt', label: 'left_backcourt', class: 'white' },
       { key: 'goalkeeper', label: 'goalkeeper', class: 'red' },
-      { key: 'right-wingman', label: 'right_wingman', class: 'white' }
+      { key: 'right-backcourt', label: 'right_backcourt', class: 'white' }
     ]
   ];
 
@@ -289,8 +290,9 @@ export class CollectPage {
         }
         this.playerPositions = this.gameState.positions;
         this.ground = _.cloneDeep(this.ground);
+        console.debug('[CollectPage] - restoreState - sanctions', this.playerMap);
         this.gameState.sanctions.forEach(s => {
-          if (this.playerMap[s.playerId].holder) {
+          if (this.playerMap[s.playerId] && this.playerMap[s.playerId].holder) {
             this.playerMap[s.playerId].sanction = s.sanction;
           }
         });
@@ -305,7 +307,9 @@ export class CollectPage {
         console.debug('[CollectPage] - restoreState - new collect', 'playerPositions', this.playerPositions, 'playerList', this.playerList);
         this.gameState = new GameState();
         this.gameState.eventId = this.currentEvent._id;
-        this.fillPlayers({});
+        this.gameState.homeGameSystem = this.gameSystem[0];
+        this.gameState.visitorGameSystem = this.gameSystem[0];
+        this.fillPlayers({}, true);
         this.handFSM.start(this.fsmContext, FSMStates.INIT);
         loader.dismiss();
         this.saveSats();
@@ -316,18 +320,22 @@ export class CollectPage {
 
   /**
    * @param  {any} playerPositions
+   * @param  {boolean} newGame
    */
-  fillPlayers(playerPositions: any) {
-    this.playerList = [];
-    let diff = Utils.objDiff(this.playerPositions, playerPositions);
-    console.debug('[CollectPage] - fillPlayers - diff', diff);
-
-    Object.keys(diff).forEach(k => {
+  fillPlayers(playerPositions: any, newGame: boolean) {
+    let difference = newGame ? this.playerPositions : diff(this.playerPositions, playerPositions);
+    console.debug('[CollectPage] - fillPlayers - difference', difference, this.playerPositions, playerPositions);
+    Object.keys(difference).forEach(k => {
       if (k === 'substitutes') {
-        this.playerPositions[k].forEach(p => {
+        if(difference[k] instanceof Object) {
+          difference[k] = Array.prototype.slice.call(difference[k]);
+        }
+        this.playerPositions[k] = difference[k];
+        console.debug('[CollectPage] - fillPlayers - position', k, this.playerPositions['substitutes']);
+        this.playerPositions['substitutes'].forEach(p => {
           let inGamePlayer = new InGamePlayer();
           inGamePlayer.playerId = p._id;
-          inGamePlayer.position = k;
+          inGamePlayer.position = 'substitutes';
           inGamePlayer.holder = false;
           this.playerMap[inGamePlayer.playerId] = inGamePlayer;
           this.statCollector.substitute(this.fsmContext, p._id);
@@ -340,14 +348,17 @@ export class CollectPage {
         });
       } else {
         let inGamePlayer = new InGamePlayer();
-        inGamePlayer.playerId = this.playerPositions[k]._id;
+        console.debug('[CollectPage] - fillPlayers - position', k);
+        inGamePlayer.playerId = difference[k]._id;
         inGamePlayer.position = k;
         inGamePlayer.holder = true;
         this.playerMap[inGamePlayer.playerId] = inGamePlayer;
-        this.statCollector.positionType(this.fsmContext, this.playerPositions[k]._id, k);
-        this.statCollector.holder(this.fsmContext, this.playerPositions[k]._id, k);
-        this.fsmContext.lastInMap[this.playerPositions[k]._id] = this.fsmContext.chrono;
+        this.playerPositions[k] = difference[k];
+        this.statCollector.positionType(this.fsmContext, difference[k]._id, k);
+        this.statCollector.holder(this.fsmContext, difference[k]._id, k);
+        this.fsmContext.lastInMap[difference[k]._id] = this.fsmContext.chrono;
         this.playerList.push(inGamePlayer);
+        console.debug('[CollectPage] - fillPlayers - playerMap', this.playerMap);
       }
     });
     this.saveState();
@@ -571,7 +582,7 @@ export class CollectPage {
    * @param  {string} playerId
    */
   doSelectPlayer(playerId: string) {
-    console.debug('[CollectPage] - doSelectPlayer', playerId, this.fsmContext);
+    console.debug('[CollectPage] - doSelectPlayer', playerId, this.fsmContext, this.playerMap[playerId]);
     if (!this.fsmContext.gamePhase) {
       this.presentToast(this.translations.collect.select_game_phase_first);
     } else if (this.handFSM.trigger(FSMEvents.selectPlayer)) {
@@ -709,28 +720,33 @@ export class CollectPage {
    * @param  {any} event
    */
   orangeCardButton(event: any) {
-    console.debug('[CollectPage] - orangeCardButton', event);
+    console.debug('[CollectPage] - orangeCardButton', event, this.fsmContext.selectedPlayer);
     if (this.fsmContext.selectedPlayer && this.playerMap[this.fsmContext.selectedPlayer.playerId].sanction !== StatType.ORANGE_CARD) {
+      let player = _.cloneDeep(this.fsmContext.selectedPlayer);
       if (this.handFSM.trigger(FSMEvents.sanction)) {
-        this.playerMap[this.fsmContext.selectedPlayer.playerId].sanction = StatType.ORANGE_CARD;
-        this.statCollector.card(this.fsmContext, StatType.ORANGE_CARD, this.fsmContext.selectedPlayer.playerId);
-        this.gameState.sanctions.push({ playerId: this.fsmContext.selectedPlayer, sanction: StatType.ORANGE_CARD });
+        console.debug('[CollectPage] - orangeCardButton - after trigger', player);
+        this.playerMap[player.playerId].sanction = StatType.ORANGE_CARD;
+        this.statCollector.card(this.fsmContext, StatType.ORANGE_CARD, player.playerId);
+        this.gameState.sanctions.push({ playerId: player, sanction: StatType.ORANGE_CARD });
+        let p = _.cloneDeep(this.playerPositions[player.position]);
+        delete this.playerPositions[player.position];
+        this.playerPositions.substitutes.push(p);
         this.saveState();
-        this.startOrangeCardTimer(this.fsmContext.selectedPlayer.playerId);
+        this.startOrangeCardTimer(player, p);
       }
     }
   }
 
-  /**
-   * OrangeCardEndEvent
-   * @param  {string} playerId
-   */
-  onOrangeCardEndEvent(playerId: string) {
-    console.debug('[CollectPage] - onOrangeCardEndEvent', playerId);
-    this.gameState.sanctions = this.gameState.sanctions.filter(s => {
-      return s.playerId !== playerId;
-    });
-    this.saveState();
+
+  startOrangeCardTimer(player: InGamePlayer, originalPlayer: any) {
+    console.debug('[CollectPage] - startYellowCardTimer', player.playerId);
+    Observable.interval(1000 * 2 * 60 * 2)
+      .subscribe(() => {
+        this.gameState.sanctions = this.gameState.sanctions.filter(s => {
+          return s.playerId !== player.playerId;
+        });
+        this.saveState();
+      });
   }
 
   /**
@@ -789,16 +805,6 @@ export class CollectPage {
       });
   }
 
-  /**
-   * @param  {string} playerId
-   */
-  startOrangeCardTimer(playerId: string) {
-    console.debug('[CollectPage] - startYellowCardTimer', playerId);
-    Observable.interval(1000 * 60 * 2)
-      .subscribe(() => {
-        this.onOrangeCardEndEvent(playerId);
-      });
-  }
 
   /**
    * @param  {number} index
@@ -848,10 +854,15 @@ export class CollectPage {
    */
   toggleSubstitutes(event: any) {
     console.debug('[CollectPage] - toggleSubstitutes', event);
-    let substitutionModal = this.modalController.create(SubstitutionModal, { playerList: this.rawPlayerList, playerPositions: _.cloneDeep(this.playerPositions) });
+    let substitutionModal = this.modalController.create(SubstitutionModal, {
+      playerList: this.rawPlayerList,
+      playerPositions: _.cloneDeep(this.playerPositions),
+      sanctions: this.gameState.sanctions
+    });
     substitutionModal.onDidDismiss((data: { playerPositions: any }) => {
       if (data) {
-        this.fillPlayers(data.playerPositions);
+        console.debug('[CollectPage] - toggleSubstitutes', data.playerPositions);
+        this.fillPlayers(data.playerPositions, false);
       }
     });
     substitutionModal.present();

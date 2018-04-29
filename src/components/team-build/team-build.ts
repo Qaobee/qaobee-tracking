@@ -1,28 +1,10 @@
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ENV } from '@app/env';
 import { TranslateService } from '@ngx-translate/core';
-import { EventEmitter } from '@angular/core';
-import { Output } from '@angular/core';
-import { Input } from '@angular/core';
-/*
- *  __________________
- *  Qaobee
- *  __________________
- *
- *  Copyright (c) 2015.  Qaobee
- *  All Rights Reserved.
- *
- *  NOTICE: All information contained here is, and remains
- *  the property of Qaobee and its suppliers,
- *  if any. The intellectual and technical concepts contained
- *  here are proprietary to Qaobee and its suppliers and may
- *  be covered by U.S. and Foreign Patents, patents in process,
- *  and are protected by trade secret or copyright law.
- *  Dissemination of this information or reproduction of this material
- *  is strictly forbidden unless prior written permission is obtained
- *  from Qaobee.
- */
-import { Component } from '@angular/core';
 import { AlertController, NavController, NavParams } from 'ionic-angular';
-import { ENV } from "@app/env";
+import _ from 'lodash';
+import { StatType } from '../../model/stat.type';
+
 @Component({
   selector: 'team-build-component',
   templateUrl: 'team-build.html',
@@ -34,19 +16,21 @@ export class TeamBuildComponent {
   @Input() playerPositions: any = {
     substitutes: []
   };
+  @Input() sanctions: { playerId: string, sanction: StatType }[] = [];
+
   @Output() playerPositionsChange: EventEmitter<any> = new EventEmitter();
 
   ground = [
     [{ key: 'pivot', label: 'pivot', class: 'blue-grey' }],
     [
-      { key: 'left-backcourt', label: 'left_backcourt', class: 'white' },
+      { key: 'left-wingman', label: 'left_wingman', class: 'white' },
       { key: 'center-backcourt', label: 'center_backcourt', class: 'white' },
-      { key: 'right-backcourt', label: 'right_backcourt', class: 'white' }
+      { key: 'right-wingman', label: 'right_wingman', class: 'white' }
     ],
     [
-      { key: 'left-wingman', label: 'left_wingman', class: 'white' },
+      { key: 'left-backcourt', label: 'left_backcourt', class: 'white' },
       { key: 'goalkeeper', label: 'goalkeeper', class: 'red' },
-      { key: 'right-wingman', label: 'right_wingman', class: 'white' }
+      { key: 'right-backcourt', label: 'right_backcourt', class: 'white' }
     ]
   ];
 
@@ -79,16 +63,18 @@ export class TeamBuildComponent {
     let excludedPlayer = [];
     Object.keys(this.playerPositions).forEach(k => {
       if (Array.isArray(this.playerPositions[k])) {
-        excludedPlayer = excludedPlayer.concat(this.playerPositions[k]);
+        excludedPlayer = excludedPlayer.concat(this.playerPositions[k]);        
       } else if (k !== position && this.playerPositions[k] && this.playerPositions[k]._id) {
-        excludedPlayer.push(this.playerPositions[k])
+        excludedPlayer.push(this.playerPositions[k]);
       }
     });
+    console.log('[TeamBuildPage] - showPlayerChooser - sanctions', this.sanctions);
     console.log('[TeamBuildPage] - showPlayerChooser - excludedPlayer', excludedPlayer);
+    console.log('[TeamBuildPage] - showPlayerChooser - playerList', this.playerList);
     this.playerList.forEach(p => {
       if (!excludedPlayer.find(item => {
         return item._id === p._id;
-      })) {
+      }) && !this.sanctions[p._id]) {
         alert.addInput({
           type: 'radio',
           label: p.firstname + ' ' + p.name + ' (' + p.status.squadnumber + ')',
@@ -108,7 +94,7 @@ export class TeamBuildComponent {
       handler: data => {
         console.debug('[TeamBuildPage] - showPlayerChooser - clear', position, data);
         delete this.playerPositions[position];
-        if(data) {
+        if (data) {
           this.playerList.push(data);
         }
       }
@@ -153,7 +139,7 @@ export class TeamBuildComponent {
       handler: data => {
         console.debug('[TeamBuildPage] - showSubstituesChooser - clear', position, data);
         delete this.playerPositions[position];
-        if(data) {
+        if (data) {
           this.playerList.push(data);
         }
       }
@@ -178,11 +164,18 @@ export class TeamBuildComponent {
    * @param {string} avatar
    * @returns {string}
    */
-  getAvatar(avatar: string) {
+  getAvatar(avatar: string): string {
     if (avatar && avatar !== 'null') {
       return this.root + '/file/SB_Person/' + avatar;
     } else {
       return '/assets/imgs/user.png';
     }
+  }
+
+  /**
+ * @param  {string} playerId
+ */
+  hasSanction(playerId: string) {
+    return _.findIndex(this.sanctions, o => { return o.playerId == playerId; }) > -1;
   }
 }

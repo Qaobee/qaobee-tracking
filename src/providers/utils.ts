@@ -96,14 +96,14 @@ export class Utils {
     });
   }
 
-  /**
-   * Arround decimal number
-   * 
-   * @param number 
-   * @param precision 
-   */
-  static precisionRound(number, precision) {
-    var factor = Math.pow(10, precision);
-    return Math.round(number * factor) / factor;
-  }
+    /**
+     * Arround decimal number
+     *
+     * @param number
+     * @param precision
+     */
+    static precisionRound(number, precision) {
+        var factor = Math.pow(10, precision);
+        return Math.round(number * factor) / factor;
+    }
 }

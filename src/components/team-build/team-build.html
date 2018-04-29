@@ -21,8 +21,8 @@
             </button>
         </ion-fab>
         <ion-row>
-            <ion-col text-center *ngFor="let s of playerPositions['substitutes']" ion-col>
-                <ion-chip>
+            <ion-col text-center *ngFor="let s of playerPositions['substitutes']" ion-col>{{ hasSanction(s._id) }}
+                <ion-chip color="{{ hasSanction(s._id)? 'yellow': 'white' }}">
                     <ion-avatar>
                         <img [src]="getAvatar(s.avatar)" alt="avatar">
                     </ion-avatar>

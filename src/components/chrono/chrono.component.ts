@@ -25,6 +25,11 @@ export class ChronoComponent {
 
   totalPeriod: number;
 
+  /**
+   * 
+   * @param {MessageBus} messageBus 
+   * @param {SettingsService} settingsService 
+   */
   constructor(
     private messageBus: MessageBus,
     private settingsService: SettingsService
@@ -41,10 +46,16 @@ export class ChronoComponent {
     });
   }
 
+  /**
+   * 
+   */
   format() {
     return this.chrono * 1000;
   }
 
+  /**
+   * 
+   */
   start() {
     this.run = true;
     console.debug('[ChronoComponent] - start', this.chrono);
@@ -70,11 +81,17 @@ export class ChronoComponent {
       });
   }
 
+  /**
+   * 
+   */
   pause() {
     this.run = false;
     this.onPaused.emit(this.chrono);
   }
 
+  /**
+   * 
+   */
   stop() {
     this.run = false;
     this.onStopped.emit(this.chrono);
