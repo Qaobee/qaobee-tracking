@@ -52,7 +52,7 @@ export class EventStatsPage {
   }
 
   /**
-   * 
+   * Get collect for an event
    * @param event 
    */
   private retriveCollects(event: any[]) {
@@ -65,22 +65,15 @@ export class EventStatsPage {
       ).subscribe((collects: any[]) => {
         if(collects.length>0) {
           this.collect = collects[0];
-          console.log('collect',collects[0]);
         }
       });
   }
 
   /**
-   * 
+   * Get list of stats for an event
    */
-  getStats(){
-    //actions negatives                    
-    let indicators = ['neutralization', 'forceDef', 'contre', 'interceptionOk', 
-                        'stopGKDef', 'penaltyObtained', 'exclTmpObtained', 'shift', 
-                        'duelWon', 'passDec', 'goalScored', 'penaltyConceded', 
-                        'interceptionKo', 'duelLoose', 'badPosition', 'forceAtt', 
-                        'marcher', 'doubleDribble', 'looseball', 'foot', 'zone', 
-                        'stopGKAtt', 'goalConceded' ];
+  getStats(){                   
+    let indicators = ['goalScored', 'goalConceded' ];
     let search = {
       listIndicators: indicators,
       listOwners: this.ownerId,
@@ -89,11 +82,9 @@ export class EventStatsPage {
       aggregat: 'COUNT'
     };
 
-    //get actions negatives
     this.statsService.getListDetailValue(search).subscribe((result: any[]) => {
       if(result.length>0){
         this.statsNotFound = false;
-        console.log('result',result);
         let goalConceded = 0;
         let goalScored = 0;
         for (let index = 0; index < result.length; index++) {

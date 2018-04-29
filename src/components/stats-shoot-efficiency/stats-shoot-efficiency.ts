@@ -66,7 +66,7 @@ export class StatsShootEfficiencyComponent {
     // goal scored or stopped
     let indicators = [];
     let labels = '';
-    if (this.positionType === 'goalkeeper'){
+    if (this.positionType && this.positionType === 'goalkeeper'){
       indicators = ['goalConceded', 'originShootDef'];
       labels = 'component.stats.shoot.efficiency.goalkeeper';
     } else {

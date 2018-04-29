@@ -32,6 +32,7 @@ import {ChronoComponent} from "./chrono/chrono.component";
 import { SassHelperComponent } from './sass-helper.component';
 import { StatsShootEfficiencyComponent } from './stats-shoot-efficiency/stats-shoot-efficiency';
 import { StatsHighligthsByQuarterComponent } from './stats-highligths-by-quarter/stats-highligths-by-quarter';
+import { StatsCollectTimeSheetComponent } from './stats-collect-time-sheet/stats-collect-time-sheet';
 
 @NgModule({
     declarations: [
@@ -41,7 +42,8 @@ import { StatsHighligthsByQuarterComponent } from './stats-highligths-by-quarter
         SassHelperComponent,
         ChronoComponent,
     StatsShootEfficiencyComponent,
-    StatsHighligthsByQuarterComponent
+    StatsHighligthsByQuarterComponent,
+    StatsCollectTimeSheetComponent
     ],
     imports: [
         IonicModule.forRoot(MyApp),
@@ -61,7 +63,8 @@ import { StatsHighligthsByQuarterComponent } from './stats-highligths-by-quarter
         ChronoComponent,
         SassHelperComponent,
     StatsShootEfficiencyComponent,
-    StatsHighligthsByQuarterComponent
+    StatsHighligthsByQuarterComponent,
+    StatsCollectTimeSheetComponent
     ],
     providers: [
         Utils
