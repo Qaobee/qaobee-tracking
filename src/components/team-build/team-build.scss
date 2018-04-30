@@ -18,12 +18,6 @@ team-build-component {
 
     ion-chip {
       max-width: calc(100vw / 3 - 2rem);
-      ion-badge {
-        position: absolute;
-        float: right;
-        top:0;
-        right: 0;
-      }
     }
   }
 }

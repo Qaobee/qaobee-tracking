@@ -32,8 +32,8 @@ export class StatCollector {
     evt.chrono = context.chrono;
     evt.phaseSeqId = context.phaseSeqId;
     evt.code = code;
-    evt.owners = context.owners;
-    evt.producter = context.connectedUser._id;
+    evt.owner = context.owners;
+    evt.producter = [context.connectedUser._id];
     evt.timer = moment.utc().valueOf();
     if (context.shootSeqId) {
       evt.shootSeqId = context.shootSeqId;
@@ -59,7 +59,7 @@ export class StatCollector {
   makePass(context: FSMContext, playerId: string, otherPlayer: string): void {
     let stat = this.eventBuilder(context, StatType.PASS, otherPlayer);
     if (playerId) {
-      stat.owners.push(playerId);
+      stat.owner.push(playerId);
     }
     this.messageBus.broadcast(StatCollector.STAT, stat);
   }
@@ -102,7 +102,7 @@ export class StatCollector {
   card(context: FSMContext, cardValue: StatType, playerId: string) {
     let stat = this.eventBuilder(context, cardValue, 1);
     if (playerId) {
-      stat.owners.push(playerId);
+      stat.owner.push(playerId);
     }
     this.messageBus.broadcast(StatCollector.STAT, stat);
   }
@@ -124,7 +124,7 @@ export class StatCollector {
   playTime(context: FSMContext, playerId: string, playTime: number) {
     let stat = this.eventBuilder(context, StatType.PLAY_TIME, playTime);
     if (playerId) {
-      stat.owners.push(playerId);
+      stat.owner.push(playerId);
     }
     this.messageBus.broadcast(StatCollector.STAT, stat);
   }
@@ -136,7 +136,7 @@ export class StatCollector {
   totalPlayTime(context: FSMContext, playerId: string) {
     let stat = this.eventBuilder(context, StatType.TOTAL_PLAY_TIME, context.playTimeMap[playerId]);
     if (playerId) {
-      stat.owners.push(playerId);
+      stat.owner.push(playerId);
     }
     this.messageBus.broadcast(StatCollector.STAT, stat);
   }
@@ -150,7 +150,7 @@ export class StatCollector {
   gameSystemChange(context: FSMContext, code: StatType, gameSystem: string, team: string) {
     let stat = this.eventBuilder(context, code, gameSystem);
     if (team != null) {
-      stat.owners.push(team);
+      stat.owner.push(team);
     }
     this.messageBus.broadcast(StatCollector.STAT, stat);
   }
@@ -164,7 +164,7 @@ export class StatCollector {
   ground(context: FSMContext, code: StatType, area: string, playerId: string) {
     let stat = this.eventBuilder(context, code, area);
     if (playerId) {
-      stat.owners.push(playerId);
+      stat.owner.push(playerId);
     }
     this.messageBus.broadcast(StatCollector.STAT, stat);
   }
@@ -178,7 +178,7 @@ export class StatCollector {
   goalTarget(context: FSMContext, code: StatType, target: string, playerId: string) {
     let stat = this.eventBuilder(context, code, target);
     if (playerId) {
-      stat.owners.push(playerId);
+      stat.owner.push(playerId);
     }
     this.messageBus.broadcast(StatCollector.STAT, stat);
   }
@@ -191,7 +191,7 @@ export class StatCollector {
   makeAction(context: FSMContext, action: string, playerId: string) {
     let stat = this.eventBuilder(context, action, 1);
     if (playerId) {
-      stat.owners.push(playerId);
+      stat.owner.push(playerId);
     }
     this.messageBus.broadcast(StatCollector.STAT, stat);
   }
@@ -204,7 +204,7 @@ export class StatCollector {
   outside(context: FSMContext, where: string, playerId: string) {
     let stat = this.eventBuilder(context, StatType.OUTSIDE, where);
     if (playerId) {
-      stat.owners.push(playerId);
+      stat.owner.push(playerId);
     }
     this.messageBus.broadcast(StatCollector.STAT, stat);
   }
@@ -217,7 +217,7 @@ export class StatCollector {
   deadTime(context: FSMContext, code: StatType, team: string) {
     let stat = this.eventBuilder(context, code, team);
     if (team != null) {
-      stat.owners.push(team);
+      stat.owner.push(team);
     }
   }
 
@@ -228,7 +228,7 @@ export class StatCollector {
   goalScored(context: FSMContext, playerId: string) {
     let stat = this.eventBuilder(context, StatType.GOAL_SCORED, 1);
     if (playerId) {
-      stat.owners.push(playerId);
+      stat.owner.push(playerId);
     }
     this.messageBus.broadcast(StatCollector.STAT, stat);
   }
@@ -240,7 +240,7 @@ export class StatCollector {
   goalConceded(context: FSMContext, playerId: string) {
     let stat = this.eventBuilder(context, StatType.GOAL_CONCEDED, 1);
     if (playerId) {
-      stat.owners.push(playerId);
+      stat.owner.push(playerId);
     }
     this.messageBus.broadcast(StatCollector.STAT, stat);
   }
@@ -252,7 +252,7 @@ export class StatCollector {
   wound(context: FSMContext, playerId: string) {
     let stat = this.eventBuilder(context, StatType.WOUND, 1);
     if (playerId) {
-      stat.owners.push(playerId);
+      stat.owner.push(playerId);
     }
     this.messageBus.broadcast(StatCollector.STAT, stat);
   }
@@ -265,7 +265,7 @@ export class StatCollector {
     let code = context.gamePhase.attack ? StatType.stopGKAtt : StatType.stopGKDef;
     let stat = this.eventBuilder(context, code, 1);
     if (playerId) {
-      stat.owners.push(playerId);
+      stat.owner.push(playerId);
     }
   }
 
@@ -277,7 +277,7 @@ export class StatCollector {
   pole(context: FSMContext, pole: string, playerId: string) {
     let stat = this.eventBuilder(context, StatType.POLE, pole);
     if (playerId) {
-      stat.owners.push(playerId);
+      stat.owner.push(playerId);
     }
     this.messageBus.broadcast(StatCollector.STAT, stat);
   }
@@ -290,7 +290,7 @@ export class StatCollector {
   holder(context: FSMContext, playerId: string, positionType: string) {
     let stat = this.eventBuilder(context, StatType.HOLDER, positionType);
     if (playerId) {
-      stat.owners.push(playerId);
+      stat.owner.push(playerId);
     }
     this.messageBus.broadcast(StatCollector.STAT, stat);
   }
@@ -303,7 +303,7 @@ export class StatCollector {
     let lastIn = context.lastInMap[playerId] || 0;
     let stat = this.eventBuilder(context, StatType.SUBSTITUE, context.chrono - lastIn);
     if (playerId) {
-      stat.owners.push(playerId);
+      stat.owner.push(playerId);
     }
     this.messageBus.broadcast(StatCollector.STAT, stat);
   }
@@ -316,7 +316,7 @@ export class StatCollector {
   positionType(context: FSMContext, playerId: string, position: string) {
     let stat = this.eventBuilder(context, StatType.POSITION_TYPE, position);
     if (playerId) {
-      stat.owners.push(playerId);
+      stat.owner.push(playerId);
     }
     this.messageBus.broadcast(StatCollector.STAT, stat);
   }

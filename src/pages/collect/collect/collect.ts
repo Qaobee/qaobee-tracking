@@ -1089,7 +1089,7 @@ export class CollectPage {
         {
           text: this.translations.actionButton.Ok,
           handler: () => {
-            if(this.handFSM.trigger(FSMEvents.endChrono)) {
+            if (this.handFSM.trigger(FSMEvents.endChrono)) {
               this.currentCollect.endDate = moment.utc().valueOf();
               this.currentCollect.status = 'done';
               this.storage.get('collects').then((collects: any[]) => {
@@ -1116,12 +1116,16 @@ export class CollectPage {
   uploadStats() {
     console.debug('[CollectPage] - uploadStats');
     this.collectService.updateCollect(this.currentCollect).subscribe(res => {
-      console.debug('[CollectPage] - uploadStats - updateCollect', res);
-      this.statAPI.addBulk(this.stats).subscribe(res => {
-        console.debug('[CollectPage] - uploadStats - addBulk', res);
-        this.presentToast(this.translations.collect.upload_done);
-        this.navCtrl.setRoot(HomePage, {user: this.authenticationService.user});
-      });
+      console.debug('[CollectPage] - uploadStats - updateCollect', res, this.stats);
+      if (res) {
+        this.statAPI.addBulk(this.stats).subscribe(res => {
+          console.debug('[CollectPage] - uploadStats - addBulk', res);
+          if (res) {
+            this.presentToast(this.translations.collect.upload_done);
+            this.navCtrl.setRoot(HomePage, { user: this.authenticationService.user });
+          }
+        });
+      }
     });
   }
 
