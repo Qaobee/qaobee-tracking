@@ -109,8 +109,8 @@ export class CollectPage {
     private authenticationService: AuthenticationService,
     private handFSM: HandFSM
   ) {
-    this.translateService.get(['collect', 'loader', 'actionButton']).subscribe(t => {
-      this.translations = { collect: t.collect, loader: t.loader, actionButton: t.actionButton };
+    this.translateService.get(['collect', 'loader', 'actionButton', 'warning']).subscribe(t => {
+      this.translations = { collect: t.collect, loader: t.loader, actionButton: t.actionButton, warning: t.warning };
       this.currentEvent = navParams.get('event');
       this.playerPositions = navParams.get('players') || {};
       this.currentCollect = navParams.get('collect');
