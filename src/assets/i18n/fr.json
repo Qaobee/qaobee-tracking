@@ -1,6 +1,7 @@
 {
   "country": "CNTR-250-FR-FRA",
   "loader": "Veuillez patienter...",
+  "warning": "Attention",
   "actionButton": {
     "Submit": "Valider",
     "Cancel": "Annuler",
@@ -167,6 +168,8 @@
     "positive_actions": "Actions positives",
     "negative_actions": "Actions négatives",
     "substitution": "Changement de joueur",
+    "ended_prompt": "Êtes vous sûr de vouloir mettre fin à la collecte?",
+    "upload_done": "Sauvegarde des données faite!",
     "team-build" : {
       "title": "Composition d'équipe",
       "substitutes": "Remplaçants",

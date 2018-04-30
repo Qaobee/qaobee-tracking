@@ -1,9 +1,12 @@
+import { HomePage } from './../../home/home';
+import { CollectService } from './../../../providers/api/api.collect.service';
 import { Component } from '@angular/core';
 import { ENV } from '@app/env';
 import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
-import { ActionSheetController, LoadingController, ModalController, NavParams, ToastController } from 'ionic-angular';
+import { ActionSheetController, LoadingController, ModalController, NavParams, ToastController, AlertController, NavController } from 'ionic-angular';
 import _ from "lodash";
+import moment from 'moment';
 import { Observable } from 'rxjs';
 import { ChronoComponent } from '../../../components/chrono/chrono.component';
 import { CollectStat } from '../../../model/collect.stat';
@@ -23,6 +26,7 @@ import { Utils } from '../../../providers/utils';
 import { GoalModal } from '../goal-modal/goal-modal';
 import { SubstitutionModal } from '../substitution-modal/substitution-modal';
 import { diff } from 'deep-object-diff';
+import { StatsModal } from '../ststs-modal/stats-modal';
 
 @Component({
   selector: 'page-collect',
@@ -73,29 +77,35 @@ export class CollectPage {
 
   /**
    * @param {NavParams} navParams
+   * @param {NavController} navCtrl
    * @param {Storage} storage
    * @param {ToastController} toastCtrl
    * @param {ModalController} modalController
    * @param {LoadingController} loadingCtrl
    * @param {ActionSheetController} actionSheetCtrl
+   * @param {AlertController} alertCtrl
    * @param {TranslateService} translateService
    * @param {MessageBus} messageBus
    * @param {APIStatsService} statAPI
    * @param {StatCollector} statCollector
+   * @param {CollectService} collectService
    * @param {AuthenticationService} authenticationService
    * @param {HandFSM} handFSM
    */
   constructor(
     public navParams: NavParams,
+    public navCtrl: NavController,
     private storage: Storage,
     private toastCtrl: ToastController,
     public modalController: ModalController,
     public loadingCtrl: LoadingController,
     public actionSheetCtrl: ActionSheetController,
+    private alertCtrl: AlertController,
     private translateService: TranslateService,
     private messageBus: MessageBus,
     private statAPI: APIStatsService,
     private statCollector: StatCollector,
+    private collectService: CollectService,
     private authenticationService: AuthenticationService,
     private handFSM: HandFSM
   ) {
@@ -139,6 +149,11 @@ export class CollectPage {
       this.stats = this.stats.slice(0, Math.max(this.stats.length - 2, this.stats.length - 1));
       this.displayedStats = this.stats.slice();
       this.displayedStats.reverse();
+    });
+
+    this.messageBus.on(StatCollector.UPLOAD_STAT, evt => {
+      console.debug('[CollectPage] - constructor - onStatCollector.UPLOAD_STAT', evt);
+      this.uploadStats();
     });
   }
 
@@ -758,8 +773,8 @@ export class CollectPage {
               });
               this.saveState();
             }
-            break; 
-            case StatType.RED_CARD:
+            break;
+          case StatType.RED_CARD:
             if (this.fsmContext.chrono >= s.time + 2 * 60 * 1000) {
               this.gameState.sanctions.filter(p => {
                 return p.playerId !== s.playerId;
@@ -1046,7 +1061,16 @@ export class CollectPage {
    */
   statsButton(event: any) {
     console.debug('[CollectPage] - statsButton', event);
-    // TODO
+    if (this.fsmContext.paused || this.handFSM.trigger(FSMEvents.doPause)) {
+      let statsModal = this.modalController.create(StatsModal, {
+        playerList: this.rawPlayerList,
+        event: this.currentEvent,
+        collect: this.currentCollect,
+        stats: this.stats,
+        gameState: this.gameState
+      });
+      statsModal.present();
+    }
   }
 
   /**
@@ -1054,15 +1078,51 @@ export class CollectPage {
    */
   stopButton(event: any) {
     console.debug('[CollectPage] - stopButton', event);
-    // TODO
+    let alert = this.alertCtrl.create({
+      title: this.translations.warning,
+      message: this.translations.collect.ended_prompt,
+      buttons: [
+        {
+          text: this.translations.actionButton.Cancel,
+          role: 'cancel'
+        },
+        {
+          text: this.translations.actionButton.Ok,
+          handler: () => {
+            if(this.handFSM.trigger(FSMEvents.endChrono)) {
+              this.currentCollect.endDate = moment.utc().valueOf();
+              this.currentCollect.status = 'done';
+              this.storage.get('collects').then((collects: any[]) => {
+                if (!collects) {
+                  collects = [];
+                }
+                collects.push(this.currentCollect);
+                this.storage.set('collects', collects);
+                this.saveSats();
+                this.saveState();
+                this.statCollector.endCollect(this.fsmContext);
+              });
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   /**
    *
    */
   uploadStats() {
-    console.debug('[CollectPage] - uploadStats')
-    // TODO
+    console.debug('[CollectPage] - uploadStats');
+    this.collectService.updateCollect(this.currentCollect).subscribe(res => {
+      console.debug('[CollectPage] - uploadStats - updateCollect', res);
+      this.statAPI.addBulk(this.stats).subscribe(res => {
+        console.debug('[CollectPage] - uploadStats - addBulk', res);
+        this.presentToast(this.translations.collect.upload_done);
+        this.navCtrl.setRoot(HomePage, {user: this.authenticationService.user});
+      });
+    });
   }
 
   /**

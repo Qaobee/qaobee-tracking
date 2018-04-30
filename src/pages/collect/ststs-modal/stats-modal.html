@@ -1,0 +1,61 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title *ngIf="event.type">{{ event.type.label }}</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="dismiss()">
+                <ion-icon name="close-circle"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content *ngIf="event">
+    <ion-item class="enteteLight" text-center>
+        <h1>{{ event.label }}</h1>
+    </ion-item>
+
+    <!-- Score's event -->
+    <ion-item>
+        <ion-row text-center>
+            <ion-col>
+                <h1> Score</h1>
+            </ion-col>
+        </ion-row>
+        <ion-row text-center class="enteteDefault">
+            <ion-col>
+                {{event.participants.teamHome.label}}
+            </ion-col>
+            <ion-col>
+                {{event.participants.teamVisitor.label}}
+            </ion-col>
+        </ion-row>
+        <ion-row text-center>
+            <ion-col>
+                <h1>{{scoreHome}}</h1>
+            </ion-col>
+            <ion-col>
+                <h1>{{scoreVisitor}}</h1>
+            </ion-col>
+        </ion-row>
+        <ion-row text-right class="enteteLight">
+            <ion-col>
+                {{'component.stats.detail' | translate}}
+                <ion-icon name="eye"></ion-icon>
+            </ion-col>
+        </ion-row>
+    </ion-item>
+
+    <!-- player's shoot efficiency -->
+    <ion-item>
+        <stats-shoot-efficiency [ownerId]="ownerId" [numberMatch]="1" [positionType]="'event'">
+        </stats-shoot-efficiency>
+    </ion-item>
+
+    <ion-item>
+        <stats-highligths-by-quarter [ownerId]="ownerId"></stats-highligths-by-quarter>
+    </ion-item>
+
+    <ion-item>
+        <stats-collect-time-sheet [collect]="collect"></stats-collect-time-sheet>
+    </ion-item>
+
+</ion-content>

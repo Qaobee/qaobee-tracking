@@ -72,7 +72,9 @@ export class MyApp {
     translate.use(translate.getBrowserLang());
   }
 
-  /** */
+  /**
+   * 
+   */
   initializeApp() {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.

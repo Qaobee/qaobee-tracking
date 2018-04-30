@@ -1,20 +1,20 @@
 <ion-header>
-    <ion-navbar>
-        <ion-title *ngIf="event.type">{{ event.type.label }}</ion-title>
-        <ion-buttons end>
-            <button ion-button icon-only (click)="deleteCollect()">
-                <ion-icon name="trash"></ion-icon>
-            </button>
-            <button ion-button icon-only>
-                <ion-icon name="more"></ion-icon>
-            </button>
-        </ion-buttons>
-    </ion-navbar>
+  <ion-navbar>
+    <ion-title *ngIf="event.type">{{ event.type.label }}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="deleteCollect()">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+      <button ion-button icon-only>
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
 
-<ion-content *ngIf="event">  
+<ion-content *ngIf="event">
   <ion-item class="enteteLight" text-center>
-      <h1>{{ event.label }}</h1>
+    <h1>{{ event.label }}</h1>
   </ion-item>
 
   <!-- Score's event -->
@@ -34,7 +34,7 @@
     </ion-row>
     <ion-row text-center>
       <ion-col>
-        <h1>{{scoreHome}}</h1> 
+        <h1>{{scoreHome}}</h1>
       </ion-col>
       <ion-col>
         <h1>{{scoreVisitor}}</h1>
@@ -42,17 +42,15 @@
     </ion-row>
     <ion-row text-right class="enteteLight">
       <ion-col>
-          {{'component.stats.detail' | translate}} <ion-icon  name="eye"></ion-icon>
+        {{'component.stats.detail' | translate}}
+        <ion-icon name="eye"></ion-icon>
       </ion-col>
     </ion-row>
   </ion-item>
-  
+
   <!-- player's shoot efficiency -->
   <ion-item>
-    <stats-shoot-efficiency 
-      [ownerId]="ownerId" 
-      [numberMatch]="1" 
-      [positionType]="'event'">
+    <stats-shoot-efficiency [ownerId]="ownerId" [numberMatch]="1" [positionType]="'event'">
     </stats-shoot-efficiency>
   </ion-item>
 

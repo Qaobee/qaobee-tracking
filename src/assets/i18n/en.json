@@ -1,6 +1,7 @@
 {
   "country": "CNTR-250-FR-FRA",
   "loader": "Please wait...",
+  "warning": "Warning",
   "actionButton": {
     "Submit": "Submit",
     "Cancel": "Cancel",
@@ -175,6 +176,8 @@
     "positive_actions": "Positive actions",
     "negative_actions": "Negative actions",
     "substitution": "Player substitution",
+    "ended_prompt": "Are you sure to end the collect?",
+    "upload_done": "Data upload done!",
     "indicators": {
       "interceptionKo": "Missed interception",
       "duelLoose": "Lost duel",
