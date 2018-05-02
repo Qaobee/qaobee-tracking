@@ -41,7 +41,7 @@ node {
                     alwaysLinkToLastBuild: false,
                     keepAll              : true,
                     reportDir            : 'build/docs/git',
-                    reportFiles          : 'index.html',
+                    reportFiles          : 'general.html',
                     reportName           : "GitStats"
             ])
             publishHTML(target: [
