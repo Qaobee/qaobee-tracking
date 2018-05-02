@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar>
-        <ion-title *ngIf="event.type">{{ event.type.label }}</ion-title>
+        <ion-title *ngIf="eventStats.event.type">{{ eventStats.event.type.label }}</ion-title>
         <ion-buttons end>
             <button ion-button icon-only (click)="deleteCollect()">
                 <ion-icon name="trash"></ion-icon>
@@ -12,9 +12,9 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content *ngIf="event">  
+<ion-content *ngIf="eventStats.event">  
   <ion-item class="enteteLight" text-center>
-      <h1>{{ event.label }}</h1>
+      <h1>{{ eventStats.event.label }}</h1>
   </ion-item>
 
   <!-- Score's event -->
@@ -26,10 +26,10 @@
     </ion-row>
     <ion-row text-center class="enteteDefault">
       <ion-col>
-        {{event.participants.teamHome.label}}
+        {{eventStats.event.participants.teamHome.label}}
       </ion-col>
       <ion-col>
-        {{event.participants.teamVisitor.label}}
+        {{eventStats.event.participants.teamVisitor.label}}
       </ion-col>
     </ion-row>
     <ion-row text-center>
@@ -50,18 +50,18 @@
   <!-- player's shoot efficiency -->
   <ion-item>
     <stats-shoot-efficiency 
-      [ownerId]="ownerId" 
+      [ownerId]="eventStats.event._id" 
       [numberMatch]="1" 
       [positionType]="'event'">
     </stats-shoot-efficiency>
   </ion-item>
 
   <ion-item>
-    <stats-highligths-by-quarter [ownerId]="ownerId"></stats-highligths-by-quarter>
+    <stats-highligths-by-quarter [ownerId]="eventStats.event._id"></stats-highligths-by-quarter>
   </ion-item>
 
   <ion-item>
-    <stats-collect-time-sheet [collect]="collect"></stats-collect-time-sheet>
+    <stats-collect-time-sheet [eventId]="eventStats.event._id"></stats-collect-time-sheet>
   </ion-item>
 
 </ion-content>
