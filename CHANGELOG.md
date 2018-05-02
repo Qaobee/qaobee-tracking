@@ -1,9 +1,11 @@
 Qaobee-Tracking
 ---
 
-## HEAD
+## v0.0.0
   
-  > +  2018/04/30  | some fixes  (*[Xavier MARIN](marin.xavier@gmail.com) | [view commit](https://gitlab.com/qaobee/qaobee-tracking/commit/9067f566e6221063da8f03c3fffc78393b0f61d4)*)
+  > +  2018/05/02  | jenkins  (*[Xavier MARIN](marin.xavier@gmail.com) | [view commit](https://gitlab.com/qaobee/qaobee-tracking/commit/9c941a26830bfe1fd904fc8c109f7213d055ee41)*)
+> +  2018/05/02  | jenkins  (*[Xavier MARIN](marin.xavier@gmail.com) | [view commit](https://gitlab.com/qaobee/qaobee-tracking/commit/5de0e710467f4b369befa5f8a2104982a7d9555b)*)
+> +  2018/04/30  | some fixes  (*[Xavier MARIN](marin.xavier@gmail.com) | [view commit](https://gitlab.com/qaobee/qaobee-tracking/commit/9067f566e6221063da8f03c3fffc78393b0f61d4)*)
 > +  2018/04/30  | Bug fix on stats upload  (*[Xavier MARIN](marin.xavier@gmail.com) | [view commit](https://gitlab.com/qaobee/qaobee-tracking/commit/b88deb9033b21cd15e54550bdff37b7348cbebe4)*)
 > +  2018/04/30  | message fix  (*[Xavier MARIN](marin.xavier@gmail.com) | [view commit](https://gitlab.com/qaobee/qaobee-tracking/commit/982ec28ebd22c972064401ecec45478fb131f5c7)*)
 > +  2018/04/30  | End collect and stats upload  (*[Xavier MARIN](marin.xavier@gmail.com) | [view commit](https://gitlab.com/qaobee/qaobee-tracking/commit/3e34a594cfc7d4d4fa41be65dcc9a68d81f93e49)*)

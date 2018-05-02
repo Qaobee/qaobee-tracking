@@ -33,7 +33,7 @@ tagList.forEach(tag => {
   });
   lastTag = tag;
 });
-fs.writeFileSync('CHANGELOG.md', md);
+console.log(md);
 if(!fs.existsSync('build/docs/changelog')) {
   fs.mkdirSync('build/docs/changelog');
 }

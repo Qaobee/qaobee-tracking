@@ -15,12 +15,11 @@ node {
         stage("Build $version") {
             sh 'rm -fr node_modules'
             sh 'yarn cache clean'
-            sh 'yarn install'
+            sh 'yarn install --ignore-engines'
             sh 'yarn run build'
         }
 
         stage("Quality $version") {
-            sh 'yarn run lint'
             sh "yarn run sonar"
         }
 
