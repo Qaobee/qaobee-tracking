@@ -22,19 +22,19 @@ node {
 
         stage("Quality $version") {
             sh 'npm run lint'
-            sh "npm run sonar-scanner"
+            sh "npm run sonar"
         }
 
 
         stage("Doc $version") {
-            sh 'gulp jsdoc'
+            sh 'npm run doc'
             sh 'git_stats generate -o build/docs/git'
-            sh './gradlew gitChangelogTask'
+            sh 'node changelog.js'
             publishHTML(target: [
                     allowMissing         : false,
                     alwaysLinkToLastBuild: false,
                     keepAll              : true,
-                    reportDir            : 'build/docs/jsdoc',
+                    reportDir            : 'build/docs/js',
                     reportFiles          : 'index.html',
                     reportName           : "JSdoc"
             ])
