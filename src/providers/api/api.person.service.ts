@@ -43,9 +43,26 @@ export class PersonService extends ApiService {
     this.apiUrl = ENV.hive + this.rootPath + '/sandbox/effective/person/';
   }
 
+  /**
+   * @function getListPersonSandbox()
+   * @description Get list person by sandbox Id
+   * @param sandboxId 
+   */
   getListPersonSandbox(sandboxId: string) {
     return this.http.get<any>(this.apiUrl + 'listSandbox/?sandboxId=' + sandboxId, this.addHeaderToken()).pipe(
       catchError(this.handleError('PersonService.getListPersonSandbox'))
+    );
+  }
+
+  /**
+   * @function getListPerson() 
+   * @description Get list person by list of person's id and with list field to retrieve
+   * @param listId 
+   * @param listField 
+   */
+  getListPerson(listId: any, listField: any) {
+    return this.http.post<any>(this.apiUrl + '/list',{listId: listId, listField: listField}, this.addHeaderToken()).pipe(
+      catchError(this.handleError('PersonService.getListPerson'))
     );
   }
 
