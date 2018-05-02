@@ -873,10 +873,7 @@ export class CollectPage {
    */
   timeoutThem(index: number, event: any) {
     console.debug('[CollectPage] - timeoutThem', index, event);
-    if (this.fsmContext.paused) {
-      this.timeoutThemState[index] = false;
-      event.checked = false;
-    } else if (this.handFSM.trigger(FSMEvents.timeout)) {
+    if (this.handFSM.trigger(FSMEvents.timeout)) {
       this.messageBus.broadcast(ChronoComponent.PAUSE, {});
       this.statCollector.deadTime(this.fsmContext, StatType.TIMEOUT_THEM, this.getTeamVisitor());
       this.gameState.visitorTimeout++;
@@ -894,11 +891,7 @@ export class CollectPage {
    */
   timeoutUs(index: number, event: any) {
     console.debug('[CollectPage] - timeoutUs', index, event, this.fsmContext.paused);
-    if (this.fsmContext.paused) {
-      this.timeoutUsState[index] = false;
-      event.checked = false;
-
-    } else if (this.handFSM.trigger(FSMEvents.timeout)) {
+    if (this.handFSM.trigger(FSMEvents.timeout)) {
       this.messageBus.broadcast(ChronoComponent.PAUSE, {});
       this.statCollector.deadTime(this.fsmContext, StatType.TIMEOUT_US, this.getTeamHomeId());
       this.gameState.homeTimeout++;

@@ -66,7 +66,7 @@ export class ChronoComponent {
         this.chrono += 1;
         this.chronoChange.emit(this.chrono);
         if (this.chrono > this.settingsService.getParametersGame().periodDuration * this.currentPhase) {
-          if (this.currentPhase === this.settingsService.getParametersGame().nbPeriod, this.settingsService.getParametersGame().periodDuration) {
+          if (this.currentPhase === this.settingsService.getParametersGame().nbPeriod) {
             console.debug('[ChronoComponent] - start - game ended', this.chrono, this.settingsService.getParametersGame().periodDuration);
             this.stop();
             this.onGameEnded.emit(this.chrono);

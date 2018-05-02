@@ -127,7 +127,7 @@ export class TeamBuildComponent {
     });
     this.sanctions.forEach(p => {
       if (p.sanction === StatType.RED_CARD) {
-        excludedPlayer.concat(this.playerList.filter(f => f._id === p.playerId));
+        excludedPlayer = excludedPlayer.concat(this.playerList.filter(f => f._id === p.playerId));
       }
     });
     this.playerList.forEach(p => {
