@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 /*
  *  __________________
@@ -21,6 +22,13 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { StatsEventService } from '../stats.event.service';
 import { EventStatsModel } from 'model/event.stats';
+=======
+import { Component } from '@angular/core';
+import { NavController, NavParams } from 'ionic-angular';
+import { APIStatsService } from '../../../providers/api/api.stats';
+import { AuthenticationService } from '../../../providers/authentication.service';
+import { CollectService } from '../../../providers/api/api.collect.service';
+>>>>>>> f5913e3dc3d9959ae95a54134e5d3836fd027237
 
 @Component({
   selector: 'page-event-stats',

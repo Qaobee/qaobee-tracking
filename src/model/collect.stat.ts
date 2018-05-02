@@ -22,7 +22,7 @@ export class CollectStat {
     /**
      * Owners
      */
-    owners: string[];
+    owner: string[];
     /**
      * Value
      */

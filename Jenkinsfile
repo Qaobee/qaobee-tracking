@@ -14,27 +14,25 @@ node {
 
         stage("Build $version") {
             sh 'rm -fr node_modules'
-            sh 'npm cache clean'
-            sh 'npm run clean'
-            sh 'npm install'
-            sh 'npm run build'
+            sh 'yarn cache clean'
+            sh 'yarn install --ignore-engines'
+            sh 'yarn run build'
         }
 
         stage("Quality $version") {
-            sh 'npm run lint'
-            sh "npm run sonar-scanner"
+            sh "yarn run sonar"
         }
 
 
         stage("Doc $version") {
-            sh 'gulp jsdoc'
+            sh 'yarn run doc'
             sh 'git_stats generate -o build/docs/git'
-            sh './gradlew gitChangelogTask'
+            sh 'node changelog.js'
             publishHTML(target: [
                     allowMissing         : false,
                     alwaysLinkToLastBuild: false,
                     keepAll              : true,
-                    reportDir            : 'build/docs/jsdoc',
+                    reportDir            : 'build/docs/js',
                     reportFiles          : 'index.html',
                     reportName           : "JSdoc"
             ])

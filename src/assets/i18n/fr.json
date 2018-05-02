@@ -1,6 +1,7 @@
 {
   "country": "CNTR-250-FR-FRA",
   "loader": "Veuillez patienter...",
+  "warning": "Attention",
   "actionButton": {
     "Submit": "Valider",
     "Cancel": "Annuler",
@@ -155,6 +156,7 @@
     "titleNotFound": "Planifier un match"
   },
   "collect": {
+    "period": "Période",
     "select_game_phase_first": "Veuillez sélectionner une phase de jeu (attaque ou défense)",
     "ended_popup_title": "Collecte terminée",
     "select_player": "Veuillez sélectionner un joueur",
@@ -166,6 +168,8 @@
     "positive_actions": "Actions positives",
     "negative_actions": "Actions négatives",
     "substitution": "Changement de joueur",
+    "ended_prompt": "Êtes vous sûr de vouloir mettre fin à la collecte?",
+    "upload_done": "Sauvegarde des données faite!",
     "team-build" : {
       "title": "Composition d'équipe",
       "substitutes": "Remplaçants",
@@ -226,8 +230,7 @@
       "impactShootDef": "Impact de tir",
       "pole": "Poteau",
       "outside": "Sortie",
-      "exclTmpObtained": "2 minutes",
-      "exclusionTempoObtained": "2 minutes",
+      "exclTmp": "2 minutes",
       "playTime": "Temps de jeu"
     },
     "positions": {

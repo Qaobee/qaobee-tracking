@@ -58,12 +58,12 @@ export class EventListPage {
    * @param {CollectService} collectService
    */
   constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              private eventsServices: EventsService,
-              private storage: Storage,
-              private authenticationService: AuthenticationService,
-              private settingsService: SettingsService,
-              private collectService: CollectService) {
+    public navParams: NavParams,
+    private eventsServices: EventsService,
+    private storage: Storage,
+    private authenticationService: AuthenticationService,
+    private settingsService: SettingsService,
+    private collectService: CollectService) {
     this.datePipe = new DatePipe(this.settingsService.getLanguage());
 
   }
@@ -87,15 +87,15 @@ export class EventListPage {
 
       // Reset items back to all of the items
       this.storage.get('events').then(events => {
-          for (let index = 0; index < events.length; index++) {
-            const element = events[index];
-            if (element.type.label.toLowerCase().indexOf(val.toLowerCase()) > -1 || element.label.toLowerCase().indexOf(val.toLowerCase()) > -1) {
-              this.eventListFiltred.push(element);
-            }
+        for (let index = 0; index < events.length; index++) {
+          const element = events[index];
+          if (element.type.label.toLowerCase().indexOf(val.toLowerCase()) > -1 || element.label.toLowerCase().indexOf(val.toLowerCase()) > -1) {
+            this.eventListFiltred.push(element);
           }
-          this.populateEvents(this.eventListFiltred);
-          this.eventListSize = this.eventListFiltred.length;
         }
+        this.populateEvents(this.eventListFiltred);
+        this.eventListSize = this.eventListFiltred.length;
+      }
       );
     } else {
       this.retrieveEventList();
@@ -143,20 +143,22 @@ export class EventListPage {
   private populateEvents(events: any[]) {
     console.debug('[EventListPage] - populateEvents', events);
     this.eventList = {};
-    events.sort(Utils.compareEvents);
-    events.forEach(e => {
-      let startDateStr = this.datePipe.transform(e.startDate, 'MMMM  - yyyy');
-      if (!this.eventList.hasOwnProperty(startDateStr)) {
-        this.eventList[startDateStr] = [];
-      }
-      // FIXME : a placer dans le détail pour éviter un appel en mitraillette, non?
-      this.collectService.getCollects(this.authenticationService.meta._id, e._id, e.owner.effectiveId, e.owner.teamId, moment("01/01/2000", "DD/MM/YYYY").valueOf(), moment().valueOf()).subscribe(result => {
-        console.debug('[EventListPage] - populateEvents - getCollects', result);
-        e.isCollected = result[0] && result[0].status !== 'pending';
-        this.eventList[startDateStr].push(e);
+    if (events) {
+      events.sort(Utils.compareEvents);
+      events.forEach(e => {
+        let startDateStr = this.datePipe.transform(e.startDate, 'MMMM  - yyyy');
+        if (!this.eventList.hasOwnProperty(startDateStr)) {
+          this.eventList[startDateStr] = [];
+        }
+        // FIXME : a placer dans le détail pour éviter un appel en mitraillette, non?
+        this.collectService.getCollects(this.authenticationService.meta._id, e._id, e.owner.effectiveId, e.owner.teamId, moment("01/01/2000", "DD/MM/YYYY").valueOf(), moment().valueOf()).subscribe(result => {
+          console.debug('[EventListPage] - populateEvents - getCollects', result);
+          e.isCollected = result[0] && result[0].status === 'done';
+          this.eventList[startDateStr].push(e);
+        });
       });
-    });
-    this.eventListSize = events.length;
+      this.eventListSize = events.length;
+    }
   }
 
   /**
@@ -166,7 +168,7 @@ export class EventListPage {
    */
   goToViewEventStat(event: any, clickEvent: any) {
     clickEvent.stopPropagation();
-    this.navCtrl.push(EventStatsPage, {event: event});
+    this.navCtrl.push(EventStatsPage, { event: event });
   }
 
   /**
@@ -176,7 +178,7 @@ export class EventListPage {
    */
   goToStartCollect(event: any, clickEvent: any) {
     clickEvent.stopPropagation();
-    this.navCtrl.push(TeamBuildPage, {event: event});
+    this.navCtrl.push(TeamBuildPage, { event: event });
   }
 
   /**
@@ -184,7 +186,7 @@ export class EventListPage {
    */
   addEvent(clickEvent: any) {
     clickEvent.stopPropagation();
-    this.navCtrl.push(EventUpsertPage, {editMode: 'CREATE'});
+    this.navCtrl.push(EventUpsertPage, { editMode: 'CREATE' });
   }
 
   /**
@@ -194,7 +196,7 @@ export class EventListPage {
    */
   goToDetail(event: any, clickEvent: any) {
     clickEvent.stopPropagation();
-    this.navCtrl.push(EventDetailPage, {event: event});
+    this.navCtrl.push(EventDetailPage, { event: event });
   }
 
 }

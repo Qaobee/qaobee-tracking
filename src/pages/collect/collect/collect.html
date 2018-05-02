@@ -90,7 +90,7 @@
             <ion-row *ngFor="let area of ground">
                 <ion-col text-center *ngFor="let pos of area" ion-col>
                     <ion-fab center middle *ngIf="playerPositions[pos.key]">
-                        <button ion-fab mini color="{{getColor(playerPositions[pos.key]?._id, pos.class)}}" (click)="doSelectPlayer(playerPositions[pos.key]?._id)">
+                        <button ion-fab mini [color]="getColor(playerPositions[pos.key]?._id, pos.class)" (click)="doSelectPlayer(playerPositions[pos.key]?._id)">
                             {{ playerPositions[pos.key]?.status.squadnumber || '?' }}
                         </button>
                     </ion-fab>

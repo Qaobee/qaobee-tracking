@@ -25,6 +25,11 @@ export class ChronoComponent {
 
   totalPeriod: number;
 
+  /**
+   * 
+   * @param {MessageBus} messageBus 
+   * @param {SettingsService} settingsService 
+   */
   constructor(
     private messageBus: MessageBus,
     private settingsService: SettingsService
@@ -41,15 +46,21 @@ export class ChronoComponent {
     });
   }
 
+  /**
+   * 
+   */
   format() {
     return this.chrono * 1000;
   }
 
+  /**
+   * 
+   */
   start() {
     this.run = true;
     console.debug('[ChronoComponent] - start', this.chrono);
     this.onStarted.emit(this.chrono);
-    Observable.interval(1000)
+    Observable.interval(1000).timeInterval()
       .takeWhile(() => this.run)
       .subscribe(() => {
         this.chrono += 1;
@@ -70,11 +81,17 @@ export class ChronoComponent {
       });
   }
 
+  /**
+   * 
+   */
   pause() {
     this.run = false;
     this.onPaused.emit(this.chrono);
   }
 
+  /**
+   * 
+   */
   stop() {
     this.run = false;
     this.onStopped.emit(this.chrono);
