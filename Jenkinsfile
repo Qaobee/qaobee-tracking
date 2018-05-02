@@ -14,20 +14,19 @@ node {
 
         stage("Build $version") {
             sh 'rm -fr node_modules'
-            sh 'npm cache clean'
-            sh 'npm run clean'
-            sh 'npm install'
-            sh 'npm run build'
+            sh 'yarn cache clean'
+            sh 'yarn install'
+            sh 'yarn run build'
         }
 
         stage("Quality $version") {
-            sh 'npm run lint'
-            sh "npm run sonar"
+            sh 'yarn run lint'
+            sh "yarn run sonar"
         }
 
 
         stage("Doc $version") {
-            sh 'npm run doc'
+            sh 'yarn run doc'
             sh 'git_stats generate -o build/docs/git'
             sh 'node changelog.js'
             publishHTML(target: [
