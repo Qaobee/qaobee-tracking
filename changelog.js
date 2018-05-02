@@ -15,7 +15,6 @@ tagList = tagList.slice(1, -1);
 if (tagList.length === 0) {
   tagList.push(process.execSync('git rev-list --max-parents=0 HEAD').toString().split('\n')[0]);
 }
-console.log(tagList)
 tagList.forEach(tag => {
   md += `## ${lastTag}
   
