@@ -39,7 +39,7 @@ export class StatsCollectTimeSheetComponent {
    */
   constructor(private translateService: TranslateService,
               private statsEventService: StatsEventService) {
-    this.eventStats.event = this.statsEventService.getEventStats(this.eventId);
+     this.statsEventService.getEventStats(this.eventId).subscribe(res => this.eventStats.event = res);
   }
 
   /**

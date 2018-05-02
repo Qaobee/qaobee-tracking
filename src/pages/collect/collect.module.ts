@@ -13,7 +13,7 @@ import { CollectPage } from "./collect/collect";
 import { HandFSM } from "../../providers/collect/hand.fsm";
 import { GoalModal } from './goal-modal/goal-modal';
 import { TeamBuildComponent } from '../../components/team-build/team-build';
-import { StatsModal } from './ststs-modal/stats-modal';
+import { StatsModal } from './stats-modal/stats-modal';
 
 @NgModule({
   declarations: [

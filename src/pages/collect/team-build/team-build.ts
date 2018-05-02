@@ -56,7 +56,7 @@ export class TeamBuildPage {
       if (!players) {
         this.getPlayers();
       } else {
-        console.log('[TeamBuildPage] - constructor', players);
+        console.debug('[TeamBuildPage] - constructor', players);
         this.playerList = players;
         this.playerListSize = players.length;
       }
@@ -98,7 +98,7 @@ export class TeamBuildPage {
    * @param  {any[]} collects
    */
   private testCollects(collects: any[]) {
-    console.log('[TeamBuildPage] - testCollects', collects);
+    console.debug('[TeamBuildPage] - testCollects', collects);
     if (collects.length > 0 && collects[0].eventRef._id === this.event._id && collects[0].status !== 'done') {
       this.storage.get('gameState-' + this.event._id).then((gameState: GameState) => {
         if (gameState) {
@@ -115,7 +115,7 @@ export class TeamBuildPage {
 
   private getPlayers() {
     this.personService.getListPersonSandbox(this.authenticationService.meta._id).subscribe((players: any[]) => {
-      console.log('[TeamBuildPage] - getPlayers', players);
+      console.debug('[TeamBuildPage] - getPlayers', players);
       this.playerList = players;
       this.playerListSize = this.playerList.length;
       this.storage.set('players', players);
@@ -123,7 +123,7 @@ export class TeamBuildPage {
   }
 
   goToResumeCollect() {
-    console.log('[TeamBuildPage] - goToResumeCollect');
+    console.debug('[TeamBuildPage] - goToResumeCollect');
     this.navCtrl.push(CollectPage, { event: this.event, collect: this.collect, playerList: this.playerList });
   }
 
@@ -131,7 +131,7 @@ export class TeamBuildPage {
    *
    */
   goToCollect() {
-    console.log('[TeamBuildPage] - goToCollect');
+    console.debug('[TeamBuildPage] - goToCollect');
     let playerIds = [];
     let count = 0;
 
@@ -148,7 +148,7 @@ export class TeamBuildPage {
       }
     });
 
-    console.log('[TeamBuildPage] - goToCollect - count', this.settingsService.getParametersGame().nbMinPlayers, count, this.settingsService.getParametersGame().nbMaxPlayers);
+    console.debug('[TeamBuildPage] - goToCollect - count', this.settingsService.getParametersGame().nbMinPlayers, count, this.settingsService.getParametersGame().nbMaxPlayers);
     if (count < this.settingsService.getParametersGame().nbMinPlayers || count > this.settingsService.getParametersGame().nbMaxPlayers) {
       this.translateService.get('collect.team-build.team-limits', { min: this.settingsService.getParametersGame().nbMinPlayers, max: this.settingsService.getParametersGame().nbMaxPlayers }).subscribe(t => {
         this.presentToast(t);
@@ -166,7 +166,7 @@ export class TeamBuildPage {
         }],
         parametersGame: this.settingsService.getParametersGame()
       };
-      console.log('[TeamBuildPage] - goToCollect -collect', this.collect);
+      console.debug('[TeamBuildPage] - goToCollect -collect', this.collect);
       this.collectService.addCollect(this.collect).subscribe((c: any) => {
         this.collect._id = c._id;
         this.storage.get('collects').then((collects: any[]) => {
@@ -175,7 +175,7 @@ export class TeamBuildPage {
           }
           collects.push(this.collect);
           this.storage.set('collects', collects);
-          console.log('[TeamBuildPage] - goToCollect', {
+          console.debug('[TeamBuildPage] - goToCollect', {
             players: this.playerPositions,
             event: this.event,
             collect: this.collect,

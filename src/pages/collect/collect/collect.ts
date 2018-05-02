@@ -26,7 +26,7 @@ import { Utils } from '../../../providers/utils';
 import { GoalModal } from '../goal-modal/goal-modal';
 import { SubstitutionModal } from '../substitution-modal/substitution-modal';
 import { diff } from 'deep-object-diff';
-import { StatsModal } from '../ststs-modal/stats-modal';
+import { StatsModal } from '../stats-modal/stats-modal';
 
 @Component({
   selector: 'page-collect',

@@ -57,7 +57,7 @@ export class TeamBuildComponent {
    * @param {string} position
    */
   showPlayerChooser(position: string) {
-    console.log('[TeamBuildPage] - showPlayerChooser - playerPositions', this.playerPositions);
+    console.debug('[TeamBuildPage] - showPlayerChooser - playerPositions', this.playerPositions);
     if (this.hasRedCard(position)) {
       return;
     } else {
@@ -71,9 +71,9 @@ export class TeamBuildComponent {
           excludedPlayer.push(this.playerPositions[k]);
         }
       });
-      console.log('[TeamBuildPage] - showPlayerChooser - sanctions', this.sanctions);
-      console.log('[TeamBuildPage] - showPlayerChooser - excludedPlayer', excludedPlayer);
-      console.log('[TeamBuildPage] - showPlayerChooser - playerList', this.playerList);
+      console.debug('[TeamBuildPage] - showPlayerChooser - sanctions', this.sanctions);
+      console.debug('[TeamBuildPage] - showPlayerChooser - excludedPlayer', excludedPlayer);
+      console.debug('[TeamBuildPage] - showPlayerChooser - playerList', this.playerList);
       this.playerList.forEach(p => {
         if (!excludedPlayer.find(item => {
           return item._id === p._id;
@@ -84,7 +84,7 @@ export class TeamBuildComponent {
             value: p,
             checked: this.playerPositions[position] && this.playerPositions[position]._id === p._id,
             handler: data => {
-              console.log(position, data.value);
+              console.debug(position, data.value);
               this.playerPositions[position] = data.value;
               alert.dismiss();
             }
@@ -114,7 +114,7 @@ export class TeamBuildComponent {
   }
 
   showSubstituesChooser(position: string) {
-    console.log('[TeamBuildPage] - showSubstituesChooser - playerPositions', this.playerPositions);
+    console.debug('[TeamBuildPage] - showSubstituesChooser - playerPositions', this.playerPositions);
     let alert = this.alertCtrl.create();
     alert.setTitle(this.translations['collect.team-build']['players-choose']);
     let excludedPlayer = [];
