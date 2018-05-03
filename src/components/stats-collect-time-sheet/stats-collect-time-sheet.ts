@@ -20,7 +20,7 @@ import { StatsEventService } from './../../pages/events/stats.event.service';
 
 import { Component, Input, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { EventStatsModel } from './../../model/event.stats';
+import { StatsContainerModel } from './../../model/stats.container';
  
 @Component({
   selector: 'stats-collect-time-sheet',
@@ -29,7 +29,7 @@ import { EventStatsModel } from './../../model/event.stats';
 export class StatsCollectTimeSheetComponent {
   
   @Input() eventId: string = '';
-  eventStats: EventStatsModel;
+  eventStats: StatsContainerModel;
   
   /**
    * 
@@ -39,7 +39,7 @@ export class StatsCollectTimeSheetComponent {
    */
   constructor(private translateService: TranslateService,
               private statsEventService: StatsEventService) {
-     this.statsEventService.getEventStats(this.eventId).subscribe(res => this.eventStats.event = res);
+     //this.statsEventService.getEventStats(this.eventId).subscribe(res => this.eventStats.event = res);
   }
 
   /**

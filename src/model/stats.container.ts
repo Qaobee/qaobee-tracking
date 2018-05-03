@@ -16,17 +16,27 @@
  *  is strictly forbidden unless prior written permission is obtained
  *  from Qaobee.
  */
-export class EventStatsModel {
+export class StatsContainerModel {
 
     /**
-     * Event information
+     * Type container (EVENT, PLAYER, TEAM)
      */
-    event: any = {};
+    type: string = '';
 
     /**
-     * Collect information
+     * Id owner container
      */
-    collect: any = {};
+    onwerId: string = '';
+
+    /**
+     * Collect's informations
+     */
+    collectList: any[] = [];
+
+    /**
+     * Team's informations
+     */
+    teamList: any[] = [];
 
     /**
      * List of player selected for the event

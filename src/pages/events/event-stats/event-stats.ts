@@ -20,7 +20,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { StatsEventService } from '../stats.event.service';
-import { EventStatsModel } from 'model/event.stats';
+import { StatsContainerModel } from 'model/stats.container';
 
 @Component({
   selector: 'page-event-stats',
@@ -28,11 +28,11 @@ import { EventStatsModel } from 'model/event.stats';
 })
 export class EventStatsPage {
 
-  eventStats: EventStatsModel;
+  statsContainer: StatsContainerModel;
   scoreHome: number = 0;
   scoreVisitor: number = 0;
   statsNotFound: boolean = true;
-  keyStorage: string = '';
+  event: any = {};
 
   /**
    *
@@ -42,24 +42,29 @@ export class EventStatsPage {
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private statsEventService: StatsEventService) {
-                  
-    this.statsEventService.getEventStats(navParams.get('event'));
-    console.log('getListDetailValue',this.eventStats);
-    if(this.eventStats) {
-      this.getScore();
+    this.event = navParams.get('event');
+    if(this.event) {
+      this.statsEventService.getEventStats(this.event._id).subscribe((statsContainer)=>{
+        this.statsContainer = statsContainer;
+        console.log('EventStatsPage',this.statsContainer);
+        if(this.statsContainer) {
+          this.getScore();
+        }
+      });
     }
   }
 
-  
-
+  /**
+   * 
+   */
   getScore() {
-    if(this.eventStats.statList.length>0){
+    if(this.statsContainer.statList.length>0){
       
       this.statsNotFound = false;
       let goalConceded = 0;
       let goalScored = 0;
-      for (let index = 0; index < this.eventStats.statList.length; index++) {
-        const element = this.eventStats.statList[index];
+      for (let index = 0; index < this.statsContainer.statList.length; index++) {
+        const element = this.statsContainer.statList[index];
         if(element.code==='goalConceded'){
           goalConceded = goalConceded +1
         }
@@ -70,7 +75,7 @@ export class EventStatsPage {
       }
 
       // Gestion score en fonction match à domicile ou extérieur
-      if(this.eventStats.event.participants.teamHome.adversary){
+      if(this.event.participants.teamHome.adversary){
         this.scoreHome = goalConceded;
         this.scoreVisitor = goalScored;
       } else {
