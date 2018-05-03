@@ -32,7 +32,7 @@
         {{event.participants.teamVisitor.label}}
       </ion-col>
     </ion-row>
-    <ion-row text-center>
+    <ion-row text-center padding>
       <ion-col>
         <h1>{{scoreHome}}</h1>
       </ion-col>
@@ -42,25 +42,26 @@
     </ion-row>
     <ion-row text-right class="enteteLight">
       <ion-col>
-        {{'component.stats.detail' | translate}}
+        <h3>{{'component.stats.detail' | translate}}
         <ion-icon name="eye"></ion-icon>
+      </h3>
       </ion-col>
     </ion-row>
   </ion-item>
 
-  <!-- player's shoot efficiency 
+  <!-- player's shoot efficiency -->
   <ion-item>
     <stats-shoot-efficiency 
-      [ownerId]="statsContainer.event._id" 
+      [ownerId]="ownerId" 
       [numberMatch]="1" 
       [positionType]="'event'">
     </stats-shoot-efficiency>
   </ion-item>
 
   <ion-item>
-    <stats-highligths-by-quarter [ownerId]="statsContainer.event._id"></stats-highligths-by-quarter>
+    <stats-highligths-by-quarter [ownerId]="ownerId"></stats-highligths-by-quarter>
   </ion-item>
--->
+
   <ion-item>
     <stats-collect-time-sheet [ownerId]="event._id" [type]="'EVENT'"></stats-collect-time-sheet>
   </ion-item>

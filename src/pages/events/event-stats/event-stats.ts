@@ -30,6 +30,7 @@ export class EventStatsPage {
 
   statsContainer: StatsContainerModel;
   event: any = {};
+  ownerId: any[] = [];
   scoreHome: number = 0;
   scoreVisitor: number = 0;
   statsNotFound: boolean = true;
@@ -44,6 +45,7 @@ export class EventStatsPage {
               public navParams: NavParams,
               private statsEventService: StatsEventService) {
     this.event = navParams.get('event');
+    this.ownerId.push(this.event._id);
     if(this.event) {
       this.statsEventService.getEventStats(this.event._id).subscribe((statsContainer)=>{
         this.statsContainer = statsContainer;

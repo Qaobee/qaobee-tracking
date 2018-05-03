@@ -65,6 +65,7 @@ export class StatsShootEfficiencyComponent {
 
     // goal scored or stopped
     let indicators = [];
+    console.log('StatsShootEfficiencyComponent =>ngOnChanges',this.ownerId);
     let labels = '';
     if (this.positionType && this.positionType === 'goalkeeper'){
       indicators = ['goalConceded', 'originShootDef'];
