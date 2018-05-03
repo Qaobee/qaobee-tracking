@@ -55,8 +55,7 @@
     </ion-item>
 
     <ion-item>
-        <!-- FIXME : ajouter dans stats-modal.ts l'object eventStats -->
-        <stats-collect-time-sheet [eventId]="'eventStats.event._id'"></stats-collect-time-sheet>
+        <stats-collect-time-sheet [ownerId]="'eventStats.event._id'" [type]="'EVENT'"></stats-collect-time-sheet>
     </ion-item>
 
 </ion-content>

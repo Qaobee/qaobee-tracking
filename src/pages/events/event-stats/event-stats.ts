@@ -29,10 +29,11 @@ import { StatsContainerModel } from 'model/stats.container';
 export class EventStatsPage {
 
   statsContainer: StatsContainerModel;
+  event: any = {};
   scoreHome: number = 0;
   scoreVisitor: number = 0;
   statsNotFound: boolean = true;
-  event: any = {};
+  
 
   /**
    *
@@ -46,7 +47,6 @@ export class EventStatsPage {
     if(this.event) {
       this.statsEventService.getEventStats(this.event._id).subscribe((statsContainer)=>{
         this.statsContainer = statsContainer;
-        console.log('EventStatsPage',this.statsContainer);
         if(this.statsContainer) {
           this.getScore();
         }

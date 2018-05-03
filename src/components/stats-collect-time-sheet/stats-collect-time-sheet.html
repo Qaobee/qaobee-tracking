@@ -1,12 +1,95 @@
-<ion-list>
-  Rien à voir pour l'instant
-  <!--
-  <ion-item *ngFor="let item of playerList"> 
-    <h2>{{item.firstname}} {{item.name}}</h2>
-    <h3>{{item.stats.goalScored}}/{{item.stats.originShootAtt}}</h3>
-    <h3>{{item.stats.yellowCard}} {{item.stats.excluTmp}} {{item.stats.redCard}}</h3>
-    <ion-badge color="secondary" item-end>{{item.stats.note}}</ion-badge>
-    <ion-icon item-end name="stats" color="danger"></ion-icon>
-  </ion-item>  
-  -->
+<ion-list *ngIf="!statsNotFound">
+  
+  <ion-item *ngFor="let item of playerList">
+    <div *ngIf="item.status.positionType.code ==='goalkeeper'">
+      <ion-row>
+        <ion-col>
+          <h2>
+            <ion-icon item-start name="stats" color="danger"></ion-icon>
+            {{item.firstname}} {{item.name}}
+          </h2>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+            <h3>Note : <ion-badge color="secondary">{{item.stats.note}}</ion-badge></h3>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <h3>Arrêt : {{item.stats.originShootDef-item.stats.goalConceded}}/{{item.stats.originShootDef}}</h3>
+          <h3>Sanction : 
+            <ion-badge *ngIf="item.stats.yellowCard>0" color="yellow" item-end>{{item.stats.yellowCard}}</ion-badge> 
+            <ion-badge *ngIf="item.stats.excluTmp>0" color="orange" item-end>{{item.stats.excluTmp}}</ion-badge>
+            <ion-badge *ngIf="item.stats.redCard>0" color="danger" item-end>{{item.stats.redCard}}</ion-badge>
+          </h3>
+          <p>&nbsp;</p>
+        </ion-col>
+      </ion-row>
+    </div>
+
+
+    <div *ngIf="item.status.positionType.code !=='goalkeeper'">
+      <ion-row>
+        <ion-col>
+          <h2>
+            <ion-icon item-start name="stats" color="danger"></ion-icon>
+            {{item.firstname}} {{item.name}}
+          </h2>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <h3>Note : <ion-badge color="secondary">{{item.stats.note}}</ion-badge></h3>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <h3>Tir : {{item.stats.goalScored}}/{{item.stats.originShootAtt}}</h3>
+          <h3>Sanction : 
+            <ion-badge *ngIf="item.stats.yellowCard>0" color="yellow" item-end>{{item.stats.yellowCard}}</ion-badge> 
+            <ion-badge *ngIf="item.stats.excluTmp>0" color="orange" item-end>{{item.stats.excluTmp}}</ion-badge>
+            <ion-badge *ngIf="item.stats.redCard>0" color="danger" item-end>{{item.stats.redCard}}</ion-badge>
+          </h3>
+          <p>&nbsp;</p>
+        </ion-col>
+      </ion-row>
+      <ion-row text-center class=enteteLight>
+        <ion-col>
+          <h3>Attaque</h3>
+        </ion-col>
+        <ion-col>
+          <h3>Défense</h3>
+        </ion-col>
+      </ion-row>
+      <ion-row text-center>
+        <ion-col>
+          <h3>Actions + </h3>
+        </ion-col>
+        <ion-col>
+          <h3>Actions - </h3>
+        </ion-col>
+        <ion-col>
+          <h3>Actions + </h3>
+        </ion-col>
+        <ion-col>
+          <h3>Actions - </h3>
+        </ion-col>
+      </ion-row>
+      <ion-row text-center>
+        <ion-col>
+          <ion-badge color="secondary">{{item.stats.actionsAttPositives}}</ion-badge>
+        </ion-col>
+        <ion-col>
+          <ion-badge color="danger">{{item.stats.actionsAttNegatives}}</ion-badge>
+        </ion-col>
+        <ion-col>
+          <ion-badge color="secondary">{{item.stats.actionsDefPositives}}</ion-badge>
+        </ion-col>
+        <ion-col>
+          <ion-badge color="danger">{{item.stats.actionsDefNegatives}}</ion-badge>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-item>
 </ion-list>

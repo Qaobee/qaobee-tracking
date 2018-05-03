@@ -60,9 +60,9 @@
   <ion-item>
     <stats-highligths-by-quarter [ownerId]="statsContainer.event._id"></stats-highligths-by-quarter>
   </ion-item>
-
-  <ion-item>
-    <stats-collect-time-sheet [eventId]="statsContainer.event._id"></stats-collect-time-sheet>
-  </ion-item>
 -->
+  <ion-item>
+    <stats-collect-time-sheet [ownerId]="event._id" [type]="'EVENT'"></stats-collect-time-sheet>
+  </ion-item>
+
 </ion-content>

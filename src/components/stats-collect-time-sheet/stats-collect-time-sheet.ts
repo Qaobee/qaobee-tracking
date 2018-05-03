@@ -18,7 +18,7 @@ import { StatsEventService } from './../../pages/events/stats.event.service';
  *  from Qaobee.
  */
 
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { StatsContainerModel } from './../../model/stats.container';
  
@@ -28,8 +28,11 @@ import { StatsContainerModel } from './../../model/stats.container';
 })
 export class StatsCollectTimeSheetComponent {
   
-  @Input() eventId: string = '';
-  eventStats: StatsContainerModel;
+  @Input() ownerId: string = '';
+  @Input() type: string = '';
+  statsContainer: StatsContainerModel;
+  statsNotFound: boolean = true;
+  playerList: any[];
   
   /**
    * 
@@ -39,22 +42,126 @@ export class StatsCollectTimeSheetComponent {
    */
   constructor(private translateService: TranslateService,
               private statsEventService: StatsEventService) {
-     //this.statsEventService.getEventStats(this.eventId).subscribe(res => this.eventStats.event = res);
   }
 
   /**
    * 
    */
   ngOnChanges(){
+
+    switch (this.type) {
+      case 'EVENT':
+        this.statsEventService.getEventStats(this.ownerId).subscribe(statsContainer => {
+          this.buildStats(statsContainer);
+        });
+        break;
     
+      default:
+        break;
+    }
+  }
+
+  /**
+   * 
+   * @param statsContainer 
+   */
+  buildStats(statsContainer: StatsContainerModel) {
     // List of positives actions
-    let actionsPositives = ['goalScored', 'neutralization', 'forceDef', 'contre', 'interceptionOk', 
-                      'stopGKDef', 'penaltyObtained', 'exclTmpObtained', 'shift', 'duelWon', 'passDec'];
+    const actionsAttPositives = ['goalScored', 'penaltyObtained', 'exclTmpObtained', 'shift', 'duelWon', 'passDec'];
+    const actionsDefPositives = ['neutralization', 'forceDef', 'contre', 'interceptionOk','stopGKDef'];
     
     // List of negatives actions                      
-    let actionsNegatives = ['goalConceded', 'penaltyConceded', 'interceptionKo', 'duelLoose', 'badPosition', 'forceAtt', 
-                      'marcher', 'doubleDribble', 'looseball', 'foot', 'zone'];
-    
-    
+    const actionsAttNegatives = ['forceAtt', 'marcher', 'doubleDribble', 'looseball', 'foot', 'zone'];
+    const actionsDefNegatives = ['goalConceded', 'penaltyConceded', 'interceptionKo', 'duelLoose', 'badPosition'];                      
+
+    this.playerList = statsContainer.playerList;
+
+    //set stat's player
+    this.playerList.forEach(player => {
+      //initialization
+      player.stats = {
+        originShootAtt: 0,originShootDef: 0,goalScored: 0,goalConceded: 0,
+        yellowCard: 0,exclTmp: 0,redCard: 0,holder: false,
+        totalPlayTime : 0, note : 0, 
+        actionsAttPositives: 0, actionsDefPositives: 0, actionsAttNegatives: 0, actionsDefNegatives: 0
+      };
+
+      //loop on statList
+      statsContainer.statList.forEach(stat => {
+        const foundOwner = stat.owner.find(function(element) {
+          return element === player._id;
+        });
+
+        if (foundOwner) {
+          // for each posistive action, add 1 to player's note  
+          const actPosAttFound = actionsAttPositives.find(function(element) {
+            return element === stat.code;
+          });
+          if(actPosAttFound) {
+            player.stats.note = player.stats.note +1;
+            player.stats.actionsAttPositives = player.stats.actionsAttPositives +1;
+          }
+
+          const actPosDefFound = actionsDefPositives.find(function(element) {
+            return element === stat.code;
+          });
+          if(actPosAttFound) {
+            player.stats.note = player.stats.note +1;
+            player.stats.actionsDefPositives = player.stats.actionsDefPositives +1;
+          }
+
+          // for each negative action, soustract 1 to player's note  
+          const actNegAttFound = actionsAttNegatives.find(function(element) {
+            return element === stat.code;
+          });
+          if(actNegAttFound) {
+            player.stats.note = player.stats.note -1;
+            player.stats.actionsAttNegatives = player.stats.actionsAttNegatives +1;
+          }
+
+          const actNegDefFound = actionsDefNegatives.find(function(element) {
+            return element === stat.code;
+          });
+          if(actNegDefFound) {
+            player.stats.note = player.stats.note -1;
+            player.stats.actionsDefNegatives = player.stats.actionsDefNegatives +1;
+          }
+
+          switch (stat.code) {
+            case 'originShootAtt':
+              player.stats.originShootAtt = player.stats.originShootAtt+1;
+              break;
+            case 'goalScored':
+              player.stats.goalScored = player.stats.goalScored+1;
+              break;
+            case 'originShootDef':
+              player.stats.originShootDef = player.stats.originShootDef+1;
+              break;
+            case 'goalConceded':
+              player.stats.goalConceded = player.stats.goalConceded+1;
+              break;
+            case 'yellowCard':
+              player.stats.yellowCard = player.stats.yellowCard+1;
+              break;
+            case 'exclTmp':
+              player.stats.exclTmp = player.stats.exclTmp+1;
+              break;
+            case 'redCard':
+              player.stats.redCard = player.stats.redCard+1;
+              break;
+            case 'holder':
+              player.stats.holder = true;
+              break;
+            case 'totalPlayTime':
+              player.stats.totalPlayTime = stat.value;
+              break;
+              
+            default:
+              break;
+          }
+        }
+      });
+    });
+    this.statsNotFound = false;
   }
 }

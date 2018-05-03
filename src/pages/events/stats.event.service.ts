@@ -1,5 +1,4 @@
 import { Observable } from 'rxjs/Observable';
-import { HttpClientModule } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Storage } from '@ionic/storage';
 import { AuthenticationService } from "../../providers/authentication.service";
@@ -66,7 +65,6 @@ export class StatsEventService {
                     if (result && result.stats.length > 0) {
                       statsContainer.statList = result.stats;
                       this.storage.set(this.authenticationService.meta._id + '-' + statsContainer.onwerId, statsContainer);
-                      console.debug('[StatsEventService] - getListDetailValue', statsContainer);
                       observer.next(statsContainer);
                       observer.complete();
                     }
