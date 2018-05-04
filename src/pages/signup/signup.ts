@@ -42,7 +42,7 @@ export class SignupPage {
     private userService: UserService) {
 
     this.userForm = this.formBuilder.group({
-      'login': ['', Validators.compose([Validators.required, Validators.pattern(/[a-zA-Z0-9_\-]{3,}/)])],
+      'login': ['', Validators.compose([Validators.required, Validators.pattern(/[a-zA-Z0-9_\-]{4,}/)])],
       'email': ['', Validators.compose([Validators.required, Validators.email])],
       'password': ['', [Validators.required]],
       'confirmPassword': ['', [Validators.required]],
