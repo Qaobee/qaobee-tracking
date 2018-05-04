@@ -10,28 +10,25 @@
 </ion-header>
 
 <ion-content padding>
+
+  <h4>
+    {{'signup.Title' | translate}}
+  </h4>
+
   <form [formGroup]="userForm">
-    <ion-item color="light">
-      <h4>
-        {{'signup.Title' | translate}}
-      </h4>
-    </ion-item>
 
     <ion-item>
-        <ion-label floating>{{ 'signup.login' | translate }}</ion-label>
-        <ion-input type="text" formControlName="login" id="login" autocomplete="login" clearInput></ion-input>
-      </ion-item>
-      <ion-item class='form-text error' *ngIf="!isValid('login')">
-        <ion-label no-margin stacked>{{ 'signup.error.login' | translate }}</ion-label>
-      </ion-item>
+      <ion-label floating>{{ 'signup.login' | translate }}</ion-label>
+      <ion-input type="text" formControlName="login" id="login" autocomplete="login" clearInput></ion-input>
+    </ion-item>
+    <p *ngIf="!isValid('login')" danger padding-left>{{ 'signup.error.login' | translate }}</p>
+    <p *ngIf="userForm.hasError('nonUniqueLogin')" danger padding-left>{{ 'signup.error.login.nonUniqueLogin' | translate }}</p>
 
     <ion-item>
       <ion-label floating>{{ 'signup.email' | translate }}</ion-label>
       <ion-input type="text" formControlName="email" id="email" autocomplete="email" clearInput></ion-input>
     </ion-item>
-    <ion-item class='form-text error' *ngIf="!isValid('email')">
-      <ion-label no-margin stacked>{{ 'signup.error.email' | translate }}</ion-label>
-    </ion-item>
+    <p *ngIf="!isValid('email')" danger padding-left>{{ 'signup.error.email' | translate }}</p>
 
     <ion-item class='form-group'>
       <ion-label floating>{{ 'signup.password' | translate }}</ion-label>
@@ -41,11 +38,16 @@
 
     <ion-item>
       <ion-label floating>{{ 'signup.confirmPassword' | translate }}</ion-label>
-      <ion-input type="password" [(ngModel)]="confirmPassword" formControlName="confirmPassword" required show-password></ion-input>
+      <ion-input type="password" id="confirmPassword" formControlName="confirmPassword" required show-password></ion-input>
     </ion-item>
-    <ion-item class='form-text error' *ngIf="userForm.controls.confirmPassword.touched && userForm.hasError('mismatchedPasswords') && userForm.controls.password.valid">
-      <ion-label no-margin stacked>{{ 'signup.error.confirmPassword' | translate }}</ion-label>
+    <p *ngIf="userForm.controls.confirmPassword.touched && userForm.hasError('mismatchedPasswords') && userForm.controls.password.valid"
+      danger padding-left>{{ 'signup.error.confirmPassword' | translate }}</p>
+
+    <ion-item>
+      <ion-checkbox formControlName="cgu" id="cgu" [checked]="false"></ion-checkbox>
+      <ion-label>{{ 'signup.cgu' | translate }}</ion-label>
     </ion-item>
+    <p *ngIf="!isValid('cgu')" danger padding-left>{{ 'signup.error.cgu' | translate }}</p>
 
   </form>
 
@@ -53,7 +55,7 @@
   <button id="cancelButton" ion-button icon-left medium (tap)="cancel()">
     {{ 'signup.cancel' | translate  }}
   </button>
-  <button id="subscribeButton" ion-button icon-left medium (tap)="createAccount(userForm.value)" type="submit">
+  <button id="subscribeButton" ion-button icon-left medium (tap)="createAccount(userForm.value)" [disabled]="!userForm.valid" type="submit">
     {{ 'signup.valid' | translate  }}
   </button>
 

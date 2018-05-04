@@ -90,7 +90,7 @@ export class UserService extends ApiService {
      * @returns {Observable<any>}
      */
     usernameTest(login: string): Observable<any>  {
-        return this.http.get<any>(ENV.hive + this.rootPath2 + '/commons/multi/signup/test/' + login).pipe(
+        return this.http.get<any>(ENV.hive + this.rootPath2 + '/commons/users/signup/test/' + login).pipe(
             catchError(this.handleError('UserService.usernameTest'))
         );
     }

@@ -27,7 +27,6 @@ import { UserService } from "../../providers/api/api.user.service";
 })
 export class SignupPage {
 
-  user: any;
   userForm: FormGroup;
 
   /**
@@ -38,16 +37,17 @@ export class SignupPage {
    * @param userService
    */
   constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              private formBuilder: FormBuilder,
-              private userService: UserService) {
+    public navParams: NavParams,
+    private formBuilder: FormBuilder,
+    private userService: UserService) {
 
     this.userForm = this.formBuilder.group({
-      'login': ['', Validators.compose([Validators.required, Validators.pattern("'[a-zA-Z0-9_\-]{3,}'")])],
+      'login': ['', Validators.compose([Validators.required, Validators.pattern(/[a-zA-Z0-9_\-]{3,}/)])],
       'email': ['', Validators.compose([Validators.required, Validators.email])],
       'password': ['', [Validators.required]],
-      'confirmPassword': ['', [Validators.required]]
-    }, {validator: this.matchingPasswords('password', 'confirmPassword')});
+      'confirmPassword': ['', [Validators.required]],
+      'cgu': ['false', Validators.compose([Validators.required, Validators.requiredTrue])]
+    }, { validator: this.matchingPasswords('password', 'confirmPassword') });
 
   }
 
@@ -71,10 +71,30 @@ export class SignupPage {
   createAccount(formVal) {
     console.log('[SignupPage] - createAccount', formVal);
     if (this.userForm.valid) {
-      this.user.account.login = formVal.login;
-      this.userService.registerUser(this.user).subscribe(r => {
-        console.log('[SignupPage] - createAccount - registerUser', r);
+      let account = {login: formVal.login, passwd: formVal.password};
+      let contact = {email: formVal.email};
+      let plan = {levelPlan: 'FREEMIUM', activity: {_id: 'ACT-HAND'}};
+
+      let user = {
+        account: account,
+        contact: contact,
+        plan: plan,
+      };
+
+      // Test unicite du login
+      this.userService.usernameTest(account.login).subscribe(r => {
+        if (r.status === true) {
+          return {
+            nonUniqueLogin: true
+          };
+        } else {
+          // Enregistrement
+          this.userService.registerUser(user).subscribe(rs => {
+            console.log('[SignupPage] - createAccount - registerUser', rs);
+          })
+        }
       })
+
     }
   }
 
