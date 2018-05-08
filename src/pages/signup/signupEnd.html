@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar hideBackButton="true">
+    <ion-title>{{'signupEnd.TitleNavBar' | translate}}</ion-title>
+    <ion-buttons end>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <div class="center icon-block">
+    <div class="accent-text-color">
+      <i class="medium material-icons md-60">verified_user</i>
+    </div>
+    
+    <h4 class="center light-text-color" translate="signupStartDonePage.title">
+      Félicitation et merci de choisir Qaobee !
+    </h4>
+  </div>
+
+  <div>
+      <span ion-text color="danger">
+        Votre inscription est presque terminée, encore un petit effort !<br>
+        Rendez-vous dans votre boîte mail pour valider votre compte Qaobee.<br>
+      </span>
+    </div>
+
+  <div>
+    <span class="right ng-binding">L'équipe Qaobee</span>
+  </div>
+
+  <button id="loginButton" ion-button icon-left medium (tap)="goToLogin()" type="submit">
+      {{ 'welcome.Login' | translate }}
+  </button>
+
+</ion-content>

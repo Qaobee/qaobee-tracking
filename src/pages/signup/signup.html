@@ -22,7 +22,6 @@
       <ion-input type="text" formControlName="login" id="login" autocomplete="login" clearInput></ion-input>
     </ion-item>
     <p *ngIf="!isValid('login')" danger padding-left>{{ 'signup.error.login' | translate }}</p>
-    <p *ngIf="userForm.hasError('nonUniqueLogin')" danger padding-left>{{ 'signup.error.login.nonUniqueLogin' | translate }}</p>
 
     <ion-item>
       <ion-label floating>{{ 'signup.email' | translate }}</ion-label>
@@ -45,7 +44,10 @@
 
     <ion-item>
       <ion-checkbox formControlName="cgu" id="cgu" [checked]="false"></ion-checkbox>
-      <ion-label>{{ 'signup.cgu' | translate }}</ion-label>
+      <ion-label>
+        {{ 'signup.cgu' | translate }}
+        <a class="button button-clear" ui-sref="home.singleLink({singleLink: link.name})">test</a>
+      </ion-label>
     </ion-item>
     <p *ngIf="!isValid('cgu')" danger padding-left>{{ 'signup.error.cgu' | translate }}</p>
 
