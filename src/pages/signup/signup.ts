@@ -17,9 +17,11 @@
  *  from Qaobee.
  */
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { NavController, NavParams } from 'ionic-angular';
+import { TranslateService } from '@ngx-translate/core';
 import { UserService } from "../../providers/api/api.user.service";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { SignupEndPage } from './signupEnd';
 
 @Component({
   selector: 'page-signup',
@@ -35,11 +37,15 @@ export class SignupPage {
    * @param navParams
    * @param formBuilder
    * @param userService
+   * @param {AlertController} alertCtrl
+   * @param {TranslateService} translateService
    */
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private formBuilder: FormBuilder,
-    private userService: UserService) {
+    private userService: UserService,
+    private alertCtrl: AlertController,
+    private translateService: TranslateService) {
 
     this.userForm = this.formBuilder.group({
       'login': ['', Validators.compose([Validators.required, Validators.pattern(/[a-zA-Z0-9_\-]{4,}/)])],
@@ -71,9 +77,9 @@ export class SignupPage {
   createAccount(formVal) {
     console.log('[SignupPage] - createAccount', formVal);
     if (this.userForm.valid) {
-      let account = {login: formVal.login, passwd: formVal.password};
-      let contact = {email: formVal.email};
-      let plan = {levelPlan: 'FREEMIUM', activity: {_id: 'ACT-HAND'}};
+      let account = { login: formVal.login, passwd: formVal.password };
+      let contact = { email: formVal.email };
+      let plan = { levelPlan: 'FREEMIUM', activity: { _id: 'ACT-HAND' } };
 
       let user = {
         account: account,
@@ -84,18 +90,45 @@ export class SignupPage {
       // Test unicite du login
       this.userService.usernameTest(account.login).subscribe(r => {
         if (r.status === true) {
-          return {
-            nonUniqueLogin: true
-          };
+          this.translateService.get('signup.messages.loginAlreadyExists').subscribe(
+            value => {
+              this.showAlert(value);
+            }
+          )
         } else {
           // Enregistrement
           this.userService.registerUser(user).subscribe(rs => {
-            console.log('[SignupPage] - createAccount - registerUser', rs);
+            console.log('[SignupPage] - createAccount - registerUser');
+            if (rs.person !== 'null' && rs.person._id !== 'null') {
+              this.navCtrl.push(SignupEndPage, {});
+            }
           })
         }
       })
 
     }
+  }
+
+  showAlert(message: string) {
+    let okButton = '';
+    this.translateService.get('signup.messages.alert.button.ok').subscribe(
+      value => {
+        okButton = value;
+      }
+    )
+    let errorTitle = '';
+    this.translateService.get('signup.messages.alert.title').subscribe(
+      value => {
+        errorTitle = value;
+      }
+    )
+
+    let alert = this.alertCtrl.create({
+      title: errorTitle,
+      subTitle: message,
+      buttons: [okButton]
+    });
+    alert.present();
   }
 
   cancel() {
@@ -106,5 +139,4 @@ export class SignupPage {
     let formField = this.userForm.controls[field];
     return formField.valid || formField.pristine;
   }
-
 }

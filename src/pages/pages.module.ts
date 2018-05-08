@@ -23,6 +23,7 @@ import {WelcomePage} from "./welcome/welcome";
 import {HomePage} from "./home/home";
 import {LoginPage} from "./login/login";
 import {SignupPage} from "./signup/signup";
+import { SignupEndPage } from './signup/signupEnd';
 import {SettingsPage} from './settings/settings';
 
 import {ComponentsModule} from "../components/components.module";
@@ -41,6 +42,7 @@ import {CollectModule} from "./collect/collect.module";
         ProfilePage,
         SettingsPage,
         SignupPage,
+        SignupEndPage,
         WelcomePage
     ],
     imports: [
@@ -65,6 +67,7 @@ import {CollectModule} from "./collect/collect.module";
         ProfilePage,
         SettingsPage,
         SignupPage,
+        SignupEndPage,
         WelcomePage
     ]
 })
