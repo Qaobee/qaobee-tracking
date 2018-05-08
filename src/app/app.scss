@@ -20,6 +20,11 @@
   }
 }
 
+.errorControlForm{
+    color: color($colors, danger, base);
+    padding: 10px 10px 10px 16px;
+}
+
 h1 {
   color: color($colors,dark,base);
 }

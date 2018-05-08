@@ -50,6 +50,14 @@
       "updateFail": "La mise à jour de l'événement a échoué",
       "createFail": "La création de l'événement a échoué",
       "deleteFail": "La suppression de l'événement a échoué"
+    },
+    "errorControlForm": {
+      "typeRequired":"Le type du match est obligatoire",
+      "labelRequired":"Le libellé du match est obligatoire",
+      "startDateRequired":"La date du match est obligatoire",
+      "timeRequired":"L'heure du match est obligatoire",
+      "myTeamRequired":"Vous devez choisir votre équipe",
+      "adversaryRequired":"Vous devez choisir un adversaire"
     }
   },
   "home": {

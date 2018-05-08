@@ -27,12 +27,12 @@
               <ion-option *ngFor="let t of eventTypes" [value]="t">{{t.label}}</ion-option>
           </ion-select>
       </ion-item>
+      <div class="errorControlForm" *ngIf="eventForm.get('type').errors && !eventForm.get('type').pristine">{{ 'eventsModule.errorControlForm.typeRequired' | translate }}</div>
       <ion-item>
           <ion-label floating>{{ 'eventsModule.label' | translate }}</ion-label>
-          <ion-input type="text" formControlName="label" id="label" clearInput></ion-input>
-          <p *ngIf="!isValid('label')" danger padding-left>Invalid label</p>
+          <ion-input id="label" type="text" formControlName="label" clearInput></ion-input>
       </ion-item>
-
+      <div class="errorControlForm" *ngIf="eventForm.get('label').errors && !eventForm.get('label').pristine">{{ 'eventsModule.errorControlForm.labelRequired' | translate }}</div>
       <!-- logistic -->
       <ion-item color="light">
         <h2 class="panel">
@@ -46,6 +46,7 @@
                 <ion-label floating>{{ 'eventsModule.startDate' | translate }}</ion-label>
                 <ion-datetime formControlName="startDate" min="2016" max="2040" displayFormat="{{ 'format.displayDate' | translate }}"></ion-datetime>
             </ion-item>
+            <div class="errorControlForm" *ngIf="eventForm.get('startDate').errors && !eventForm.get('startDate').pristine">{{ 'eventsModule.errorControlForm.dateRequired' | translate }}</div>
         </ion-col>
         <ion-col>
             <ion-item>
@@ -53,6 +54,7 @@
                 <ion-datetime displayFormat="{{ 'format.displayTime' | translate }}" pickerFormat="{{ 'format.pickerTime' | translate }}"
                               formControlName="startTime"></ion-datetime>
             </ion-item>
+            <div class="errorControlForm" *ngIf="eventForm.get('startTime').errors && !eventForm.get('startTime').pristine">{{ 'eventsModule.errorControlForm.timeRequired' | translate }}</div>
         </ion-col>
       </ion-row>
       <div class="autocomplete">
@@ -94,11 +96,13 @@
               <ion-option *ngFor="let t of teams.myTeams" [value]="t">{{t.label}}</ion-option>
           </ion-select>
       </ion-item>
+      <div class="errorControlForm" *ngIf="eventForm.get('myTeam').errors && !eventForm.get('myTeam').pristine">{{ 'eventsModule.errorControlForm.myTeamRequired' | translate }}</div>
       <ion-item>
           <ion-label>{{ 'eventsModule.teamVisitor' | translate }}</ion-label>
           <ion-select formControlName="adversaryTeam" [compareWith]="compareOptionTeam">
               <ion-option *ngFor="let t of teams.adversaries" [value]="t">{{t.label}}</ion-option>
           </ion-select>
       </ion-item>
+      <div class="errorControlForm" *ngIf="eventForm.get('adversaryTeam').errors && !eventForm.get('adversaryTeam').pristine">{{ 'eventsModule.errorControlForm.adversaryRequired' | translate }}</div>
     </form>
 </ion-content>

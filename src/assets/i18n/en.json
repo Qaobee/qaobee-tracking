@@ -50,6 +50,14 @@
       "updateFail": "A problem occurs during the event's update",
       "createFail": "A problem occurs during the event's creation",
       "deleteFail": "A problem occurs during the event's delete"
+    },
+    "errorControlForm": {
+      "typeRequired":"Type is required",
+      "labelRequired":"Label is required",
+      "startDateRequired":"Date is required",
+      "timeRequired":"Time is required",
+      "myTeamRequired":"choose your team, please",
+      "adversaryRequired":"choose an adversary, please"
     }
   },
   "home": {

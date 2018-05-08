@@ -85,8 +85,47 @@ export class EventUpsertPage {
               private teamService: TeamService,
               private translateService: TranslateService) {
 
+    // Retreive my team list
+    this.teamService.getTeams(authenticationService.meta.effectiveDefault, authenticationService.meta._id, 'all', 'false').subscribe((teams: any[]) => {
+      if (teams) {
+        this.teams.myTeams = teams;
+        if (teams.length === 1 && !this.event.participants.teamHome) {
+          this.event.participants.teamHome = teams[0];
+          this.eventForm.controls['myTeam'].setValue(teams[0]);
+        }
+      }
+    });
+
+    // Retreive adversary team list
+    this.teamService.getTeams(authenticationService.meta.effectiveDefault, authenticationService.meta._id, 'all', 'true').subscribe((teams: any[]) => {
+      if (teams) {
+        this.teams.adversaries = teams;
+        if (teams.length === 1 && !this.event.participants.teamVisitor) {
+          this.event.participants.teamVisitor = teams[0];
+          this.eventForm.controls['adversaryTeam'].setValue(teams[0]);
+        }
+      }
+    });
+
+    // Retreive list event type
+    this.activityCfgService.getParamFieldList(authenticationService.meta.activity._id, 'listEventType').subscribe((types: any[]) => {
+      if (types) {
+        this.eventTypes = types;
+        if (types.length === 1) {
+          this.event.type = types[0];
+          this.eventForm.controls['type'].setValue(this.event.type);
+        }
+      }
+    });
+    this.createForm();
+  }
+
+  /**
+   * Prepare event's object for an update or a creation
+   */
+  prepareEvent(){
     //Mode edit CREATE or UPDATE
-    this.editMode = navParams.get('editMode');
+    this.editMode = this.navParams.get('editMode');
     if (this.editMode && this.editMode === 'CREATE') {
       this.event = {
         participants: {},
@@ -98,7 +137,7 @@ export class EventUpsertPage {
       this.radioHome = true;
 
     } else {
-      this.event = navParams.get('event');
+      this.event = this.navParams.get('event');
       if (this.event && this.event.startDate) {
         this.startDate = moment(this.event.startDate).format("YYYY-MM-DD");
         this.startTime = moment(this.event.startDate).format("HH:mm");
@@ -118,7 +157,16 @@ export class EventUpsertPage {
         }
       }
     }
+  };
 
+
+  /**
+   * Create form's controls
+   */
+  createForm() {
+    if(!this.event) {
+      this.prepareEvent();
+    }
     this.eventForm = this.formBuilder.group({
       'label': [this.event.label || '', [Validators.required]],
       'address': [this.address || ''],
@@ -129,38 +177,7 @@ export class EventUpsertPage {
       'adversaryTeam': [this.adversaryTeam, [Validators.required]],
       'radioHome': [this.radioHome, [Validators.required]],
     });
-
-    // My team list
-    this.teamService.getTeams(authenticationService.meta.effectiveDefault, authenticationService.meta._id, 'all', 'false').subscribe((teams: any[]) => {
-      if (teams) {
-        this.teams.myTeams = teams;
-        if (teams.length === 1 && !this.event.participants.teamHome) {
-          this.event.participants.teamHome = teams[0];
-          this.eventForm.controls['myTeam'].setValue(teams[0]);
-        }
-      }
-    });
-
-    // Adversary team list
-    this.teamService.getTeams(authenticationService.meta.effectiveDefault, authenticationService.meta._id, 'all', 'true').subscribe((teams: any[]) => {
-      if (teams) {
-        this.teams.adversaries = teams;
-        if (teams.length === 1 && !this.event.participants.teamVisitor) {
-          this.event.participants.teamVisitor = teams[0];
-          this.eventForm.controls['adversaryTeam'].setValue(teams[0]);
-        }
-      }
-    });
-    this.activityCfgService.getParamFieldList(authenticationService.meta.activity._id, 'listEventType').subscribe((types: any[]) => {
-      if (types) {
-        this.eventTypes = types;
-        if (types.length === 1) {
-          this.event.type = types[0];
-          this.eventForm.controls['type'].setValue(this.event.type);
-        }
-      }
-    });
-  }
+  };
 
   /**
    * Match element in option list from select input
