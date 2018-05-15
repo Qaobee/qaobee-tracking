@@ -1,21 +1,5 @@
-/*
- *  __________________
- *  Qaobee
- *  __________________
- *
- *  Copyright (c) 2015.  Qaobee
- *  All Rights Reserved.
- *
- *  NOTICE: All information contained here is, and remains
- *  the property of Qaobee and its suppliers,
- *  if any. The intellectual and technical concepts contained
- *  here are proprietary to Qaobee and its suppliers and may
- *  be covered by U.S. and Foreign Patents, patents in process,
- *  and are protected by trade secret or copyright law.
- *  Dissemination of this information or reproduction of this material
- *  is strictly forbidden unless prior written permission is obtained
- *  from Qaobee.
- */
+import { LogoutPage } from './../pages/logout/logout';
+import { NGXLogger } from 'ngx-logger';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -35,7 +19,6 @@ import { MessageBus } from "../providers/message-bus.service";
 import { MetaService } from "../providers/api/api.meta.service";
 import { HomePage } from "../pages/home/home";
 import { EventListPage } from "../pages/events/event-list/event-list";
-
 @Component({
   templateUrl: 'app.html'
 })
@@ -58,14 +41,17 @@ export class MyApp {
    * @param {MetaService} metaService
    */
   constructor(private platform: Platform,
-              private statusBar: StatusBar,
-              private splashScreen: SplashScreen,
-              private userService: UserService,
-              private storage: Storage,
-              private authenticationService: AuthenticationService,
-              private translate: TranslateService,
-              private eventService: MessageBus,
-              private metaService: MetaService) {
+    private statusBar: StatusBar,
+    private splashScreen: SplashScreen,
+    private userService: UserService,
+    private storage: Storage,
+    private authenticationService: AuthenticationService,
+    private translate: TranslateService,
+    private eventService: MessageBus,
+    private logger: NGXLogger,
+    private metaService: MetaService
+  ) {
+    this.logger.debug('constructor');
     this.initializeApp();
     this.pages = [];
     translate.setDefaultLang('en');
@@ -94,7 +80,7 @@ export class MyApp {
         this.metaService.getMeta().subscribe(m => {
           if (m) {
             this.authenticationService.meta = m;
-            this.nav.setRoot(HomePage, {user: user});
+            this.nav.setRoot(HomePage, { user: user });
           }
         });
       });
@@ -124,9 +110,9 @@ export class MyApp {
     this.translate.get(['menu.Home', 'menu.Login', 'menu.Subscribe']).subscribe(
       value => {
         this.pages = [
-          {title: value['menu.Home'], component: WelcomePage, icon: 'home'},
-          {title: value['menu.Login'], component: LoginPage, icon: 'log-in'},
-          {title: value['menu.Subscribe'], component: SignupPage, icon: 'log-in'}
+          { title: value['menu.Home'], component: WelcomePage, icon: 'home' },
+          { title: value['menu.Login'], component: LoginPage, icon: 'log-in' },
+          { title: value['menu.Subscribe'], component: SignupPage, icon: 'log-in' }
         ];
       }
     )
@@ -136,11 +122,12 @@ export class MyApp {
     this.translate.get(['menu.Home', 'menu.Events', 'menu.Players', 'menu.Stats', 'menu.Settings',]).subscribe(
       value => {
         this.pages = [
-          {title: value['menu.Home'], component: HomePage, icon: 'home'},
-          {title: value['menu.Events'], component: EventListPage, icon: 'calendar'},
-          {title: value['menu.Players'], component: PlayerListPage, icon: 'people'},
+          { title: value['menu.Home'], component: HomePage, icon: 'home' },
+          { title: value['menu.Events'], component: EventListPage, icon: 'calendar' },
+          { title: value['menu.Players'], component: PlayerListPage, icon: 'people' },
           //{ title: value['menu.Stats'], component: CollectListPage, icon: 'stats' },
-          {title: value['menu.Settings'], component: SettingsPage, icon: 'settings'}
+          { title: value['menu.Settings'], component: SettingsPage, icon: 'settings' },
+          { title: value['menu.Logout'], component: LogoutPage, icon: 'log-out' }
         ];
       }
     )

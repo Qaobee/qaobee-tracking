@@ -1,3 +1,4 @@
+import { LogoutPage } from './logout/logout';
 /*
  *  __________________
  *  Qaobee
@@ -43,6 +44,7 @@ import {CollectModule} from "./collect/collect.module";
         SettingsPage,
         SignupPage,
         SignupEndPage,
+        LogoutPage,
         WelcomePage
     ],
     imports: [
@@ -63,11 +65,12 @@ import {CollectModule} from "./collect/collect.module";
     ],
     entryComponents: [
         HomePage,
-        LoginPage,
+        LogoutPage,
         ProfilePage,
         SettingsPage,
         SignupPage,
         SignupEndPage,
+        LoginPage,
         WelcomePage
     ]
 })

@@ -1,27 +1,7 @@
-/*
- *  __________________
- *  Qaobee
- *  __________________
- *
- *  Copyright (c) 2015.  Qaobee
- *  All Rights Reserved.
- *
- *  NOTICE: All information contained here is, and remains
- *  the property of Qaobee and its suppliers,
- *  if any. The intellectual and technical concepts contained
- *  here are proprietary to Qaobee and its suppliers and may
- *  be covered by U.S. and Foreign Patents, patents in process,
- *  and are protected by trade secret or copyright law.
- *  Dissemination of this information or reproduction of this material
- *  is strictly forbidden unless prior written permission is obtained
- *  from Qaobee.
- */
-
-import { Component, Input, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { APIStatsService } from './../../providers/api/api.stats';
 import { AuthenticationService } from './../../providers/authentication.service';
-import { Utils } from './../../providers/utils';
 import { Chart } from 'chart.js';
 
 @Component({
@@ -29,9 +9,9 @@ import { Chart } from 'chart.js';
   templateUrl: 'stats-highligths-by-quarter.html'
 })
 export class StatsHighligthsByQuarterComponent {
-  
+
   @Input() ownerId: any[] = [];
-  
+
   @ViewChild('barCanvas') barCanvas;
   barChart: any;
   statsNotFound: boolean = true;
@@ -44,25 +24,24 @@ export class StatsHighligthsByQuarterComponent {
   intervalKo15: any[] = [];
   intervalKo30: any[] = [];
   intervalKo45: any[] = [];
-  intervalKo60: any[]= [];
+  intervalKo60: any[] = [];
 
   /**
    * 
-   * @param statsService 
-   * @param translateService 
-   * @param authenticationService 
+   * @param {APIStatsService} statsService 
+   * @param {TranslateService} translateService
+   * @param {AuthenticationService} authenticationService 
    */
   constructor(private statsService: APIStatsService,
     private translateService: TranslateService,
     private authenticationService: AuthenticationService) {
-    
   }
 
   ngOnChanges() {
     //actions positives
-    let indicatorsOk = ['neutralization', 'forceDef', 'contre', 'interceptionOk', 
-                        'stopGKDef', 'penaltyObtained', 'exclTmpObtained', 'shift', 
-                        'duelWon', 'passDec', 'goalScored'];
+    let indicatorsOk = ['neutralization', 'forceDef', 'contre', 'interceptionOk',
+      'stopGKDef', 'penaltyObtained', 'exclTmpObtained', 'shift',
+      'duelWon', 'passDec', 'goalScored'];
     let search = {
       listIndicators: indicatorsOk,
       listOwners: this.ownerId,
@@ -72,27 +51,27 @@ export class StatsHighligthsByQuarterComponent {
     };
     //get actions positives
     this.statsService.getListDetailValue(search).subscribe((result: any[]) => {
-      if(result.length>0){
+      if (result.length > 0) {
         this.statsNotFound = false;
         for (let index = 0; index < result.length; index++) {
           const element = result[index];
           //Positive action in the first quarter
-          if(element.chrono<901) {
+          if (element.chrono < 901) {
             this.intervalOk15.push(element);
           }
 
           //Positive action in the second quarter
-          if(element.chrono>=901 && element.chrono<1801) {
+          if (element.chrono >= 901 && element.chrono < 1801) {
             this.intervalOk30.push(element);
           }
 
           //Positive action in the third quarter
-          if(element.chrono>=1801 && element.chrono<2701) {
+          if (element.chrono >= 1801 && element.chrono < 2701) {
             this.intervalOk45.push(element);
           }
 
           //Positive action in the last quarter
-          if(element.chrono>=2701) {
+          if (element.chrono >= 2701) {
             this.intervalOk60.push(element);
           }
         }
@@ -101,11 +80,11 @@ export class StatsHighligthsByQuarterComponent {
     })
   }
 
-  getActionsNegatives(){
+  getActionsNegatives() {
     //actions negatives                    
-    let indicatorsKo = ['penaltyConceded', 'interceptionKo', 'duelLoose', 
-                        'badPosition', 'forceAtt', 'marcher', 'doubleDribble', 
-                        'looseball', 'foot', 'zone', 'stopGKAtt', 'goalConceded' ];
+    let indicatorsKo = ['penaltyConceded', 'interceptionKo', 'duelLoose',
+      'badPosition', 'forceAtt', 'marcher', 'doubleDribble',
+      'looseball', 'foot', 'zone', 'stopGKAtt', 'goalConceded'];
     let search = {
       listIndicators: indicatorsKo,
       listOwners: this.ownerId,
@@ -116,31 +95,31 @@ export class StatsHighligthsByQuarterComponent {
 
     //get actions negatives
     this.statsService.getListDetailValue(search).subscribe((result: any[]) => {
-      if(result.length>0){
+      if (result.length > 0) {
         this.statsNotFound = false;
         for (let index = 0; index < result.length; index++) {
           const element = result[index];
           //Negative action in the first quarter
-          if(element.chrono<901) {
+          if (element.chrono < 901) {
             this.intervalKo15.push(element);
           }
 
           //Negative action in the second quarter
-          if(element.chrono>=901 && element.chrono<1801) {
+          if (element.chrono >= 901 && element.chrono < 1801) {
             this.intervalKo30.push(element);
           }
 
           //Negative action in the third quarter
-          if(element.chrono>=1801 && element.chrono<2701) {
+          if (element.chrono >= 1801 && element.chrono < 2701) {
             this.intervalKo45.push(element);
           }
 
           //Negative action in the last quarter
-          if(element.chrono>=2701) {
+          if (element.chrono >= 2701) {
             this.intervalKo60.push(element);
           }
         }
-      } 
+      }
       this.buildChart();
     })
   }
@@ -148,7 +127,7 @@ export class StatsHighligthsByQuarterComponent {
   /**
    * 
    */
-  buildChart(){
+  buildChart() {
     let labels = 'component.stats.highlights.quarter';
     this.translateService.get(labels).subscribe(
       value => {
@@ -201,7 +180,7 @@ export class StatsHighligthsByQuarterComponent {
             }
           }
         }
-      );
-    });
+        );
+      });
   }
 }
