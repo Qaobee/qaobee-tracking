@@ -77,7 +77,8 @@
     "Subscribe": "S'inscrire"
   },
   "logout" : {
-    "TitleNavBar": "Déconnexion"
+    "TitleNavBar": "Déconnexion",
+    "Title": "Êtes-vous sur de vouloir vous déconnecter?"
   },
   "signup": {
     "TitleNavBar": "Inscription",

@@ -1,5 +1,4 @@
-import { LogoutPage } from './../pages/logout/logout';
-import { NGXLogger } from 'ngx-logger';
+import { ENV } from '@app/env';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -7,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { LoginPage } from '../pages/login/login';
 import { WelcomePage } from '../pages/welcome/welcome';
+import { LogoutPage } from './../pages/logout/logout';
 import { SignupPage } from '../pages/signup/signup';
 import { PlayerListPage } from '../pages/players/player-list/player-list';
 import { SettingsPage } from '../pages/settings/settings';
@@ -19,6 +19,8 @@ import { MessageBus } from "../providers/message-bus.service";
 import { MetaService } from "../providers/api/api.meta.service";
 import { HomePage } from "../pages/home/home";
 import { EventListPage } from "../pages/events/event-list/event-list";
+
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -48,10 +50,8 @@ export class MyApp {
     private authenticationService: AuthenticationService,
     private translate: TranslateService,
     private eventService: MessageBus,
-    private logger: NGXLogger,
     private metaService: MetaService
   ) {
-    this.logger.debug('constructor');
     this.initializeApp();
     this.pages = [];
     translate.setDefaultLang('en');
@@ -119,7 +119,7 @@ export class MyApp {
   }
 
   private buildLoggedMenu() {
-    this.translate.get(['menu.Home', 'menu.Events', 'menu.Players', 'menu.Stats', 'menu.Settings',]).subscribe(
+    this.translate.get(['menu.Home', 'menu.Events', 'menu.Players', 'menu.Stats', 'menu.Settings', 'menu.Logout',]).subscribe(
       value => {
         this.pages = [
           { title: value['menu.Home'], component: HomePage, icon: 'home' },

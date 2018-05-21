@@ -24,7 +24,6 @@ import {APIModule} from "../providers/api/api.module";
 import {Utils} from "../providers/utils";
 import {SettingsService} from "../providers/settings.service";
 import {LocationService} from "../providers/location.service";
-import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -38,7 +37,6 @@ export function createTranslateLoader(http: HttpClient) {
         HttpClientModule,
         IonicModule.forRoot(MyApp),
         IonicStorageModule.forRoot(),
-        LoggerModule.forRoot({serverLoggingUrl: '', level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.OFF}),
         APIModule,
         ComponentsModule,
         PageModule,

@@ -77,7 +77,8 @@
     "Subscribe": "Signup"
   },
   "logout" : {
-    "TitleNavBar": "Logout"
+    "TitleNavBar": "Logout",
+    "Title": "Do you really want to disconnect?"
   },
   "signup": {
     "TitleNavBar": "Subscription",
