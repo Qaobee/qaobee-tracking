@@ -25,9 +25,9 @@ export class PlayerStatsPage {
    * @param {AuthenticationService} authenticationService
    */
   constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              private statsService: APIStatsService,
-              private authenticationService: AuthenticationService) {
+    public navParams: NavParams,
+    private statsService: APIStatsService,
+    private authenticationService: AuthenticationService) {
 
     this.player = navParams.get('player');
     this.ownerId.push(this.player._id);
@@ -37,7 +37,7 @@ export class PlayerStatsPage {
   /**
    * 
    */
-  ionViewDidEnter(){
+  ionViewDidEnter() {
     this.searchPlayerUse();
   }
 
@@ -45,11 +45,11 @@ export class PlayerStatsPage {
    * 
    */
   searchPlayerUse() {
-    
+
     // holder vs substitue
     let indicators = ['holder', 'substitue'];
     let listFieldsGroupBy = ['code'];
-    
+
     let search = {
       listIndicators: indicators,
       listOwners: this.ownerId,
@@ -58,24 +58,24 @@ export class PlayerStatsPage {
       aggregat: 'COUNT',
       listFieldsGroupBy: listFieldsGroupBy
     };
-    
+
     this.statsService.getStatGroupBy(search).subscribe((result: any[]) => {
-      if(result.length>0){
+      if (result.length > 0) {
         for (let index = 0; index < result.length; index++) {
           const element = result[index];
 
-          if(element._id.code==='holder'){
+          if (element._id.code === 'holder') {
             this.numberHolder = element.value;
             this.numberMatch = this.numberMatch + element.value;
           }
-          if(element._id.code==='substitue'){
+          if (element._id.code === 'substitue') {
             this.numberMatch = this.numberMatch + element.value;
           }
         }
 
         //Total playtime
         indicators = ['totalPlayTime'];
-        
+
         search = {
           listIndicators: indicators,
           listOwners: this.ownerId,
@@ -84,10 +84,10 @@ export class PlayerStatsPage {
           aggregat: 'SUM',
           listFieldsGroupBy: listFieldsGroupBy
         };
-        
+
         this.statsService.getStatGroupBy(search).subscribe((result: any[]) => {
-          if(result.length>0){
-            this.avgPlaytime = Utils.precisionRound(result[0].value/(60*this.numberMatch),-1);
+          if (result.length > 0) {
+            this.avgPlaytime = Utils.precisionRound(result[0].value / (60 * this.numberMatch), -1);
           }
         });
       }

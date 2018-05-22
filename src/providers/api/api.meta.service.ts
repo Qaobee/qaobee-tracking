@@ -1,35 +1,29 @@
 import { Observable } from 'rxjs/Observable';
-import {ApiService} from "./api";
-import {App, ToastController} from "ionic-angular";
-import {AuthenticationService} from "../authentication.service";
-import {HttpClient} from "@angular/common/http";
-import {Injectable} from "@angular/core";
-import {ENV} from "@app/env";
-import {catchError} from "rxjs/operators";
+import { ApiService } from "./api";
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { ENV } from "@app/env";
+import { catchError } from "rxjs/operators";
 
 @Injectable()
-export class MetaService extends ApiService {
+export class MetaService {
     /**
      *
-     * @param {App} app
-     * @param {AuthenticationService} authenticationService
-     * @param {ToastController} toastCtrl
+     * @param {ApiService} apiService
      * @param {HttpClient} http
      */
-    constructor(app: App,
-                authenticationService: AuthenticationService,
-                toastCtrl: ToastController,
-                private http: HttpClient) {
-        super(app, authenticationService, toastCtrl);
+    constructor(
+        private http: HttpClient,
+        private apiService: ApiService) {
     }
 
     /**
      *
      * @returns {Observable<any>}
      */
-    getMeta():Observable<any> {
-        return this.http.get<any>(ENV.hive + this.rootPath +  '/commons/users/user/meta', this.addHeaderToken()).pipe(
-            catchError(this.handleError('MetaServices.getMeta'))
+    getMeta(): Observable<any> {
+        return this.http.get<any>(ENV.hive + this.apiService.rootPath + '/commons/users/user/meta', this.apiService.addHeaderToken()).pipe(
+            catchError(this.apiService.handleError('MetaServices.getMeta'))
         );
     }
 
@@ -37,9 +31,9 @@ export class MetaService extends ApiService {
      *
      * @returns {Observable<any>}
      */
-    getParams():Observable<any> {
-        return this.http.get<any>(ENV.hive + this.rootPath + '/commons/settings/get', this.addHeaderToken()).pipe(
-            catchError(this.handleError('MetaServices.getParams'))
+    getParams(): Observable<any> {
+        return this.http.get<any>(ENV.hive + this.apiService.rootPath + '/commons/settings/get', this.apiService.addHeaderToken()).pipe(
+            catchError(this.apiService.handleError('MetaServices.getParams'))
         );
     }
 

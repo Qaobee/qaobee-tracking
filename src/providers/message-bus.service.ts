@@ -21,6 +21,7 @@ import { Subject, Observable } from "rxjs";
 
 @Injectable()
 export class MessageBus {
+    static goToLogin: any;
   public static navigation: string = 'navigation';
   public static userLogged: string = 'user-logged';
   private readonly listeners = {};

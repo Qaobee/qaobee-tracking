@@ -1,8 +1,10 @@
-import { ENV } from '@app/env';
+import { SynchroPage } from './../pages/synchro/synchro';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+
+import { TranslateService } from '@ngx-translate/core';
 
 import { LoginPage } from '../pages/login/login';
 import { WelcomePage } from '../pages/welcome/welcome';
@@ -10,15 +12,16 @@ import { LogoutPage } from './../pages/logout/logout';
 import { SignupPage } from '../pages/signup/signup';
 import { PlayerListPage } from '../pages/players/player-list/player-list';
 import { SettingsPage } from '../pages/settings/settings';
-
-import { TranslateService } from '@ngx-translate/core';
-import { AuthenticationService } from "../providers/authentication.service";
-import { Storage } from "@ionic/storage";
-import { UserService } from "../providers/api/api.user.service";
-import { MessageBus } from "../providers/message-bus.service";
-import { MetaService } from "../providers/api/api.meta.service";
 import { HomePage } from "../pages/home/home";
 import { EventListPage } from "../pages/events/event-list/event-list";
+
+
+import { MetaService } from "../providers/api/api.meta.service";
+import { UserService } from "../providers/api/api.user.service";
+
+import { AuthenticationService } from "../providers/authentication.service";
+import { Storage } from "@ionic/storage";
+import { MessageBus } from "../providers/message-bus.service";
 
 
 @Component({
@@ -88,6 +91,9 @@ export class MyApp {
       this.eventService.on(MessageBus.navigation, page => {
         this.nav.push(page.component, page.options);
       });
+      this.eventService.on(MessageBus.goToLogin, () => {
+        this.nav.setRoot(LoginPage);
+      });
     });
   }
 
@@ -119,13 +125,14 @@ export class MyApp {
   }
 
   private buildLoggedMenu() {
-    this.translate.get(['menu.Home', 'menu.Events', 'menu.Players', 'menu.Stats', 'menu.Settings', 'menu.Logout',]).subscribe(
+    this.translate.get(['menu.Home', 'menu.Events', 'menu.Players', 'menu.Stats', 'menu.Settings', 'menu.Logout', 'menu.Synchro']).subscribe(
       value => {
         this.pages = [
           { title: value['menu.Home'], component: HomePage, icon: 'home' },
           { title: value['menu.Events'], component: EventListPage, icon: 'calendar' },
           { title: value['menu.Players'], component: PlayerListPage, icon: 'people' },
           //{ title: value['menu.Stats'], component: CollectListPage, icon: 'stats' },
+          { title: value['menu.Synchro'], component: SynchroPage, icon: 'sync' },
           { title: value['menu.Settings'], component: SettingsPage, icon: 'settings' },
           { title: value['menu.Logout'], component: LogoutPage, icon: 'log-out' }
         ];

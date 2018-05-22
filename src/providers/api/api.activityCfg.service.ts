@@ -1,6 +1,4 @@
-import { ApiService } from "./api";
-import { App, ToastController } from "ionic-angular";
-import { AuthenticationService } from "../authentication.service";
+import { ApiService } from './api';
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ENV } from "@app/env";
@@ -10,22 +8,17 @@ import { Observable } from "rxjs/Observable";
 import moment from 'moment';
 
 @Injectable()
-export class ActivityCfgService extends ApiService {
+export class ActivityCfgService {
     /**
-     *
-     * @param {App} app
-     * @param {AuthenticationService} authenticationService
-     * @param {ToastController} toastCtrl
      * @param {TranslateService} translate
      * @param {HttpClient} http
+     * @param {ApiService} apiService
      */
-    constructor(app: App,
-        authenticationService: AuthenticationService,
-        toastCtrl: ToastController,
+    constructor(
         private translate: TranslateService,
-        private http: HttpClient
+        private http: HttpClient,
+        private apiService: ApiService
     ) {
-        super(app, authenticationService, toastCtrl);
     }
 
     /**
@@ -36,10 +29,10 @@ export class ActivityCfgService extends ApiService {
     get(activityId: string) {
         return new Observable<any>((observer) => {
             this.translate.get('country').subscribe(value => {
-                this.http.get<any>(ENV.hive + this.rootPath + '/commons/settings/activitycfg/get?activityId=' + activityId
+                this.http.get<any>(ENV.hive + this.apiService.rootPath + '/commons/settings/activitycfg/get?activityId=' + activityId
                     + '&date=' + moment.utc().valueOf()
-                    + '&countryId=' + value, this.addHeaderToken()).pipe(
-                        catchError(this.handleError('ActivityCfgService.get'))
+                    + '&countryId=' + value, this.apiService.addHeaderToken()).pipe(
+                        catchError(this.apiService.handleError('ActivityCfgService.get'))
                     ).subscribe(data => {
                         observer.next(data);
                         observer.complete();
@@ -56,10 +49,10 @@ export class ActivityCfgService extends ApiService {
     getParamFieldList(activityId: string, params: string) {
         return new Observable<any>((observer) => {
             this.translate.get('country').subscribe(value => {
-                this.http.get<any[]>(ENV.hive + this.rootPath + '/commons/settings/activitycfg/params?paramFieldList=' + params
+                this.http.get<any[]>(ENV.hive + this.apiService.rootPath + '/commons/settings/activitycfg/params?paramFieldList=' + params
                     + '&activityId=' + activityId
-                    + '&date=' + moment.utc().valueOf() + '&countryId=' + value, this.addHeaderToken()).pipe(
-                        catchError(this.handleError('ActivityCfgService.getParamFieldList'))
+                    + '&date=' + moment.utc().valueOf() + '&countryId=' + value, this.apiService.addHeaderToken()).pipe(
+                        catchError(this.apiService.handleError('ActivityCfgService.getParamFieldList'))
                     ).subscribe(data => {
                         observer.next(data);
                         observer.complete();

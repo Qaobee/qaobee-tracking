@@ -99,7 +99,8 @@
     "Players": "Players",
     "Stats": "Stats",
     "Settings": "Settings",
-    "Logout": "Logout"
+    "Logout": "Logout",
+    "Synchro": "Synchronization"
   },
   "player": {
     "TitleNavBarPlayer": "Player",

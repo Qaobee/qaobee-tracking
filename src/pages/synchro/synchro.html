@@ -1,0 +1,33 @@
+<ion-header>
+
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{ 'sync.TitleNavBar' | translate }}</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+    <ion-list no-lines>
+        <ion-item>
+            <ion-icon name="{{ sync.events.done?'checkmark':'sync' }}" item-start></ion-icon> Events
+            <ion-badge *ngIf="sync.events.count >= 0" item-end>{{ sync.events.count }}</ion-badge>
+        </ion-item>
+        <ion-item>
+            <ion-icon name="{{ sync.effectives.done?'checkmark':'sync' }}" item-start></ion-icon> Effectives
+            <ion-badge *ngIf="sync.effectives.count >= 0" item-end>{{ sync.effectives.count }}</ion-badge>
+        </ion-item>
+        <ion-item>
+            <ion-icon name="{{ sync.collects.done?'checkmark':'sync' }}" item-start></ion-icon> Collects
+            <ion-badge *ngIf="sync.collects.count >= 0" item-end>{{ sync.collects.count }}</ion-badge>
+        </ion-item>
+    </ion-list>
+    <ion-fab bottom right>
+        <button ion-fab large (tap)="syncAll()" color="danger">
+            <ion-icon name="sync"></ion-icon>
+        </button>
+    </ion-fab>
+</ion-content>

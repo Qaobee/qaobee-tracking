@@ -1,22 +1,24 @@
+import { ErrorHandler, NgModule } from "@angular/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { IonicStorageModule } from "@ionic/storage";
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { createTranslateLoader } from "../../app/app.module";
+import { IonicErrorHandler } from "ionic-angular";
+import { FileTransfer } from "@ionic-native/file-transfer";
+
+import { MetaService } from "./api.meta.service";
+import { EventsService } from "./api.events.service";
+import { PersonService } from "./api.person.service";
+import { TeamService } from "./api.team.service";
+import { ActivityCfgService } from "./api.activityCfg.service";
+import { CollectService } from "./api.collect.service"
+import { EffectiveService } from "./api.effective.service"
 import { APIStatsService } from './api.stats';
-import {ErrorHandler, NgModule} from "@angular/core";
-import {HttpClient, HttpClientModule} from "@angular/common/http";
-import {IonicStorageModule} from "@ionic/storage";
-import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
-import {createTranslateLoader} from "../../app/app.module";
-import {UserService} from "./api.user.service";
-import {IonicErrorHandler} from "ionic-angular";
-import {FileTransfer} from "@ionic-native/file-transfer";
-import {MetaService} from "./api.meta.service";
-import {EventsService} from "./api.events.service";
-import {PersonService} from "./api.person.service";
-import {TeamService} from "./api.team.service";
-import {ActivityCfgService} from "./api.activityCfg.service";
-import {CollectService} from "./api.collect.service"
-import {EffectiveService} from "./api.effective.service"
+import { UserService } from "./api.user.service";
+import { ApiService } from "./api";
 
 @NgModule({
-    declarations: [    ],
+    declarations: [],
     imports: [
         HttpClientModule,
         IonicStorageModule.forRoot(),
@@ -28,9 +30,10 @@ import {EffectiveService} from "./api.effective.service"
             }
         })
     ],
-    entryComponents: [ ],
+    entryComponents: [],
     providers: [
-        {provide: ErrorHandler, useClass: IonicErrorHandler},
+        { provide: ErrorHandler, useClass: IonicErrorHandler },
+        ApiService,
         UserService,
         MetaService,
         EventsService,
@@ -40,9 +43,9 @@ import {EffectiveService} from "./api.effective.service"
         APIStatsService,
         CollectService,
         EffectiveService,
-        FileTransfer
+        FileTransfer,
+
     ]
 })
-
 export class APIModule {
 }

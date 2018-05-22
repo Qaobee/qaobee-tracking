@@ -1,38 +1,36 @@
-import {Injectable} from "@angular/core";
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {catchError} from 'rxjs/operators';
-import 'rxjs/add/operator/map';
-import {ApiService} from "./api";
-import {App, Platform, ToastController} from 'ionic-angular';
-import {AuthenticationService} from "../authentication.service";
-import {TranslateService} from "@ngx-translate/core";
-import {FileTransfer, FileUploadOptions, FileUploadResult} from "@ionic-native/file-transfer";
-import {ENV} from "@app/env";
 
+import { Injectable } from "@angular/core";
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import 'rxjs/add/operator/map';
+import { Platform } from 'ionic-angular';
+import { TranslateService } from "@ngx-translate/core";
+import { FileTransfer, FileUploadOptions, FileUploadResult } from "@ionic-native/file-transfer";
+import { ENV } from "@app/env";
+
+import { AuthenticationService } from '../authentication.service';
+import { ApiService } from "./api";
 
 @Injectable()
-export class UserService extends ApiService {
+export class UserService {
     private rootPath2: string = '/api/2';
 
     /**
-     *
-     * @param {App} app
      * @param {AuthenticationService} authenticationService
-     * @param {ToastController} toastCtrl
      * @param {HttpClient} http
      * @param {TranslateService} translate
+     * @param {ApiService} apiService
      * @param {FileTransfer} fileTransfer
      * @param {Platform} plt
      */
-    constructor(app: App,
-                authenticationService: AuthenticationService,
-                toastCtrl: ToastController,
-                private http: HttpClient,
-                private translate: TranslateService,
-                private fileTransfer: FileTransfer,
-                private plt: Platform) {
-        super(app, authenticationService, toastCtrl);
+    constructor(
+        private authenticationService: AuthenticationService,
+        private http: HttpClient,
+        private translate: TranslateService,
+        private fileTransfer: FileTransfer,
+        private apiService: ApiService,
+        private plt: Platform) {
     }
 
     /**
@@ -44,13 +42,13 @@ export class UserService extends ApiService {
      * @returns {Observable<any>}
      */
     login(login: string, passwd: string, mobileToken: string): Observable<any> {
-        return this.http.post<any>(ENV.hive + this.rootPath + '/commons/users/user/login', {
+        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/commons/users/user/login', {
             login: login,
             password: passwd,
             mobileToken: mobileToken,
             os: this.plt.platforms()[1]
         }).pipe(
-            catchError(this.handleError('UserService.login'))
+            catchError(this.apiService.handleError('UserService.login'))
         );
     }
 
@@ -62,11 +60,11 @@ export class UserService extends ApiService {
      * @returns {Observable<any>}
      */
     sso(login: string, mobileToken: string): Observable<any> {
-        return this.http.post<any>(ENV.hive + this.rootPath + '/commons/users/user/sso', {
+        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/commons/users/user/sso', {
             login: login,
             mobileToken: mobileToken
         }).pipe(
-            catchError(this.handleError('UserService.sso'))
+            catchError(this.apiService.handleError('UserService.sso'))
         );
     }
 
@@ -75,12 +73,12 @@ export class UserService extends ApiService {
      * @param user
      * @returns {Observable<any>}
      */
-    registerUser(user: any): Observable<any>  {
+    registerUser(user: any): Observable<any> {
         user.captcha = 'empty';
         user.country = this.translate.getBrowserLang();
         user.account.origin = 'mobile';
         return this.http.put<any>(ENV.hive + this.rootPath2 + '/commons/users/signup/register', user).pipe(
-            catchError(this.handleError('UserService.registerUser'))
+            catchError(this.apiService.handleError('UserService.registerUser'))
         );
     }
 
@@ -89,9 +87,9 @@ export class UserService extends ApiService {
      * @param {string} login
      * @returns {Observable<any>}
      */
-    usernameTest(login: string): Observable<any>  {
+    usernameTest(login: string): Observable<any> {
         return this.http.get<any>(ENV.hive + this.rootPath2 + '/commons/users/signup/test/' + login).pipe(
-            catchError(this.handleError('UserService.usernameTest'))
+            catchError(this.apiService.handleError('UserService.usernameTest'))
         );
     }
 
@@ -100,9 +98,9 @@ export class UserService extends ApiService {
      * @param user
      * @returns {Observable<any>}
      */
-    updateUser(user: any): Observable<any>  {
-        return this.http.post<any>(ENV.hive + this.rootPath + '/commons/users/profile', user, this.addHeaderToken()).pipe(
-            catchError(this.handleError('UserService.updateUser'))
+    updateUser(user: any): Observable<any> {
+        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/commons/users/profile', user, this.apiService.addHeaderToken()).pipe(
+            catchError(this.apiService.handleError('UserService.updateUser'))
         );
     }
 
@@ -110,9 +108,9 @@ export class UserService extends ApiService {
      *
      * @returns {Observable<any>}
      */
-    logoff(): Observable<any>  {
-        return this.http.get<any>(ENV.hive + this.rootPath + '/commons/users/user/logout', this.addHeaderToken()).pipe(
-            catchError(this.handleError('UserService.logoff'))
+    logoff(): Observable<any> {
+        return this.http.get<any>(ENV.hive + this.apiService.rootPath + '/commons/users/user/logout', this.apiService.addHeaderToken()).pipe(
+            catchError(this.apiService.handleError('UserService.logoff'))
         );
     }
 
@@ -120,9 +118,9 @@ export class UserService extends ApiService {
      *
      * @returns {Observable<any>}
      */
-    getCurrentUser(): Observable<any>  {
-        return this.http.get<any>(ENV.hive + this.rootPath + '/commons/users/user/current', this.addHeaderToken()).pipe(
-            catchError(this.handleError('UserService.getCurrentUser'))
+    getCurrentUser(): Observable<any> {
+        return this.http.get<any>(ENV.hive + this.apiService.rootPath + '/commons/users/user/current', this.apiService.addHeaderToken()).pipe(
+            catchError(this.apiService.handleError('UserService.getCurrentUser'))
         );
     }
 
@@ -131,9 +129,9 @@ export class UserService extends ApiService {
      * @param {string} path
      * @returns {Observable<any>}
      */
-    getEncryptedInfos(path: string): Observable<any>  {
-        return this.http.post<any>(ENV.hive + this.rootPath + '/commons/users/user/encrypt', {path: path}, this.addHeaderToken()).pipe(
-            catchError(this.handleError('UserService.getEncryptedInfos'))
+    getEncryptedInfos(path: string): Observable<any> {
+        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/commons/users/user/encrypt', { path: path }, this.apiService.addHeaderToken()).pipe(
+            catchError(this.apiService.handleError('UserService.getEncryptedInfos'))
         );
     }
 
@@ -142,11 +140,11 @@ export class UserService extends ApiService {
      * @param {string} filePath
      * @returns {Promise<FileUploadResult>}
      */
-    postAvatar(filePath: string):Promise<FileUploadResult> {
+    postAvatar(filePath: string): Promise<FileUploadResult> {
         let options: FileUploadOptions = {
             fileKey: 'image',
             httpMethod: 'POST',
-            params: {title: this.authenticationService.user._id},
+            params: { title: this.authenticationService.user._id },
             headers: {
                 'token': this.authenticationService.token,
                 'Accept-Language': this.translate.getBrowserLang()

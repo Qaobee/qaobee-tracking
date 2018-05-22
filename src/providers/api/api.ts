@@ -1,26 +1,30 @@
+import { MessageBus } from './../message-bus.service';
 import {Injectable} from "@angular/core";
-import 'rxjs/add/operator/map';
 import {App, ToastController} from 'ionic-angular';
 import {Observable} from "rxjs/Observable";
+import 'rxjs/add/operator/map';
 import {of} from "rxjs/observable/of";
 import {HttpHeaders} from "@angular/common/http";
-import {LoginPage} from "../../pages/login/login";
 import {AuthenticationService} from "../authentication.service";
-
 /**
  * ApiService
  */
 @Injectable()
 export class ApiService {
     private excludedOperations: string[] = ['UserService.login'];
-    protected rootPath: string = '/api/1/';
+    rootPath: string = '/api/1/';
     /**
      *
      * @param {App} app
      * @param {AuthenticationService} authenticationService
      * @param {ToastController} toastCtrl
      */
-    constructor(public app: App, public authenticationService: AuthenticationService, public toastCtrl: ToastController) {
+    constructor(
+        private app: App, 
+        private authenticationService: AuthenticationService, 
+        private toastCtrl: ToastController,
+        private eventService: MessageBus
+    ) {
     }
 
     /**
@@ -34,7 +38,7 @@ export class ApiService {
             console.error(operation, error);
             if (error.status === 401 && this.excludedOperations.indexOf(operation) === -1) {
                 console.debug('[APIService] - handleError',this.app.getRootNav(),  operation, result);
-                this.app.getRootNav().push(LoginPage, {});
+               this.eventService.broadcast(MessageBus.goToLogin, {});
                 this.authenticationService.isLogged = false;
                 return of(result);
             } else {

@@ -52,12 +52,12 @@
       "deleteFail": "La suppression de l'événement a échoué"
     },
     "errorControlForm": {
-      "typeRequired":"Le type du match est obligatoire",
-      "labelRequired":"Le libellé du match est obligatoire",
-      "startDateRequired":"La date du match est obligatoire",
-      "timeRequired":"L'heure du match est obligatoire",
-      "myTeamRequired":"Vous devez choisir votre équipe",
-      "adversaryRequired":"Vous devez choisir un adversaire"
+      "typeRequired": "Le type du match est obligatoire",
+      "labelRequired": "Le libellé du match est obligatoire",
+      "startDateRequired": "La date du match est obligatoire",
+      "timeRequired": "L'heure du match est obligatoire",
+      "myTeamRequired": "Vous devez choisir votre équipe",
+      "adversaryRequired": "Vous devez choisir un adversaire"
     }
   },
   "home": {
@@ -76,13 +76,16 @@
     "Login": "Connexion",
     "Subscribe": "S'inscrire"
   },
-  "logout" : {
+  "logout": {
     "TitleNavBar": "Déconnexion",
     "Title": "Êtes-vous sur de vouloir vous déconnecter?"
   },
+  "sync": {
+    "TitleNavBar": "Synchronisation"
+  },
   "signup": {
     "TitleNavBar": "Inscription",
-    "Title":  "Inscription",
+    "Title": "Inscription",
     "login": "Identifiant",
     "email": "E-mail",
     "password": "Mot de passe",
@@ -99,7 +102,8 @@
     "Players": "Joueurs",
     "Stats": "Stats",
     "Settings": "Paramètres",
-    "Logout": "Déconnexion"
+    "Logout": "Déconnexion",
+    "Synchro": "Synchronisation"
   },
   "player": {
     "TitleNavBarPlayer": "Joueur",
@@ -182,7 +186,7 @@
     "substitution": "Changement de joueur",
     "ended_prompt": "Êtes vous sûr de vouloir mettre fin à la collecte?",
     "upload_done": "Sauvegarde des données faite!",
-    "team-build" : {
+    "team-build": {
       "title": "Composition d'équipe",
       "substitutes": "Remplaçants",
       "player-choose": "Choisissez un joueur",
@@ -259,30 +263,30 @@
     }
   },
   "component": {
-    "stats":{
-      "statsNotFound":"Aucunes Stats trouvées",
+    "stats": {
+      "statsNotFound": "Aucunes Stats trouvées",
       "detail": "Plus de détails",
-      "shoot":{
-        "efficiency":{
-          "player":{
-            "title":"Efficacité au tir",
+      "shoot": {
+        "efficiency": {
+          "player": {
+            "title": "Efficacité au tir",
             "goal": "Buts",
             "shoot": "Tirs",
             "goalAverage": "Moy. buts / match",
             "shootAverage": "Moy. tirs / match"
           },
           "goalkeeper": {
-            "title":"Pourcentage d'arrêts",
+            "title": "Pourcentage d'arrêts",
             "goal": "Arrêts",
             "shoot": "Buts",
             "goalAverage": "Moy. arrêts / match",
             "shootAverage": "Moy. buts / match"
-          }  
+          }
         }
       },
-      "highlights":{
-        "quarter":{
-          "title":"Performances",
+      "highlights": {
+        "quarter": {
+          "title": "Performances",
           "actionsOk": "Actions positives",
           "actionsKo": "Actions négatives"
         }
