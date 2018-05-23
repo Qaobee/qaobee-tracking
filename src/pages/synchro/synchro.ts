@@ -87,11 +87,11 @@ export class SynchroPage {
 
     /**
      *
-     * @returns {Observable<Number>}
+     * @returns {Observable<number>}
      */
-    syncEvents(): Observable<Number> {
+    syncEvents(): Observable<number> {
         console.log('[SynchroPage] - syncEvents');
-        return new Observable<Number>(observer => {
+        return new Observable<number>(observer => {
             this.eventsServices.getEvents(
                 this.authenticationService.meta.season.startDate,
                 this.authenticationService.meta.season.endDate,
@@ -137,10 +137,10 @@ export class SynchroPage {
 
     /**
      *
-     * @returns {Observable<Number>}
+     * @returns {Observable<number>}
      */
-    syncEffective(): Observable<Number> {
-        return new Observable<Number>(observer => {
+    syncEffective(): Observable<number> {
+        return new Observable<number>(observer => {
             this.effectiveService.getList(this.authenticationService.meta._id).subscribe((effectivesFromAPI: any[]) => {
                 this.storage.get('effectives').then((storedEffectives: any[]) => {
                     let effective = _.unionBy(storedEffectives, effectivesFromAPI, '_id');
@@ -177,10 +177,10 @@ export class SynchroPage {
 
     /**
      *
-     * @returns {Observable<Number>}
+     * @returns {Observable<number>}
      */
-    syncCollects(): Observable<Number> {
-        return new Observable<Number>(observer => {
+    syncCollects(): Observable<number> {
+        return new Observable<number>(observer => {
             this.collectService.getCollectList({
                 sandboxId: this.authenticationService.meta._id,
                 startDate: this.authenticationService.meta.season.startDate,
@@ -234,10 +234,10 @@ export class SynchroPage {
 
     /**
      *
-     * @returns {Observable<Number>}
+     * @returns {Observable<number>}
      */
-    syncStats(): Observable<Number> {
-        return new Observable<Number>(observer => {
+    syncStats(): Observable<number> {
+        return new Observable<number>(observer => {
             this.storage.get('events').then(storedEvents => {
                 let asyncs: Observable<number>[] = [];
                 storedEvents.forEach(currentEvent => {
