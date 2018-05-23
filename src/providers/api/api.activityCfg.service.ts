@@ -32,11 +32,11 @@ export class ActivityCfgService {
                 this.http.get<any>(ENV.hive + this.apiService.rootPath + '/commons/settings/activitycfg/get?activityId=' + activityId
                     + '&date=' + moment.utc().valueOf()
                     + '&countryId=' + value, this.apiService.addHeaderToken()).pipe(
-                        catchError(this.apiService.handleError('ActivityCfgService.get'))
-                    ).subscribe(data => {
-                        observer.next(data);
-                        observer.complete();
-                    });
+                    catchError(this.apiService.handleError('ActivityCfgService.get'))
+                ).subscribe(data => {
+                    observer.next(data);
+                    observer.complete();
+                });
             });
         });
     }
@@ -52,11 +52,11 @@ export class ActivityCfgService {
                 this.http.get<any[]>(ENV.hive + this.apiService.rootPath + '/commons/settings/activitycfg/params?paramFieldList=' + params
                     + '&activityId=' + activityId
                     + '&date=' + moment.utc().valueOf() + '&countryId=' + value, this.apiService.addHeaderToken()).pipe(
-                        catchError(this.apiService.handleError('ActivityCfgService.getParamFieldList'))
-                    ).subscribe(data => {
-                        observer.next(data);
-                        observer.complete();
-                    });
+                    catchError(this.apiService.handleError('ActivityCfgService.getParamFieldList'))
+                ).subscribe(data => {
+                    observer.next(data);
+                    observer.complete();
+                });
             });
         });
     }

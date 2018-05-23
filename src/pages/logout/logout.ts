@@ -26,6 +26,9 @@ export class LogoutPage {
 
     }
 
+    /**
+     *
+     */
     doLogout() {
         this.storage.forEach((v: any, k: string) => {
             console.debug('[LogoutPage] - doLogout', k, v);
@@ -40,6 +43,9 @@ export class LogoutPage {
         });
     }
 
+    /**
+     *
+     */
     cancel() {
         this.navCtrl.pop();
     }

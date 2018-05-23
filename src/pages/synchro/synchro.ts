@@ -6,10 +6,9 @@ import { EventsService } from '../../providers/api/api.events.service';
 import { AuthenticationService } from '../../providers/authentication.service';
 import { EffectiveService } from '../../providers/api/api.effective.service';
 import { CollectService } from '../../providers/api/api.collect.service';
+import { APIStatsService } from '../../providers/api/api.stats';
 import _ from "lodash";
 
-
-// TODO : i18n
 @Component({
     selector: 'page-synchro',
     templateUrl: 'synchro.html',
@@ -28,9 +27,24 @@ export class SynchroPage {
         collects: {
             done: false,
             count: -1
+        },
+        stats: {
+            done: false,
+            count: -1
         }
-    }
+    };
 
+    /**
+     *
+     * @param {NavController} navCtrl
+     * @param {NavParams} navParams
+     * @param {Storage} storage
+     * @param {EventsService} eventsServices
+     * @param {CollectService} collectService
+     * @param {EffectiveService} effectiveService
+     * @param {APIStatsService} statAPI
+     * @param {AuthenticationService} authenticationService
+     */
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
@@ -38,17 +52,26 @@ export class SynchroPage {
         private eventsServices: EventsService,
         private collectService: CollectService,
         private effectiveService: EffectiveService,
+        private statAPI: APIStatsService,
         private authenticationService: AuthenticationService
     ) {
     }
 
 
+    /**
+     *
+     */
     syncAll() {
         console.debug('[SynchroPage] - syncAll');
         this.syncEvents().subscribe(count => {
             console.debug('[SynchroPage] - syncAll - events', count);
             this.sync.events.done = true;
             this.sync.events.count = count;
+            this.syncStats().subscribe(count => {
+                console.debug('[SynchroPage] - syncAll - stats', count);
+                this.sync.stats.done = true;
+                this.sync.stats.count = count;
+            });
         });
         this.syncEffective().subscribe(count => {
             console.debug('[SynchroPage] - syncAll - effectives', count);
@@ -62,6 +85,10 @@ export class SynchroPage {
         });
     }
 
+    /**
+     *
+     * @returns {Observable<Number>}
+     */
     syncEvents(): Observable<Number> {
         console.log('[SynchroPage] - syncEvents');
         return new Observable<Number>(observer => {
@@ -84,6 +111,7 @@ export class SynchroPage {
                     missing.forEach(e => {
                         asyncs.push(new Observable<boolean>(obs => {
                             this.eventsServices.addEvent(e).subscribe(r => {
+                                console.debug('[SynchroPage] - syncEvents - result', r);
                                 obs.next(true);
                             }, e => {
                                 obs.error(e);
@@ -91,16 +119,15 @@ export class SynchroPage {
                                 obs.complete();
                             });
                         }));
-
                     });
-                    if (missing.length > 0) {
+                    if (asyncs.length > 0) {
                         Observable.forkJoin(asyncs).subscribe(r => {
                             console.debug('[SynchroPage] - syncEvents - forkJoin', r);
-                            observer.next(missing.length);
+                            observer.next(asyncs.length);
                             observer.complete();
                         });
                     } else {
-                        observer.next(missing.length);
+                        observer.next(0);
                         observer.complete();
                     }
                 });
@@ -108,6 +135,10 @@ export class SynchroPage {
         });
     }
 
+    /**
+     *
+     * @returns {Observable<Number>}
+     */
     syncEffective(): Observable<Number> {
         return new Observable<Number>(observer => {
             this.effectiveService.getList(this.authenticationService.meta._id).subscribe((effectivesFromAPI: any[]) => {
@@ -119,6 +150,7 @@ export class SynchroPage {
                     missing.forEach(e => {
                         asyncs.push(new Observable<boolean>(obs => {
                             this.effectiveService.update(e).subscribe(r => {
+                                console.debug('[SynchroPage] - syncEffective - result', r);
                                 obs.next(true);
                             }, e => {
                                 obs.error(e);
@@ -128,14 +160,14 @@ export class SynchroPage {
                         }));
 
                     });
-                    if (missing.length > 0) {
+                    if (asyncs.length > 0) {
                         Observable.forkJoin(asyncs).subscribe(r => {
                             console.debug('[SynchroPage] - syncEffective - forkJoin', r);
-                            observer.next(missing.length);
+                            observer.next(asyncs.length);
                             observer.complete();
                         });
                     } else {
-                        observer.next(missing.length);
+                        observer.next(0);
                         observer.complete();
                     }
                 });
@@ -143,6 +175,10 @@ export class SynchroPage {
         });
     }
 
+    /**
+     *
+     * @returns {Observable<Number>}
+     */
     syncCollects(): Observable<Number> {
         return new Observable<Number>(observer => {
             this.collectService.getCollectList({
@@ -157,7 +193,8 @@ export class SynchroPage {
                     let asyncs: Observable<boolean>[] = [];
                     missing.forEach(e => {
                         asyncs.push(new Observable<boolean>(obs => {
-                            this.effectiveService.update(e).subscribe(r => {
+                            this.collectService.addCollect(e).subscribe(r => {
+                                console.debug('[SynchroPage] - syncCollects - result', r);
                                 obs.next(true);
                             }, e => {
                                 obs.error(e);
@@ -167,17 +204,67 @@ export class SynchroPage {
                         }));
 
                     });
-                    if (missing.length > 0) {
+                    const existing = _.intersectionBy(storedCollects, collectsFromAPI, '_id');
+                    existing.forEach(e => {
+                        asyncs.push(new Observable<boolean>(obs => {
+                            this.collectService.updateCollect(e).subscribe(r => {
+                                console.debug('[SynchroPage] - syncCollects - result', r);
+                                obs.next(true);
+                            }, e => {
+                                obs.error(e);
+                            }, () => {
+                                obs.complete();
+                            });
+                        }));
+                    });
+                    if (asyncs.length > 0) {
                         Observable.forkJoin(asyncs).subscribe(r => {
                             console.debug('[SynchroPage] - syncCollects - forkJoin', r);
-                            observer.next(missing.length);
+                            observer.next(asyncs.length);
                             observer.complete();
                         });
                     } else {
-                        observer.next(missing.length);
+                        observer.next(0);
                         observer.complete();
                     }
                 });
+            });
+        });
+    }
+
+    /**
+     *
+     * @returns {Observable<Number>}
+     */
+    syncStats(): Observable<Number> {
+        return new Observable<Number>(observer => {
+            this.storage.get('events').then(storedEvents => {
+                let asyncs: Observable<number>[] = [];
+                storedEvents.forEach(currentEvent => {
+                    this.storage.get('stats-' + currentEvent._id).then(stats => {
+                        asyncs.push(new Observable<number>(obs => {
+                            this.statAPI.addBulk(stats).subscribe((r: any) => {
+                                obs.next(r.count);
+                            }, e => {
+                                obs.error(e);
+                            }, () => {
+                                obs.complete();
+                            });
+                        }));
+                    });
+                });
+                if (asyncs.length > 0) {
+                    Observable.forkJoin(asyncs).subscribe(r => {
+                        console.debug('[SynchroPage] - syncStatss - forkJoin', r);
+                        observer.next(_.reduce(r, function (sum, n) {
+                            return sum + n;
+                        }, 0));
+                        observer.complete();
+                    });
+                } else {
+                    observer.next(0);
+                    observer.complete();
+                }
             });
         });
     }

@@ -1,4 +1,3 @@
-import { SynchroPage } from './../pages/synchro/synchro';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -8,13 +7,13 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { LoginPage } from '../pages/login/login';
 import { WelcomePage } from '../pages/welcome/welcome';
-import { LogoutPage } from './../pages/logout/logout';
+import { LogoutPage } from '../pages/logout/logout';
 import { SignupPage } from '../pages/signup/signup';
 import { PlayerListPage } from '../pages/players/player-list/player-list';
 import { SettingsPage } from '../pages/settings/settings';
 import { HomePage } from "../pages/home/home";
 import { EventListPage } from "../pages/events/event-list/event-list";
-
+import { SynchroPage } from '../pages/synchro/synchro';
 
 import { MetaService } from "../providers/api/api.meta.service";
 import { UserService } from "../providers/api/api.user.service";

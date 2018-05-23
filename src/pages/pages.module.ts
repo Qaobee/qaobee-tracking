@@ -40,7 +40,7 @@ import { CollectModule } from "./collect/collect.module";
             loader: {
                 provide: TranslateLoader,
                 useFactory: (createTranslateLoader),
-                deps: [HttpClient]
+                deps: [ HttpClient ]
             }
         }),
         EventsModule,

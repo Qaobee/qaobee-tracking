@@ -16,39 +16,39 @@ import { TeamBuildComponent } from '../../components/team-build/team-build';
 import { StatsModal } from './stats-modal/stats-modal';
 
 @NgModule({
-  declarations: [
-    TeamBuildPage,
-    CollectPage,
-    GoalModal,
-    SubstitutionModal,
-    StatsModal,
-    TeamBuildComponent
-  ],
-  imports: [
-    HttpClientModule,
-    IonicModule.forRoot(App),
-    IonicStorageModule.forRoot(),
-    ComponentsModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
-        deps: [HttpClient]
-      }
-    }),
-    PipesModule,
-  ],
-  providers: [
-    HandFSM,
-    StatCollector
-  ],
-  entryComponents: [
-    TeamBuildPage,
-    CollectPage,
-    GoalModal,
-    SubstitutionModal,
-    StatsModal
-  ]
+    declarations: [
+        TeamBuildPage,
+        CollectPage,
+        GoalModal,
+        SubstitutionModal,
+        StatsModal,
+        TeamBuildComponent
+    ],
+    imports: [
+        HttpClientModule,
+        IonicModule.forRoot(App),
+        IonicStorageModule.forRoot(),
+        ComponentsModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (createTranslateLoader),
+                deps: [ HttpClient ]
+            }
+        }),
+        PipesModule,
+    ],
+    providers: [
+        HandFSM,
+        StatCollector
+    ],
+    entryComponents: [
+        TeamBuildPage,
+        CollectPage,
+        GoalModal,
+        SubstitutionModal,
+        StatsModal
+    ]
 })
 
 export class CollectModule {

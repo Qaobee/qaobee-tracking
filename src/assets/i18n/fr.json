@@ -81,7 +81,11 @@
     "Title": "Êtes-vous sur de vouloir vous déconnecter?"
   },
   "sync": {
-    "TitleNavBar": "Synchronisation"
+    "TitleNavBar": "Synchronisation",
+    "Events": "Evénements",
+    "Effectives": "Effectifs",
+    "Collects": "Collectes",
+    "Statistics": "Statistiques"
   },
   "signup": {
     "TitleNavBar": "Inscription",

@@ -26,13 +26,13 @@ import { ApiService } from "./api";
             loader: {
                 provide: TranslateLoader,
                 useFactory: (createTranslateLoader),
-                deps: [HttpClient]
+                deps: [ HttpClient ]
             }
         })
     ],
     entryComponents: [],
     providers: [
-        { provide: ErrorHandler, useClass: IonicErrorHandler },
+        {provide: ErrorHandler, useClass: IonicErrorHandler},
         ApiService,
         UserService,
         MetaService,

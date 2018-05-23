@@ -8,61 +8,62 @@ import { ActivityCfgService } from './api/api.activityCfg.service';
 
 @Injectable()
 export class SettingsService {
-  readonly locale: string;
-  private activityCfg: any;
-  /**
-   *
-   * @param {TranslateService} translate
-   * @param {Storage} storage
-   * @param {ActivityCfgService} activityCfgService
-   */
-  constructor(private translate: TranslateService, private storage: Storage, private activityCfgService: ActivityCfgService) {
-    this.locale = this.translate.getBrowserLang();
-    registerLocaleData(localeFr, 'fr');
-    registerLocaleData(localeEn, 'en');
-    registerLocaleData(localeEn, 'us');
-    this.init();
-  }
+    readonly locale: string;
+    private activityCfg: any;
 
-  /**
-   * 
-   */
-  init() {
-    this.storage.get('activityCfg').then(activityCfg => {
-      console.debug('[SettingsService] - from storage', activityCfg);
-      if (!activityCfg) {
-        this.activityCfgService.get('ACT-HAND').subscribe(activityCfgFromAPI => {
-          console.debug('[SettingsService] - from API', activityCfgFromAPI);
-          this.storage.set('activityCfg', activityCfgFromAPI);
-          this.activityCfg = activityCfgFromAPI;
+    /**
+     *
+     * @param {TranslateService} translate
+     * @param {Storage} storage
+     * @param {ActivityCfgService} activityCfgService
+     */
+    constructor(private translate: TranslateService, private storage: Storage, private activityCfgService: ActivityCfgService) {
+        this.locale = this.translate.getBrowserLang();
+        registerLocaleData(localeFr, 'fr');
+        registerLocaleData(localeEn, 'en');
+        registerLocaleData(localeEn, 'us');
+        this.init();
+    }
+
+    /**
+     *
+     */
+    init() {
+        this.storage.get('activityCfg').then(activityCfg => {
+            console.debug('[SettingsService] - from storage', activityCfg);
+            if (!activityCfg) {
+                this.activityCfgService.get('ACT-HAND').subscribe(activityCfgFromAPI => {
+                    console.debug('[SettingsService] - from API', activityCfgFromAPI);
+                    this.storage.set('activityCfg', activityCfgFromAPI);
+                    this.activityCfg = activityCfgFromAPI;
+                });
+            } else {
+                this.activityCfg = activityCfg;
+            }
         });
-      } else {
-        this.activityCfg = activityCfg;
-      }
-    });
-  }
+    }
 
-  /**
-   * 
-   */
-  save() {
+    /**
+     *
+     */
+    save() {
 
-  }
+    }
 
-  /**
-   * Get current locale
-   *
-   * @returns {string}
-   */
-  getLanguage(): string {
-    return this.locale;
-  }
+    /**
+     * Get current locale
+     *
+     * @returns {string}
+     */
+    getLanguage(): string {
+        return this.locale;
+    }
 
-  getParametersGame(): { periodDuration: number, nbMaxPlayers: number, nbMinPlayers: number, nbPeriod: number, nbTimeout: number, timeoutDuration: number, yellowCardMax: number, exclusionTempo: number, halfTimeDuration: number } {
-    return this.activityCfg.parametersGame;
-  }
+    getParametersGame(): { periodDuration: number, nbMaxPlayers: number, nbMinPlayers: number, nbPeriod: number, nbTimeout: number, timeoutDuration: number, yellowCardMax: number, exclusionTempo: number, halfTimeDuration: number } {
+        return this.activityCfg.parametersGame;
+    }
 
-  getActivityConfig(): any {
-    return this.activityCfg;
-  }
+    getActivityConfig(): any {
+        return this.activityCfg;
+    }
 }

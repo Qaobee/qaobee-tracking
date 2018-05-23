@@ -1,6 +1,7 @@
-import { StatType } from './../../../model/stat.type';
+import { StatType } from '../../../model/stat.type';
 import { NavParams, ViewController } from 'ionic-angular';
 import { Component } from '@angular/core';
+
 @Component({
     selector: 'substitution-modal',
     templateUrl: 'substitution-modal.html'
@@ -13,9 +14,9 @@ export class SubstitutionModal {
     };
 
     /**
-     * 
-     * @param {ViewController} viewCtrl 
-     * @param {NavParams} params 
+     *
+     * @param {ViewController} viewCtrl
+     * @param {NavParams} params
      */
     constructor(public viewCtrl: ViewController, private params: NavParams) {
         this.playerList = this.params.get('playerList');
@@ -25,15 +26,15 @@ export class SubstitutionModal {
     }
 
     /**
-     * 
+     *
      */
     validate() {
         console.debug('[SubstitutionModal] - validate', this.playerPositions);
-        this.viewCtrl.dismiss({ playerPositions: this.playerPositions });
+        this.viewCtrl.dismiss({playerPositions: this.playerPositions});
     }
 
     /**
-     * 
+     *
      */
     dismiss() {
         this.viewCtrl.dismiss();

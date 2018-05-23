@@ -9,10 +9,14 @@ export const PREFIX = '--';
 export class SassHelperComponent {
 
     constructor() {
-
     }
 
     // Read the custom property of body section with given name:
+    /**
+     *
+     * @param {string} name
+     * @returns {string}
+     */
     readProperty(name: string): string {
         let bodyStyles = window.getComputedStyle(document.body);
         return bodyStyles.getPropertyValue(PREFIX + name);

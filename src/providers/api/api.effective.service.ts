@@ -16,6 +16,7 @@ export class EffectiveService {
         private apiService: ApiService
     ) {
     }
+
     /**
      * @param  {string} effectiveId
      */

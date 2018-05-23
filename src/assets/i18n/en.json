@@ -52,12 +52,12 @@
       "deleteFail": "A problem occurs during the event's delete"
     },
     "errorControlForm": {
-      "typeRequired":"Type is required",
-      "labelRequired":"Label is required",
-      "startDateRequired":"Date is required",
-      "timeRequired":"Time is required",
-      "myTeamRequired":"choose your team, please",
-      "adversaryRequired":"choose an adversary, please"
+      "typeRequired": "Type is required",
+      "labelRequired": "Label is required",
+      "startDateRequired": "Date is required",
+      "timeRequired": "Time is required",
+      "myTeamRequired": "choose your team, please",
+      "adversaryRequired": "choose an adversary, please"
     }
   },
   "home": {
@@ -76,7 +76,7 @@
     "Login": "Connection",
     "Subscribe": "Signup"
   },
-  "logout" : {
+  "logout": {
     "TitleNavBar": "Logout",
     "Title": "Do you really want to disconnect?"
   },
@@ -89,6 +89,13 @@
     "confirmPassword": "Re-enter password",
     "cancel": "Annuler",
     "valid": "Valider"
+  },
+  "sync": {
+    "TitleNavBar": "Synchronization",
+    "Events": "Events",
+    "Effectives": "Effectives",
+    "Collects": "Collects",
+    "Statistics": "Statistics"
   },
   "menu": {
     "Login": "Signin",
@@ -261,10 +268,10 @@
   },
   "component": {
     "stats": {
-      "statsNotFound":"Stats not found",
+      "statsNotFound": "Stats not found",
       "detail": "More details",
       "shoot": {
-        "efficiency":{ 
+        "efficiency": {
           "player": {
             "title": "Efficiency's shoot",
             "goal": "Goals",
@@ -272,18 +279,18 @@
             "goalAverage": "Avg. goals / match",
             "shootAverage": "Avg. shoots / match"
           },
-          "goalkeeper":{
+          "goalkeeper": {
             "title": "Efficiency's stop",
             "goal": "Stops",
             "shoot": "Goals",
             "goalAverage": "Avg. stops / match",
             "shootAverage": "Avg. goals / match"
           }
-        } 
+        }
       },
-      "highlights":{
-        "quarter":{
-          "title":"Performances",
+      "highlights": {
+        "quarter": {
+          "title": "Performances",
           "actionsOk": "Good actions",
           "actionsKo": "Bad actions"
         }

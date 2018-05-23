@@ -1,4 +1,3 @@
-
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -46,7 +45,7 @@ export class UserService {
             login: login,
             password: passwd,
             mobileToken: mobileToken,
-            os: this.plt.platforms()[1]
+            os: this.plt.platforms()[ 1 ]
         }).pipe(
             catchError(this.apiService.handleError('UserService.login'))
         );
@@ -130,7 +129,7 @@ export class UserService {
      * @returns {Observable<any>}
      */
     getEncryptedInfos(path: string): Observable<any> {
-        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/commons/users/user/encrypt', { path: path }, this.apiService.addHeaderToken()).pipe(
+        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/commons/users/user/encrypt', {path: path}, this.apiService.addHeaderToken()).pipe(
             catchError(this.apiService.handleError('UserService.getEncryptedInfos'))
         );
     }
@@ -144,7 +143,7 @@ export class UserService {
         let options: FileUploadOptions = {
             fileKey: 'image',
             httpMethod: 'POST',
-            params: { title: this.authenticationService.user._id },
+            params: {title: this.authenticationService.user._id},
             headers: {
                 'token': this.authenticationService.token,
                 'Accept-Language': this.translate.getBrowserLang()

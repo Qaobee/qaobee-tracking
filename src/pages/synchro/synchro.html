@@ -13,16 +13,20 @@
 <ion-content>
     <ion-list no-lines>
         <ion-item>
-            <ion-icon name="{{ sync.events.done?'checkmark':'sync' }}" item-start></ion-icon> Events
+            <ion-icon name="{{ sync.events.done?'checkmark':'sync' }}" item-start></ion-icon> {{ 'sync.Events' | translate }}
             <ion-badge *ngIf="sync.events.count >= 0" item-end>{{ sync.events.count }}</ion-badge>
         </ion-item>
         <ion-item>
-            <ion-icon name="{{ sync.effectives.done?'checkmark':'sync' }}" item-start></ion-icon> Effectives
+            <ion-icon name="{{ sync.effectives.done?'checkmark':'sync' }}" item-start></ion-icon> {{ 'sync.Effectives' | translate }}
             <ion-badge *ngIf="sync.effectives.count >= 0" item-end>{{ sync.effectives.count }}</ion-badge>
         </ion-item>
         <ion-item>
-            <ion-icon name="{{ sync.collects.done?'checkmark':'sync' }}" item-start></ion-icon> Collects
+            <ion-icon name="{{ sync.collects.done?'checkmark':'sync' }}" item-start></ion-icon> {{ 'sync.Collects' | translate }}
             <ion-badge *ngIf="sync.collects.count >= 0" item-end>{{ sync.collects.count }}</ion-badge>
+        </ion-item>
+        <ion-item>
+            <ion-icon name="{{ sync.stats.done?'checkmark':'sync' }}" item-start></ion-icon> {{ 'sync.Statistics' | translate }}
+            <ion-badge *ngIf="sync.stats.count >= 0" item-end>{{ sync.stats.count }}</ion-badge>
         </ion-item>
     </ion-list>
     <ion-fab bottom right>

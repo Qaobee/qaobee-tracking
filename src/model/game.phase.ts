@@ -11,7 +11,7 @@ export class GamePhase {
     /**
      * Phase code
      */
-    code:StatType;
+    code: StatType;
     /**
      * Start time
      */
