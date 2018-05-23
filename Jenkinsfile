@@ -100,7 +100,7 @@ def notifyBuild(String buildStatus = 'STARTED') {
 
 def notifySlack(color, message, buildStatus) {
     String slackURL = 'https://hooks.slack.com/services/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'
-    String payload = "{\"username\": \"QSwarm-Web\",\"attachments\":[{\"title\": \"${env.JOB_NAME} ${buildStatus}\",\"color\": \"${color}\",\"text\": \"${message}\"}]}"
+    String payload = "{\"username\": \"Qaobee-tracking\",\"attachments\":[{\"title\": \"${env.JOB_NAME} ${buildStatus}\",\"color\": \"${color}\",\"text\": \"${message}\"}]}"
     def cmd = "curl -X POST -H 'Content-type: application/json' --data '${payload}' ${slackURL}"
     print cmd
     sh cmd
