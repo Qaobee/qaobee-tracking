@@ -98,8 +98,7 @@ export class NextEventComponent {
      *
      */
     goToCreateEvent() {
-        console.log('[NextEventComponent] goToCreateEvent');
-        this.eventService.broadcast(MessageBus.navigation, {component: EventUpsertPage});
+        this.navCtrl.push(EventUpsertPage, {event: event, editMode : 'CREATE'});
     }
 
     /**

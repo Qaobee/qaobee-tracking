@@ -109,6 +109,7 @@ export class EventUpsertPage {
 
         // Retreive list event type
         this.activityCfgService.getParamFieldList(authenticationService.meta.activity._id, 'listEventType').subscribe((types: any[]) => {
+            console.log('[EventUpsertPage] event type list', types);
             if (types) {
                 this.eventTypes = types;
                 if (types.length === 1) {
@@ -117,7 +118,7 @@ export class EventUpsertPage {
                 }
             }
         });
-        this.createForm();
+        this.prepareEvent();
     }
 
     /**
@@ -157,16 +158,7 @@ export class EventUpsertPage {
                 }
             }
         }
-    };
 
-
-    /**
-     * Create form's controls
-     */
-    createForm() {
-        if (!this.event) {
-            this.prepareEvent();
-        }
         this.eventForm = this.formBuilder.group({
             'label': [ this.event.label || '', [ Validators.required ] ],
             'address': [ this.address || '' ],
@@ -184,7 +176,7 @@ export class EventUpsertPage {
      * @param e1
      * @param e2
      */
-    static compareOptionTypeEvent(e1: any, e2: any): boolean {
+    compareOptionTypeEvent(e1: any, e2: any): boolean {
         return e1 && e2 ? e1.code === e2.code : e1 === e2;
     }
 
@@ -193,7 +185,7 @@ export class EventUpsertPage {
      * @param e1
      * @param e2
      */
-    static compareOptionTeam(e1: any, e2: any): boolean {
+    compareOptionTeam(e1: any, e2: any): boolean {
         return e1 && e2 ? e1._id === e2._id : e1 === e2;
     }
 
