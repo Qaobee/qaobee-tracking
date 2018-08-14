@@ -2,7 +2,7 @@ team-build-component {
   #substitute-area {
     background-color: color($colors, secondary, base);
     min-height: 18rem;
-  
+
     h4 {
       color: color($colors, light, base);
     }
@@ -12,9 +12,9 @@ team-build-component {
     z-index: 5;
     height: 18rem;
     width: 100vw;
-    background: url("/assets/imgs/zone_defense.png") no-repeat;
+    background: url('../assets/imgs/zone_defense.png') no-repeat;
+    -webkit-background-image: url('../../assets/imgs/zone_defense.png') no-repeat;
     background-size: 100vw 18rem;
-
 
     ion-chip {
       max-width: calc(100vw / 3 - 2rem);
