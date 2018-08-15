@@ -34,7 +34,7 @@ node {
             timeout(time: 30, unit: 'DAYS') {
                 input 'Publish on PlayStore Alpha ?'
             }
-            androidApkUpload apkFilesPattern: 'build/com.qaobee.hand.apk', googleCredentialsId: 'qaobee-mobile', rolloutPercentage: '100%', trackName: 'alpha'
+            androidApkUpload apkFilesPattern: 'build/com.qaobee.hand.apk', googleCredentialsId: 'qaobee-mobile', rolloutPercentage: '100%', trackName: 'internal'
 
             this.notifyBuild('PUBLISHED')
         }
