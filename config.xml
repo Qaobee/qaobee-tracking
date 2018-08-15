@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget android-versionCode="144" id="com.qaobee.hand" version="1.0.144" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>qaobee-tracking</name>
+    <name>QSwarm - Handball</name>
     <description>Qaobee Handball.</description>
     <author email="contact@qaobee.com" href="https://qaobee.com/">Qaobee Team</author>
     <content src="index.html" />
@@ -98,4 +98,5 @@
     <engine name="ios" />
     <engine name="browser" spec="5.0.3" />
     <engine name="android" spec="7.1.0" />
+    <plugin name="cordova-plugin-firebase" spec="^1.0.5" />
 </widget>

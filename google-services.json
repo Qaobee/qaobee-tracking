@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "556868703323",
+    "firebase_url": "https://qaobeeandroid.firebaseio.com",
+    "project_id": "qaobeeandroid",
+    "storage_bucket": "qaobeeandroid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556868703323:android:c56748bdf972d246",
+        "android_client_info": {
+          "package_name": "com.qaobee.hand"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "556868703323-t71e34kn745icfu2kees21a0sn7vjorq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.qaobee.hand",
+            "certificate_hash": "53ae2b8e2f0a0241f0f561724e5cf36cbed6bea6"
+          }
+        },
+        {
+          "client_id": "556868703323-imoik4rj8h16cqmssnsghckvhmnuumhd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALR820Wmf7VDLvHfWTPKaxwo2VH6wsmSc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "556868703323-imoik4rj8h16cqmssnsghckvhmnuumhd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
