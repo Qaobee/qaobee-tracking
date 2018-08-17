@@ -184,7 +184,7 @@ export class HandFSM extends EasyFlow {
             phase.startTime = context.fsmContext.chrono;
             context.fsmContext.gamePhase = phase;
             this.saveState(context);
-            this.messageBus.broadcast(HandFSM.SWITCH_PHASE, {attack: true});
+            this.messageBus.broadcast(HandFSM.SWITCH_PHASE, { attack: true });
         });
 
         whenEnter(FSMStates.DEFENSE, (context: Context) => {
@@ -198,7 +198,7 @@ export class HandFSM extends EasyFlow {
             phase.startTime = context.fsmContext.chrono;
             context.fsmContext.gamePhase = phase;
             this.saveState(context);
-            this.messageBus.broadcast(HandFSM.SWITCH_PHASE, {attack: false});
+            this.messageBus.broadcast(HandFSM.SWITCH_PHASE, { attack: false });
         });
 
         whenEnter(FSMStates.RETURN_TO_SELECTED_PLAYER, (context: Context) => {
@@ -213,7 +213,7 @@ export class HandFSM extends EasyFlow {
      * @param  {Context} context
      */
     saveState(context: Context) {
-        this.messageBus.broadcast(HandFSM.GAME_STATE, {state: context.state});
+        this.messageBus.broadcast(HandFSM.GAME_STATE, { state: context.state });
     }
 
     /**
@@ -223,7 +223,7 @@ export class HandFSM extends EasyFlow {
      * @returns {Context}
      */
     start(fsmContext: FSMContext, initialState: FSMStates): Context {
-        this.context = super.start({fsmContext: fsmContext}, initialState);
+        this.context = super.start({ fsmContext: fsmContext }, initialState);
         return this.context;
     }
 

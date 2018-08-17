@@ -12,7 +12,7 @@ import { UserService } from '../../providers/api/api.user.service';
  */
 @Component({
     selector: 'page-login',
-    templateUrl: 'login.html',
+    templateUrl: 'login.html'
 })
 export class LoginPage {
 

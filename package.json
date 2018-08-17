@@ -1,8 +1,8 @@
 {
   "name": "qaobee-tracking",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "version": "1.0.143",
+  "author": "Qaobee",
+  "homepage": "https://www.qaobee.com/",
   "private": true,
   "config": {
     "ionic_webpack": "./config/webpack.config.js"
@@ -32,6 +32,7 @@
     "@ionic-native/date-picker": "4.7.0",
     "@ionic-native/file": "4.7.0",
     "@ionic-native/file-transfer": "4.7.0",
+    "@ionic-native/firebase": "^4.11.0",
     "@ionic-native/google-maps": "4.7.0",
     "@ionic-native/splash-screen": "4.7.0",
     "@ionic-native/status-bar": "4.7.0",
@@ -47,6 +48,7 @@
     "cordova-plugin-device": "2.0.2",
     "cordova-plugin-file": "6.0.1",
     "cordova-plugin-file-transfer": "1.7.1",
+    "cordova-plugin-firebase": "^1.0.5",
     "cordova-plugin-ionic-keyboard": "2.0.5",
     "cordova-plugin-ionic-webview": "1.2.0",
     "cordova-plugin-splashscreen": "5.0.2",
@@ -91,11 +93,13 @@
         "API_KEY_FOR_IOS": "AIzaSyDvAgEI0JNhEYqbWVkt8ObEVx7vj5FLxkM",
         "PLAY_SERVICES_VERSION": "11.8.0",
         "ANDROID_SUPPORT_V4_VERSION": "24.1.0"
-      }
+      },
+      "cordova-plugin-firebase": {}
     },
     "platforms": [
       "browser",
-      "android"
+      "android",
+      "ios"
     ]
   }
 }

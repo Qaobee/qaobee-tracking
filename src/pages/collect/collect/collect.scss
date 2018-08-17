@@ -13,7 +13,6 @@ page-collect {
             content: '-';
             padding-right: 0.5rem;
         }
-        .event {}
     }
     .period {
         font-size: 1rem;
@@ -48,18 +47,21 @@ page-collect {
             min-height: 70px;
         }
     }
-    #ground-area {
-        z-index: 5;
-        height: 18rem;
-        width: 100vw;
-        background: url("/assets/imgs/zone_defense.png") no-repeat;
-        background-size: 100vw 18rem;
-        .col {
-            min-height: 64px;
-        }
+  
+  
+  #ground-area {
+    z-index: 5;
+    height: 18rem;
+    width: 100vw;
+    background: url('../assets/imgs/zone_defense.png') no-repeat;
+    -webkit-background-image: url('../../assets/imgs/zone_defense.png') no-repeat;
+    background-size: 100vw 18rem;
+    .col {
+      min-height: 64px;
     }
-    ion-select {
-        max-width: 100%;
-        text-align: center;
-    }
+  }
+  ion-select {
+    max-width: 100%;
+    text-align: center;
+  }
 }

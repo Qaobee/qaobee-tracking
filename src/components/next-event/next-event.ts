@@ -4,7 +4,6 @@ import { EventsService } from "../../providers/api/api.events.service";
 import { AuthenticationService } from "../../providers/authentication.service";
 import { Storage } from "@ionic/storage";
 import { Utils } from "../../providers/utils";
-import { MessageBus } from "../../providers/message-bus.service";
 import { EventUpsertPage } from "../../pages/events/event-upsert/event-upsert";
 import { EventDetailPage } from '../../pages/events/event-detail/event-detail';
 import { TeamBuildPage } from "../../pages/collect/team-build/team-build";
@@ -24,13 +23,11 @@ export class NextEventComponent {
      * @param {EventsService} eventsServices
      * @param {Storage} storage
      * @param {AuthenticationService} authenticationService
-     * @param {MessageBus} eventService
      */
     constructor(public navCtrl: NavController,
                 private eventsServices: EventsService,
                 private storage: Storage,
-                private authenticationService: AuthenticationService,
-                private eventService: MessageBus) {
+                private authenticationService: AuthenticationService) {
 
         this.user = this.authenticationService.user;
         this.storage.get('events').then(events => {

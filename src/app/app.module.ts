@@ -24,6 +24,7 @@ import { APIModule } from "../providers/api/api.module";
 import { Utils } from "../providers/utils";
 import { SettingsService } from "../providers/settings.service";
 import { LocationService } from "../providers/location.service";
+import { Firebase } from "@ionic-native/firebase";
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -62,6 +63,7 @@ export function createTranslateLoader(http: HttpClient) {
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         StatusBar,
         SplashScreen,
+        Firebase,
         UniqueDeviceID,
         AuthenticationService,
         MessageBus,
