@@ -176,6 +176,7 @@ export class StatCollector {
      * @param  {string} playerId
      */
     goalTarget(context: FSMContext, code: StatType, target: string, playerId: string) {
+        console.log('[StatCollector] - goalTarget', playerId);
         let stat = this.eventBuilder(context, code, target);
         if (playerId) {
             stat.owner.push(playerId);

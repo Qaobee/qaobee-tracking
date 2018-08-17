@@ -22,15 +22,17 @@ page-collect {
         padding-top: 0;
     }
     .team {
-        font-size: 1rem;
+        font-size: 1,5rem;
         padding: 0;
+        color: color($colors,dark,base);
+        text-align: center;
     }
     .small {
         font-size: 1rem;
         padding: 0;
     }
     .score {
-        font-size: 3rem;
+        font-size: 4rem;
         font-weight: bold;
         padding: 0;
         color: color($colors, secondary, base);
@@ -43,7 +45,7 @@ page-collect {
     }
     .btn-list {
         .col {
-            min-height: 64px;
+            min-height: 70px;
         }
     }
     #ground-area {

@@ -69,16 +69,16 @@ export class CollectPage {
     translations: any = {};
 
     ground = [
-        [ {key: 'pivot', label: 'pivot', class: 'blue-grey'} ],
+        [ {key: 'pivot', label: 'pivot', class: 'dark'} ],
         [
-            {key: 'left-wingman', label: 'left_wingman', class: 'white'},
-            {key: 'center-backcourt', label: 'center_backcourt', class: 'white'},
-            {key: 'right-wingman', label: 'right_wingman', class: 'white'}
+            {key: 'left-backcourt', label: 'left_backcourt', class: 'dark'},
+            {key: 'center-backcourt', label: 'center_backcourt', class: 'dark'},
+            {key: 'right-backcourt', label: 'right_backcourt', class: 'dark'}
         ],
         [
-            {key: 'left-backcourt', label: 'left_backcourt', class: 'white'},
-            {key: 'goalkeeper', label: 'goalkeeper', class: 'indigo'},
-            {key: 'right-backcourt', label: 'right_backcourt', class: 'white'}
+            {key: 'left-wingman', label: 'left_wingman', class: 'dark'},
+            {key: 'goalkeeper', label: 'goalkeeper', class: 'white'},
+            {key: 'right-wingman', label: 'right_wingman', class: 'dark'}
         ]
     ];
 
@@ -496,15 +496,13 @@ export class CollectPage {
      *
      */
     showGround() {
-        console.debug('[CollectPage] - showGround');
         if (!this.fsmContext.gamePhase) {
             this.presentToast(this.translations.collect.select_game_phase_first);
-        } else if (!this.fsmContext.selectedPlayer) {
+        } else if (!this.fsmContext.selectedPlayer && this.fsmContext.gamePhase.attack) {
             this.presentToast(this.translations.collect.select_player);
         } else {
             let goalModal = this.modalController.create(GoalModal, {});
             goalModal.onDidDismiss((data: { ground: string, goal: string, scorred: boolean }) => {
-                console.debug('[CollectPage] - showGround', data);
                 if (data) {
                     if (data.ground.startsWith('outside')) {
                         if (this.fsmContext.gamePhase && this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.outsideAtt)) {
