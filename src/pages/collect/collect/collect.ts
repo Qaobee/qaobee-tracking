@@ -574,7 +574,7 @@ export class CollectPage {
         console.debug('[CollectPage] - goalButton');
         if (!this.fsmContext.gamePhase) {
             this.presentToast(this.translations.collect.select_game_phase_first);
-        } else if (!this.fsmContext.selectedPlayer) {
+        } else if (!this.fsmContext.selectedPlayer && this.fsmContext.gamePhase.attack) {
             this.presentToast(this.translations.collect.select_player);
         } else {
             let fsmEvent = this.fsmContext.gamePhase.attack ? FSMEvents.goalScoredAtt : FSMEvents.goalScoredDef;
@@ -587,7 +587,7 @@ export class CollectPage {
                     this.doDefense();
                 }
             } else {
-                this.statCollector.goalConceded(this.fsmContext, this.fsmContext.selectedPlayer.playerId);
+                this.statCollector.goalConceded(this.fsmContext, this.getGaolkeeperId());
                 this.gameState.visitorScore++;
                 if (this.handFSM.trigger(fsmEvent)) {
                     this.doAttack();
