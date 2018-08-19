@@ -32,7 +32,6 @@ export class StatCollector {
         evt.chrono = context.chrono;
         evt.phaseSeqId = context.phaseSeqId;
         evt.code = code;
-        console.warn('OWNERS OWNERS OWNERS OWNERS OWNERS' +context.owners);
         evt.owner = context.owners;
         evt.producter = [ context.connectedUser._id ];
         evt.timer = moment.utc().valueOf();
@@ -164,6 +163,7 @@ export class StatCollector {
      * @param  {string} playerId
      */
     ground(context: FSMContext, code: StatType, area: string, playerId: string) {
+        console.warn('StatCollector - goalTarget - playerId =>' +playerId);
         let stat = this.eventBuilder(context, code, area);
         if (playerId) {
             stat.owner.push(playerId);
@@ -178,6 +178,7 @@ export class StatCollector {
      * @param  {string} playerId
      */
     goalTarget(context: FSMContext, code: StatType, target: string, playerId: string) {
+        console.warn('StatCollector - goalTarget - playerId =>' +playerId);
         let stat = this.eventBuilder(context, code, target);
         if (playerId) {
             stat.owner.push(playerId);
@@ -240,6 +241,7 @@ export class StatCollector {
      * @param  {string} playerId
      */
     goalConceded(context: FSMContext, playerId: string) {
+        console.log('StatCollector - goalConceded - playerId =>' +playerId);
         let stat = this.eventBuilder(context, StatType.GOAL_CONCEDED, 1);
         if (playerId) {
             stat.owner.push(playerId);
