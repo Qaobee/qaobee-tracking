@@ -32,6 +32,7 @@ export class StatCollector {
         evt.chrono = context.chrono;
         evt.phaseSeqId = context.phaseSeqId;
         evt.code = code;
+        console.warn('OWNERS OWNERS OWNERS OWNERS OWNERS' +context.owners);
         evt.owner = context.owners;
         evt.producter = [ context.connectedUser._id ];
         evt.timer = moment.utc().valueOf();
@@ -41,6 +42,7 @@ export class StatCollector {
         if (context.gamePhase) {
             evt.attack = context.gamePhase.attack;
         }
+        console.warn('TARGETVALUE TARGETVALUE TARGETVALUE TARGETVALUE TARGETVALUE ' +code+' - '+value);
         if (typeof value === 'string') {
             evt.value = value;
         } else {
@@ -176,7 +178,6 @@ export class StatCollector {
      * @param  {string} playerId
      */
     goalTarget(context: FSMContext, code: StatType, target: string, playerId: string) {
-        console.log('[StatCollector] - goalTarget', playerId);
         let stat = this.eventBuilder(context, code, target);
         if (playerId) {
             stat.owner.push(playerId);
