@@ -58,10 +58,6 @@ export class APIStatsService {
         let request = [];
         stats.forEach(stat => {
             let s: any = stat;
-            if (stat.value && '' !== stat.value) {
-                s.value = stat.intValue;
-                delete s.intValue;
-            }
             request.push(s);
         });
         return this.http.put<any>(this.apiUrl + '/sandbox/stats/statistics/addBulk', request, this.apiService.addHeaderToken()).pipe(

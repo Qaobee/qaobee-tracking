@@ -41,12 +41,14 @@ export class StatCollector {
         if (context.gamePhase) {
             evt.attack = context.gamePhase.attack;
         }
-        console.warn('TARGETVALUE TARGETVALUE TARGETVALUE TARGETVALUE TARGETVALUE ' +code+' - '+value);
+        console.debug('[StatCollector] - eventBuilder - code : ' +code+' - '+value);
         if (typeof value === 'string') {
             evt.value = value;
         } else {
             evt.intValue = value;
         }
+
+        console.debug('[StatCollector] - eventBuilder - evt : ' +evt);
         return evt;
     }
 
@@ -163,7 +165,7 @@ export class StatCollector {
      * @param  {string} playerId
      */
     ground(context: FSMContext, code: StatType, area: string, playerId: string) {
-        console.warn('StatCollector - goalTarget - playerId =>' +playerId);
+        console.debug('StatCollector - goalTarget - playerId =>' +playerId);
         let stat = this.eventBuilder(context, code, area);
         if (playerId) {
             stat.owner.push(playerId);
@@ -178,7 +180,7 @@ export class StatCollector {
      * @param  {string} playerId
      */
     goalTarget(context: FSMContext, code: StatType, target: string, playerId: string) {
-        console.warn('StatCollector - goalTarget - playerId =>' +playerId);
+        console.debug('StatCollector - goalTarget - playerId =>' +playerId);
         let stat = this.eventBuilder(context, code, target);
         if (playerId) {
             stat.owner.push(playerId);
@@ -241,7 +243,7 @@ export class StatCollector {
      * @param  {string} playerId
      */
     goalConceded(context: FSMContext, playerId: string) {
-        console.log('StatCollector - goalConceded - playerId =>' +playerId);
+        console.debug('StatCollector - goalConceded - playerId =>' +playerId);
         let stat = this.eventBuilder(context, StatType.GOAL_CONCEDED, 1);
         if (playerId) {
             stat.owner.push(playerId);
