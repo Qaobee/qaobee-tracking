@@ -28,7 +28,7 @@ node {
 
                 def codeVersion = version.trim().substring(1).tokenize('.').toArray()[2].toInteger()
                 sh "ionic cordova build android --prod --release -- -- --versionCode=$codeVersion"
-                sh "jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -storepass zaza666 -keypass zaza666 -keystore /var/lib/jenkins/and.k platforms/android/build/outputs/apk/android-release-unsigned.apk qaobee"
+                sh "jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -storepass zaza666 -keypass zaza666 -keystore /var/lib/jenkins/and.ks platforms/android/build/outputs/apk/android-release-unsigned.apk qaobee"
                 sh "zipalign -v 4 platforms/android/build/outputs/apk/android-release-unsigned.apk build/com.qaobee.hand.apk"
             }
         }
