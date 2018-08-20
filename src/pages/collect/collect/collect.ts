@@ -69,16 +69,16 @@ export class CollectPage {
     translations: any = {};
 
     ground = [
-        [ {key: 'pivot', label: 'pivot', class: 'blue-grey'} ],
+        [ {key: 'pivot', label: 'pivot', class: 'dark'} ],
         [
-            {key: 'left-wingman', label: 'left_wingman', class: 'white'},
-            {key: 'center-backcourt', label: 'center_backcourt', class: 'white'},
-            {key: 'right-wingman', label: 'right_wingman', class: 'white'}
+            {key: 'left-backcourt', label: 'left_backcourt', class: 'dark'},
+            {key: 'center-backcourt', label: 'center_backcourt', class: 'dark'},
+            {key: 'right-backcourt', label: 'right_backcourt', class: 'dark'}
         ],
         [
-            {key: 'left-backcourt', label: 'left_backcourt', class: 'white'},
-            {key: 'goalkeeper', label: 'goalkeeper', class: 'indigo'},
-            {key: 'right-backcourt', label: 'right_backcourt', class: 'white'}
+            {key: 'left-wingman', label: 'left_wingman', class: 'dark'},
+            {key: 'goalkeeper', label: 'goalkeeper', class: 'white'},
+            {key: 'right-wingman', label: 'right_wingman', class: 'dark'}
         ]
     ];
 
@@ -291,6 +291,18 @@ export class CollectPage {
     /**
      *
      */
+    cleanFlowContext() {
+        this.fsmContext.owners = [
+            this.currentEvent.owner.sandboxId,
+            this.currentEvent.owner.effectiveId,
+            this.currentEvent.owner.teamId,
+            this.currentEvent._id
+        ];
+    }
+
+    /**
+     *
+     */
     restoreState() {
         let loader = this.loadingCtrl.create({
             content: this.translations.loader
@@ -371,12 +383,14 @@ export class CollectPage {
                     inGamePlayer.holder = false;
                     this.playerMap[ inGamePlayer.playerId ] = inGamePlayer;
                     this.statCollector.substitute(this.fsmContext, p._id);
+                    this.cleanFlowContext();
                     this.playerList.push(inGamePlayer);
                     let lastIn = this.fsmContext.lastInMap[ p._id ] || 0;
                     let playTime = this.fsmContext.chrono - lastIn;
                     let totalPlayTime = this.fsmContext.playTimeMap[ p._id ] || 0;
                     this.fsmContext.playTimeMap[ p._id ] = totalPlayTime + playTime;
                     this.statCollector.playTime(this.fsmContext, p._id, playTime);
+                    this.cleanFlowContext();
                 });
             } else {
                 let inGamePlayer = new InGamePlayer();
@@ -387,7 +401,9 @@ export class CollectPage {
                 this.playerMap[ inGamePlayer.playerId ] = inGamePlayer;
                 this.playerPositions[ k ] = difference[ k ];
                 this.statCollector.positionType(this.fsmContext, difference[ k ]._id, k);
+                this.cleanFlowContext();
                 this.statCollector.holder(this.fsmContext, difference[ k ]._id, k);
+                this.cleanFlowContext();
                 this.fsmContext.lastInMap[ difference[ k ]._id ] = this.fsmContext.chrono;
                 this.playerList.push(inGamePlayer);
                 console.debug('[CollectPage] - fillPlayers - playerMap', this.playerMap);
@@ -444,17 +460,17 @@ export class CollectPage {
      *
      * @returns {string} Goal id
      */
-    getGaolkeeperId(): string {
-        console.debug('[CollectPage] - getGaolkeeperId');
+    getGoalkeeperId(): string {
+        let goalkeeperId = undefined;
         this.playerList.forEach((p: InGamePlayer) => {
+        
             if (p.holder) {
                 if ("goalkeeper" === p.position) {
-                    console.debug('[CollectPage] - getGaolkeeperId', p.playerId);
-                    return p.playerId;
+                    goalkeeperId =  p.playerId;
                 }
             }
         });
-        return undefined;
+        return goalkeeperId;
     }
 
     /**
@@ -462,29 +478,34 @@ export class CollectPage {
      * @param {any} data
      */
     showGoal(data: { ground: string, goal: string, scorred: boolean }) {
-        console.debug('[CollectPage] - showGoal', data);
         if (data.goal.startsWith('outside')) {
             if (this.fsmContext.gamePhase && this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.outsideAtt)) {
                 this.statCollector.outside(this.fsmContext, data.goal, this.fsmContext.selectedPlayer.playerId);
+                this.cleanFlowContext();
 
             } else if (this.fsmContext.gamePhase && !this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.outsideDef)) {
-                this.statCollector.outside(this.fsmContext, data.goal, this.getGaolkeeperId());
+                this.statCollector.outside(this.fsmContext, data.goal, this.getGoalkeeperId());
+                this.cleanFlowContext();
             }
             this.fsmContext.shootSeqId = undefined;
         } else if (data.goal.endsWith('pole')) {
             if (this.fsmContext.gamePhase && this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.poleShotAtt)) {
                 this.statCollector.pole(this.fsmContext, data.goal, this.fsmContext.selectedPlayer.playerId);
+                this.cleanFlowContext();
 
             } else if (this.fsmContext.gamePhase && !this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.poleShotDef)) {
-                this.statCollector.pole(this.fsmContext, data.goal, this.getGaolkeeperId());
+                this.statCollector.pole(this.fsmContext, data.goal, this.getGoalkeeperId());
+                this.cleanFlowContext();
             }
             this.fsmContext.shootSeqId = undefined;
         } else {
             if (this.fsmContext.gamePhase && this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.goalShotAtt)) {
                 this.statCollector.goalTarget(this.fsmContext, StatType.IMPACT_SHOOD_ATT, data.goal, this.fsmContext.selectedPlayer.playerId);
+                this.cleanFlowContext();
                 this.showGoalBtns(data);
             } else if (this.fsmContext.gamePhase && !this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.goalShotDef)) {
-                this.statCollector.goalTarget(this.fsmContext, StatType.IMPACT_SHOOD_DEF, data.goal, this.getGaolkeeperId());
+                this.statCollector.goalTarget(this.fsmContext, StatType.IMPACT_SHOOD_DEF, data.goal, this.getGoalkeeperId());
+                this.cleanFlowContext();
                 this.showGoalBtns(data);
             } else {
                 this.handFSM.trigger(FSMEvents.restoreGoalState);
@@ -496,30 +517,32 @@ export class CollectPage {
      *
      */
     showGround() {
-        console.debug('[CollectPage] - showGround');
         if (!this.fsmContext.gamePhase) {
             this.presentToast(this.translations.collect.select_game_phase_first);
-        } else if (!this.fsmContext.selectedPlayer) {
+        } else if (!this.fsmContext.selectedPlayer && this.fsmContext.gamePhase.attack) {
             this.presentToast(this.translations.collect.select_player);
         } else {
             let goalModal = this.modalController.create(GoalModal, {});
             goalModal.onDidDismiss((data: { ground: string, goal: string, scorred: boolean }) => {
-                console.debug('[CollectPage] - showGround', data);
                 if (data) {
                     if (data.ground.startsWith('outside')) {
                         if (this.fsmContext.gamePhase && this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.outsideAtt)) {
                             this.statCollector.outside(this.fsmContext, data.ground, this.fsmContext.selectedPlayer.playerId);
+                            this.cleanFlowContext();
                         } else if (this.fsmContext.gamePhase && !this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.outsideDef)) {
-                            this.statCollector.outside(this.fsmContext, data.ground, this.getGaolkeeperId());
+                            this.statCollector.outside(this.fsmContext, data.ground, this.getGoalkeeperId());
+                            this.cleanFlowContext();
                             this.handFSM.trigger(FSMEvents.doAttack);
                         }
                         this.fsmContext.shootSeqId = undefined;
                     } else {
                         if (this.fsmContext.gamePhase && this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.groundAtt)) {
                             this.statCollector.ground(this.fsmContext, StatType.ORIGIN_SHOOT_ATT, data.ground, this.fsmContext.selectedPlayer.playerId);
+                            this.cleanFlowContext();
                             this.showGoal(data);
                         } else if (this.fsmContext.gamePhase && !this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.groundDef)) {
-                            this.statCollector.ground(this.fsmContext, StatType.ORIGIN_SHOOT_DEF, data.ground, this.getGaolkeeperId());
+                            this.statCollector.ground(this.fsmContext, StatType.ORIGIN_SHOOT_DEF, data.ground, this.getGoalkeeperId());
+                            this.cleanFlowContext();
                             this.showGoal(data);
                         } else {
                             this.handFSM.trigger(FSMEvents.restoreGoalState);
@@ -555,10 +578,12 @@ export class CollectPage {
             console.debug('[CollectPage] - stopShootButton - gamePhase', this.fsmContext.gamePhase.attack);
             if (this.fsmContext.gamePhase.attack) {
                 this.statCollector.stopShoot(this.fsmContext, undefined);
+                this.cleanFlowContext();
                 this.fsmContext.selectedPlayer = undefined;
                 this.doDefense();
             } else {
-                this.statCollector.stopShoot(this.fsmContext, this.getGaolkeeperId());
+                this.statCollector.stopShoot(this.fsmContext, this.getGoalkeeperId());
+                this.cleanFlowContext();
                 this.doSelectGoalKeeper();
                 this.doAttack();
             }
@@ -573,10 +598,9 @@ export class CollectPage {
      *
      */
     goalButton() {
-        console.debug('[CollectPage] - goalButton');
         if (!this.fsmContext.gamePhase) {
             this.presentToast(this.translations.collect.select_game_phase_first);
-        } else if (!this.fsmContext.selectedPlayer) {
+        } else if (!this.fsmContext.selectedPlayer && this.fsmContext.gamePhase.attack) {
             this.presentToast(this.translations.collect.select_player);
         } else {
             let fsmEvent = this.fsmContext.gamePhase.attack ? FSMEvents.goalScoredAtt : FSMEvents.goalScoredDef;
@@ -584,12 +608,18 @@ export class CollectPage {
             let wasAttack = this.fsmContext.gamePhase.attack;
             if (wasAttack) {
                 this.statCollector.goalScored(this.fsmContext, this.fsmContext.selectedPlayer.playerId);
+                this.cleanFlowContext();
                 this.gameState.homeScore++;
                 if (this.handFSM.trigger(fsmEvent)) {
                     this.doDefense();
                 }
             } else {
-                this.statCollector.goalConceded(this.fsmContext, this.fsmContext.selectedPlayer.playerId);
+                let goalKeeperId = this.getGoalkeeperId();
+                if(goalKeeperId) {
+                    this.statCollector.goalConceded(this.fsmContext, goalKeeperId);
+                    this.cleanFlowContext();
+                }
+                
                 this.gameState.visitorScore++;
                 if (this.handFSM.trigger(fsmEvent)) {
                     this.doAttack();
@@ -607,7 +637,7 @@ export class CollectPage {
      */
     doSelectGoalKeeper() {
         console.debug('[CollectPage] - doSelectGoalKeeper');
-        this.doSelectPlayer(this.getGaolkeeperId());
+        this.doSelectPlayer(this.getGoalkeeperId());
     }
 
     /**
@@ -620,6 +650,7 @@ export class CollectPage {
         } else if (this.handFSM.trigger(FSMEvents.selectPlayer)) {
             if (this.fsmContext.selectedPlayer && this.fsmContext.gamePhase.attack) {
                 this.statCollector.makePass(this.fsmContext, this.fsmContext.selectedPlayer.playerId, playerId);
+                this.cleanFlowContext();
             }
             this.fsmContext.selectedPlayer = this.playerMap[ playerId ];
         }
@@ -746,6 +777,7 @@ export class CollectPage {
         } else {
             this.messageBus.broadcast(ChronoComponent.PAUSE, {});
             this.statCollector.wound(this.fsmContext, this.fsmContext.selectedPlayer.playerId);
+            this.cleanFlowContext();
         }
     }
 
@@ -760,6 +792,7 @@ export class CollectPage {
                 console.debug('[CollectPage] - orangeCardButton - after trigger', selectedPlayer);
                 this.playerMap[ selectedPlayer.playerId ].sanction = StatType.ORANGE_CARD;
                 this.statCollector.card(this.fsmContext, StatType.ORANGE_CARD, selectedPlayer.playerId);
+                this.cleanFlowContext();
                 this.gameState.sanctions.push({
                     playerId: selectedPlayer.playerId,
                     sanction: StatType.ORANGE_CARD,
@@ -826,6 +859,7 @@ export class CollectPage {
                 console.debug('[CollectPage] - yellowCardButton', selectedPlayer);
                 this.playerMap[ selectedPlayer.playerId ].sanction = StatType.YELLOW_CARD;
                 this.statCollector.card(this.fsmContext, StatType.YELLOW_CARD, selectedPlayer.playerId);
+                this.cleanFlowContext();
                 this.gameState.sanctions.push({
                     playerId: selectedPlayer.playerId,
                     sanction: StatType.YELLOW_CARD,
@@ -863,6 +897,7 @@ export class CollectPage {
                 console.debug('[CollectPage] - redCardButton', event, selectedPlayer);
                 this.playerMap[ selectedPlayer.playerId ].sanction = StatType.RED_CARD;
                 this.statCollector.card(this.fsmContext, StatType.RED_CARD, selectedPlayer.playerId);
+                this.cleanFlowContext();
                 this.gameState.sanctions.push({
                     playerId: selectedPlayer.playerId,
                     sanction: StatType.RED_CARD,
@@ -875,6 +910,7 @@ export class CollectPage {
                 let totalPlayTime = this.fsmContext.playTimeMap[ selectedPlayer.playerId ] || 0;
                 this.fsmContext.playTimeMap[ selectedPlayer.playerId ] = totalPlayTime + this.fsmContext.chrono - lastIn;
                 this.statCollector.totalPlayTime(this.fsmContext, selectedPlayer.playerId);
+                this.cleanFlowContext();
                 delete this.playerPositions[ selectedPlayer.position ];
                 this.saveState();
             }
@@ -891,6 +927,7 @@ export class CollectPage {
         if (this.handFSM.trigger(FSMEvents.timeout)) {
             this.messageBus.broadcast(ChronoComponent.PAUSE, {});
             this.statCollector.deadTime(this.fsmContext, StatType.TIMEOUT_THEM, this.getTeamVisitor());
+            this.cleanFlowContext();
             this.gameState.visitorTimeout++;
             this.timeoutThemState[ index ] = true;
             this.saveSats();
@@ -909,6 +946,7 @@ export class CollectPage {
         if (this.handFSM.trigger(FSMEvents.timeout)) {
             this.messageBus.broadcast(ChronoComponent.PAUSE, {});
             this.statCollector.deadTime(this.fsmContext, StatType.TIMEOUT_US, this.getTeamHomeId());
+            this.cleanFlowContext();
             this.gameState.homeTimeout++;
             this.timeoutUsState[ index ] = true;
             this.saveSats();
@@ -961,6 +999,7 @@ export class CollectPage {
                     text: this.translations.collect.indicators[ a.code ],
                     handler: () => {
                         this.statCollector.makeAction(this.fsmContext, a.code, this.fsmContext.selectedPlayer.playerId);
+                        this.cleanFlowContext();
                         if (!this.fsmContext.gamePhase.attack && !'neutralization' === a.code && this.handFSM.trigger(FSMEvents.doAttack)) {
                             console.debug('[CollectPage] - positiveActionButton - action ', a.code);
                         }
@@ -995,6 +1034,7 @@ export class CollectPage {
                     text: this.translations.collect.indicators[ a.code ],
                     handler: () => {
                         this.statCollector.makeAction(this.fsmContext, a.code, this.fsmContext.selectedPlayer.playerId);
+                        this.cleanFlowContext();
                         this.fsmContext.selectedPlayer = undefined;
                         if (this.handFSM.trigger(FSMEvents.doDefense)) {
                             console.debug('[CollectPage] - negativeActionButton - action', a.code);
@@ -1031,6 +1071,7 @@ export class CollectPage {
      */
     visitorGameSystem(event: any) {
         this.statCollector.gameSystemChange(this.fsmContext, StatType.GAME_SYSTEM, this.gameState.visitorGameSystem, this.getTeamVisitor());
+        this.cleanFlowContext();
         this.saveState();
     }
 
@@ -1039,6 +1080,7 @@ export class CollectPage {
      */
     homeGameSystem(event: any) {
         this.statCollector.gameSystemChange(this.fsmContext, StatType.GAME_SYSTEM, this.gameState.visitorGameSystem, this.getTeamHomeId());
+        this.cleanFlowContext();
         this.saveState();
     }
 
@@ -1109,6 +1151,7 @@ export class CollectPage {
                                 this.saveSats();
                                 this.saveState();
                                 this.statCollector.endCollect(this.fsmContext);
+                                this.cleanFlowContext();
                             });
                         }
                     }

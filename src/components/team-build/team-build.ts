@@ -23,14 +23,14 @@ export class TeamBuildComponent {
     ground = [
         [ {key: 'pivot', label: 'pivot', class: 'blue-grey'} ],
         [
-            {key: 'left-wingman', label: 'left_wingman', class: 'white'},
+            {key: 'left-backcourt', label: 'left_backcourt', class: 'white'},
             {key: 'center-backcourt', label: 'center_backcourt', class: 'white'},
-            {key: 'right-wingman', label: 'right_wingman', class: 'white'}
+            {key: 'right-backcourt', label: 'right_backcourt', class: 'white'}
         ],
         [
-            {key: 'left-backcourt', label: 'left_backcourt', class: 'white'},
+            {key: 'left-wingman', label: 'left_wingman', class: 'white'},
             {key: 'goalkeeper', label: 'goalkeeper', class: 'indigo'},
-            {key: 'right-backcourt', label: 'right_backcourt', class: 'white'}
+            {key: 'right-wingman', label: 'right_wingman', class: 'white'}
         ]
     ];
 

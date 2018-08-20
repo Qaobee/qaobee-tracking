@@ -21,6 +21,7 @@
                         <ion-row>
                             <ion-col class="score" text-center>{{ gameState.homeScore }}</ion-col>
                         </ion-row>
+                        <!--
                         <ion-row>
                             <ion-col text-center class="small">{{ 'collect.timeout' | translate }}</ion-col>
                         </ion-row>
@@ -35,13 +36,15 @@
                                 <ion-checkbox (ionChange)="timeoutUs(2, $event)" [(ngModel)]="timeoutUsState[2]"></ion-checkbox>
                             </ion-col>
                         </ion-row>
+                        -->
                     </ion-grid>
                 </ion-col>
-                <ion-col>
+                <!--<ion-col>
                     <ion-list inset class="events-list">
                         <span class="event" *ngFor="let s of displayedStats">{{ 'collect.indicators.' + s.code | translate }}</span>
                     </ion-list>
                 </ion-col>
+                -->
                 <ion-col>
                     <ion-grid>
                         <ion-row>
@@ -50,6 +53,7 @@
                         <ion-row>
                             <ion-col text-center class="score">{{ gameState.visitorScore }}</ion-col>
                         </ion-row>
+                        <!--
                         <ion-row>
                             <ion-col text-center class="small">{{ 'collect.timeout' | translate }}</ion-col>
                         </ion-row>
@@ -58,54 +62,62 @@
                                 <ion-checkbox (click)="timeoutThem(i, $event)" checked="state"></ion-checkbox>
                             </ion-col>
                         </ion-row>
+                        -->
                     </ion-grid>
                 </ion-col>
             </ion-row>
-            <ion-row class="btn-list">
-                <ion-col text-center>
-                    <ion-fab center middle>
-                        <button ion-fab mini color="green" (click)="positiveActionButton($event)">
-                            <ion-icon name="add"></ion-icon>
-                        </button>
-                    </ion-fab>
-                </ion-col>
-                <ion-col text-center>
-                    <ion-fab center middle *ngIf="fsmContext?.gamePhase">
-                        <button ion-fab mini color="{{ fsmContext?.gamePhase?.attack?'green':'red' }}" (click)="showGround($event)">
-                            <ion-icon name="football"></ion-icon>
-                        </button>
-                    </ion-fab>
-                </ion-col>
-                <ion-col text-center>
-                    <ion-fab center middle>
-                        <button ion-fab mini color="red" (click)="negativeActionButton($event)">
-                            <ion-icon name="remove"></ion-icon>
-                        </button>
-                    </ion-fab>
-                </ion-col>
-            </ion-row>
         </ion-grid>
-
         <ion-grid id="ground-area">
             <ion-row *ngFor="let area of ground">
                 <ion-col text-center *ngFor="let pos of area" ion-col>
                     <ion-fab center middle *ngIf="playerPositions[pos.key]">
-                        <button ion-fab mini [color]="getColor(playerPositions[pos.key]?._id, pos.class)" (click)="doSelectPlayer(playerPositions[pos.key]?._id)">
-                            {{ playerPositions[pos.key]?.status.squadnumber || '?' }}
+                        <button ion-button  [color]="getColor(playerPositions[pos.key]?._id, pos.class)" (click)="doSelectPlayer(playerPositions[pos.key]?._id)">
+                                <ion-icon name="shirt" color="red"></ion-icon> &nbsp; {{ playerPositions[pos.key]?.status.squadnumber || '?' }}
                         </button>
                     </ion-fab>
                 </ion-col>
             </ion-row>
         </ion-grid>
         <ion-grid>
+            <ion-row><ion-col>&nbsp;</ion-col></ion-row>
             <ion-row class="btn-list">
                 <ion-col text-center>
                     <ion-fab center middle>
-                        <button ion-fab mini color="danger" (click)="hurtButton($event)">
+                        <button ion-button large color="green" (click)="positiveActionButton($event)">
+                            <ion-icon name="thumbs-up"></ion-icon>
+                        </button>
+                    </ion-fab>
+                </ion-col>
+                <ion-col text-center>
+                    <ion-fab center middle *ngIf="fsmContext?.gamePhase">
+                        <button ion-button large outline color="{{ fsmContext?.gamePhase?.attack?'green':'red' }}" (click)="showGround($event)">
+                            <ion-icon name="football"></ion-icon>
+                        </button>
+                    </ion-fab>
+                </ion-col>
+                <ion-col text-center>
+                    <ion-fab center middle>
+                        <button ion-button large color="red" (click)="negativeActionButton($event)">
+                            <ion-icon name="thumbs-down"></ion-icon>
+                        </button>
+                    </ion-fab>
+                </ion-col>
+            </ion-row>
+            <ion-row><ion-col>&nbsp;</ion-col></ion-row>
+        </ion-grid>
+
+
+        <ion-grid>
+            <ion-row class="btn-list">
+                <!--
+                <ion-col text-center>
+                    <ion-fab center middle>
+                        <button ion-fab mini color="secondary" (click)="hurtButton($event)">
                             <ion-icon name="medkit"></ion-icon>
                         </button>
                     </ion-fab>
                 </ion-col>
+                
                 <ion-col text-center>
                     <ion-fab center middle>
                         <button ion-fab mini color="yellow" (click)="yellowCardButton($event)">
@@ -127,14 +139,16 @@
                         </button>
                     </ion-fab>
                 </ion-col>
+            -->
                 <ion-col text-center>
                     <ion-fab center middle>
-                        <button ion-fab mini color="secondary" (click)="toggleSubstitutes($event)">
+                        <button ion-fab large color="secondary" (click)="toggleSubstitutes($event)">
                             <ion-icon name="swap"></ion-icon>
                         </button>
                     </ion-fab>
                 </ion-col>
             </ion-row>
+            <!--
             <ion-row>
                 <ion-col text-center>
                     <ion-select [(ngModel)]="gameState.homeGameSystem" (ionChange)="homeGameSystem($event)" okText="{{ 'actionButton.Ok' | translate }}"
@@ -149,9 +163,10 @@
                     </ion-select>
                 </ion-col>
             </ion-row>
+            -->
             <ion-row class="btn-list">
                 <ion-col text-center>
-                    <button ion-button color="light" (click)="attackButton($event)" small [disabled]="!attackEnabled">{{ 'collect.attack' | translate }}</button>
+                    <button ion-button color="dark" (click)="attackButton($event)" large [disabled]="!attackEnabled">{{ 'collect.attack' | translate }}</button>
                 </ion-col>
 
                 <ion-col text-center>
@@ -163,7 +178,7 @@
                 </ion-col>
 
                 <ion-col text-center>
-                    <button ion-button color="light" (click)="defenseButton($event)" small [disabled]="!defenseEnabled">{{ 'collect.defense' | translate }}</button>
+                    <button ion-button color="dark" (click)="defenseButton($event)" large [disabled]="!defenseEnabled">{{ 'collect.defense' | translate }}</button>
                 </ion-col>
             </ion-row>
         </ion-grid>
