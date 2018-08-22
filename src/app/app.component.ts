@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { Firebase } from '@ionic-native/firebase';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -44,7 +43,6 @@ export class MyApp {
      * @param {TranslateService} translate
      * @param {MessageBus} eventService
      * @param {MetaService} metaService
-     * @param {Firebase} firebase
      */
     constructor(private platform: Platform,
                 private statusBar: StatusBar,
@@ -54,8 +52,7 @@ export class MyApp {
                 private authenticationService: AuthenticationService,
                 private translate: TranslateService,
                 private eventService: MessageBus,
-                private metaService: MetaService,
-                private firebase: Firebase
+                private metaService: MetaService
     ) {
         this.initializeApp();
         this.pages = [];
@@ -68,10 +65,6 @@ export class MyApp {
      */
     initializeApp() {
         this.platform.ready().then(() => {
-            this.firebase.setAnalyticsCollectionEnabled(true);
-            window.onerror = (message, url, line) => {
-                this.firebase.logError(`${message}, ${url}, ${line}`);
-            };
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
             this.statusBar.styleDefault();
