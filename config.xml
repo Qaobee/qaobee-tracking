@@ -93,8 +93,7 @@
     </plugin>
     <plugin name="cordova-plugin-datepicker"/>
     <engine name="ios"/>
-    <plugin name="cordova-plugin-googlemaps"
-            spec="https://github.com/mapsplugin/cordova-plugin-googlemaps.git#multiple_maps">
+    <plugin name="cordova-plugin-googlemaps" spec="2.3.11">
         <variable name="API_KEY_FOR_ANDROID" value="AIzaSyAIrX1gfN5320cePP4N1qkOPAO60K7Lwr4"/>
         <variable name="API_KEY_FOR_IOS" value="AIzaSyDvAgEI0JNhEYqbWVkt8ObEVx7vj5FLxkM"/>
         <variable name="PLAY_SERVICES_VERSION" value="15.0.0"/>
