@@ -63,7 +63,7 @@
     "rxjs": "5.5.10",
     "sw-toolbox": "3.6.0",
     "zone.js": "0.8.26",
-    "cordova-plugin-geolocation": "^4.0.1"
+    "cordova-plugin-geolocation": "4.0.1"
   },
   "devDependencies": {
     "@compodoc/compodoc": "1.1.2",
@@ -86,7 +86,9 @@
       "cordova-plugin-camera": {},
       "cordova-plugin-file": {},
       "cordova-plugin-file-transfer": {},
-      "cordova-plugin-geolocation": {},
+      "cordova-plugin-geolocation": {
+        "PLAY_SERVICES_VERSION": "15.0.0"
+      },
       "cordova-plugin-datepicker": {},
       "cordova-plugin-googlemaps": {
         "API_KEY_FOR_ANDROID": "AIzaSyAIrX1gfN5320cePP4N1qkOPAO60K7Lwr4",
