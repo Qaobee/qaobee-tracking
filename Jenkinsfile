@@ -29,15 +29,15 @@ node {
                 def codeVersion = version.trim().substring(1).tokenize('.').toArray()[2].toInteger()
                 sh "ionic cordova build android --prod --release -- -- --versionCode=$codeVersion"
                 sh "jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -storepass zaza666 -keypass zaza666 -keystore /var/lib/jenkins/and.ks ./platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk qaobee"
-                sh "zipalign -v 4 ./platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk build/com.qaobee.hand.apk"
+                sh "zipalign -v 4 ./platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk com.qaobee.hand.apk"
             }
         }
 
         stage("Publish $version to Alpha") {
             timeout(time: 30, unit: 'DAYS') {
-                input 'Publish on PlayStore Alpha ?'
+                input 'Publish on PlayStore Internal ?'
             }
-            androidApkUpload apkFilesPattern: 'build/com.qaobee.hand.apk', googleCredentialsId: 'qaobee-mobile', rolloutPercentage: '100%', trackName: 'internal'
+            androidApkUpload apkFilesPattern: 'com.qaobee.hand.apk', googleCredentialsId: 'qaobee-mobile', rolloutPercentage: '100%', trackName: 'internal'
 
             this.notifyBuild('PUBLISHED')
         }
