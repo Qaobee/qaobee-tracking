@@ -42,6 +42,11 @@ node {
             this.notifyBuild('PUBLISHED')
         }
 
+        stage("Update Git") {
+            sh "git tag -a $version -m \"$version\""
+            sh "git push origin --tags"
+        }
+
         stage("Doc $version") {
             sh 'yarn run doc'
             sh 'git_stats generate -o build/docs/git'
