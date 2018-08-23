@@ -101,6 +101,7 @@ export class TeamBuildPage {
         console.debug('[TeamBuildPage] - testCollects', collects);
         if (collects.length > 0 && collects[ 0 ].eventRef._id === this.event._id && collects[ 0 ].status !== 'done') {
             this.storage.get('gameState-' + this.event._id).then((gameState: GameState) => {
+                console.log('[TeamBuildPage] - Collect gameState', gameState);
                 if (gameState) {
                     this.translateService.get('collect.team-build.collect-in-progress').subscribe(t => {
                         this.presentToast(t);

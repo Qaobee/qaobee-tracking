@@ -13,6 +13,7 @@ export class TeamBuildComponent {
     root: string = ENV.hive;
     translations: any = {};
     @Input() playerList: any[] = [];
+    @Input() isTeamBuilding: boolean = true;
     @Input() playerPositions: any = {
         substitutes: []
     };
@@ -57,7 +58,7 @@ export class TeamBuildComponent {
      * @param {string} position
      */
     showPlayerChooser(position: string) {
-        console.debug('[TeamBuildPage] - showPlayerChooser - playerPositions', this.playerPositions);
+        console.debug('[TeamBuildComponent] - showPlayerChooser - playerPositions', this.playerPositions);
         if (this.hasRedCard(position)) {
             return;
         } else {
@@ -71,37 +72,62 @@ export class TeamBuildComponent {
                     excludedPlayer.push(this.playerPositions[ k ]);
                 }
             });
-            console.debug('[TeamBuildPage] - showPlayerChooser - sanctions', this.sanctions);
-            console.debug('[TeamBuildPage] - showPlayerChooser - excludedPlayer', excludedPlayer);
-            console.debug('[TeamBuildPage] - showPlayerChooser - playerList', this.playerList);
-            this.playerList.forEach(p => {
-                if (!excludedPlayer.find(item => {
-                    return item._id === p._id;
-                }) && !this.sanctions[ p._id ]) {
-                    alert.addInput({
-                        type: 'radio',
-                        label: p.firstname + ' ' + p.name + ' (' + p.status.squadnumber + ')',
-                        value: p,
-                        checked: this.playerPositions[ position ] && this.playerPositions[ position ]._id === p._id,
-                        handler: data => {
-                            console.debug(position, data.value);
-                            this.playerPositions[ position ] = data.value;
-                            alert.dismiss();
-                        }
-                    });
-                }
-            });
-
-            alert.addButton({
-                text: this.translations.actionButton.Clear,
-                handler: data => {
-                    console.debug('[TeamBuildPage] - showPlayerChooser - clear', position, data);
-                    delete this.playerPositions[ position ];
-                    if (data) {
-                        this.playerList.push(data);
+            console.debug('[TeamBuildComponent] - showPlayerChooser - sanctions', this.sanctions);
+            console.debug('[TeamBuildComponent] - showPlayerChooser - excludedPlayer', excludedPlayer);
+            console.debug('[TeamBuildComponent] - showPlayerChooser - playerList', this.playerList);
+            if(this.isTeamBuilding) {
+                this.playerList.forEach(p => {
+                    if (!excludedPlayer.find(item => {
+                        return item._id === p._id;
+                    }) && !this.sanctions[ p._id ]) {
+                        alert.addInput({
+                            type: 'radio',
+                            label: p.firstname + ' ' + p.name + ' (' + p.status.squadnumber + ')',
+                            value: p,
+                            checked: this.playerPositions[ position ] && this.playerPositions[ position ]._id === p._id,
+                            handler: data => {
+                                console.debug(position, data.value);
+                                this.playerPositions[ position ] = data.value;
+                                alert.dismiss();
+                            }
+                        });
                     }
-                }
-            });
+                });
+            } else {
+                Object.keys(this.playerPositions).forEach(k => {
+                    if ('substitutes' === k) {
+                        this.playerPositions[ k ].forEach(p =>{
+                            alert.addInput({
+                                type: 'radio',
+                                label: p.firstname + ' ' + p.name + ' (' + p.status.squadnumber + ')',
+                                value: p,
+                                checked: this.playerPositions[ position ] && this.playerPositions[ position ]._id === p._id,
+                                handler: data => {
+                                    console.debug(position, data.value);
+                                    this.playerPositions[ 'substitutes' ] = this.playerPositions[ 'substitutes' ].filter(p => {
+                                       return p._id !== data.value._id;
+                                    });
+                                    this.playerPositions[ 'substitutes' ].push(this.playerPositions[ position ]);
+                                    this.playerPositions[ position ] = data.value;
+                                    alert.dismiss();
+                                }
+                            });
+                        });
+                    }
+                });
+            }
+            if(this.isTeamBuilding) {
+                alert.addButton({
+                    text: this.translations.actionButton.Clear,
+                    handler: data => {
+                        console.debug('[TeamBuildPage] - showPlayerChooser - clear', position, data);
+                        delete this.playerPositions[ position ];
+                        if (data) {
+                            this.playerList.push(data);
+                        }
+                    }
+                });
+            }
             alert.addButton({
                 text: this.translations.actionButton.Ok,
                 handler: data => {
@@ -118,7 +144,7 @@ export class TeamBuildComponent {
      * @param {string} position
      */
     showSubstituesChooser(position: string) {
-        console.debug('[TeamBuildPage] - showSubstituesChooser - playerPositions', this.playerPositions);
+        console.debug('[TeamBuildComponent] - showSubstituesChooser - playerPositions', this.playerPositions);
         let alert = this.alertCtrl.create();
         alert.setTitle(this.translations[ 'collect.team-build' ][ 'players-choose' ]);
         let excludedPlayer = [];
@@ -150,7 +176,7 @@ export class TeamBuildComponent {
         alert.addButton({
             text: this.translations.actionButton.Clear,
             handler: data => {
-                console.debug('[TeamBuildPage] - showSubstituesChooser - clear', position, data);
+                console.debug('[TeamBuildComponent] - showSubstituesChooser - clear', position, data);
                 delete this.playerPositions[ position ];
                 if (data) {
                     this.playerList.push(data);
@@ -160,7 +186,7 @@ export class TeamBuildComponent {
         alert.addButton({
             text: this.translations.actionButton.Ok,
             handler: data => {
-                console.debug('[TeamBuildPage] - showSubstituesChooser - add', position, data);
+                console.debug('[TeamBuildComponent] - showSubstituesChooser - add', position, data);
                 this.playerPositions[ position ] = this.playerPositions[ position ].concat(data);
             }
         });

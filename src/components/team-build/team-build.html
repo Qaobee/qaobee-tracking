@@ -15,7 +15,7 @@
     </ion-grid>
     <ion-grid id="substitute-area">
         <h4>{{ 'collect.team-build.substitutes' | translate }}</h4>
-        <ion-fab right edge>
+        <ion-fab right edge *ngIf="isTeamBuilding">
             <button ion-fab mini (click)="showSubstituesChooser('substitutes')">
                 <ion-icon name="add"></ion-icon>
             </button>
@@ -27,9 +27,9 @@
                         <img [src]="getAvatar(s.avatar)" alt="avatar">
                     </ion-avatar>
                     <ion-label>{{ s.name }}
-                        <ion-badge text-end>{{ s.status.squadnumber }}</ion-badge>
+                        <ion-badge text-end>{{ s.status?.squadnumber }}</ion-badge>
                     </ion-label>
-                    <button ion-button clear color="dark" (click)="remove(s)">
+                    <button ion-button clear color="dark" (click)="remove(s)" *ngIf="isTeamBuilding">
                         <ion-icon name="close-circle"></ion-icon>
                     </button>
                 </ion-chip>

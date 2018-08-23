@@ -960,7 +960,7 @@ export class CollectPage {
      * @param  {any} event
      */
     toggleSubstitutes(event: any) {
-        console.debug('[CollectPage] - toggleSubstitutes', event);
+        console.debug('[CollectPage] - toggleSubstitutes', event, this.playerPositions);
         let substitutionModal = this.modalController.create(SubstitutionModal, {
             playerList: this.rawPlayerList,
             playerPositions: _.cloneDeep(this.playerPositions),
