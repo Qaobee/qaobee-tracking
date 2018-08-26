@@ -34,7 +34,7 @@ export class LoginPage {
                 private storage: Storage,
                 private uniqueDeviceID: UniqueDeviceID,
                 private eventService: MessageBus) {
-        this.storage.get("login").then(l => {
+        this.storage.get('login').then(l => {
             this.login = l;
         })
     }

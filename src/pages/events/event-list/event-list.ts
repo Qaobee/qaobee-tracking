@@ -71,7 +71,7 @@ export class EventListPage {
         if (val && val.trim() != '') {
 
             // Reset items back to all of the items
-            this.storage.get('events').then(events => {
+            this.storage.get(this.authenticationService.meta._id+'-events').then(events => {
                     for (let index = 0; index < events.length; index++) {
                         const element = events[ index ];
                         if (element.type.label.toLowerCase().indexOf(val.toLowerCase()) > -1 || element.label.toLowerCase().indexOf(val.toLowerCase()) > -1) {
@@ -91,7 +91,7 @@ export class EventListPage {
      * if evnets exist then return list, else, call eventsService
      */
     private retrieveEventList() {
-        this.storage.get('events').then(events => {
+        this.storage.get(this.authenticationService.meta._id+'-events').then(events => {
             if (!events) {
                 this.getEvents(null);
             } else {
@@ -113,7 +113,7 @@ export class EventListPage {
             this.authenticationService.meta.activity._id,
             this.authenticationService.meta._id,
         ).subscribe(eventList => {
-            this.storage.set('events', eventList);
+            this.storage.set(this.authenticationService.meta._id+'-events', eventList);
             this.populateEvents(eventList);
             if (refresher) {
                 refresher.complete();
@@ -126,7 +126,6 @@ export class EventListPage {
      * @param {any[]} events
      */
     private populateEvents(events: any[]) {
-        console.debug('[EventListPage] - populateEvents', events);
         this.eventList = {};
         if (events) {
             events.sort(Utils.compareEvents);
@@ -135,9 +134,8 @@ export class EventListPage {
                 if (!this.eventList.hasOwnProperty(startDateStr)) {
                     this.eventList[ startDateStr ] = [];
                 }
-                // FIXME : a placer dans le détail pour éviter un appel en mitraillette, non?
+
                 this.collectService.getCollects(this.authenticationService.meta._id, e._id, e.owner.effectiveId, e.owner.teamId, moment("01/01/2000", "DD/MM/YYYY").valueOf(), moment().valueOf()).subscribe(result => {
-                    console.debug('[EventListPage] - populateEvents - getCollects', result);
                     e.isCollected = result[ 0 ] && result[ 0 ].status === 'done';
                     this.eventList[ startDateStr ].push(e);
                 });

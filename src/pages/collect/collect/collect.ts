@@ -707,9 +707,9 @@ export class CollectPage {
         console.debug('[CollectPage] - startCollect');
         this.currentCollect.startDate = Date.now();
         this.currentCollect.status = 'inProgress';
-        this.storage.get('collects').then((collects: any) => {
+        this.storage.get(this.authenticationService.meta._id+'-collects').then((collects: any) => {
             (collects || {})[ this.currentCollect._id ] = this.currentCollect;
-            this.storage.set('collects', collects);
+            this.storage.set(this.authenticationService.meta._id+'-collects', collects);
         });
     }
 
@@ -1142,12 +1142,12 @@ export class CollectPage {
                         if (this.handFSM.trigger(FSMEvents.endChrono)) {
                             this.currentCollect.endDate = moment.utc().valueOf();
                             this.currentCollect.status = 'done';
-                            this.storage.get('collects').then((collects: any[]) => {
+                            this.storage.get(this.authenticationService.meta._id+'-collects').then((collects: any[]) => {
                                 if (!collects) {
                                     collects = [];
                                 }
                                 collects.push(this.currentCollect);
-                                this.storage.set('collects', collects);
+                                this.storage.set(this.authenticationService.meta._id+'-collects', collects);
                                 this.saveSats();
                                 this.saveState();
                                 this.statCollector.endCollect(this.fsmContext);

@@ -140,12 +140,12 @@ export class MyApp {
     }
 
     private trySSO() {
-        this.storage.get("login").then(l => {
-            this.storage.get("mobileToken").then(mt => {
+        this.storage.get('login').then(l => {
+            this.storage.get('mobileToken').then(mt => {
                 if (l && mt) {
                     this.userService.sso(l, mt).subscribe((result: any) => {
                         if (result) {
-                            this.storage.set("mobileToken", mt);
+                            this.storage.set('mobileToken', mt);
                             this.eventService.broadcast(MessageBus.userLogged, result);
                         }
                     });

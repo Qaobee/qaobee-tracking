@@ -41,7 +41,7 @@ export class PlayerListPage {
         this.personService.getListPersonSandbox(this.authenticationService.meta._id).subscribe(list => {
             this.playerList = list;
             this.playerListSize = this.playerList.length;
-            this.storage.set('players', list);
+            this.storage.set(this.authenticationService.meta._id+'-players', list);
             if (refresher) {
                 refresher.complete();
             }
@@ -52,7 +52,7 @@ export class PlayerListPage {
      * if players exist then return list, else, call personneService
      */
     private retrievePlayerList() {
-        this.storage.get('players').then(players => {
+        this.storage.get(this.authenticationService.meta._id+'-players').then(players => {
             if (!players) {
                 this.getPlayers(null);
             } else {
@@ -76,7 +76,7 @@ export class PlayerListPage {
         if (val && val.trim() != '') {
 
             // Reset items back to all of the items
-            this.storage.get('players').then(players => {
+            this.storage.get(this.authenticationService.meta._id+'-players').then(players => {
                     for (let index = 0; index < players.length; index++) {
                         const element = players[ index ];
                         if (element.name.toLowerCase().indexOf(val.toLowerCase()) > -1 || element.firstname.toLowerCase().indexOf(val.toLowerCase()) > -1) {

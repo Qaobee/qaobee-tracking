@@ -100,11 +100,11 @@ export class SynchroPage {
                 this.authenticationService.meta._id,
             ).subscribe(eventList => {
                 console.debug('[SynchroPage] - syncEvents - eventList', eventList);
-                this.storage.get('events').then(storedEvents => {
+                this.storage.get(this.authenticationService.meta._id+'-events').then(storedEvents => {
                     console.debug('[SynchroPage] - syncEvents - storedEvents', storedEvents);
                     let events = _.unionBy(storedEvents, eventList, '_id');
                     console.debug('[SynchroPage] - syncEvents - events', events);
-                    this.storage.set('events', events);
+                    this.storage.set(this.authenticationService.meta._id+'-events', events);
                     let missing = _.differenceBy(storedEvents, eventList, '_id');
                     console.debug('[SynchroPage] - syncEvents - missing', missing);
                     let asyncs: Observable<boolean>[] = [];
@@ -186,9 +186,9 @@ export class SynchroPage {
                 startDate: this.authenticationService.meta.season.startDate,
                 endDate: this.authenticationService.meta.season.endDate
             }).subscribe((collectsFromAPI: any[]) => {
-                this.storage.get('collects').then((storedCollects: any[]) => {
+                this.storage.get(this.authenticationService.meta._id+'-collects').then((storedCollects: any[]) => {
                     let effective = _.unionBy(storedCollects, collectsFromAPI, '_id');
-                    this.storage.set('collects', effective);
+                    this.storage.set(this.authenticationService.meta._id+'-collects', effective);
                     let missing = _.differenceBy(storedCollects, collectsFromAPI, '_id');
                     let asyncs: Observable<boolean>[] = [];
                     missing.forEach(e => {
@@ -238,7 +238,7 @@ export class SynchroPage {
      */
     syncStats(): Observable<number> {
         return new Observable<number>(observer => {
-            this.storage.get('events').then(storedEvents => {
+            this.storage.get(this.authenticationService.meta._id+'-events').then(storedEvents => {
                 let asyncs: Observable<number>[] = [];
                 storedEvents.forEach(currentEvent => {
                     this.storage.get('stats-' + currentEvent._id).then(stats => {

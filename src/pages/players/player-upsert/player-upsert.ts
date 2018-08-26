@@ -217,9 +217,9 @@ export class PlayerUpsertPage {
             this.personService.addPerson(dataContainer).subscribe(r => {
 
                 if (this.editMode === 'CREATE') {
-                    this.storage.get('players').then(players => {
+                    this.storage.get(this.authenticationService.meta._id+'-players').then(players => {
                         players.push(r);
-                        this.storage.set('players', players);
+                        this.storage.set(this.authenticationService.meta._id+'-players', players);
 
                         this.effectiveService.get(this.authenticationService.meta.effectiveDefault).subscribe(effectiveGet => {
                             console.log('effectiveGet', effectiveGet);

@@ -30,7 +30,7 @@ export class NextEventComponent {
                 private authenticationService: AuthenticationService) {
 
         this.user = this.authenticationService.user;
-        this.storage.get('events').then(events => {
+        this.storage.get(this.authenticationService.meta._id+'-events').then(events => {
             if (!events) {
                 this.eventsServices.getEvents(
                     this.authenticationService.meta.season.startDate,

@@ -52,7 +52,7 @@ export class TeamBuildPage {
                 private effectiveService: EffectiveService,
     ) {
         this.event = navParams.get('event');
-        this.storage.get('players').then(players => {
+        this.storage.get(this.authenticationService.meta._id+'-players').then(players => {
             if (!players) {
                 this.getPlayers();
             } else {
@@ -61,7 +61,7 @@ export class TeamBuildPage {
                 this.playerListSize = players.length;
             }
         });
-        this.storage.get('collects').then((collects: any[]) => {
+        this.storage.get(this.authenticationService.meta._id+'-collects').then((collects: any[]) => {
             if (collects) {
                 this.testCollects(collects);
             } else {
@@ -122,7 +122,7 @@ export class TeamBuildPage {
             console.debug('[TeamBuildPage] - getPlayers', players);
             this.playerList = players;
             this.playerListSize = this.playerList.length;
-            this.storage.set('players', players);
+            this.storage.set(this.authenticationService.meta._id+'-players', players);
         });
     }
 
@@ -179,12 +179,12 @@ export class TeamBuildPage {
             console.debug('[TeamBuildPage] - goToCollect -collect', this.collect);
             this.collectService.addCollect(this.collect).subscribe((c: any) => {
                 this.collect._id = c._id;
-                this.storage.get('collects').then((collects: any[]) => {
+                this.storage.get(this.authenticationService.meta._id+'-collects').then((collects: any[]) => {
                     if (!collects) {
                         collects = [];
                     }
                     collects.push(this.collect);
-                    this.storage.set('collects', collects);
+                    this.storage.set(this.authenticationService.meta._id+'-collects', collects);
                     console.debug('[TeamBuildPage] - goToCollect', {
                         players: this.playerPositions,
                         event: this.event,

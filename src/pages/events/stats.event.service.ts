@@ -33,8 +33,7 @@ export class StatsEventService {
      */
     getEventStats(eventId: string): Observable<StatsContainerModel> {
         return new Observable<StatsContainerModel>((observer) => {
-            let keyStorage = this.authenticationService.meta._id + '-' + eventId;
-            this.storage.get(keyStorage).then(statsContainer => {
+            this.storage.get(this.authenticationService.meta._id + '-' + eventId).then(statsContainer => {
                 if (statsContainer) {
                     observer.next(statsContainer);
                     observer.complete();

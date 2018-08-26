@@ -264,9 +264,9 @@ export class EventUpsertPage {
             this.eventsService.addEvent(this.event).subscribe(r => {
 
                 if (this.editMode === 'CREATE') {
-                    this.storage.get('events').then(events => {
+                    this.storage.get(this.authenticationService.meta._id+'-events').then(events => {
                         events.push(r);
-                        this.storage.set('events', events);
+                        this.storage.set(this.authenticationService.meta._id+'-events', events);
                         this.navCtrl.pop();
                         this.translateService.get('eventsModule.messages.createDone').subscribe(
                             value => {
