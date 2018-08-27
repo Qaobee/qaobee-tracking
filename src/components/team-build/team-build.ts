@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ENV } from '@app/env';
 import { TranslateService } from '@ngx-translate/core';
-import { AlertController, NavController, NavParams } from 'ionic-angular';
+import { Alert, AlertController, NavController, NavParams } from 'ionic-angular';
 import _ from 'lodash';
 import { StatType } from '../../model/stat.type';
 
@@ -75,7 +75,7 @@ export class TeamBuildComponent {
             console.debug('[TeamBuildComponent] - showPlayerChooser - sanctions', this.sanctions);
             console.debug('[TeamBuildComponent] - showPlayerChooser - excludedPlayer', excludedPlayer);
             console.debug('[TeamBuildComponent] - showPlayerChooser - playerList', this.playerList);
-            if(this.isTeamBuilding) {
+            if (this.isTeamBuilding) {
                 this.playerList.forEach(p => {
                     if (!excludedPlayer.find(item => {
                         return item._id === p._id;
@@ -95,28 +95,17 @@ export class TeamBuildComponent {
                 });
             } else {
                 Object.keys(this.playerPositions).forEach(k => {
-                    if ('substitutes' === k) {
-                        this.playerPositions[ k ].forEach(p =>{
-                            alert.addInput({
-                                type: 'radio',
-                                label: p.firstname + ' ' + p.name + ' (' + p.status.squadnumber + ')',
-                                value: p,
-                                checked: this.playerPositions[ position ] && this.playerPositions[ position ]._id === p._id,
-                                handler: data => {
-                                    console.debug(position, data.value);
-                                    this.playerPositions[ 'substitutes' ] = this.playerPositions[ 'substitutes' ].filter(p => {
-                                       return p._id !== data.value._id;
-                                    });
-                                    this.playerPositions[ 'substitutes' ].push(this.playerPositions[ position ]);
-                                    this.playerPositions[ position ] = data.value;
-                                    alert.dismiss();
-                                }
-                            });
+                    if (Array.isArray(this.playerPositions[ k ])) {
+                        this.playerPositions[ k ].forEach(p => {
+                            this.addplayerToAlert(alert, p, position, k);
                         });
+                    } else {
+                        const p = this.playerPositions[ k ];
+                        this.addplayerToAlert(alert, p, position, k);
                     }
                 });
             }
-            if(this.isTeamBuilding) {
+            if (this.isTeamBuilding) {
                 alert.addButton({
                     text: this.translations.actionButton.Clear,
                     handler: data => {
@@ -137,6 +126,29 @@ export class TeamBuildComponent {
             });
             alert.present();
         }
+    }
+
+
+    private addplayerToAlert(alert: Alert, chosen: any, chosenPosition: string, positionBefore) {
+        alert.addInput({
+            type: 'radio',
+            label: chosen.firstname + ' ' + chosen.name + ' (' + chosen.status.squadnumber + ')',
+            value: chosen,
+            checked: this.playerPositions[ chosenPosition ] && this.playerPositions[ chosenPosition ]._id === chosen._id,
+            handler: data => {
+                console.debug(chosenPosition, data.value);
+                if ('substitutes' === positionBefore) {
+                    this.playerPositions[ positionBefore ] = this.playerPositions[ positionBefore ].filter(p => {
+                        return p._id !== data.value._id;
+                    });
+                    this.playerPositions[ positionBefore ].push(this.playerPositions[ chosenPosition ]);
+                } else {
+                    this.playerPositions[ positionBefore ] = this.playerPositions[ chosenPosition ];
+                }
+                this.playerPositions[ chosenPosition ] = data.value;
+                alert.dismiss();
+            }
+        });
     }
 
     /**
