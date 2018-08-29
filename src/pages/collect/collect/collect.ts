@@ -1012,6 +1012,7 @@ export class CollectPage {
             });
             let actionSheet = this.actionSheetCtrl.create({
                 title: this.translations.collect.positive_actions,
+                cssClass: "positive",
                 buttons: buttons
             });
             actionSheet.present();
@@ -1048,6 +1049,7 @@ export class CollectPage {
             });
             let actionSheet = this.actionSheetCtrl.create({
                 title: this.translations.collect.negative_actions,
+                cssClass: "negative",
                 buttons: buttons
             });
             actionSheet.present();

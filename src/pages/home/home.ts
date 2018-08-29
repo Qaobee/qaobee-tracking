@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { AuthenticationService } from "../../providers/authentication.service";
 import { PlayerListPage } from '../players/player-list/player-list';
 import { EventListPage } from '../events/event-list/event-list';
+import { CollectListPage } from "../collect/collect-list/collect-list";
 
 @Component({
     selector: 'page-home',
@@ -44,6 +45,6 @@ export class HomePage {
      *
      */
     goToCollectList() {
-        console.log('goToCollectList');
+        this.navCtrl.push(CollectListPage);
     }
 }

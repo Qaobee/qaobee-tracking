@@ -1,29 +1,21 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Refresher } from 'ionic-angular';
-import { AuthenticationService } from "../../../providers/authentication.service";
-import { EventsService } from "../../../providers/api/api.events.service";
-import { CollectService } from '../../../providers/api/api.collect.service';
-import { Storage } from "@ionic/storage";
-import { Utils } from "../../../providers/utils";
 import { DatePipe } from "@angular/common";
+import { EventsService } from "../../../providers/api/api.events.service";
+import { Storage } from "@ionic/storage";
+import { AuthenticationService } from "../../../providers/authentication.service";
 import { SettingsService } from "../../../providers/settings.service";
-import { EventDetailPage } from "../event-detail/event-detail";
-import { EventUpsertPage } from "../event-upsert/event-upsert";
-import { EventStatsPage } from "../event-stats/event-stats";
-import { TeamBuildPage } from "../../collect/team-build/team-build";
-import moment from 'moment';
+import { CollectService } from "../../../providers/api/api.collect.service";
+import moment from "moment";
+import { EventStatsPage } from "../../events/event-stats/event-stats";
+import { EventDetailPage } from "../../events/event-detail/event-detail";
 
-/**
- * Generated class for the EventListPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 @Component({
-    selector: 'page-event-list',
-    templateUrl: 'event-list.html',
+    selector: 'page-collect-list',
+    templateUrl: 'collect-list.html',
 })
-export class EventListPage {
+export class CollectListPage {
+
     datePipe: DatePipe;
     eventList: any;
     eventListSize: number;
@@ -71,7 +63,7 @@ export class EventListPage {
         if (val && val.trim() != '') {
 
             // Reset items back to all of the items
-            this.storage.get(this.authenticationService.meta._id+'-events').then(events => {
+            this.storage.get(this.authenticationService.meta._id + '-events').then(events => {
                     for (let index = 0; index < events.length; index++) {
                         const element = events[ index ];
                         if (element.type.label.toLowerCase().indexOf(val.toLowerCase()) > -1 || element.label.toLowerCase().indexOf(val.toLowerCase()) > -1) {
@@ -91,7 +83,7 @@ export class EventListPage {
      * if evnets exist then return list, else, call eventsService
      */
     private retrieveEventList() {
-        this.storage.get(this.authenticationService.meta._id+'-events').then(events => {
+        this.storage.get(this.authenticationService.meta._id + '-events').then(events => {
             if (!events) {
                 this.getEvents(null);
             } else {
@@ -113,7 +105,7 @@ export class EventListPage {
             this.authenticationService.meta.activity._id,
             this.authenticationService.meta._id,
         ).subscribe(eventList => {
-            this.storage.set(this.authenticationService.meta._id+'-events', eventList);
+            this.storage.set(this.authenticationService.meta._id + '-events', eventList);
             this.populateEvents(eventList);
             if (refresher) {
                 refresher.complete();
@@ -127,9 +119,8 @@ export class EventListPage {
      */
     private populateEvents(events: any[]) {
         this.eventList = {};
-        console.log('[EventListPage] - populateEvents', events);
         if (events) {
-            events.sort(Utils.compareEvents);
+            console.log('[CollectListPage] - populateEvents', events);
             events.forEach(e => {
                 let startDateStr = this.datePipe.transform(e.startDate, 'MMMM  - yyyy');
                 if (!this.eventList.hasOwnProperty(startDateStr)) {
@@ -138,7 +129,9 @@ export class EventListPage {
 
                 this.collectService.getCollects(this.authenticationService.meta._id, e._id, e.owner.effectiveId, e.owner.teamId, moment("01/01/2000", "DD/MM/YYYY").valueOf(), moment().valueOf()).subscribe(result => {
                     e.isCollected = result[ 0 ] && result[ 0 ].status === 'done';
-                    this.eventList[ startDateStr ].push(e);
+                    if( e.isCollected) {
+                        this.eventList[ startDateStr ].push(e);
+                    }
                 });
             });
             this.eventListSize = events.length;
@@ -153,24 +146,6 @@ export class EventListPage {
     goToViewEventStat(event: any, clickEvent: any) {
         clickEvent.stopPropagation();
         this.navCtrl.push(EventStatsPage, {event: event});
-    }
-
-    /**
-     *
-     * @param event
-     * @param clickEvent
-     */
-    goToStartCollect(event: any, clickEvent: any) {
-        clickEvent.stopPropagation();
-        this.navCtrl.push(TeamBuildPage, {event: event});
-    }
-
-    /**
-     *
-     */
-    addEvent(clickEvent: any) {
-        clickEvent.stopPropagation();
-        this.navCtrl.push(EventUpsertPage, {editMode: 'CREATE'});
     }
 
     /**
