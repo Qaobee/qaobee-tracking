@@ -14,6 +14,7 @@ import { HandFSM } from "../../providers/collect/hand.fsm";
 import { GoalModal } from './goal-modal/goal-modal';
 import { TeamBuildComponent } from '../../components/team-build/team-build';
 import { StatsModal } from './stats-modal/stats-modal';
+import { CollectListPage } from "./collect-list/collect-list";
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import { StatsModal } from './stats-modal/stats-modal';
         GoalModal,
         SubstitutionModal,
         StatsModal,
-        TeamBuildComponent
+        TeamBuildComponent,
+        CollectListPage
     ],
     imports: [
         HttpClientModule,
@@ -47,7 +49,8 @@ import { StatsModal } from './stats-modal/stats-modal';
         CollectPage,
         GoalModal,
         SubstitutionModal,
-        StatsModal
+        StatsModal,
+        CollectListPage
     ]
 })
 

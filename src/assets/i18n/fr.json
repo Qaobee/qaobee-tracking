@@ -38,6 +38,9 @@
     "eventsList": {
       "title": "Evénements"
     },
+    "collectList": {
+      "title": "Collectes"
+    },
     "detail": {
       "edit": "Modifier",
       "trash": "Supprimer",
