@@ -20,51 +20,62 @@
   }
 }
 
-.errorControlForm{
-    color: color($colors, danger, base);
-    padding: 10px 10px 10px 16px;
+.errorControlForm {
+  color: color($colors, danger, base);
+  padding: 10px 10px 10px 16px;
 }
 
 h1 {
-  color: color($colors,dark,base);
+  color: color($colors, dark, base);
 }
 
 h2, p {
-  color: color($colors,danger,base);
+  color: color($colors, danger, base);
 }
 
 h3 {
-  color: color($colors,primary,base);
+  color: color($colors, primary, base);
 }
 
 .panel {
-  color: color($colors,dark,base);
+  color: color($colors, dark, base);
 }
 
-.enteteLight{
+.enteteLight {
   background-color: color($colors, light, base);
   padding: 0 auto;
   margin: 0 auto;
 }
 
-.enteteDefault{
+.enteteDefault {
   background-color: color($colors, primary, base);
   padding: 0 auto;
   margin: 0 auto;
-  color : white;
+  color: white;
 }
 
-.enteteDark{
+.enteteDark {
   background-color: color($colors, dark, base);
   padding: 0 auto;
   margin: 0 auto;
-  color : white;
+  color: white;
 }
 
 .enteteDark h1, .enteteDark h3 {
-  color : white;
+  color: white;
 }
 
 ion-footer {
   background-color: color($colors, light, base);
+}
+
+.positive .action-sheet-title {
+  background-color: color($colors, green, base) !important;
+  color: color($colors, white, base) !important;
+  font-weight: bold;
+}
+
+.negative .action-sheet-title {
+  background-color: color($colors, red, base);
+  color: color($colors, white, base);
 }
