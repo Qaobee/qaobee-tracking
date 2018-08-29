@@ -63,7 +63,12 @@
   "home": {
     "agenda": "Agenda",
     "players": "Players",
-    "stats": "Stats"
+    "teams": "Teams",
+    "stats": "Stats",
+    "agendaText": "Planifier vos matchs dans l'agenda",
+    "playersText": "Gerez et consultez les perfs de vos joueurs",
+    "teamsText": "Gérez et consultez les perfs de vos Equipes",
+    "statsText": "Consultez vos les stats d'un match"
   },
   "welcome": {
     "Login": "Signin",
