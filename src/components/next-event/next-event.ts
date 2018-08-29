@@ -39,7 +39,7 @@ export class NextEventComponent {
                     this.authenticationService.meta.activity._id,
                     this.authenticationService.meta._id,
                 ).subscribe(eventList => {
-                    this.storage.set('events', eventList).then(r => {
+                    this.storage.set(this.authenticationService.meta._id+'-events', eventList).then(r => {
                         console.log('[NextEventComponent] constructor', r);
                     });
                     this.getLastEvent(eventList);
