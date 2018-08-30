@@ -14,6 +14,8 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+
+
 .danger-toast {
   .toast-container {
     background-color: color($colors, dark, base);
@@ -78,4 +80,58 @@ ion-footer {
 .negative .action-sheet-title {
   background-color: color($colors, red, base);
   color: color($colors, white, base);
+}
+
+// IntroJS
+ion-app, ion-nav, ion-tab, ion-tabs, .app-root, .ion-page, .item {
+  contain: none !important;
+}
+
+.introjs-arrow {
+  display: none !important;
+}
+.introjs-overlay {
+  background-color: color($colors, blue, base);
+}
+.introjs-showElement {
+
+}
+
+.introjs-helperLayer {
+  border-radius: 50%;
+  padding: 20px;
+  margin-left: -20px;
+  margin-top: -20px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: transparent solid 1px;
+}
+.introjs-tooltip {
+  border: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  background-color: transparent;
+  color: #fff;
+  font-family: "Roboto", "Helvetica Neue", sans-serif;
+
+  &.introjs-bottom-middle-aligned {
+    margin-top: 30px;
+  }
+  .introjs-tooltiptext {
+    font-size: 2em;
+    text-align: justify;
+  }
+  .introjs-button, .introjs-button:active, .introjs-button:focus, .introjs-button:hover {
+    color: #fff;
+    box-shadow: none;
+    font-family: "Roboto", "Helvetica Neue", sans-serif;
+    font-size: 2em;
+    padding: .8em;
+    border: none;
+    text-shadow: none;
+    background: transparent none;
+    &.introjs-disabled {
+      color: color($colors, dark, base);
+    }
+  }
 }

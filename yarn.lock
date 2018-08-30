@@ -227,6 +227,10 @@
   version "9.12.2"
   resolved "https://registry.yarnpkg.com/@types/highlight.js/-/highlight.js-9.12.2.tgz#6ee7cd395effe5ec80b515d3ff1699068cd0cd1d"
 
+"@types/intro.js@^2.4.3":
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/@types/intro.js/-/intro.js-2.4.3.tgz#dabdec09604732e25a321a0040dd8ec34190dff6"
+
 "@types/localforage@0.0.30":
   version "0.0.30"
   resolved "https://registry.yarnpkg.com/@types/localforage/-/localforage-0.0.30.tgz#3d60a6bf6dda38e3f8a469611598379f1f649509"
@@ -2463,6 +2467,10 @@ inline-process-browser@^1.0.0:
 interpret@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.1.0.tgz#7ed1b1410c6a0e0f78cf95d3b8440c63f78b8614"
+
+intro.js@^2.9.3:
+  version "2.9.3"
+  resolved "https://registry.yarnpkg.com/intro.js/-/intro.js-2.9.3.tgz#001d9a7bca66d8f4d2d0253c9b3345e9ae4320c3"
 
 invert-kv@^1.0.0:
   version "1.0.0"

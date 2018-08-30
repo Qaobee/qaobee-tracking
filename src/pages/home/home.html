@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar>
-        <button ion-button menuToggle>
+        <button ion-button menuToggle  id="step4">
             <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>Hello {{ (user.firstname) ? user.firstname : user.account.login | uppercase}} !</ion-title> 
@@ -19,20 +19,21 @@
         <ion-col text-center>
           {{ 'home.stats' | translate }}
         </ion-col>
-      </ion-row> 
-      <ion-row>
+      </ion-row>
+
+        <ion-row>
         <ion-col text-center>
-          <button ion-button (tap)="goToEventList()" large color="dark">  
+          <button id="step1" ion-button (tap)="goToEventList()" large color="dark">
             <ion-icon name="calendar"></ion-icon>
           </button>
         </ion-col>
         <ion-col text-center>
-          <button ion-button (tap)="goToPlayerList()" large color="dark">  
+          <button id="step2" ion-button (tap)="goToPlayerList()" large color="dark">
             <ion-icon name="people"></ion-icon>
           </button>
         </ion-col>
         <ion-col text-center>
-          <button ion-button (tap)="goToCollectList()" large color="dark">  
+          <button id="step3" ion-button (tap)="goToCollectList()" large color="dark">
             <ion-icon name="stats"></ion-icon>
           </button>
         </ion-col>

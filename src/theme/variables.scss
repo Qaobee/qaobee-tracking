@@ -11,6 +11,8 @@ $font-path: "../assets/fonts";
 $app-direction: ltr;
 
 @import "ionic.globals";
+@import "introjs.min";
+
 
 // Shared Variables
 // --------------------------------------------------
@@ -26,6 +28,7 @@ $app-direction: ltr;
 // to match your app's branding. Ionic uses a Sass map of
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
+
 
 $colors: (
         primary: #546e7a,
