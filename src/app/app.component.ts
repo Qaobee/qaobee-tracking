@@ -117,9 +117,9 @@ export class MyApp {
         this.translate.get([ 'menu.Home', 'menu.Login', 'menu.Subscribe' ]).subscribe(
             value => {
                 this.pages = [
-                    {title: value[ 'menu.Home' ], component: WelcomePage, icon: 'home'},
-                    {title: value[ 'menu.Login' ], component: LoginPage, icon: 'log-in'},
-                    {title: value[ 'menu.Subscribe' ], component: SignupPage, icon: 'log-in'}
+                    {title: value[ 'menu.Home' ], component: WelcomePage, icon: 'home', color:'light'},
+                    {title: value[ 'menu.Login' ], component: LoginPage, icon: 'log-in', color:'light'},
+                    {title: value[ 'menu.Subscribe' ], component: SignupPage, icon: 'log-in', color:'danger'}
                 ];
             }
         )
