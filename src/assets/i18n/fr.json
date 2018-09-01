@@ -110,12 +110,19 @@
     "Subscribe": "S'inscrire",
     "Login": "Connexion",
     "Profile": "Profile",
-    "Events": "Evénements",
+    "Events": "Agenda",
     "Players": "Joueurs",
+    "Teams": "Equipes",
     "Stats": "Stats",
     "Settings": "Paramètres",
     "Logout": "Déconnexion",
     "Synchro": "Synchronisation"
+  },
+  "team": {
+    "TitleNavBarTeamList":"Equipes",
+    "TitleMyTeamList":"Mes équipes",
+    "TitleAdversaryTeamList":"Mes adversaires"
+
   },
   "player": {
     "TitleNavBarPlayer": "Joueur",

@@ -1,3 +1,4 @@
+
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -10,6 +11,7 @@ import { WelcomePage } from '../pages/welcome/welcome';
 import { LogoutPage } from '../pages/logout/logout';
 import { SignupPage } from '../pages/signup/signup';
 import { PlayerListPage } from '../pages/players/player-list/player-list';
+import { TeamListPage } from './../pages/teams/team-list/team-list';
 import { SettingsPage } from '../pages/settings/settings';
 import { HomePage } from "../pages/home/home";
 import { EventListPage } from "../pages/events/event-list/event-list";
@@ -29,7 +31,7 @@ import { MessageBus } from "../providers/message-bus.service";
 export class MyApp {
     @ViewChild(Nav) nav: Nav;
     rootPage: any = WelcomePage;
-    pages: Array<{ title: string, component: any, icon: string }>;
+    pages: Array<{ title: string, component: any, icon: string, color: string }>;
     user: any;
 
     /**
@@ -124,16 +126,17 @@ export class MyApp {
     }
 
     private buildLoggedMenu() {
-        this.translate.get([ 'menu.Home', 'menu.Events', 'menu.Players', 'menu.Stats', 'menu.Settings', 'menu.Logout', 'menu.Synchro' ]).subscribe(
+        this.translate.get([ 'menu.Home', 'menu.Events', 'menu.Players', 'menu.Teams', 'menu.Stats', 'menu.Settings', 'menu.Logout', 'menu.Synchro' ]).subscribe(
             value => {
                 this.pages = [
-                    {title: value[ 'menu.Home' ], component: HomePage, icon: 'home'},
-                    {title: value[ 'menu.Events' ], component: EventListPage, icon: 'calendar'},
-                    {title: value[ 'menu.Players' ], component: PlayerListPage, icon: 'people'},
-                    //{ title: value['menu.Stats'], component: CollectListPage, icon: 'stats' },
-                    {title: value[ 'menu.Synchro' ], component: SynchroPage, icon: 'sync'},
-                    {title: value[ 'menu.Settings' ], component: SettingsPage, icon: 'settings'},
-                    {title: value[ 'menu.Logout' ], component: LogoutPage, icon: 'log-out'}
+                    {title: value[ 'menu.Home' ], component: HomePage, icon: 'home', color:'light'},
+                    {title: value[ 'menu.Events' ], component: EventListPage, icon: 'calendar', color:'danger'},
+                    {title: value[ 'menu.Players' ], component: PlayerListPage, icon: 'contact', color:'green'},
+                    {title: value[ 'menu.Teams' ], component: TeamListPage, icon: 'contacts', color:'warning'},
+                    //{ title: value['menu.Stats'], component: CollectListPage, icon: 'stats',color:'danger' },
+                    {title: value[ 'menu.Synchro' ], component: SynchroPage, icon: 'sync', color:'light'},
+                    {title: value[ 'menu.Settings' ], component: SettingsPage, icon: 'settings', color:'light'},
+                    {title: value[ 'menu.Logout' ], component: LogoutPage, icon: 'log-out', color:'dark'}
                 ];
             }
         )

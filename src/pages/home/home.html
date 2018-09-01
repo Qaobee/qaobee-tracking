@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-navbar>
+    <ion-navbar color="dark">
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
@@ -45,17 +45,17 @@
     </ion-row>
     <ion-row>
       <ion-col text-center>
-        <button ion-button (tap)="goToPlayerList()" large color="dark" outline>  
+        <button ion-button (tap)="goToPlayerList()" large color="green">  
           <ion-icon name="contact"></ion-icon>
         </button>
       </ion-col>
       <ion-col text-center>
-        <button ion-button (tap)="goToPlayerList()" large color="dark" outline>  
+        <button ion-button (tap)="goToTeamsList()" large color="warning">  
           <ion-icon name="contacts"></ion-icon>
         </button>
       </ion-col>
       <ion-col text-center>
-        <button ion-button (tap)="goToCollectList()" large color="dark" outline>  
+        <button ion-button (tap)="goToCollectList()" large color="danger">  
           <ion-icon name="stats"></ion-icon>
         </button>
       </ion-col>

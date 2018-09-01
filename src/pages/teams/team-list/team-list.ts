@@ -33,8 +33,12 @@ import { TeamService } from '../../../providers/api/api.team.service';
 })
 export class TeamListPage {
 
-    teamList: any;
-    teamListSize: number;
+    teams: any = {
+        myTeams: [],
+        adversaries: []
+    };
+    myTeamListSize: number;
+    adversaryTeamListSize: number;
     teamListFiltred: any;
 
     /**
@@ -51,7 +55,7 @@ export class TeamListPage {
                 private storage: Storage,
                 private teamService: TeamService,
                 private authenticationService: AuthenticationService) {
-        this.retrieveteamList();
+        this.retrieveTeamList();
     }
 
     /**
@@ -59,13 +63,29 @@ export class TeamListPage {
      * @param refresher
      */
     private getTeams(refresher: Refresher) {
-        this.teamService.getTeams(authenticationService.meta.effectiveDefault, authenticationService.meta._id, 'all', 'false').subscribe((teams: any[]) => {
+        // Retreive my team list
+        this.teamService.getTeams(this.authenticationService.meta.effectiveDefault, this.authenticationService.meta._id, 'all', 'false').subscribe((teams: any[]) => {
             if (teams) {
-                this.teams.myTeams = teams;
-                if (teams.length === 1 && !this.event.participants.teamHome) {
-                    this.event.participants.teamHome = teams[ 0 ];
-                    this.eventForm.controls[ 'myTeam' ].setValue(teams[ 0 ]);
-                }
+                this.teams.myTeams = [];
+                teams.forEach(item => {
+                    if(!item.adversary){
+                        this.teams.myTeams.push(item);
+                    }
+                });
+                this.myTeamListSize = this.teams.myTeams.lenght;
+            }
+        });
+
+        // Retreive adversary team list
+        this.teamService.getTeams(this.authenticationService.meta.effectiveDefault, this.authenticationService.meta._id, 'all', 'true').subscribe((teams: any[]) => {
+            if (teams) {
+                this.teams.adversaries = [];
+                teams.forEach(item => {
+                    if(item.adversary){
+                        this.teams.adversaries.push(item);
+                    }
+                });
+                this.adversaryTeamListSize = this.teams.adversaries.lenght;
             }
         });
     }
@@ -73,13 +93,12 @@ export class TeamListPage {
     /**
      * if teams exist then return list, else, call personneService
      */
-    private retrieveteamList() {
+    private retrieveTeamList() {
         this.storage.get(this.authenticationService.meta._id+'-teams').then(teams => {
             if (!teams) {
-                this.getteams(null);
+                this.getTeams(null);
             } else {
-                this.teamList = teams;
-                this.teamListSize = teams.length;
+                this.teams = teams;
             }
         })
     }
@@ -105,12 +124,12 @@ export class TeamListPage {
                             this.teamListFiltred.push(element);
                         }
                     }
-                    this.teamList = this.teamListFiltred;
-                    this.teamListSize = this.teamListFiltred.length;
+                    this.teams = this.teamListFiltred;
+                    this.myTeamListSize = this.teamListFiltred.length;
                 }
             );
         } else {
-            this.retrieveteamList();
+            this.retrieveTeamList();
         }
     }
 

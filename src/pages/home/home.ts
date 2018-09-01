@@ -4,6 +4,7 @@ import { AuthenticationService } from "../../providers/authentication.service";
 import { PlayerListPage } from '../players/player-list/player-list';
 import { EventListPage } from '../events/event-list/event-list';
 import { CollectListPage } from "../collect/collect-list/collect-list";
+import { TeamListPage } from './../teams/team-list/team-list';
 
 @Component({
     selector: 'page-home',
@@ -39,6 +40,13 @@ export class HomePage {
      */
     goToPlayerList() {
         this.navCtrl.push(PlayerListPage);
+    }
+
+    /**
+     *
+     */
+    goToTeamsList() {
+        this.navCtrl.push(TeamListPage);
     }
 
     /**
