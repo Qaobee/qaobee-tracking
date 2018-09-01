@@ -14,6 +14,7 @@
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
     "ionic:serve": "ionic-app-scripts serve",
+    "dev": "ionic-app-scripts serve",
     "sonar": "./node_modules/sonar-scanner/bin/sonar-scanner",
     "doc": "./node_modules/.bin/compodoc --theme material -p tsconfig.json -d build/docs/js",
     "doc:serve": "./node_modules/.bin/compodoc --theme material -r 9999 -p tsconfig.json -d build/docs/js -s"

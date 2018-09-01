@@ -83,18 +83,20 @@ ion-footer {
 }
 
 // IntroJS
-ion-app, ion-nav, ion-tab, ion-tabs, .app-root, .ion-page, .item {
+ion-app, ion-nav, ion-tab, ion-tabs, .app-root, .ion-page, .item, .toolbar {
   contain: none !important;
 }
 
+.introjs-showElement {
+  &.bar-button-menutoggle {
+    color: #000000 !important;
+  }
+}
 .introjs-arrow {
   display: none !important;
 }
 .introjs-overlay {
   background-color: color($colors, blue, base);
-}
-.introjs-showElement {
-
 }
 
 .introjs-helperLayer {
