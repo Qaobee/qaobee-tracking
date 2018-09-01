@@ -66,7 +66,12 @@
   "home": {
     "agenda": "Agenda",
     "players": "Players",
-    "stats": "Stats"
+    "teams": "Teams",
+    "stats": "Stats",
+    "agendaText": "Planifier vos matchs dans l'agenda",
+    "playersText": "Gerez et consultez les perfs de vos joueurs",
+    "teamsText": "Gérez et consultez les perfs de vos Equipes",
+    "statsText": "Consultez vos les stats d'un match"
   },
   "welcome": {
     "Login": "Signin",
@@ -105,12 +110,19 @@
     "Home": "Home",
     "Subscribe": "Signup",
     "Profile": "Profil",
-    "Events": "Events",
+    "Events": "Agenda",
     "Players": "Players",
+    "Teams": "Teams",
     "Stats": "Stats",
     "Settings": "Settings",
     "Logout": "Logout",
     "Synchro": "Synchronization"
+  },
+  "team": {
+    "TitleNavBarTeamList":"Teams",
+    "TitleMyTeamList":"My Teams",
+    "TitleAdversaryTeamList":"My adversaries"
+
   },
   "player": {
     "TitleNavBarPlayer": "Player",

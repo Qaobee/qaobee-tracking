@@ -11,7 +11,7 @@
     <ion-content>
         <ion-list>
             <menu-header [user]="user"></menu-header>
-            <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+            <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)" color="{{p.color}}">
                 <ion-icon name="{{ p.icon }}" *ngIf="p.icon"></ion-icon>
                 {{p.title}}
             </button>

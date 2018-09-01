@@ -1,43 +1,64 @@
 <ion-header>
-    <ion-navbar>
-        <button ion-button menuToggle  id="step4">
+    <ion-navbar color="dark">
+        <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>Hello {{ (user.firstname) ? user.firstname : user.account.login | uppercase}} !</ion-title> 
     </ion-navbar>
 </ion-header>
 
-<ion-content>
-    <ion-item class="enteteLight">
-      <ion-row>
-        <ion-col text-center>
-          {{ 'home.agenda' | translate }}
-        </ion-col>
-        <ion-col text-center>
-          {{ 'home.players' | translate }}
-        </ion-col>
-        <ion-col text-center>
-          {{ 'home.stats' | translate }}
-        </ion-col>
-      </ion-row>
-
-        <ion-row>
-        <ion-col text-center>
-          <button id="step1" ion-button (tap)="goToEventList()" large color="dark">
-            <ion-icon name="calendar"></ion-icon>
-          </button>
-        </ion-col>
-        <ion-col text-center>
-          <button id="step2" ion-button (tap)="goToPlayerList()" large color="dark">
-            <ion-icon name="people"></ion-icon>
-          </button>
-        </ion-col>
-        <ion-col text-center>
-          <button id="step3" ion-button (tap)="goToCollectList()" large color="dark">
-            <ion-icon name="stats"></ion-icon>
-          </button>
-        </ion-col>
-      </ion-row>
+<ion-content class="card-background-page">
+  <ion-card>
+    <div class="card-title">{{ 'home.agenda' | translate }}</div>
+    <img src="assets/imgs/agenda-2018.jpg">
+    <ion-item>
+      <ion-icon name="football" item-start large></ion-icon>
+      <h2>Museum of Football</h2>
+      <p>11 N. Way St, Madison, WI 53703</p>
     </ion-item>
-    <next-event></next-event>
+  
+    <ion-item>
+        
+    </ion-item>
+  
+    <ion-item>
+        <span item-end>{{ 'home.agendaText' | translate }}</span>
+      <button ion-button (tap)="goToEventList()" large color="danger" small outline item-end>  
+        <ion-icon name="calendar"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-card>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar color="light">
+    <ion-row>
+      <ion-col text-center>
+        <div>{{ 'home.players' | translate }}</div>
+      </ion-col>
+      <ion-col text-center>
+        <div>{{ 'home.teams' | translate }}</div>
+      </ion-col>
+      <ion-col text-center>
+        <div>{{ 'home.stats' | translate }}</div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <button ion-button (tap)="goToPlayerList()" large color="green">  
+          <ion-icon name="contact"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col text-center>
+        <button ion-button (tap)="goToTeamsList()" large color="warning">  
+          <ion-icon name="contacts"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col text-center>
+        <button ion-button (tap)="goToCollectList()" large color="danger">  
+          <ion-icon name="stats"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

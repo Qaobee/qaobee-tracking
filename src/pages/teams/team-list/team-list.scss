@@ -1,0 +1,11 @@
+page-team-list {
+    
+    .playerDisactivated h2{
+        color: color($colors, primary, base);
+    }
+
+    .playerDisactivated ion-badge {
+        background-color: color($colors, primary, base);
+        color : color($colors, light, base);
+    }
+}
