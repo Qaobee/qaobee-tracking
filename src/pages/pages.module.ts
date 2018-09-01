@@ -17,6 +17,7 @@ import { IonicStorageModule } from "@ionic/storage";
 import { createTranslateLoader } from "../app/app.module";
 import { EventsModule } from "./events/events.module";
 import { PlayersModule } from "./players/players.module";
+import { TeamsModule } from "./teams/teams.module";
 import { CollectModule } from "./collect/collect.module";
 
 @NgModule({
@@ -45,6 +46,7 @@ import { CollectModule } from "./collect/collect.module";
         }),
         EventsModule,
         PlayersModule,
+        TeamsModule,
         CollectModule
     ],
     entryComponents: [

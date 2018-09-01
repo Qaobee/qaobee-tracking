@@ -1,0 +1,19 @@
+page-team-stats {
+  
+  canvas {
+    border: 1px solid color($colors,light,base);
+  }
+
+  .rubrik {
+    background-color: color($colors,dark,base);
+    color: white;
+  }
+
+  .rubrik h1{
+    color: color($colors,light,base);
+  }
+
+  .borderTable {
+    border: 1px solid white;
+  }
+}

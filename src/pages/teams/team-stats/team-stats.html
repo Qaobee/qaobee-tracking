@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{'team.TitleNavBarTeamStats' | translate}}</ion-title>
+    <ion-buttons end>
+
+      <button ion-button icon-only>
+        <ion-icon name="more"></ion-icon>
+      </button>
+
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-item class="enteteLight">
+    <ion-row>
+      <ion-col><ion-avatar>
+          <img src="assets/imgs/user.png" alt="avatar">
+        </ion-avatar></ion-col>
+      <ion-col>
+        <h1>{{team.firstname}} {{team.name}}</h1>
+      </ion-col>
+      <ion-col text-right>
+        <ion-badge color="secondary">{{team.status.squadnumber}}</ion-badge>
+      </ion-col>
+    </ion-row>
+	</ion-item>
+
+	<ion-list *ngIf="numberMatch>0" >
+		<!-- team's shoot efficiency -->
+		<ion-item>
+				<stats-shoot-efficiency 
+					[ownerId]="ownerId" 
+					[numberMatch]="numberMatch" 
+					[positionType]="team.status.positionType.code">
+				</stats-shoot-efficiency>
+		</ion-item>
+
+		<!-- team's use -->
+		<ion-item>
+			<ion-row text-center>
+				<ion-col>
+					<h1>Utilisation</h1>
+				</ion-col>
+			</ion-row>
+	
+			<ion-row text-center class="enteteDark">
+				<ion-col class="borderTable">
+					<h3>Nb match</h3>
+				</ion-col>
+				<ion-col class="borderTable">
+					<h3>Titulaire</h3>
+				</ion-col>
+				<ion-col class="borderTable">
+					<h3>Tps jeu Moy.</h3>
+				</ion-col>
+			</ion-row>
+			
+			<ion-row text-center class="enteteLight">
+				<ion-col class="borderTable">
+					<h2>{{numberMatch}}</h2>
+				</ion-col>
+				<ion-col class="borderTable">
+					<h2>{{numberHolder}}</h2>
+				</ion-col>
+				<ion-col class="borderTable">
+					<h2>{{avgPlaytime}} '</h2>
+				</ion-col>
+			</ion-row>
+
+			<ion-row text-right class="enteteLight">
+				<ion-col>
+					<h3>
+						{{'component.stats.detail' | translate}} <ion-icon  name="eye"></ion-icon>
+					</h3>
+				</ion-col>
+			</ion-row>
+
+		</ion-item>
+	
+		<!-- team's efficiency -->
+		<ion-item>
+			<stats-highligths-by-quarter [ownerId]="ownerId"></stats-highligths-by-quarter>
+		</ion-item>
+	</ion-list>
+</ion-content>

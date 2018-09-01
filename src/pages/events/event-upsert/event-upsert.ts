@@ -86,7 +86,7 @@ export class EventUpsertPage {
                 private translateService: TranslateService) {
 
         // Retreive my team list
-        this.teamService.getTeams(authenticationService.meta.effectiveDefault, authenticationService.meta._id, 'all', 'false').subscribe((teams: any[]) => {
+        this.teamService.getTeams(this.authenticationService.meta.effectiveDefault, this.authenticationService.meta._id, 'all', 'false').subscribe((teams: any[]) => {
             if (teams) {
                 this.teams.myTeams = teams;
                 if (teams.length === 1 && !this.event.participants.teamHome) {
@@ -97,7 +97,7 @@ export class EventUpsertPage {
         });
 
         // Retreive adversary team list
-        this.teamService.getTeams(authenticationService.meta.effectiveDefault, authenticationService.meta._id, 'all', 'true').subscribe((teams: any[]) => {
+        this.teamService.getTeams(this.authenticationService.meta.effectiveDefault, this.authenticationService.meta._id, 'all', 'true').subscribe((teams: any[]) => {
             if (teams) {
                 this.teams.adversaries = teams;
                 if (teams.length === 1 && !this.event.participants.teamVisitor) {
@@ -108,7 +108,7 @@ export class EventUpsertPage {
         });
 
         // Retreive list event type
-        this.activityCfgService.getParamFieldList(authenticationService.meta.activity._id, 'listEventType').subscribe((types: any[]) => {
+        this.activityCfgService.getParamFieldList(this.authenticationService.meta.activity._id, 'listEventType').subscribe((types: any[]) => {
             console.log('[EventUpsertPage] event type list', types);
             if (types) {
                 this.eventTypes = types;
