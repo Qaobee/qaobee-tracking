@@ -6,6 +6,7 @@ import { EventListPage } from '../events/event-list/event-list';
 import { CollectListPage } from "../collect/collect-list/collect-list";
 import introJs from 'intro.js/intro.js';
 import { TeamListPage } from "../teams/team-list/team-list";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
     selector: 'page-home',
@@ -19,62 +20,65 @@ export class HomePage {
      *
      * @param {NavController} navCtrl
      * @param {NavParams} navParams
+     * @param {TranslateService} translateService
      * @param {AuthenticationService} authenticationService
      */
-    constructor(public navCtrl: NavController, public navParams: NavParams,
+    constructor(public navCtrl: NavController,
+                public navParams: NavParams,
+                private translateService: TranslateService,
                 private authenticationService: AuthenticationService) {
         this.user = navParams.get('user');
         if (!this.user) {
             this.user = this.authenticationService.user;
         }
     }
+
     /**
      *
      */
     ionViewDidEnter() {
-        this. startTour();
+        this.startTour();
     }
 
     private startTour() {
-        console.log('Starting tour');
-        // TODO i18n
         let intro = introJs.introJs();
-        intro.setOptions({
-            steps: [
-                {
-                    element: "#step1",
-                    intro: "Plan events : You can create an event or see the championship.",
-                    position: "bottom"
-                },
-                {
-                    element: "#step2",
-                    intro: "Manage your players :  You add or update your players.",
-                    position: "bottom"
-                },
-                {
-                    element: "#step3",
-                    intro: "Anytime, you can see the event's statistics.",
-                    position: "bottom"
-                },
-                {
-                    element: "#step4",
-                    intro: "To change game settings (half-time duration, player count, etc…) select Settings in the main menu.",
-                    position: "bottom"
-                }
-            ],
-            showProgress: false,
-            skipLabel: "Skip",
-            doneLabel: "Ok",
-            nextLabel: ">",
-            prevLabel: "<",
-            overlayOpacity: "0.8",
-            tooltipPosition: 'top',
-            hidePrev: true,
-            hideNext: true,
-            showStepNumbers: false
+        this.translateService.get('showcase').subscribe(showcase => {
+            intro.setOptions({
+                steps: [
+                    {
+                        element: "#step1",
+                        intro: showcase.home.events,
+                        position: "bottom"
+                    },
+                    {
+                        element: "#step2",
+                        intro: showcase.home.players,
+                        position: "bottom"
+                    },
+                    {
+                        element: "#step3",
+                        intro: showcase.home.stats,
+                        position: "bottom"
+                    },
+                    {
+                        element: "#step4",
+                        intro: showcase.home.settings,
+                        position: "bottom"
+                    }
+                ],
+                showProgress: false,
+                skipLabel: showcase.navigation.skip,
+                doneLabel: showcase.navigation.ok,
+                nextLabel: showcase.navigation.next,
+                prevLabel: showcase.navigation.prev,
+                overlayOpacity: "0.8",
+                tooltipPosition: 'top',
+                hidePrev: true,
+                hideNext: true,
+                showStepNumbers: false
+            });
+            intro.start();
         });
-        intro.start();
-
     }
 
     /**

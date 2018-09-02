@@ -1,5 +1,5 @@
-import { HomePage } from './../../home/home';
-import { CollectService } from './../../../providers/api/api.collect.service';
+import { HomePage } from '../../home/home';
+import { CollectService } from '../../../providers/api/api.collect.service';
 import { Component } from '@angular/core';
 import { ENV } from '@app/env';
 import { Storage } from '@ionic/storage';
@@ -34,6 +34,7 @@ import { Utils } from '../../../providers/utils';
 import { GoalModal } from '../goal-modal/goal-modal';
 import { SubstitutionModal } from '../substitution-modal/substitution-modal';
 import { diff } from 'deep-object-diff';
+import introJs from 'intro.js/intro.js';
 import { StatsModal } from '../stats-modal/stats-modal';
 
 @Component({
@@ -169,6 +170,72 @@ export class CollectPage {
             this.uploadStats();
         });
     }
+
+    ionViewDidEnter() {
+        this.startTour();
+    }
+
+    private startTour() {
+        let intro = introJs.introJs();
+        this.translateService.get('showcase').subscribe(showcase => {
+            intro.setOptions({
+                steps: [
+                    {
+                        element: "chrono-component #play",
+                        intro: showcase.collect.collect,
+                        position: "bottom"
+                    },
+                    {
+                        element: "#step2",
+                        intro: showcase.collect.game_phase,
+                        position: "bottom"
+                    },
+                    {
+                        element: "#ground-area ion-fab",
+                        intro: showcase.collect.select_player,
+                        position: "bottom"
+                    },
+                    {
+                        element: "#step4",
+                        intro: showcase.collect.indicators,
+                        position: "bottom"
+                    },
+                    {
+                        element: "#step5",
+                        intro: showcase.collect.shoot,
+                        position: "bottom"
+                    },
+                    {
+                        element: "#step6",
+                        intro: showcase.collect.stats,
+                        position: "bottom"
+                    },
+                    {
+                        element: "#step7",
+                        intro: showcase.collect.toggle_substitues,
+                        position: "bottom"
+                    },
+                    {
+                        element: "chrono-component #stop",
+                        intro: showcase.collect.stop_game,
+                        position: "bottom"
+                    }
+                ],
+                showProgress: false,
+                skipLabel: showcase.navigation.skip,
+                doneLabel: showcase.navigation.ok,
+                nextLabel: showcase.navigation.next,
+                prevLabel: showcase.navigation.prev,
+                overlayOpacity: "0.8",
+                tooltipPosition: 'top',
+                hidePrev: true,
+                hideNext: true,
+                showStepNumbers: false
+            });
+            intro.start();
+        });
+    }
+
 
     /**
      * @param  {string} playerId
@@ -463,10 +530,10 @@ export class CollectPage {
     getGoalkeeperId(): string {
         let goalkeeperId = undefined;
         this.playerList.forEach((p: InGamePlayer) => {
-        
+
             if (p.holder) {
                 if ("goalkeeper" === p.position) {
-                    goalkeeperId =  p.playerId;
+                    goalkeeperId = p.playerId;
                 }
             }
         });
@@ -615,11 +682,11 @@ export class CollectPage {
                 }
             } else {
                 let goalKeeperId = this.getGoalkeeperId();
-                if(goalKeeperId) {
+                if (goalKeeperId) {
                     this.statCollector.goalConceded(this.fsmContext, goalKeeperId);
                     this.cleanFlowContext();
                 }
-                
+
                 this.gameState.visitorScore++;
                 if (this.handFSM.trigger(fsmEvent)) {
                     this.doAttack();
@@ -707,9 +774,9 @@ export class CollectPage {
         console.debug('[CollectPage] - startCollect');
         this.currentCollect.startDate = Date.now();
         this.currentCollect.status = 'inProgress';
-        this.storage.get(this.authenticationService.meta._id+'-collects').then((collects: any) => {
+        this.storage.get(this.authenticationService.meta._id + '-collects').then((collects: any) => {
             (collects || {})[ this.currentCollect._id ] = this.currentCollect;
-            this.storage.set(this.authenticationService.meta._id+'-collects', collects);
+            this.storage.set(this.authenticationService.meta._id + '-collects', collects);
         });
     }
 
@@ -1144,12 +1211,12 @@ export class CollectPage {
                         if (this.handFSM.trigger(FSMEvents.endChrono)) {
                             this.currentCollect.endDate = moment.utc().valueOf();
                             this.currentCollect.status = 'done';
-                            this.storage.get(this.authenticationService.meta._id+'-collects').then((collects: any[]) => {
+                            this.storage.get(this.authenticationService.meta._id + '-collects').then((collects: any[]) => {
                                 if (!collects) {
                                     collects = [];
                                 }
                                 collects.push(this.currentCollect);
-                                this.storage.set(this.authenticationService.meta._id+'-collects', collects);
+                                this.storage.set(this.authenticationService.meta._id + '-collects', collects);
                                 this.saveSats();
                                 this.saveState();
                                 this.statCollector.endCollect(this.fsmContext);

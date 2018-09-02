@@ -311,5 +311,35 @@
         }
       }
     }
+  },
+  "showcase": {
+    "navigation": {
+      "skip": "Passer",
+      "next": ">",
+      "prev": "<",
+      "ok": "Terminer"
+    },
+    "home" : {
+      "players": "<h1>Gérez vos joueurs</h1><p>Vous pouvez ajouter/modifier vos joueurs.</p>",
+      "events": "<h1>Planifiez vos événements</h1><p>Vous pouvez créer des événement ou bénéficier de ceux du championat.</p>",
+      "settings": "<h1>Paramétres</h1><p>Pour changer les paramètres d'un match (Durée des mi-temps, nombre de joueur etc…) cliquez sur le menu principal en haut à gauche et choisissez l'option Paramètres.</p>",
+      "teams": "<h1>Gérez vos équipes</h1><p>Gérez les membres de vos équipes</p>",
+      "stats": "<h1>Statistiques</h1><p>Visualisez les statistiques relatives à vos événements collectés.</p>"
+    },
+    "team": {
+      "position": "<h1>Affecter un joueur à un poste</h1><p>Pour affecter un joueur à un poste, cliquez sur le poste et choisissez un joureur dans la liste.</p>",
+      "substitutes": "<h1>Sélectionnez des remplaçants</h1><p>Cliquez sur ce bouton pour choisir les remplaçants.</p>",
+      "start": "<h1>Validez</h1><p>Une fois votre équipe composée, validez votre feuille de match pour démarrer une collecte.</p>"
+    },
+    "collect": {
+      "collect" : "<h1>Démarrez le chrono du match</h1><p>Pour démarrer la collecte des statistiques cliquez sur ce bouton.</p>",
+      "game_phase": "Choisissez une phase de jeu.",
+      "select_player": "Sélectionnez le joueur réalisant l'action.",
+      "indicators": "Choisissez l'indicateur correspondant à l'action.",
+      "shoot": "Un bouton de tir  apparaît, une popup de séquence de tir vous guidera pour achever l'action.",
+      "stats": "A tout moment, vous avez accès aux statistique de l'événement.",
+      "toggle_substitues": "Effectuez des remplacements de joueurs.",
+      "stop_game" : "Enfin, stopez le chrono pour mettre fin à l'événement et avoir vos statistiques."
+    }
   }
 }

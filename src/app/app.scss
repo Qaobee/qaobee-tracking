@@ -91,12 +91,21 @@ ion-app, ion-nav, ion-tab, ion-tabs, .app-root, .ion-page, .item, .toolbar {
   &.bar-button-menutoggle {
     color: #000000 !important;
   }
+  &.bar-button ion-icon {
+    color: #000000 !important;
+
+  }
 }
 .introjs-arrow {
   display: none !important;
 }
 .introjs-overlay {
-  background-color: color($colors, blue, base);
+//  background-color: color($colors, blue, base);
+  background: #356aa0;
+  background: -moz-linear-gradient(-45deg, #356aa0 0%, #004f9e 100%);
+  background: -webkit-linear-gradient(-45deg, #356aa0 0%,#004f9e 100%);
+  background: linear-gradient(135deg, #356aa0 0%,#004f9e 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#356aa0', endColorstr='#004f9e',GradientType=1 );
 }
 
 .introjs-helperLayer {
@@ -121,7 +130,11 @@ ion-app, ion-nav, ion-tab, ion-tabs, .app-root, .ion-page, .item, .toolbar {
   }
   .introjs-tooltiptext {
     font-size: 2em;
-    text-align: justify;
+  //  text-align: justify;
+
+    h1, h2, p {
+      color: #fff;
+    }
   }
   .introjs-button, .introjs-button:active, .introjs-button:focus, .introjs-button:hover {
     color: #fff;

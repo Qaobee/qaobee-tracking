@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { SettingsService } from "../../../providers/settings.service";
 import { CollectPage } from "../collect/collect";
 import moment from 'moment';
+import introJs from 'intro.js/intro.js';
 import { CollectService } from '../../../providers/api/api.collect.service';
 import { EffectiveService } from '../../../providers/api/api.effective.service';
 import { GameState } from '../../../model/game.state';
@@ -75,6 +76,46 @@ export class TeamBuildPage {
                     }
                 });
             }
+        });
+    }
+
+    ionViewDidEnter() {
+        this.startTour();
+    }
+
+    private startTour() {
+        let intro = introJs.introJs();
+        this.translateService.get('showcase').subscribe(showcase => {
+            intro.setOptions({
+                steps: [
+                    {
+                        element: "#ground-area ion-chip",
+                        intro: showcase.team.position,
+                        position: "bottom-middle-aligned"
+                    },
+                    {
+                        element: "#substitute-area ion-fab",
+                        intro: showcase.team.substitutes,
+                        position: "bottom"
+                    },
+                    {
+                        element: "ion-header ion-buttons button",
+                        intro: showcase.team.start,
+                        position: "bottom"
+                    }
+                ],
+                showProgress: false,
+                skipLabel: showcase.navigation.skip,
+                doneLabel: showcase.navigation.ok,
+                nextLabel: showcase.navigation.next,
+                prevLabel: showcase.navigation.prev,
+                overlayOpacity: "0.8",
+                tooltipPosition: 'bottom-middle-aligned',
+                hidePrev: true,
+                hideNext: true,
+                showStepNumbers: false
+            });
+            intro.start();
         });
     }
 
