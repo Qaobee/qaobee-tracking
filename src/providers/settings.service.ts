@@ -5,6 +5,7 @@ import { Injectable } from "@angular/core";
 import { Storage } from '@ionic/storage';
 import { TranslateService } from "@ngx-translate/core";
 import { ActivityCfgService } from './api/api.activityCfg.service';
+import { Observable } from "rxjs";
 
 @Injectable()
 export class SettingsService {
@@ -29,17 +30,23 @@ export class SettingsService {
      *
      */
     init() {
-        this.storage.get('activityCfg').then(activityCfg => {
-            console.debug('[SettingsService] - from storage', activityCfg);
-            if (!activityCfg) {
-                this.activityCfgService.get('ACT-HAND').subscribe(activityCfgFromAPI => {
-                    console.debug('[SettingsService] - from API', activityCfgFromAPI);
-                    this.storage.set('activityCfg', activityCfgFromAPI);
-                    this.activityCfg = activityCfgFromAPI;
-                });
-            } else {
-                this.activityCfg = activityCfg;
-            }
+        return new Observable<any>((observer) => {
+            this.storage.get('activityCfg').then(activityCfg => {
+                console.debug('[SettingsService] - from storage', activityCfg);
+                if (!activityCfg) {
+                    this.activityCfgService.get('ACT-HAND').subscribe(activityCfgFromAPI => {
+                        console.debug('[SettingsService] - from API', activityCfgFromAPI);
+                        this.storage.set('activityCfg', activityCfgFromAPI);
+                        this.activityCfg = activityCfgFromAPI;
+                        observer.next(this.activityCfg);
+                        observer.complete();
+                    });
+                } else {
+                    this.activityCfg = activityCfg;
+                    observer.next(this.activityCfg);
+                    observer.complete();
+                }
+            });
         });
     }
 
@@ -47,7 +54,7 @@ export class SettingsService {
      *
      */
     save() {
-
+        this.storage.set('activityCfg', this.activityCfg);
     }
 
     /**
@@ -59,8 +66,19 @@ export class SettingsService {
         return this.locale;
     }
 
-    getParametersGame(): { periodDuration: number, nbMaxPlayers: number, nbMinPlayers: number, nbPeriod: number, nbTimeout: number, timeoutDuration: number, yellowCardMax: number, exclusionTempo: number, halfTimeDuration: number } {
-        return this.activityCfg.parametersGame;
+    getParametersGame(): Observable<{ periodDuration: number, nbMaxPlayers: number, nbMinPlayers: number, nbPeriod: number, nbTimeout: number, timeoutDuration: number, yellowCardMax: number, exclusionTempo: number, halfTimeDuration: number }> {
+        return new Observable<any>((observer) => {
+            this.init().subscribe(() => {
+                console.debug('[SettingsService] - getParametersGame', this.activityCfg);
+                observer.next(this.activityCfg.parametersGame);
+                observer.complete();
+            });
+        });
+    }
+
+    setParametersGame(parameters: { periodDuration: number, nbMaxPlayers: number, nbMinPlayers: number, nbPeriod: number, nbTimeout: number, timeoutDuration: number, yellowCardMax: number, exclusionTempo: number, halfTimeDuration: number }) {
+        this.activityCfg.parametersGame = parameters;
+        this.save();
     }
 
     getActivityConfig(): any {

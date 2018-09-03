@@ -171,9 +171,6 @@ export class CollectPage {
         });
     }
 
-    ionViewDidLoad() {
-    }
-
     private startTour() {
         this.storage.get(this.authenticationService.meta._id + "-tour-collect").then(tourDone => {
             if (!tourDone) {

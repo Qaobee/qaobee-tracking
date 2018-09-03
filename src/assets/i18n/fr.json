@@ -320,7 +320,9 @@
     "min_players": "Nombre minimum de joueurs",
     "max_players": "Nombre maximum de joueurs",
     "app_parameters": "Paramètres de l'application",
-    "tour": "Réinitialiser le tour guidé"
+    "tour": "Réinitialiser le tour guidé",
+    "saved": "Paramètres sauvegardés",
+    "tour_reseted": "Visite guidée activée"
   },
   "showcase": {
     "navigation": {
