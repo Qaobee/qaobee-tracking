@@ -25,6 +25,7 @@ export class ChronoComponent {
     @Output() currentPhaseChange: EventEmitter<number> = new EventEmitter();
 
     totalPeriod: number;
+    private settings: any;
 
     /**
      *
@@ -35,15 +36,18 @@ export class ChronoComponent {
         private messageBus: MessageBus,
         private settingsService: SettingsService
     ) {
-        this.totalPeriod = this.settingsService.getParametersGame().nbPeriod;
-        this.messageBus.on(ChronoComponent.PAUSE, () => {
-            this.pause();
-        });
-        this.messageBus.on(ChronoComponent.PLAY, () => {
-            this.start();
-        });
-        this.messageBus.on(ChronoComponent.STOP, () => {
-            this.stop();
+        this.settingsService.getParametersGame().subscribe(settings => {
+            this.settings = settings;
+            this.totalPeriod = settings.nbPeriod;
+            this.messageBus.on(ChronoComponent.PAUSE, () => {
+                this.pause();
+            });
+            this.messageBus.on(ChronoComponent.PLAY, () => {
+                this.start();
+            });
+            this.messageBus.on(ChronoComponent.STOP, () => {
+                this.stop();
+            });
         });
     }
 
@@ -66,13 +70,13 @@ export class ChronoComponent {
             .subscribe(() => {
                 this.chrono += 1;
                 this.chronoChange.emit(this.chrono);
-                if (this.chrono > this.settingsService.getParametersGame().periodDuration * this.currentPhase) {
-                    if (this.currentPhase === this.settingsService.getParametersGame().nbPeriod) {
-                        console.debug('[ChronoComponent] - start - game ended', this.chrono, this.settingsService.getParametersGame().periodDuration);
+                if (this.chrono > this.settings.periodDuration * this.currentPhase) {
+                    if (this.currentPhase === this.settings.nbPeriod) {
+                        console.debug('[ChronoComponent] - start - game ended', this.chrono, this.settings.periodDuration);
                         this.stop();
                         this.onGameEnded.emit(this.chrono);
                     } else {
-                        console.debug('[ChronoComponent] - start - period change', this.chrono, this.settingsService.getParametersGame().periodDuration);
+                        console.debug('[ChronoComponent] - start - period change', this.chrono, this.settings.periodDuration);
                         this.currentPhase++;
                         this.currentPhaseChange.emit(this.currentPhase);
                         this.pause();

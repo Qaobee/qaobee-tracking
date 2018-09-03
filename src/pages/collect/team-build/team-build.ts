@@ -27,7 +27,7 @@ export class TeamBuildPage {
     };
     collect: any = {};
     private intro = introJs.introJs();
-
+    private settings: any;
 
     /**
      *
@@ -54,6 +54,10 @@ export class TeamBuildPage {
                 private effectiveService: EffectiveService,
     ) {
         this.event = navParams.get('event');
+
+        this.settings.subscribe(settings => {
+            this.settings = settings;
+        });
         this.storage.get(this.authenticationService.meta._id + '-players').then(players => {
             if (!players) {
                 this.getPlayers();
@@ -63,6 +67,7 @@ export class TeamBuildPage {
                 this.playerListSize = players.length;
             }
         });
+        
         this.storage.get(this.authenticationService.meta._id + '-collects').then((collects: any[]) => {
             if (collects) {
                 this.testCollects(collects);
@@ -207,11 +212,11 @@ export class TeamBuildPage {
             }
         });
 
-        console.debug('[TeamBuildPage] - goToCollect - count', this.settingsService.getParametersGame().nbMinPlayers, count, this.settingsService.getParametersGame().nbMaxPlayers);
-        if (count < this.settingsService.getParametersGame().nbMinPlayers || count > this.settingsService.getParametersGame().nbMaxPlayers) {
+        console.debug('[TeamBuildPage] - goToCollect - count', this.settings.nbMinPlayers, count, this.settings.nbMaxPlayers);
+        if (count < this.settings.nbMinPlayers || count > this.settings.nbMaxPlayers) {
             this.translateService.get('collect.team-build.team-limits', {
-                min: this.settingsService.getParametersGame().nbMinPlayers,
-                max: this.settingsService.getParametersGame().nbMaxPlayers
+                min: this.settings.nbMinPlayers,
+                max: this.settings.nbMaxPlayers
             }).subscribe(t => {
                 this.presentToast(t);
             })
@@ -226,7 +231,7 @@ export class TeamBuildPage {
                 }, {
                     indicators: [ 'all' ]
                 } ],
-                parametersGame: this.settingsService.getParametersGame()
+                parametersGame: this.settings
             };
             console.debug('[TeamBuildPage] - goToCollect -collect', this.collect);
             this.collectService.addCollect(this.collect).subscribe((c: any) => {
