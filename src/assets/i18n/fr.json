@@ -350,7 +350,7 @@
       "indicators": "Choisissez l'indicateur correspondant à l'action.",
       "shoot": "Un bouton de tir  apparaît, une popup de séquence de tir vous guidera pour achever l'action.",
       "stats": "A tout moment, vous avez accès aux statistique de l'événement.",
-      "toggle_substitues": "Effectuez des remplacements de joueurs.",
+      "toggle_substitutes": "Effectuez des remplacements de joueurs.",
       "stop_game" : "Enfin, stopez le chrono pour mettre fin à l'événement et avoir vos statistiques."
     }
   }

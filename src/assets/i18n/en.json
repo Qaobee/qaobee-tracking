@@ -311,5 +311,47 @@
         }
       }
     }
+  },
+  "settings": {
+    "title": "Settings",
+    "game_parameters": "Collect settings",
+    "half_time_duration": "Half-time duration (minutes)",
+    "half_time_count": "Half-time count",
+    "min_players": "Minimum number of players",
+    "max_players": "Maximum number of players",
+    "app_parameters": "Application settings",
+    "tour": "Reset guided tour",
+    "saved": "Settings updated",
+    "tour_reseted": "Guided tour activated"
+  },
+  "showcase": {
+    "navigation": {
+      "skip": "Skip",
+      "next": ">",
+      "prev": "<",
+      "ok": "Done"
+    },
+    "home" : {
+      "players": "<h1>Manage your players</h1><p>You add or update your players.</p>",
+      "events": "<h1>Plan events</h1><p>You can create an event or see the championship.</p>",
+      "settings": "<h1>Settings</h1><p>To change game settings (half-time duration, player count, etc…) select Settings in the main menu.</p>",
+      "teams": "<h1>Manage your teams</h1><p>Manage your players in your teams.</p>",
+      "stats": "<h1>Statistics</h1><p>Visualize collected events statistics.</p>"
+    },
+    "team": {
+      "position": "<h1>Put a player to his position</h1><p>Choose a position and choose a player in the list</p>",
+      "substitutes": "<h1>Choose substitutes</h1><p>Click here to select substitutes.</p>",
+      "start": "<h1>Validez</h1><p>Une fois votre équipe composée, validez votre feuille de match pour démarrer une collecte.</p>"
+    },
+    "collect": {
+      "collect" : "<h1>Start collecting</h1><p>To start a collect, tap on this button.</p>",
+      "game_phase": "Choose a game phase.",
+      "select_player": "Select the player who makes the action.",
+      "indicators": "Choose the right action indicator.",
+      "shoot": "A shot button will appear, a shoot sequence popup will lead tou to the end of the action.",
+      "stats": "Anytime, you can see the event's statistics.",
+      "toggle_substitutes": "Perform player replacements",
+      "stop_game" : "Finally, stop the clock to end the event and have your statistics."
+    }
   }
 }

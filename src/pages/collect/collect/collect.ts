@@ -210,7 +210,7 @@ export class CollectPage {
                             },
                             {
                                 element: "page-collect > ion-content > div.scroll-content > ion-list > ion-grid:nth-child(5) > ion-row:nth-child(1) > ion-col > ion-fab > button",
-                                intro: showcase.collect.toggle_substitues,
+                                intro: showcase.collect.toggle_substitutes,
                                 position: "bottom"
                             },
                             {
