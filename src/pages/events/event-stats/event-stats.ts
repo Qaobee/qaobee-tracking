@@ -21,6 +21,7 @@ export class EventStatsPage {
      *
      * @param {NavController} navCtrl
      * @param {NavParams} navParams
+     * @param {StatsEventService} statsEventService
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,

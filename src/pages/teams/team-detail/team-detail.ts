@@ -33,11 +33,10 @@ export class TeamDetailPage {
 
     /**
      *
-     * @param navCtrl
-     * @param navParams
-     * @param personService
-     * @param alertCtrl
-     * @param translateService
+     * @param {NavController} navCtrl
+     * @param {NavParams} navParams
+     * @param {AlertController} alertCtrl
+     * @param {TranslateService} translateService
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,

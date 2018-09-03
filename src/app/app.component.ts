@@ -11,7 +11,7 @@ import { WelcomePage } from '../pages/welcome/welcome';
 import { LogoutPage } from '../pages/logout/logout';
 import { SignupPage } from '../pages/signup/signup';
 import { PlayerListPage } from '../pages/players/player-list/player-list';
-import { TeamListPage } from './../pages/teams/team-list/team-list';
+import { TeamListPage } from '../pages/teams/team-list/team-list';
 import { SettingsPage } from '../pages/settings/settings';
 import { HomePage } from "../pages/home/home";
 import { EventListPage } from "../pages/events/event-list/event-list";

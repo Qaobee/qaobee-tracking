@@ -23,7 +23,7 @@ import { TeamUpsertPage } from '../team-upsert/team-upsert';
 import { Component } from '@angular/core';
 import { NavController, NavParams, Refresher } from 'ionic-angular';
 import { Storage } from "@ionic/storage";
-import { AuthenticationService } from './../../../providers/authentication.service';
+import { AuthenticationService } from '../../../providers/authentication.service';
 import { TeamStatsPage } from '../team-stats/team-stats';
 import { TeamService } from '../../../providers/api/api.team.service';
 
