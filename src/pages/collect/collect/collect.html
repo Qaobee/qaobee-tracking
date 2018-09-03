@@ -70,11 +70,11 @@
         <ion-grid id="ground-area">
             <ion-row *ngFor="let area of ground">
                 <ion-col text-center *ngFor="let pos of area" ion-col>
-                    <ion-fab center middle *ngIf="playerPositions[pos.key]">
+                    <div center middle *ngIf="playerPositions[pos.key]">
                         <button ion-button  [color]="getColor(playerPositions[pos.key]?._id, pos.class)" (click)="doSelectPlayer(playerPositions[pos.key]?._id)">
                                 <ion-icon name="shirt" color="red"></ion-icon> &nbsp; {{ playerPositions[pos.key]?.status.squadnumber || '?' }}
                         </button>
-                    </ion-fab>
+                    </div>
                 </ion-col>
             </ion-row>
         </ion-grid>
@@ -82,14 +82,14 @@
             <ion-row><ion-col>&nbsp;</ion-col></ion-row>
             <ion-row class="btn-list">
                 <ion-col text-center>
-                    <div center middle id="step4">
+                    <div center middle>
                         <button ion-button large color="green" (click)="positiveActionButton($event)">
                             <ion-icon name="thumbs-up"></ion-icon>
                         </button>
                     </div>
                 </ion-col>
                 <ion-col text-center>
-                    <div id="step5" center middle *ngIf="fsmContext?.gamePhase">
+                    <div center middle *ngIf="fsmContext?.gamePhase">
                         <button ion-button large outline color="{{ fsmContext?.gamePhase?.attack?'green':'red' }}" (click)="showGround($event)">
                             <ion-icon name="football"></ion-icon>
                         </button>
@@ -141,7 +141,7 @@
                 </ion-col>
             -->
                 <ion-col text-center>
-                    <ion-fab id="step7" center middle>
+                    <ion-fab center middle>
                         <button ion-fab large color="secondary" (click)="toggleSubstitutes($event)">
                             <ion-icon name="swap"></ion-icon>
                         </button>
@@ -166,11 +166,11 @@
             -->
             <ion-row class="btn-list">
                 <ion-col text-center>
-                    <button id="step2" ion-button color="dark" (click)="attackButton($event)" large [disabled]="!attackEnabled">{{ 'collect.attack' | translate }}</button>
+                    <button ion-button color="dark" (click)="attackButton($event)" large [disabled]="!attackEnabled">{{ 'collect.attack' | translate }}</button>
                 </ion-col>
 
                 <ion-col text-center>
-                    <ion-fab id="step6" center middle>
+                    <ion-fab center middle>
                         <button ion-fab mini color="danger" (click)="statsButton($event)">
                             <ion-icon name="stats"></ion-icon>
                         </button>

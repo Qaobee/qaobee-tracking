@@ -14,8 +14,6 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-
-
 .danger-toast {
   .toast-container {
     background-color: color($colors, dark, base);
@@ -96,16 +94,17 @@ ion-app, ion-nav, ion-tab, ion-tabs, .app-root, .ion-page, .item, .toolbar {
 
   }
 }
+
 .introjs-arrow {
   display: none !important;
 }
+
 .introjs-overlay {
-//  background-color: color($colors, blue, base);
   background: #356aa0;
   background: -moz-linear-gradient(-45deg, #356aa0 0%, #004f9e 100%);
-  background: -webkit-linear-gradient(-45deg, #356aa0 0%,#004f9e 100%);
-  background: linear-gradient(135deg, #356aa0 0%,#004f9e 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#356aa0', endColorstr='#004f9e',GradientType=1 );
+  background: -webkit-linear-gradient(-45deg, #356aa0 0%, #004f9e 100%);
+  background: linear-gradient(135deg, #356aa0 0%, #004f9e 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#356aa0', endColorstr='#004f9e', GradientType=1);
 }
 
 .introjs-helperLayer {
@@ -117,6 +116,7 @@ ion-app, ion-nav, ion-tab, ion-tabs, .app-root, .ion-page, .item, .toolbar {
   box-shadow: none;
   border: transparent solid 1px;
 }
+
 .introjs-tooltip {
   border: none;
   -webkit-box-shadow: none;
@@ -128,9 +128,10 @@ ion-app, ion-nav, ion-tab, ion-tabs, .app-root, .ion-page, .item, .toolbar {
   &.introjs-bottom-middle-aligned {
     margin-top: 30px;
   }
+
   .introjs-tooltiptext {
     font-size: 2em;
-  //  text-align: justify;
+    margin-left: 10px;
 
     h1, h2, p {
       color: #fff;
@@ -148,5 +149,15 @@ ion-app, ion-nav, ion-tab, ion-tabs, .app-root, .ion-page, .item, .toolbar {
     &.introjs-disabled {
       color: color($colors, dark, base);
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .introjs-helperNumberLayer {
+    left: 0 !important;
+    top: -10px !important;
+  }
+  .introjs-tooltip {
+    margin-top: 40px !important;
   }
 }

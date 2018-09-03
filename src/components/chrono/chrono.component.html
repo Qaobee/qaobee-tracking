@@ -2,7 +2,7 @@
     <ion-row>
         <ion-col col-3 class="period" text-center>{{ 'collect.period' | translate }}<br/>{{ currentPhase }}/{{ totalPeriod }}</ion-col>
         <ion-col col-1 text-center>
-            <button id="play" ion-button small icon-only *ngIf="!run" (click)="start()">
+            <button ion-button small icon-only *ngIf="!run" (click)="start()">
                 <ion-icon name="play"></ion-icon>
             </button>
             <button ion-button small icon-only *ngIf="run" (click)="pause()">
@@ -11,7 +11,7 @@
         </ion-col>
         <ion-col col-4 text-center [class]="(run?'chrono':'chrono blink')">{{ (format() | date: 'mm:ss') }}</ion-col>
         <ion-col col-1 text-center>
-            <button id="stop" ion-button small icon-only (click)="stop()">
+            <button ion-button small icon-only (click)="stop()">
                 <ion-icon name="square"></ion-icon>
             </button>
         </ion-col>

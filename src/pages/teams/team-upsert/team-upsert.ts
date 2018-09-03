@@ -22,7 +22,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Storage } from '@ionic/storage';
-import { AuthenticationService } from './../../../providers/authentication.service';
+import { AuthenticationService } from '../../../providers/authentication.service';
 
 @Component({
     selector: 'page-team-upsert',
@@ -39,9 +39,7 @@ export class TeamUpsertPage {
      * @param {NavParams} navParams
      * @param {ToastController} toastCtrl
      * @param {FormBuilder} formBuilder
-     * @param {ActivityCfgService} activityCfgService
      * @param {AuthenticationService} authenticationService
-     * @param {Storage} storage
      * @param {TranslateService} translateService
      */
     constructor(public navCtrl: NavController,
@@ -49,7 +47,6 @@ export class TeamUpsertPage {
                 private toastCtrl: ToastController,
                 private formBuilder: FormBuilder,
                 private authenticationService: AuthenticationService,
-                private storage: Storage,
                 private translateService: TranslateService) {
         this.editMode = navParams.get('editMode');
         if (this.editMode && this.editMode === 'CREATE') {

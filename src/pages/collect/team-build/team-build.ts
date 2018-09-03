@@ -26,6 +26,7 @@ export class TeamBuildPage {
         substitutes: []
     };
     collect: any = {};
+    private intro = introJs.introJs();
 
 
     /**
@@ -53,7 +54,7 @@ export class TeamBuildPage {
                 private effectiveService: EffectiveService,
     ) {
         this.event = navParams.get('event');
-        this.storage.get(this.authenticationService.meta._id+'-players').then(players => {
+        this.storage.get(this.authenticationService.meta._id + '-players').then(players => {
             if (!players) {
                 this.getPlayers();
             } else {
@@ -62,7 +63,7 @@ export class TeamBuildPage {
                 this.playerListSize = players.length;
             }
         });
-        this.storage.get(this.authenticationService.meta._id+'-collects').then((collects: any[]) => {
+        this.storage.get(this.authenticationService.meta._id + '-collects').then((collects: any[]) => {
             if (collects) {
                 this.testCollects(collects);
             } else {
@@ -84,38 +85,47 @@ export class TeamBuildPage {
     }
 
     private startTour() {
-        let intro = introJs.introJs();
-        this.translateService.get('showcase').subscribe(showcase => {
-            intro.setOptions({
-                steps: [
-                    {
-                        element: "#ground-area ion-chip",
-                        intro: showcase.team.position,
-                        position: "bottom-middle-aligned"
-                    },
-                    {
-                        element: "#substitute-area ion-fab",
-                        intro: showcase.team.substitutes,
-                        position: "bottom"
-                    },
-                    {
-                        element: "ion-header ion-buttons button",
-                        intro: showcase.team.start,
-                        position: "bottom"
-                    }
-                ],
-                showProgress: false,
-                skipLabel: showcase.navigation.skip,
-                doneLabel: showcase.navigation.ok,
-                nextLabel: showcase.navigation.next,
-                prevLabel: showcase.navigation.prev,
-                overlayOpacity: "0.8",
-                tooltipPosition: 'bottom-middle-aligned',
-                hidePrev: true,
-                hideNext: true,
-                showStepNumbers: false
-            });
-            intro.start();
+        this.storage.get(this.authenticationService.meta._id + "-tour-team-build").then(tourDone => {
+            if (!tourDone) {
+                this.translateService.get('showcase').subscribe(showcase => {
+                    this.intro.setOptions({
+                        steps: [
+                            {
+                                element: "#ground-area > ion-row:nth-child(1) > ion-col > ion-chip",
+                                intro: showcase.team.position,
+                                position: "right"
+                            },
+                            {
+                                element: "#substitute-area ion-fab",
+                                intro: showcase.team.substitutes,
+                                position: "bottom"
+                            },
+                            {
+                                element: "ion-header ion-buttons button",
+                                intro: showcase.team.start,
+                                position: "bottom"
+                            }
+                        ],
+                        showProgress: false,
+                        skipLabel: showcase.navigation.skip,
+                        doneLabel: showcase.navigation.ok,
+                        nextLabel: showcase.navigation.next,
+                        prevLabel: showcase.navigation.prev,
+                        overlayOpacity: "0.8",
+                        tooltipPosition: 'bottom',
+                        hidePrev: true,
+                        hideNext: true,
+                        showStepNumbers: false
+                    });
+                    this.intro.oncomplete(this.endTour.bind(this));
+                    this.intro.start();
+                });
+            }
+        });
+    }
+
+    private endTour() {
+        this.storage.set(this.authenticationService.meta._id + "-tour-home", true).then(() => {
         });
     }
 
@@ -163,7 +173,7 @@ export class TeamBuildPage {
             console.debug('[TeamBuildPage] - getPlayers', players);
             this.playerList = players;
             this.playerListSize = this.playerList.length;
-            this.storage.set(this.authenticationService.meta._id+'-players', players);
+            this.storage.set(this.authenticationService.meta._id + '-players', players);
         });
     }
 
@@ -172,6 +182,7 @@ export class TeamBuildPage {
      */
     goToResumeCollect() {
         console.debug('[TeamBuildPage] - goToResumeCollect');
+        this.intro.exit(true);
         this.navCtrl.push(CollectPage, {event: this.event, collect: this.collect, playerList: this.playerList});
     }
 
@@ -220,12 +231,12 @@ export class TeamBuildPage {
             console.debug('[TeamBuildPage] - goToCollect -collect', this.collect);
             this.collectService.addCollect(this.collect).subscribe((c: any) => {
                 this.collect._id = c._id;
-                this.storage.get(this.authenticationService.meta._id+'-collects').then((collects: any[]) => {
+                this.storage.get(this.authenticationService.meta._id + '-collects').then((collects: any[]) => {
                     if (!collects) {
                         collects = [];
                     }
                     collects.push(this.collect);
-                    this.storage.set(this.authenticationService.meta._id+'-collects', collects);
+                    this.storage.set(this.authenticationService.meta._id + '-collects', collects);
                     console.debug('[TeamBuildPage] - goToCollect', {
                         players: this.playerPositions,
                         event: this.event,
