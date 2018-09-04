@@ -78,11 +78,17 @@
     "Subscribe": "Signup"
   },
   "login": {
-    "TitleNavBar": "Identification",
+    "TitleNavBar": "Login",
     "Username": "Login",
     "Password": "Password",
     "Login": "Connection",
-    "Subscribe": "Signup"
+    "Subscribe": "Signup",
+    "password_reset": {
+      "title": "Forgot password?",
+      "desc": "These are things that happen, give us your login and we will reset it for you!",
+      "login": "Login",
+      "modalForgotPwdOk": "<p>Your request for password regeneration is in progress!</p><p>In a few minutes, you will receive an e-mail to modify your access to your Qaobee account.</p><p>See you soon on qaobee.com!</p>"
+    }
   },
   "logout": {
     "TitleNavBar": "Logout",
@@ -119,10 +125,9 @@
     "Synchro": "Synchronization"
   },
   "team": {
-    "TitleNavBarTeamList":"Teams",
-    "TitleMyTeamList":"My Teams",
-    "TitleAdversaryTeamList":"My adversaries"
-
+    "TitleNavBarTeamList": "Teams",
+    "TitleMyTeamList": "My Teams",
+    "TitleAdversaryTeamList": "My adversaries"
   },
   "player": {
     "TitleNavBarPlayer": "Player",
@@ -331,7 +336,7 @@
       "prev": "<",
       "ok": "Done"
     },
-    "home" : {
+    "home": {
       "players": "<h1>Manage your players</h1><p>You add or update your players.</p>",
       "events": "<h1>Plan events</h1><p>You can create an event or see the championship.</p>",
       "settings": "<h1>Settings</h1><p>To change game settings (half-time duration, player count, etc…) select Settings in the main menu.</p>",
@@ -344,14 +349,14 @@
       "start": "<h1>Validez</h1><p>Une fois votre équipe composée, validez votre feuille de match pour démarrer une collecte.</p>"
     },
     "collect": {
-      "collect" : "<h1>Start collecting</h1><p>To start a collect, tap on this button.</p>",
+      "collect": "<h1>Start collecting</h1><p>To start a collect, tap on this button.</p>",
       "game_phase": "Choose a game phase.",
       "select_player": "Select the player who makes the action.",
       "indicators": "Choose the right action indicator.",
       "shoot": "A shot button will appear, a shoot sequence popup will lead tou to the end of the action.",
       "stats": "Anytime, you can see the event's statistics.",
       "toggle_substitutes": "Perform player replacements",
-      "stop_game" : "Finally, stop the clock to end the event and have your statistics."
+      "stop_game": "Finally, stop the clock to end the event and have your statistics."
     }
   }
 }
