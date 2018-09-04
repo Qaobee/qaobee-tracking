@@ -32,7 +32,7 @@ export class LogoutPage {
     doLogout() {
         this.storage.forEach((v: any, k: string) => {
             console.debug('[LogoutPage] - doLogout', k, v);
-            if (k !== 'login') {
+            if (k !== 'login' && !k.endsWith('tour-home') && !k.endsWith('tour-collect') && !k.endsWith('tour-team-build')) {
                 this.storage.remove(k);
             }
             this.authenticationService.isLogged = false;

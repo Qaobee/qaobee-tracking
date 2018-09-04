@@ -30,6 +30,12 @@
                     {{ 'actionButton.Submit' | translate  }}
                 </button>
             </ion-item>
+
+            <ion-item >
+                <button id="password-reset" ion-button medium (tap)="doPasswordReset()" clear>
+                    {{ 'login.password_reset.title' | translate  }}
+                </button>
+            </ion-item>
         </ion-list>
 
         <button id="subscribeButton" ion-button icon-left medium (tap)="goToSignup()" outline color="danger">
