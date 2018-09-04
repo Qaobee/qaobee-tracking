@@ -6,6 +6,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { IonicStorageModule } from '@ionic/storage';
 import { File } from '@ionic-native/file';
 import { Camera } from '@ionic-native/camera';
+import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
 
 import { MyApp } from './app.component';
 
@@ -41,6 +42,7 @@ export function createTranslateLoader(http: HttpClient) {
         IonicStorageModule.forRoot(),
         APIModule,
         ComponentsModule,
+        PasswordStrengthBarModule,
         PageModule,
         TranslateModule.forRoot({
             loader: {

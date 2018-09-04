@@ -27,7 +27,7 @@ export class LoginPage {
      * @param {AlertController} alertController
      * @param {UserService} userService
      * @param {Storage} storage
-     * @param {ToastController} toastController
+     * @param {ToastController} toastCtrl
      * @param {UniqueDeviceID} uniqueDeviceID
      * @param {TranslateService} translateService
      * @param {MessageBus} eventService

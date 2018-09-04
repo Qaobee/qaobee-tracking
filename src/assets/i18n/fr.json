@@ -109,7 +109,13 @@
     "password": "Mot de passe",
     "confirmPassword": "Re-saisir le mot de passe",
     "cancel": "Annuler",
-    "valid": "Valider"
+    "valid": "Valider",
+    "password_strength": "Robustesse :",
+    "cgu": {
+      "label": "Accèpter les CGU et la politique de respect de la vie privée",
+      "cgu": "CGU",
+      "privacy-policy": "Politique de respect de la vie privée"
+    }
   },
   "menu": {
     "Home": "Accueil",

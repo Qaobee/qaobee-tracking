@@ -3232,6 +3232,10 @@ next-tick@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
 
+ng2-password-strength-bar@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/ng2-password-strength-bar/-/ng2-password-strength-bar-1.2.1.tgz#d837c37147ca6b1958c63228dbff7dbab085fd9a"
+
 "node-easy-flow@git+https://github.com/Giwi/node-easy-flow.git#v2.0.2-rc1":
   version "2.0.1"
   resolved "git+https://github.com/Giwi/node-easy-flow.git#2a7b9067108dcc75ffb3e5d0766c50ffe6415843"

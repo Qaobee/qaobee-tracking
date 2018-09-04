@@ -9,7 +9,6 @@ import { LoginPage } from "./login/login";
 import { SignupPage } from "./signup/signup";
 import { SignupEndPage } from './signup/signupEnd';
 import { SettingsPage } from './settings/settings';
-
 import { ComponentsModule } from "../components/components.module";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
@@ -19,6 +18,7 @@ import { EventsModule } from "./events/events.module";
 import { PlayersModule } from "./players/players.module";
 import { TeamsModule } from "./teams/teams.module";
 import { CollectModule } from "./collect/collect.module";
+import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
 
 @NgModule({
     declarations: [
@@ -37,6 +37,7 @@ import { CollectModule } from "./collect/collect.module";
         HttpClientModule,
         IonicStorageModule.forRoot(),
         ComponentsModule,
+        PasswordStrengthBarModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

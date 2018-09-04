@@ -1,64 +1,71 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>{{'signup.TitleNavBar' | translate}}</ion-title>
-    <ion-buttons end>
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>{{'signup.TitleNavBar' | translate}}</ion-title>
+        <ion-buttons end>
+            <button ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
 </ion-header>
 
 <ion-content padding>
 
-  <h4>
-    {{'signup.Title' | translate}}
-  </h4>
+    <h4>
+        {{'signup.Title' | translate}}
+    </h4>
 
-  <form [formGroup]="userForm">
+    <form [formGroup]="userForm">
 
-    <ion-item>
-      <ion-label floating>{{ 'signup.login' | translate }}</ion-label>
-      <ion-input type="text" formControlName="login" id="login" autocomplete="login" clearInput></ion-input>
-    </ion-item>
-    <p *ngIf="!isValid('login')" danger padding-left>{{ 'signup.error.login' | translate }}</p>
+        <ion-item>
+            <ion-label floating>{{ 'signup.login' | translate }}</ion-label>
+            <ion-input type="text" formControlName="login" id="login" autocomplete="login" clearInput></ion-input>
+        </ion-item>
+        <p *ngIf="!isValid('login')" danger padding-left>{{ 'signup.error.login' | translate }}</p>
 
-    <ion-item>
-      <ion-label floating>{{ 'signup.email' | translate }}</ion-label>
-      <ion-input type="text" formControlName="email" id="email" autocomplete="email" clearInput></ion-input>
-    </ion-item>
-    <p *ngIf="!isValid('email')" danger padding-left>{{ 'signup.error.email' | translate }}</p>
+        <ion-item>
+            <ion-label floating>{{ 'signup.email' | translate }}</ion-label>
+            <ion-input type="text" formControlName="email" id="email" autocomplete="email" clearInput></ion-input>
+        </ion-item>
+        <p *ngIf="!isValid('email')" danger padding-left>{{ 'signup.error.email' | translate }}</p>
 
-    <ion-item class='form-group'>
-      <ion-label floating>{{ 'signup.password' | translate }}</ion-label>
-      <ion-input type="password" formControlName="password" id="password" clearInput></ion-input>
-      <p *ngIf="userForm.controls.password.touched && !userForm.controls.password.valid" danger padding-left>Invalid label</p>
-    </ion-item>
+        <ion-item class='form-group'>
+            <ion-label floating>{{ 'signup.password' | translate }}</ion-label>
+            <ion-input type="password" formControlName="password" id="password" clearInput></ion-input>
 
-    <ion-item>
-      <ion-label floating>{{ 'signup.confirmPassword' | translate }}</ion-label>
-      <ion-input type="password" id="confirmPassword" formControlName="confirmPassword" required show-password></ion-input>
-    </ion-item>
-    <p *ngIf="userForm.controls.confirmPassword.touched && userForm.hasError('mismatchedPasswords') && userForm.controls.password.valid"
-      danger padding-left>{{ 'signup.error.confirmPassword' | translate }}</p>
+            <p *ngIf="userForm.controls.password.touched && !userForm.controls.password.valid" danger padding-left>
+                Invalid label</p>
+        </ion-item>
+        <ng2-password-strength-bar
+                [passwordToCheck]="userForm.controls.password.value"
+                barLabel="{{ 'signup.password_strength' | translate}}"
+        >
+        </ng2-password-strength-bar>
+        <ion-item>
+            <ion-label floating>{{ 'signup.confirmPassword' | translate }}</ion-label>
+            <ion-input type="password" id="confirmPassword" formControlName="confirmPassword" required
+                       show-password></ion-input>
+        </ion-item>
+        <p *ngIf="userForm.controls.confirmPassword.touched && userForm.hasError('mismatchedPasswords') && userForm.controls.password.valid"
+           danger padding-left>{{ 'signup.error.confirmPassword' | translate }}</p>
 
-    <ion-item>
-      <ion-checkbox formControlName="cgu" id="cgu" [checked]="false"></ion-checkbox>
-      <ion-label>
-        {{ 'signup.cgu' | translate }}
-        <a class="button button-clear" ui-sref="home.singleLink({singleLink: link.name})">test</a>
-      </ion-label>
-    </ion-item>
-    <p *ngIf="!isValid('cgu')" danger padding-left>{{ 'signup.error.cgu' | translate }}</p>
+        <ion-item>
+            <ion-checkbox formControlName="cgu" id="cgu" [checked]="false"></ion-checkbox>
+            <ion-label>{{ 'signup.cgu.label' | translate }}</ion-label>
+        </ion-item>
+        <p *ngIf="!isValid('cgu')" danger padding-left>{{ 'signup.error.cgu' | translate }}</p>
+        <a href="https://www.qaobee.com/#/legal-agreement" target="_blank">{{'signup.cgu.cgu' | translate }}</a> |
+        <a href="https://www.qaobee.com/#/privacy-policy" target="_blank">{{'signup.cgu.privacy-policy' | translate
+            }}</a>
+    </form>
 
-  </form>
 
-
-  <button id="cancelButton" ion-button icon-left medium (tap)="cancel()">
-    {{ 'signup.cancel' | translate  }}
-  </button>
-  <button id="subscribeButton" ion-button icon-left medium (tap)="createAccount(userForm.value)" [disabled]="!userForm.valid" type="submit">
-    {{ 'signup.valid' | translate  }}
-  </button>
+    <button id="cancelButton" ion-button icon-left medium (tap)="cancel()">
+        {{ 'signup.cancel' | translate  }}
+    </button>
+    <button id="subscribeButton" ion-button icon-left medium (tap)="createAccount(userForm.value)"
+            [disabled]="!userForm.valid" type="submit">
+        {{ 'signup.valid' | translate  }}
+    </button>
 
 </ion-content>

@@ -101,8 +101,14 @@
     "email": "Email",
     "password": "Password",
     "confirmPassword": "Re-enter password",
-    "cancel": "Annuler",
-    "valid": "Valider"
+    "cancel": "Cancel",
+    "valid": "Submit",
+    "password_strength": "Password strength:",
+    "cgu": {
+      "label": "Accept legal agreement and the privacy policy",
+      "cgu": "Legal agreement",
+      "privacy-policy": "Privacy policy"
+    }
   },
   "sync": {
     "TitleNavBar": "Synchronization",
