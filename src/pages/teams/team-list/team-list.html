@@ -20,13 +20,12 @@
 
   <ion-list inset>
     <ion-list-header>
-      {{'team.TitleMyTeamList' | translate}}
+      <span color="warning">{{'team.TitleMyTeamList' | translate}}</span>
     </ion-list-header>
 
-    <ion-item *ngFor="let item of teams.myTeams" (click)="goToDetail(item, $event)" [ngClass]="{'playerDisactivated':item.enable==='false'}">
+    <ion-item *ngFor="let item of teams.myTeams" (click)="goToDetail(item, $event)" [ngClass]="{'teamDisactivated':item.enable==='false'}">
       <h2>{{item.label}}</h2>
-      <p *ngIf="(item.enable === 'true')">{{'player.labels.desactivated' | translate}}</p>
-      <ion-icon item-end name="stats" color="danger" (click)="goToStats(item, $event)"></ion-icon>
+      <ion-icon item-end name="stats" color="warning" (click)="goToStats(item, $event)"></ion-icon>
     </ion-item>  
   </ion-list>
 
@@ -34,9 +33,12 @@
     <ion-list-header>
       {{'team.TitleAdversaryTeamList' | translate}}
     </ion-list-header>
-    <ion-item *ngFor="let item of teams.adversaries" (click)="goToDetail(item, $event)" [ngClass]="{'playerDisactivated':item.enable==='false'}">
+    <ion-item>
+    <ion-badge color="danger" item-start>{{playerListSize}}</ion-badge>
+      <ion-searchbar (ionInput)="searchItems($event)"></ion-searchbar>
+    </ion-item>
+    <ion-item *ngFor="let item of teams.adversaries" (click)="goToDetail(item, $event)" [ngClass]="{'teamDisactivated':item.enable==='false'}">
       <h2>{{item.label}}</h2>
-      <p *ngIf="(item.enable === 'true')">{{'player.labels.desactivated' | translate}}</p>
     </ion-item>  
   </ion-list>
 </ion-content>

@@ -117,9 +117,9 @@ export class MyApp {
         this.translate.get([ 'menu.Home', 'menu.Login', 'menu.Subscribe' ]).subscribe(
             value => {
                 this.pages = [
-                    {title: value[ 'menu.Home' ], component: WelcomePage, icon: 'home', color:'light'},
-                    {title: value[ 'menu.Login' ], component: LoginPage, icon: 'log-in', color:'light'},
-                    {title: value[ 'menu.Subscribe' ], component: SignupPage, icon: 'log-in', color:'danger'}
+                    {title: value[ 'menu.Home' ], component: WelcomePage, icon: 'home', color:'primary'},
+                    {title: value[ 'menu.Login' ], component: LoginPage, icon: 'arrow-dropright-circle', color:'secondary'},
+                    {title: value[ 'menu.Subscribe' ], component: SignupPage, icon: 'add-circle', color:'danger'}
                 ];
             }
         )
@@ -129,13 +129,13 @@ export class MyApp {
         this.translate.get([ 'menu.Home', 'menu.Events', 'menu.Players', 'menu.Teams', 'menu.Stats', 'menu.Settings', 'menu.Logout', 'menu.Synchro' ]).subscribe(
             value => {
                 this.pages = [
-                    {title: value[ 'menu.Home' ], component: HomePage, icon: 'home', color:'light'},
+                    {title: value[ 'menu.Home' ], component: HomePage, icon: 'home', color:'primary'},
                     {title: value[ 'menu.Events' ], component: EventListPage, icon: 'calendar', color:'danger'},
                     {title: value[ 'menu.Players' ], component: PlayerListPage, icon: 'contact', color:'green'},
                     {title: value[ 'menu.Teams' ], component: TeamListPage, icon: 'contacts', color:'warning'},
                     //{ title: value['menu.Stats'], component: CollectListPage, icon: 'stats',color:'danger' },
-                    {title: value[ 'menu.Synchro' ], component: SynchroPage, icon: 'sync', color:'light'},
-                    {title: value[ 'menu.Settings' ], component: SettingsPage, icon: 'settings', color:'light'},
+                    {title: value[ 'menu.Synchro' ], component: SynchroPage, icon: 'sync', color:'primary'},
+                    {title: value[ 'menu.Settings' ], component: SettingsPage, icon: 'settings', color:'primary'},
                     {title: value[ 'menu.Logout' ], component: LogoutPage, icon: 'log-out', color:'dark'}
                 ];
             }

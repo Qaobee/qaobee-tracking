@@ -33,8 +33,7 @@ export class SignupPage {
             'login': [ '', Validators.compose([ Validators.required, Validators.pattern(/[a-zA-Z0-9_\-]{4,}/) ]) ],
             'email': [ '', Validators.compose([ Validators.required, Validators.email ]) ],
             'password': [ '', [ Validators.required ] ],
-            'confirmPassword': [ '', [ Validators.required ] ],
-            'cgu': [ 'false', Validators.compose([ Validators.required, Validators.requiredTrue ]) ]
+            'confirmPassword': [ '', [ Validators.required ] ]
         }, {validator: this.matchingPasswords('password', 'confirmPassword')});
 
     }

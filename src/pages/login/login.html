@@ -14,25 +14,25 @@
     <div class="overlay"></div>
     <div class="over">
         <ion-list>
-            <ion-item padding>
+            <ion-item>
                 <ion-label stacked>{{ 'login.Username' | translate }}</ion-label>
                 <ion-input type="text" [(ngModel)]="login" clearInput></ion-input>
             </ion-item>
 
-            <ion-item padding> 
+            <ion-item> 
                 <ion-label stacked>{{ 'login.Password' | translate }}</ion-label>
                 <ion-input type="password" [(ngModel)]="passwd" clearInput autocomplete="password"></ion-input>
             </ion-item>
 
             <ion-item>
-                <button id="connectButton" ion-button icon-left large (tap)="doLogin()" color="danger">
+                <button id="connectButton" ion-button icon-left large (tap)="doLogin()" color="secondary" outline>
                     <ion-icon name="log-in"></ion-icon>
                     {{ 'actionButton.Submit' | translate  }}
                 </button>
             </ion-item>
         </ion-list>
 
-        <button id="subscribeButton" ion-button icon-left medium (tap)="goToSignup()">
+        <button id="subscribeButton" ion-button icon-left medium (tap)="goToSignup()" outline color="danger">
                 {{ 'login.Subscribe' | translate  }}
         </button>
     

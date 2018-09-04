@@ -103,7 +103,8 @@
     "password": "Mot de passe",
     "confirmPassword": "Re-saisir le mot de passe",
     "cancel": "Annuler",
-    "valid": "Valider"
+    "valid": "Valider",
+    "cgu": "En cliquant sur Valider, vous acceptez" 
   },
   "menu": {
     "Home": "Accueil",
