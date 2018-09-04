@@ -13,7 +13,7 @@
 <ion-content class="cover">
     <div class="overlay"></div>
     <div class="over">
-        <ion-list>
+        <ion-list no-lines>
             <ion-item padding>
                 <ion-label stacked>{{ 'login.Username' | translate }}</ion-label>
                 <ion-input type="text" [(ngModel)]="login" clearInput></ion-input>
@@ -28,6 +28,12 @@
                 <button id="connectButton" ion-button icon-left large (tap)="doLogin()" color="danger">
                     <ion-icon name="log-in"></ion-icon>
                     {{ 'actionButton.Submit' | translate  }}
+                </button>
+            </ion-item>
+
+            <ion-item >
+                <button id="password-reset" ion-button medium (tap)="doPasswordReset()" clear>
+                    {{ 'login.password_reset.title' | translate  }}
                 </button>
             </ion-item>
         </ion-list>

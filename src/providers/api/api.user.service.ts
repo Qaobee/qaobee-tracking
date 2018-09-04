@@ -153,5 +153,14 @@ export class UserService {
         return this.fileTransfer.create().upload(filePath, ENV.hive + '/file/User/avatar/' + this.authenticationService.user._id, options);
     }
 
+    /**
+     * @param {string} login
+     * @returns {Promise<FileUploadResult>}
+     */
+    forgotPasswd(login: string) {
+        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/commons/users/user/newpasswd', {login: login}).pipe(
+            catchError(this.apiService.handleError('UserService.getEncryptedInfos'))
+        );
+    }
 
 }

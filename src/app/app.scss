@@ -161,3 +161,7 @@ ion-app, ion-nav, ion-tab, ion-tabs, .app-root, .ion-page, .item, .toolbar {
     margin-top: 40px !important;
   }
 }
+
+.alert-message p {
+  color: color($colors, dark, base);
+}

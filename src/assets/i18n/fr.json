@@ -82,7 +82,13 @@
     "Username": "Identifiant",
     "Password": "Mot de passe",
     "Login": "Connexion",
-    "Subscribe": "S'inscrire"
+    "Subscribe": "S'inscrire",
+    "password_reset": {
+      "title": "Mot de passe oublié ?",
+      "desc": "Ce sont des choses qui arrivent, donnez-nous votre identifiant de connexion, nous le réinitialiserons pour vous!",
+      "login": "Identifiant",
+      "modalForgotPwdOk": "<p>Votre demande de regénération de mot de passe est en cours !</p><p>Vous allez recevoir d'ici quelques minutes un e-mail pour modifier vos accès à votre compte Qaobee.</p><p>A très vite sur qaobee.com !</p>"
+    }
   },
   "logout": {
     "TitleNavBar": "Déconnexion",
@@ -119,10 +125,9 @@
     "Synchro": "Synchronisation"
   },
   "team": {
-    "TitleNavBarTeamList":"Equipes",
-    "TitleMyTeamList":"Mes équipes",
-    "TitleAdversaryTeamList":"Mes adversaires"
-
+    "TitleNavBarTeamList": "Equipes",
+    "TitleMyTeamList": "Mes équipes",
+    "TitleAdversaryTeamList": "Mes adversaires"
   },
   "player": {
     "TitleNavBarPlayer": "Joueur",
@@ -331,7 +336,7 @@
       "prev": "<",
       "ok": "Terminer"
     },
-    "home" : {
+    "home": {
       "players": "<h1>Gérez vos joueurs</h1><p>Vous pouvez ajouter/modifier vos joueurs.</p>",
       "events": "<h1>Planifiez vos événements</h1><p>Vous pouvez créer des événement ou bénéficier de ceux du championat.</p>",
       "settings": "<h1>Paramétres</h1><p>Pour changer les paramètres d'un match (Durée des mi-temps, nombre de joueur etc…) cliquez sur le menu principal en haut à gauche et choisissez l'option Paramètres.</p>",
@@ -344,14 +349,14 @@
       "start": "<h1>Validez</h1><p>Une fois votre équipe composée, validez votre feuille de match pour démarrer une collecte.</p>"
     },
     "collect": {
-      "collect" : "<h1>Démarrez le chrono du match</h1><p>Pour démarrer la collecte des statistiques cliquez sur ce bouton.</p>",
+      "collect": "<h1>Démarrez le chrono du match</h1><p>Pour démarrer la collecte des statistiques cliquez sur ce bouton.</p>",
       "game_phase": "Choisissez une phase de jeu.",
       "select_player": "Sélectionnez le joueur réalisant l'action.",
       "indicators": "Choisissez l'indicateur correspondant à l'action.",
       "shoot": "Un bouton de tir  apparaît, une popup de séquence de tir vous guidera pour achever l'action.",
       "stats": "A tout moment, vous avez accès aux statistique de l'événement.",
       "toggle_substitutes": "Effectuez des remplacements de joueurs.",
-      "stop_game" : "Enfin, stopez le chrono pour mettre fin à l'événement et avoir vos statistiques."
+      "stop_game": "Enfin, stopez le chrono pour mettre fin à l'événement et avoir vos statistiques."
     }
   }
 }
