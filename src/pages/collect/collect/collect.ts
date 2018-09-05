@@ -35,6 +35,7 @@ import { GoalModal } from '../goal-modal/goal-modal';
 import { SubstitutionModal } from '../substitution-modal/substitution-modal';
 import introJs from 'intro.js/intro.js';
 import { StatsModal } from '../stats-modal/stats-modal';
+import { EventsService } from "../../../providers/api/api.events.service";
 
 @Component({
     selector: 'page-collect',
@@ -98,6 +99,7 @@ export class CollectPage {
      * @param {StatCollector} statCollector
      * @param {CollectService} collectService
      * @param {AuthenticationService} authenticationService
+     * @param {EventsService} eventsService
      * @param {HandFSM} handFSM
      */
     constructor(
@@ -115,6 +117,7 @@ export class CollectPage {
         private statCollector: StatCollector,
         private collectService: CollectService,
         private authenticationService: AuthenticationService,
+        private eventsService: EventsService,
         private handFSM: HandFSM
     ) {
         this.translateService.get([ 'collect', 'loader', 'actionButton', 'warning' ]).subscribe(t => {
@@ -1250,6 +1253,8 @@ export class CollectPage {
                                     this.fsmContext.players = this.rawPlayerList;
                                     this.saveState();
                                     this.statCollector.endCollect(this.fsmContext);
+                                    this.currentEvent.isCollected = true;
+                                    this.eventsService.addEvent(this.currentEvent);
                                     this.cleanFlowContext();
                                 });
                             }
