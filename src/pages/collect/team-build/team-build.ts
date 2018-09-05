@@ -55,7 +55,7 @@ export class TeamBuildPage {
     ) {
         this.event = navParams.get('event');
 
-        this.settings.subscribe(settings => {
+        this.settingsService.getParametersGame().subscribe(settings => {
             this.settings = settings;
         });
         this.storage.get(this.authenticationService.meta._id + '-players').then(players => {
