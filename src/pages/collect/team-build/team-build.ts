@@ -130,7 +130,7 @@ export class TeamBuildPage {
     }
 
     private endTour() {
-        this.storage.set(this.authenticationService.meta._id + "-tour-home", true).then(() => {
+        this.storage.set(this.authenticationService.meta._id + "-tour-team-build", true).then(() => {
         });
     }
 
