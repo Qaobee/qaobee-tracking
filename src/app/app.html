@@ -9,11 +9,11 @@
     </ion-header>
 
     <ion-content>
-        <ion-list>
+        <ion-list inset>
             <menu-header [user]="user"></menu-header>
-            <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)" color="{{p.color}}">
-                <ion-icon name="{{ p.icon }}" *ngIf="p.icon"></ion-icon>
-                {{p.title}}
+            <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+                <ion-icon name="{{ p.icon }}" *ngIf="p.icon" color="{{p.color}}"></ion-icon>
+                <span color="{{p.color}}">{{p.title}}</span>
             </button>
         </ion-list>
     </ion-content>
