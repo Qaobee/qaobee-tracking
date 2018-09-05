@@ -441,7 +441,7 @@ export class CollectPage {
      * @param  {boolean} newGame
      */
     fillPlayers(playerPositions: any, newGame: boolean) {
-        let difference = newGame ? this.playerPositions : diff(this.playerPositions, playerPositions);
+        let difference = newGame ? this.playerPositions : playerPositions;
         console.debug('[CollectPage] - fillPlayers - difference', difference, this.playerPositions, playerPositions);
         Object.keys(difference).forEach(k => {
             if (k === 'substitutes') {
