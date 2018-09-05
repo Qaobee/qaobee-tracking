@@ -120,7 +120,9 @@ export class TeamBuildPage {
                         tooltipPosition: 'bottom',
                         hidePrev: true,
                         hideNext: true,
-                        showStepNumbers: false
+                        showStepNumbers: false,
+                        exitOnOverlayClick: false,
+                        disableInteraction: true
                     });
                     this.intro.oncomplete(this.endTour.bind(this));
                     this.intro.start();

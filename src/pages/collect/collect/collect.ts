@@ -228,7 +228,9 @@ export class CollectPage {
                         tooltipPosition: 'top',
                         hidePrev: true,
                         hideNext: true,
-                        showStepNumbers: false
+                        showStepNumbers: false,
+                        exitOnOverlayClick: false,
+                        disableInteraction: true
                     });
                     intro.oncomplete(this.endTour.bind(this));
                     intro.start();
