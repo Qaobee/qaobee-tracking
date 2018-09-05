@@ -8,46 +8,50 @@
 </ion-header>
 
 <ion-content>
-  <!-- add button -->
-  <ion-fab bottom right>
-      <button ion-fab large (click)="addEvent($event)" color="danger"><ion-icon name="add"></ion-icon></button>
-  </ion-fab>
-  
-  <!-- refresh list -->
-  <ion-refresher (ionRefresh)="getEvents($event)">
-      <ion-refresher-content
-              pullingIcon="arrow-dropdown"
-              pullingText="{{ 'refresher.label' | translate }}"
-              refreshingSpinner="circles"
-              refreshingText="{{ 'refresher.message' | translate }}">
-      </ion-refresher-content>
-  </ion-refresher>
+    <!-- add button -->
+    <ion-fab bottom right>
+        <button ion-fab large (click)="addEvent($event)" color="danger">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
 
-  <!-- event list -->
-  <ion-list *ngIf="eventList">
+    <!-- refresh list -->
+    <ion-refresher (ionRefresh)="getEvents($event)">
+        <ion-refresher-content
+                pullingIcon="arrow-dropdown"
+                pullingText="{{ 'refresher.label' | translate }}"
+                refreshingSpinner="circles"
+                refreshingText="{{ 'refresher.message' | translate }}">
+        </ion-refresher-content>
+    </ion-refresher>
 
-      <!-- filter list -->
-      <ion-item color="primary">
-        <ion-badge color="danger" item-start>{{eventListSize}}</ion-badge>
-        <ion-searchbar (ionInput)="searchItems($event)"></ion-searchbar>
-      </ion-item>
-      
-      <!-- items -->
-      <div *ngFor="let entry of eventList | keys">
-          <ion-item-divider color="light">{{ entry.key }}</ion-item-divider>
-          <ion-item *ngFor="let event of entry.value" (click)="goToDetail(event, $event)">
-              <h2 class="panel">
-                <ion-icon name="ribbon" *ngIf="event.type.code==='championship'"></ion-icon>
-                <ion-icon name="trophy" *ngIf="event.type.code==='cup'"></ion-icon>
-                <ion-icon name="happy" *ngIf="event.type.code==='friendlyGame'"></ion-icon>
-                {{event.type.label}}
-              </h2>
-              <h2>{{ event.label }}</h2>
-              <h3>{{ event.participants.teamHome.label }} / {{ event.participants.teamVisitor.label }}</h3>
-              <p>{{ event.startDate | date:"mediumDate" }} {{ event.startDate | date:"shortTime" }}</p>
-              <ion-icon item-end name="stopwatch" color="danger" *ngIf="!event.isCollected" (click)="goToStartCollect(event, $event)"></ion-icon>
-              <ion-icon item-end name="stats" color="danger" *ngIf="event.isCollected" (click)="goToViewEventStat(event, $event)"></ion-icon>
-          </ion-item>
-      </div>
-  </ion-list>
+    <!-- event list -->
+    <ion-list *ngIf="eventList">
+
+        <!-- filter list -->
+        <ion-item color="primary">
+            <ion-badge color="danger" item-start>{{eventListSize}}</ion-badge>
+            <ion-searchbar (ionInput)="searchItems($event)"></ion-searchbar>
+        </ion-item>
+
+        <!-- items -->
+        <div *ngFor="let entry of eventList | keys">
+            <ion-item-divider color="light">{{ entry.key }}</ion-item-divider>
+            <ion-item *ngFor="let event of entry.value" (click)="goToDetail(event, $event)">
+                <h2 class="panel">
+                    <ion-icon name="ribbon" *ngIf="event.type.code==='championship'"></ion-icon>
+                    <ion-icon name="trophy" *ngIf="event.type.code==='cup'"></ion-icon>
+                    <ion-icon name="happy" *ngIf="event.type.code==='friendlyGame'"></ion-icon>
+                    {{event.type.label}}
+                </h2>
+                <h2>{{ event.label }}</h2>
+                <h3>{{ event.participants.teamHome.label }} / {{ event.participants.teamVisitor.label }}</h3>
+                <p>{{ event.startDate | date:"mediumDate" }} {{ event.startDate | date:"shortTime" }}</p>
+                <ion-icon item-end name="stopwatch" color="danger" *ngIf="!event.isCollected"
+                          (click)="goToStartCollect(event, $event)"></ion-icon>
+                <ion-icon item-end name="stats" color="danger" *ngIf="event.isCollected"
+                          (click)="goToViewEventStat(event, $event)"></ion-icon>
+            </ion-item>
+        </div>
+    </ion-list>
 </ion-content>

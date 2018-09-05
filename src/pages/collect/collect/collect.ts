@@ -6,12 +6,12 @@ import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
 import {
     ActionSheetController,
+    AlertController,
     LoadingController,
     ModalController,
+    NavController,
     NavParams,
-    ToastController,
-    AlertController,
-    NavController
+    ToastController
 } from 'ionic-angular';
 import _ from "lodash";
 import moment from 'moment';
@@ -33,9 +33,9 @@ import { MessageBus } from '../../../providers/message-bus.service';
 import { Utils } from '../../../providers/utils';
 import { GoalModal } from '../goal-modal/goal-modal';
 import { SubstitutionModal } from '../substitution-modal/substitution-modal';
-import { diff } from 'deep-object-diff';
 import introJs from 'intro.js/intro.js';
 import { StatsModal } from '../stats-modal/stats-modal';
+import { EventsService } from "../../../providers/api/api.events.service";
 
 @Component({
     selector: 'page-collect',
@@ -99,6 +99,7 @@ export class CollectPage {
      * @param {StatCollector} statCollector
      * @param {CollectService} collectService
      * @param {AuthenticationService} authenticationService
+     * @param {EventsService} eventsService
      * @param {HandFSM} handFSM
      */
     constructor(
@@ -116,6 +117,7 @@ export class CollectPage {
         private statCollector: StatCollector,
         private collectService: CollectService,
         private authenticationService: AuthenticationService,
+        private eventsService: EventsService,
         private handFSM: HandFSM
     ) {
         this.translateService.get([ 'collect', 'loader', 'actionButton', 'warning' ]).subscribe(t => {
@@ -228,7 +230,9 @@ export class CollectPage {
                         tooltipPosition: 'top',
                         hidePrev: true,
                         hideNext: true,
-                        showStepNumbers: false
+                        showStepNumbers: false,
+                        exitOnOverlayClick: false,
+                        disableInteraction: true
                     });
                     intro.oncomplete(this.endTour.bind(this));
                     intro.start();
@@ -238,7 +242,7 @@ export class CollectPage {
     }
 
     private endTour() {
-        this.storage.set(this.authenticationService.meta._id + "-tour-home", true).then(() => {
+        this.storage.set(this.authenticationService.meta._id + "-tour-collect", true).then(() => {
         });
     }
 
@@ -387,39 +391,45 @@ export class CollectPage {
             console.debug('[CollectPage] - restoreState - gameState from storage', gameState);
             if (gameState) {
                 this.gameState = gameState;
-                this.fsmContext.lastInMap = this.gameState.lastInMap || {};
-                this.fsmContext.playTimeMap = this.gameState.playTimeMap || {};
-                this.fsmContext.chrono = this.gameState.chrono;
-                this.handFSM.initialState = FSMStates.PAUSED;
-                this.playerList = this.gameState.playerList || [];
-                this.playerList.forEach(k => {
-                    console.debug('[CollectPage] - restoreState - gameState from storage - playerList', k);
-                    this.playerMap[ k.playerId ] = k;
-                });
-                for (let i = 0; i < this.gameState.homeTimeout; i++) {
-                    this.timeoutUsState[ i ] = true;
-                }
-                for (let i = 0; i < this.gameState.visitorTimeout; i++) {
-                    this.timeoutThemState[ i ] = true;
-                }
-                this.playerPositions = this.gameState.positions;
-                this.ground = _.cloneDeep(this.ground);
-                console.debug('[CollectPage] - restoreState - sanctions', this.playerMap);
-                this.gameState.sanctions.forEach(s => {
-                    if (this.playerMap[ s.playerId ] && this.playerMap[ s.playerId ].holder) {
-                        this.playerMap[ s.playerId ].sanction = s.sanction;
+                if (FSMStates.GAME_ENDED !== gameState.state) {
+                    this.fsmContext.lastInMap = this.gameState.lastInMap || {};
+                    this.fsmContext.playTimeMap = this.gameState.playTimeMap || {};
+                    this.fsmContext.chrono = this.gameState.chrono;
+                    this.handFSM.initialState = FSMStates.PAUSED;
+                    this.playerList = this.gameState.playerList || [];
+                    this.playerList.forEach(k => {
+                        console.debug('[CollectPage] - restoreState - gameState from storage - playerList', k);
+                        this.playerMap[ k.playerId ] = k;
+                    });
+                    for (let i = 0; i < this.gameState.homeTimeout; i++) {
+                        this.timeoutUsState[ i ] = true;
                     }
-                });
-                this.checkSanctions();
-                this.storage.get('stats-' + this.currentEvent._id).then((stats: CollectStat[]) => {
-                    console.debug('[CollectPage] - restoreState - fetch stats', stats);
-                    this.setStats(stats || []);
-                    this.handFSM.start(this.fsmContext, FSMStates.PAUSED);
-                    this.handFSM.saveState(this.fsmContext);
+                    for (let i = 0; i < this.gameState.visitorTimeout; i++) {
+                        this.timeoutThemState[ i ] = true;
+                    }
+                    this.playerPositions = this.gameState.positions;
+                    this.ground = _.cloneDeep(this.ground);
+                    console.debug('[CollectPage] - restoreState - sanctions', this.playerMap);
+                    this.gameState.sanctions.forEach(s => {
+                        if (this.playerMap[ s.playerId ] && this.playerMap[ s.playerId ].holder) {
+                            this.playerMap[ s.playerId ].sanction = s.sanction;
+                        }
+                    });
+                    this.checkSanctions();
+                    this.storage.get('stats-' + this.currentEvent._id).then((stats: CollectStat[]) => {
+                        console.debug('[CollectPage] - restoreState - fetch stats', stats);
+                        this.setStats(stats || []);
+                        this.handFSM.start(this.fsmContext, FSMStates.PAUSED);
+                        this.handFSM.saveState(this.fsmContext);
+                        loader.dismiss();
+                        console.debug('[CollectPage] - restoreState - fetch context', 'fsmContext', this.fsmContext, 'gameState', this.gameState);
+                        this.startTour();
+                    });
+                } else {
                     loader.dismiss();
-                    console.debug('[CollectPage] - restoreState - fetch context', 'fsmContext', this.fsmContext, 'gameState', this.gameState);
-                    this.startTour();
-                });
+                    this.presentToast(this.translations.collect.ended_popup_title);
+                    return;
+                }
             } else {
                 console.debug('[CollectPage] - restoreState - new collect', 'playerPositions', this.playerPositions, 'playerList', this.playerList);
                 this.gameState = new GameState();
@@ -441,7 +451,7 @@ export class CollectPage {
      * @param  {boolean} newGame
      */
     fillPlayers(playerPositions: any, newGame: boolean) {
-        let difference = newGame ? this.playerPositions : diff(this.playerPositions, playerPositions);
+        let difference = newGame ? this.playerPositions : playerPositions;
         console.debug('[CollectPage] - fillPlayers - difference', difference, this.playerPositions, playerPositions);
         Object.keys(difference).forEach(k => {
             if (k === 'substitutes') {
@@ -749,7 +759,7 @@ export class CollectPage {
      */
     playButton(event: number) {
         console.debug('[CollectPage] - playButton', event);
-        if (this.handFSM.context.state === FSMStates.GAME_ENDED) {
+        if (FSMStates.GAME_ENDED === this.gameState.state || this.handFSM.context.state === FSMStates.GAME_ENDED) {
             this.presentToast(this.translations.collect.ended_popup_title);
             return;
         } else if (this.handFSM.context.state === FSMStates.INIT) {
@@ -769,7 +779,10 @@ export class CollectPage {
      */
     pauseButton(event: number) {
         console.debug('[CollectPage] - pauseButton', event);
-        if (this.handFSM.trigger(FSMEvents.doPause)) {
+        if (FSMStates.GAME_ENDED === this.gameState.state || this.handFSM.context.state === FSMStates.GAME_ENDED) {
+            this.presentToast(this.translations.collect.ended_popup_title);
+            return;
+        } else if (this.handFSM.trigger(FSMEvents.doPause)) {
             this.fsmContext.paused = true;
         }
     }
@@ -1168,7 +1181,6 @@ export class CollectPage {
         this.fsmContext.paused = true;
         this.gameState.state = this.handFSM.context.state;
         this.saveState();
-        // bus.post(gameState); ?
     }
 
     /**
@@ -1206,37 +1218,55 @@ export class CollectPage {
      */
     stopButton(event: any) {
         console.debug('[CollectPage] - stopButton', event);
-        let alert = this.alertCtrl.create({
-            title: this.translations.warning,
-            message: this.translations.collect.ended_prompt,
-            buttons: [
-                {
-                    text: this.translations.actionButton.Cancel,
-                    role: 'cancel'
-                },
-                {
-                    text: this.translations.actionButton.Ok,
-                    handler: () => {
-                        if (this.handFSM.trigger(FSMEvents.endChrono)) {
-                            this.currentCollect.endDate = moment.utc().valueOf();
-                            this.currentCollect.status = 'done';
-                            this.storage.get(this.authenticationService.meta._id + '-collects').then((collects: any[]) => {
-                                if (!collects) {
-                                    collects = [];
-                                }
-                                collects.push(this.currentCollect);
-                                this.storage.set(this.authenticationService.meta._id + '-collects', collects);
-                                this.saveSats();
-                                this.saveState();
-                                this.statCollector.endCollect(this.fsmContext);
-                                this.cleanFlowContext();
-                            });
+        if (FSMStates.GAME_ENDED !== this.gameState.state) {
+            let alert = this.alertCtrl.create({
+                title: this.translations.warning,
+                message: this.translations.collect.ended_prompt,
+                buttons: [
+                    {
+                        text: this.translations.actionButton.Cancel,
+                        role: 'cancel'
+                    },
+                    {
+                        text: this.translations.actionButton.Ok,
+                        handler: () => {
+                            if (this.handFSM.trigger(FSMEvents.endChrono)) {
+                                this.currentCollect.endDate = moment.utc().valueOf();
+                                this.currentCollect.status = 'done';
+                                this.storage.get(this.authenticationService.meta._id + '-collects').then((collects: any[]) => {
+                                    if (!collects) {
+                                        collects = [];
+                                    }
+                                    const index = collects.findIndex(value => {
+                                        return value._id = this.currentCollect._id
+                                    }, this);
+                                    if (index === -1) {
+                                        collects.push(this.currentCollect);
+                                    } else {
+                                        collects[ index ] = this.currentCollect;
+                                    }
+
+                                    this.storage.set(this.authenticationService.meta._id + '-collects', collects);
+                                    console.debug('[CollectPage] - collects', collects);
+                                    console.debug('[CollectPage] - this.rawPlayerList', this.rawPlayerList);
+                                    this.saveSats();
+                                    this.fsmContext.players = this.rawPlayerList;
+                                    this.saveState();
+                                    this.statCollector.endCollect(this.fsmContext);
+                                    this.currentEvent.isCollected = true;
+                                    this.eventsService.addEvent(this.currentEvent);
+                                    this.cleanFlowContext();
+                                });
+                            }
                         }
                     }
-                }
-            ]
-        });
-        alert.present();
+                ]
+            });
+            alert.present();
+        } else {
+            this.presentToast(this.translations.collect.ended_popup_title);
+            return;
+        }
     }
 
     /**

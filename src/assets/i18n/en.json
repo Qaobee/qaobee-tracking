@@ -356,8 +356,8 @@
   "showcase": {
     "navigation": {
       "skip": "Skip",
-      "next": ">",
-      "prev": "<",
+      "next": "Next",
+      "prev": "Previous",
       "ok": "Done"
     },
     "home": {

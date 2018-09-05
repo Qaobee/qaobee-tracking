@@ -120,7 +120,9 @@ export class TeamBuildPage {
                         tooltipPosition: 'bottom',
                         hidePrev: true,
                         hideNext: true,
-                        showStepNumbers: false
+                        showStepNumbers: false,
+                        exitOnOverlayClick: false,
+                        disableInteraction: true
                     });
                     this.intro.oncomplete(this.endTour.bind(this));
                     this.intro.start();
@@ -130,7 +132,7 @@ export class TeamBuildPage {
     }
 
     private endTour() {
-        this.storage.set(this.authenticationService.meta._id + "-tour-home", true).then(() => {
+        this.storage.set(this.authenticationService.meta._id + "-tour-team-build", true).then(() => {
         });
     }
 
