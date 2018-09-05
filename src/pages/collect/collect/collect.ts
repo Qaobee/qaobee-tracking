@@ -238,7 +238,7 @@ export class CollectPage {
     }
 
     private endTour() {
-        this.storage.set(this.authenticationService.meta._id + "-tour-home", true).then(() => {
+        this.storage.set(this.authenticationService.meta._id + "-tour-collect", true).then(() => {
         });
     }
 
