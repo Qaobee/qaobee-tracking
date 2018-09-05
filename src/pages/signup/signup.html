@@ -33,7 +33,7 @@
           </ion-item>
           <ion-item>
           <ng2-password-strength-bar
-              [passwordToCheck]="userForm.controls.password.value"
+              [passwordToCheck]="userForm.controls['password.value']"
               barLabel="{{ 'signup.password_strength' | translate}}">
           </ng2-password-strength-bar>
           </ion-item>
@@ -42,7 +42,7 @@
               <ion-input type="password" id="confirmPassword" formControlName="confirmPassword" required
                         show-password></ion-input>
           </ion-item>
-          <p *ngIf="userForm.controls.confirmPassword.touched && userForm.hasError('mismatchedPasswords') && userForm.controls.password.valid"
+          <p *ngIf="userForm.controls['confirmPasswordKey'].touched && userForm.hasError('mismatchedPasswords') && userForm.controls['password'].valid"
             danger padding-left>{{ 'signup.error.confirmPassword' | translate }}</p>
           
           <ion-item>
