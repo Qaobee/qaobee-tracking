@@ -1186,8 +1186,10 @@ export class CollectPage {
      * @param  {any} event
      */
     statsButton(event: any) {
-        console.debug('[CollectPage] - statsButton', event);
+        console.debug('[CollectPage] - statsButton', event, this.fsmContext.paused);
         if (this.fsmContext.paused || this.handFSM.trigger(FSMEvents.doPause)) {
+            this.fsmContext.paused = true;
+            this.messageBus.broadcast(ChronoComponent.PAUSE, {});
             let statsModal = this.modalController.create(StatsModal, {
                 playerList: this.rawPlayerList,
                 event: this.currentEvent,
