@@ -338,8 +338,8 @@
   "showcase": {
     "navigation": {
       "skip": "Passer",
-      "next": ">",
-      "prev": "<",
+      "next": "Suivant",
+      "prev": "Précédent",
       "ok": "Terminer"
     },
     "home": {
