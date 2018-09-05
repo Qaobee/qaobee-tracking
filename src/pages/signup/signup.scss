@@ -35,7 +35,6 @@ page-signup {
 
       #cgu {
         display: block;
-        margin: 20px auto;
         font-size: 10px;
         color:color($colors, danger, base);
       }
@@ -53,6 +52,11 @@ page-signup {
         border-bottom-color: color($colors, dark, base);
         -webkit-box-shadow: inset 0 -1px 0 0 color($colors, dark, base);
         box-shadow: inset 0 -1px 0 0 color($colors, dark, base);
+      }
+
+      .errorMsg {
+        color:color($colors, danger, base);
+        font-size: 10px;
       }
 
 }

@@ -32,7 +32,7 @@ export class SignupPage {
         this.userForm = this.formBuilder.group({
             'login': [ '', Validators.compose([ Validators.required, Validators.pattern(/[a-zA-Z0-9_\-]{4,}/) ]) ],
             'email': [ '', Validators.compose([ Validators.required, Validators.email ]) ],
-            'password': [ '', [ Validators.required ] ],
+            'password': [ '', Validators.compose([ Validators.required, Validators.pattern(/[a-zA-Z0-9_\-]{4,}/) ]) ],
             'confirmPassword': [ '', [ Validators.required ] ],
             'cgu': [ 'false', Validators.compose([ Validators.required, Validators.requiredTrue ]) ]
         }, {validator: this.matchingPasswords('password', 'confirmPassword')});
@@ -70,7 +70,6 @@ export class SignupPage {
      * @param formVal
      */
     createAccount(formVal) {
-        console.log('[SignupPage] - createAccount', formVal);
         if (this.userForm.valid) {
             let account = {login: formVal.login, passwd: formVal.password};
             let contact = {email: formVal.email};
@@ -93,7 +92,6 @@ export class SignupPage {
                 } else {
                     // Enregistrement
                     this.userService.registerUser(user).subscribe(rs => {
-                        console.log('[SignupPage] - createAccount - registerUser');
                         if (rs.person !== 'null' && rs.person._id !== 'null') {
                             this.navCtrl.push(SignupEndPage, {});
                         }

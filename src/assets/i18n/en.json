@@ -94,6 +94,13 @@
     "TitleNavBar": "Logout",
     "Title": "Do you really want to disconnect?"
   },
+  "sync": {
+    "TitleNavBar": "Synchronization",
+    "Events": "Events",
+    "Effectives": "Effectives",
+    "Collects": "Collects",
+    "Statistics": "Statistiques"
+  },
   "signup": {
     "TitleNavBar": "Subscription",
     "Title": "Subscription",
@@ -105,17 +112,28 @@
     "valid": "Submit",
     "password_strength": "Password strength:",
     "cgu": {
-      "label": "Accept legal agreement and the privacy policy",
-      "cgu": "Legal agreement",
-      "privacy-policy": "Privacy policy"
+      "label": "I agree whith CGU and confidentiality's terms",
+      "cgu": "CGU",
+      "privacy-policy": "Confidential's terms"
+    },
+    "error": {
+      "login": "The minimum size of login is 4 caracters",
+      "email": "Format mail invalid",
+      "nonunique": "The login already exist",
+      "password": {
+        "short": "The minimum size of login is 6 caracters",
+        "different": "Password not match"
+      },
+      "passwdStrength": "Strength password"
     }
   },
-  "sync": {
-    "TitleNavBar": "Synchronization",
-    "Events": "Events",
-    "Effectives": "Effectives",
-    "Collects": "Collects",
-    "Statistics": "Statistics"
+  "signupStartDonePage": {
+    "title": "Congratulations ! Your account is created!",
+    "line1": "Your registration is almost over, a little effort!",
+    "line2": "Go to your mailbox to validate your Qaobee account.",
+    "line3": "See you soon on qaobee.com!",
+    "signature": "The Qaobee team",
+    "buttonHome": "Home"
   },
   "menu": {
     "Login": "Signin",

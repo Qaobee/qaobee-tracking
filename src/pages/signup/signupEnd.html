@@ -1,39 +1,27 @@
-<ion-header>
-  <ion-navbar hideBackButton="true">
-    <ion-title>{{'signupEnd.TitleNavBar' | translate}}</ion-title>
-    <ion-buttons end>
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
+<<ion-header>
+    <ion-navbar>
+        <ion-title>{{'signup.TitleNavBar' | translate}}</ion-title>
+        <ion-buttons end>
+            <button ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="cover">
+  <div class="overlay"></div>
+  <div class="over">
+    <h4 translate="signupStartDonePage.title"></h4>
 
-  <div class="center icon-block">
-    <div class="accent-text-color">
-      <span class="medium material-icons md-60">verified_user</span>
-    </div>
-    
-    <h4 class="center light-text-color" translate="signupStartDonePage.title">
-      Félicitation et merci de choisir Qaobee !
-    </h4>
+    <p>{{'signupStartDonePage.line1' | translate}}</p>
+    <p>{{'signupStartDonePage.line2' | translate}}</p>
+  
+    <button id="loginButton" ion-button icon-left medium center-align (tap)="goToLogin()" type="submit">
+        {{ 'welcome.Login' | translate }}
+    </button>
   </div>
 
-  <div>
-      <span ion-text color="danger">
-        Votre inscription est presque terminée, encore un petit effort !<br>
-        Rendez-vous dans votre boîte mail pour valider votre compte Qaobee.<br>
-      </span>
-    </div>
-
-  <div>
-    <span class="right ng-binding">L'équipe Qaobee</span>
-  </div>
-
-  <button id="loginButton" ion-button icon-left medium (tap)="goToLogin()" type="submit">
-      {{ 'welcome.Login' | translate }}
-  </button>
+  
 
 </ion-content>

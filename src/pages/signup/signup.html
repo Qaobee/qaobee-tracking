@@ -14,45 +14,50 @@
   <div class="over">
     <form [formGroup]="userForm">
         <ion-list>
-          <ion-list-header color="primary"><span id="signupTitle">{{'signup.Title' | translate}}</span></ion-list-header>
           <ion-item>
-              <ion-label stacked>{{ 'signup.login' | translate }}</ion-label>
+              <ion-label color="dark" stacked>{{ 'signup.login' | translate }}</ion-label>
               <ion-input type="text" formControlName="login" id="login" autocomplete="login" clearInput></ion-input>
           </ion-item>
-          <p *ngIf="!isValid('login')" danger padding-left>{{ 'signup.error.login' | translate }}</p>
-
+          <ion-item *ngIf="!isValid('login')">
+            <p class="errorMsg">{{ 'signup.error.login' | translate }}</p>
+          </ion-item>
           <ion-item>
               <ion-label stacked>{{ 'signup.email' | translate }}</ion-label>
               <ion-input type="text" formControlName="email" id="email" autocomplete="email" clearInput></ion-input>
           </ion-item>
-          <p *ngIf="!isValid('email')" danger padding-left>{{ 'signup.error.email' | translate }}</p>
-
+          <ion-item *ngIf="!isValid('email')">
+            <p class="errorMsg">{{ 'signup.error.email' | translate }}</p>
+          </ion-item>
           <ion-item>
               <ion-label stacked>{{ 'signup.password' | translate }}</ion-label>
               <ion-input type="password" formControlName="password" id="password" clearInput></ion-input>
           </ion-item>
-          <ion-item>
-          <ng2-password-strength-bar
-              [passwordToCheck]="userForm.controls['password.value']"
-              barLabel="{{ 'signup.password_strength' | translate}}">
-          </ng2-password-strength-bar>
+          <ion-item *ngIf="!isValid('password')">
+              <p class="errorMsg">{{ 'signup.error.password.short' | translate }}</p>
+            </ion-item>
+          <ion-item *ngIf="userForm.controls.password.touched">
+            <ng2-password-strength-bar
+                [passwordToCheck]="userForm.controls.password.value"
+                barLabel="{{ 'signup.password_strength' | translate}}">
+            </ng2-password-strength-bar>
           </ion-item>
           <ion-item>
               <ion-label stacked>{{ 'signup.confirmPassword' | translate }}</ion-label>
               <ion-input type="password" id="confirmPassword" formControlName="confirmPassword" required
                         show-password></ion-input>
           </ion-item>
-          <p *ngIf="userForm.controls['confirmPasswordKey'].touched && userForm.hasError('mismatchedPasswords') && userForm.controls['password'].valid"
-            danger padding-left>{{ 'signup.error.confirmPassword' | translate }}</p>
+          <ion-item *ngIf="userForm.controls.confirmPassword.touched && userForm.hasError('mismatchedPasswords') && userForm.controls.password.valid">
+            <p class="errorMsg">{{ 'signup.error.password.different' | translate }}</p>
+          </ion-item>
           
           <ion-item>
             <ion-checkbox formControlName="cgu" [checked]="false"></ion-checkbox>
-            <ion-label>{{ 'signup.cgu.label' | translate }}</ion-label>
+            <ion-label stacked>{{ 'signup.cgu.label' | translate }}</ion-label>
         </ion-item>
-        <div id="cgu" color="white">
+        <ion-item id="cgu" center>
             <a href="https://www.qaobee.com/#/legal-agreement" target="_blank">{{'signup.cgu.cgu' | translate }}</a> |
             <a href="https://www.qaobee.com/#/privacy-policy" target="_blank">{{'signup.cgu.privacy-policy' | translate}}</a>
-        </div>
+        </ion-item>
         
         <ion-row>
           <ion-col>

@@ -115,7 +115,25 @@
       "label": "Accèpter les CGU et la politique de respect de la vie privée",
       "cgu": "CGU",
       "privacy-policy": "Politique de respect de la vie privée"
+    },
+    "error": {
+      "login": "L'identifiant doit contenir 4 caractères minimum",
+      "email": "Format E-mail invalide",
+      "nonunique": "Le nom d'utilisateur que vous avez choisi existe déjà",
+      "password": {
+        "short": "Le mot de passe doit contenir 6 caractères minimum",
+        "different": "Les mots de passe xont différents"
+      },
+      "passwdStrength": "Robustesse du mot de passe"
     }
+  },
+  "signupStartDonePage": {
+    "title": "Félicitation et merci de choisir Qaobee !",
+    "line1": "Votre inscription est presque terminée, encore un petit effort !",
+    "line2": "Rendez-vous dans votre boîte mail pour valider votre compte Qaobee.",
+    "line3": "A très vite sur qaobee.com !",
+    "signature": "L'équipe Qaobee",
+    "buttonHome": "Accueil"
   },
   "menu": {
     "Home": "Accueil",
