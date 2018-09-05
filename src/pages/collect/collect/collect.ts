@@ -6,12 +6,12 @@ import { Storage } from '@ionic/storage';
 import { TranslateService } from '@ngx-translate/core';
 import {
     ActionSheetController,
+    AlertController,
     LoadingController,
     ModalController,
+    NavController,
     NavParams,
-    ToastController,
-    AlertController,
-    NavController
+    ToastController
 } from 'ionic-angular';
 import _ from "lodash";
 import moment from 'moment';
@@ -33,7 +33,6 @@ import { MessageBus } from '../../../providers/message-bus.service';
 import { Utils } from '../../../providers/utils';
 import { GoalModal } from '../goal-modal/goal-modal';
 import { SubstitutionModal } from '../substitution-modal/substitution-modal';
-import { diff } from 'deep-object-diff';
 import introJs from 'intro.js/intro.js';
 import { StatsModal } from '../stats-modal/stats-modal';
 
