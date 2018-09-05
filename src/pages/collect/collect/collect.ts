@@ -388,39 +388,45 @@ export class CollectPage {
             console.debug('[CollectPage] - restoreState - gameState from storage', gameState);
             if (gameState) {
                 this.gameState = gameState;
-                this.fsmContext.lastInMap = this.gameState.lastInMap || {};
-                this.fsmContext.playTimeMap = this.gameState.playTimeMap || {};
-                this.fsmContext.chrono = this.gameState.chrono;
-                this.handFSM.initialState = FSMStates.PAUSED;
-                this.playerList = this.gameState.playerList || [];
-                this.playerList.forEach(k => {
-                    console.debug('[CollectPage] - restoreState - gameState from storage - playerList', k);
-                    this.playerMap[ k.playerId ] = k;
-                });
-                for (let i = 0; i < this.gameState.homeTimeout; i++) {
-                    this.timeoutUsState[ i ] = true;
-                }
-                for (let i = 0; i < this.gameState.visitorTimeout; i++) {
-                    this.timeoutThemState[ i ] = true;
-                }
-                this.playerPositions = this.gameState.positions;
-                this.ground = _.cloneDeep(this.ground);
-                console.debug('[CollectPage] - restoreState - sanctions', this.playerMap);
-                this.gameState.sanctions.forEach(s => {
-                    if (this.playerMap[ s.playerId ] && this.playerMap[ s.playerId ].holder) {
-                        this.playerMap[ s.playerId ].sanction = s.sanction;
+                if (FSMStates.GAME_ENDED !== gameState.state) {
+                    this.fsmContext.lastInMap = this.gameState.lastInMap || {};
+                    this.fsmContext.playTimeMap = this.gameState.playTimeMap || {};
+                    this.fsmContext.chrono = this.gameState.chrono;
+                    this.handFSM.initialState = FSMStates.PAUSED;
+                    this.playerList = this.gameState.playerList || [];
+                    this.playerList.forEach(k => {
+                        console.debug('[CollectPage] - restoreState - gameState from storage - playerList', k);
+                        this.playerMap[ k.playerId ] = k;
+                    });
+                    for (let i = 0; i < this.gameState.homeTimeout; i++) {
+                        this.timeoutUsState[ i ] = true;
                     }
-                });
-                this.checkSanctions();
-                this.storage.get('stats-' + this.currentEvent._id).then((stats: CollectStat[]) => {
-                    console.debug('[CollectPage] - restoreState - fetch stats', stats);
-                    this.setStats(stats || []);
-                    this.handFSM.start(this.fsmContext, FSMStates.PAUSED);
-                    this.handFSM.saveState(this.fsmContext);
+                    for (let i = 0; i < this.gameState.visitorTimeout; i++) {
+                        this.timeoutThemState[ i ] = true;
+                    }
+                    this.playerPositions = this.gameState.positions;
+                    this.ground = _.cloneDeep(this.ground);
+                    console.debug('[CollectPage] - restoreState - sanctions', this.playerMap);
+                    this.gameState.sanctions.forEach(s => {
+                        if (this.playerMap[ s.playerId ] && this.playerMap[ s.playerId ].holder) {
+                            this.playerMap[ s.playerId ].sanction = s.sanction;
+                        }
+                    });
+                    this.checkSanctions();
+                    this.storage.get('stats-' + this.currentEvent._id).then((stats: CollectStat[]) => {
+                        console.debug('[CollectPage] - restoreState - fetch stats', stats);
+                        this.setStats(stats || []);
+                        this.handFSM.start(this.fsmContext, FSMStates.PAUSED);
+                        this.handFSM.saveState(this.fsmContext);
+                        loader.dismiss();
+                        console.debug('[CollectPage] - restoreState - fetch context', 'fsmContext', this.fsmContext, 'gameState', this.gameState);
+                        this.startTour();
+                    });
+                } else {
                     loader.dismiss();
-                    console.debug('[CollectPage] - restoreState - fetch context', 'fsmContext', this.fsmContext, 'gameState', this.gameState);
-                    this.startTour();
-                });
+                    this.presentToast(this.translations.collect.ended_popup_title);
+                    return;
+                }
             } else {
                 console.debug('[CollectPage] - restoreState - new collect', 'playerPositions', this.playerPositions, 'playerList', this.playerList);
                 this.gameState = new GameState();
@@ -750,7 +756,7 @@ export class CollectPage {
      */
     playButton(event: number) {
         console.debug('[CollectPage] - playButton', event);
-        if (this.handFSM.context.state === FSMStates.GAME_ENDED) {
+        if (FSMStates.GAME_ENDED === this.gameState.state || this.handFSM.context.state === FSMStates.GAME_ENDED) {
             this.presentToast(this.translations.collect.ended_popup_title);
             return;
         } else if (this.handFSM.context.state === FSMStates.INIT) {
@@ -770,7 +776,10 @@ export class CollectPage {
      */
     pauseButton(event: number) {
         console.debug('[CollectPage] - pauseButton', event);
-        if (this.handFSM.trigger(FSMEvents.doPause)) {
+        if (FSMStates.GAME_ENDED === this.gameState.state || this.handFSM.context.state === FSMStates.GAME_ENDED) {
+            this.presentToast(this.translations.collect.ended_popup_title);
+            return;
+        } else if (this.handFSM.trigger(FSMEvents.doPause)) {
             this.fsmContext.paused = true;
         }
     }
@@ -1169,7 +1178,6 @@ export class CollectPage {
         this.fsmContext.paused = true;
         this.gameState.state = this.handFSM.context.state;
         this.saveState();
-        // bus.post(gameState); ?
     }
 
     /**
@@ -1207,37 +1215,53 @@ export class CollectPage {
      */
     stopButton(event: any) {
         console.debug('[CollectPage] - stopButton', event);
-        let alert = this.alertCtrl.create({
-            title: this.translations.warning,
-            message: this.translations.collect.ended_prompt,
-            buttons: [
-                {
-                    text: this.translations.actionButton.Cancel,
-                    role: 'cancel'
-                },
-                {
-                    text: this.translations.actionButton.Ok,
-                    handler: () => {
-                        if (this.handFSM.trigger(FSMEvents.endChrono)) {
-                            this.currentCollect.endDate = moment.utc().valueOf();
-                            this.currentCollect.status = 'done';
-                            this.storage.get(this.authenticationService.meta._id + '-collects').then((collects: any[]) => {
-                                if (!collects) {
-                                    collects = [];
-                                }
-                                collects.push(this.currentCollect);
-                                this.storage.set(this.authenticationService.meta._id + '-collects', collects);
-                                this.saveSats();
-                                this.saveState();
-                                this.statCollector.endCollect(this.fsmContext);
-                                this.cleanFlowContext();
-                            });
+        if (FSMStates.GAME_ENDED !== this.gameState.state) {
+            let alert = this.alertCtrl.create({
+                title: this.translations.warning,
+                message: this.translations.collect.ended_prompt,
+                buttons: [
+                    {
+                        text: this.translations.actionButton.Cancel,
+                        role: 'cancel'
+                    },
+                    {
+                        text: this.translations.actionButton.Ok,
+                        handler: () => {
+                            if (this.handFSM.trigger(FSMEvents.endChrono)) {
+                                this.currentCollect.endDate = moment.utc().valueOf();
+                                this.currentCollect.status = 'done';
+                                this.storage.get(this.authenticationService.meta._id + '-collects').then((collects: any[]) => {
+                                    if (!collects) {
+                                        collects = [];
+                                    }
+                                    const index = collects.findIndex(value => {
+                                        return value._id = this.currentCollect._id
+                                    }, this);
+                                    if (index === -1) {
+                                        collects.push(this.currentCollect);
+                                    } else {
+                                        collects[ index ] = this.currentCollect;
+                                    }
+
+                                    this.storage.set(this.authenticationService.meta._id + '-collects', collects);
+                                    console.debug('[CollectPage] - collects', collects);
+                                    console.debug('[CollectPage] - this.rawPlayerList', this.rawPlayerList);
+                                    this.saveSats();
+                                    this.fsmContext.players = this.rawPlayerList;
+                                    this.saveState();
+                                    this.statCollector.endCollect(this.fsmContext);
+                                    this.cleanFlowContext();
+                                });
+                            }
                         }
                     }
-                }
-            ]
-        });
-        alert.present();
+                ]
+            });
+            alert.present();
+        } else {
+            this.presentToast(this.translations.collect.ended_popup_title);
+            return;
+        }
     }
 
     /**

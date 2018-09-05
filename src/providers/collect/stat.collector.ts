@@ -41,14 +41,14 @@ export class StatCollector {
         if (context.gamePhase) {
             evt.attack = context.gamePhase.attack;
         }
-        console.debug('[StatCollector] - eventBuilder - code : ' +code+' - '+value);
+        console.debug('[StatCollector] - eventBuilder - code : ', code, value);
         if (typeof value === 'string') {
             evt.value = value;
         } else {
             evt.intValue = value;
         }
 
-        console.debug('[StatCollector] - eventBuilder - evt : ' +evt);
+        console.debug('[StatCollector] - eventBuilder - evt : ', evt);
         return evt;
     }
 
@@ -72,11 +72,13 @@ export class StatCollector {
      * @param {FSMContext} context
      */
     endCollect(context: FSMContext) {
+        console.debug('[StatCollector] - endCollect - context.players', context.players);
         if (context.gamePhase) {
             this.switchPhase(context, context.chrono - context.gamePhase.startTime);
         }
 
         context.players.forEach(rp => {
+            console.debug('[StatCollector] - endCollect', rp);
             if (rp.holder) {
                 let lastIn = 0;
                 if (context.lastInMap.hasOwnProperty(rp.playerId)) {
@@ -141,6 +143,7 @@ export class StatCollector {
         if (playerId) {
             stat.owner.push(playerId);
         }
+        console.debug('[StatCollector] - totalPlayTime', stat, 'context.playTimeMap[ playerId ]', context.playTimeMap[ playerId ]);
         this.messageBus.broadcast(StatCollector.STAT, stat);
     }
 
@@ -165,7 +168,7 @@ export class StatCollector {
      * @param  {string} playerId
      */
     ground(context: FSMContext, code: StatType, area: string, playerId: string) {
-        console.debug('StatCollector - goalTarget - playerId =>' +playerId);
+        console.debug('StatCollector - goalTarget - playerId =>' + playerId);
         let stat = this.eventBuilder(context, code, area);
         if (playerId) {
             stat.owner.push(playerId);
@@ -180,7 +183,7 @@ export class StatCollector {
      * @param  {string} playerId
      */
     goalTarget(context: FSMContext, code: StatType, target: string, playerId: string) {
-        console.debug('StatCollector - goalTarget - playerId =>' +playerId);
+        console.debug('StatCollector - goalTarget - playerId =>' + playerId);
         let stat = this.eventBuilder(context, code, target);
         if (playerId) {
             stat.owner.push(playerId);
@@ -243,7 +246,7 @@ export class StatCollector {
      * @param  {string} playerId
      */
     goalConceded(context: FSMContext, playerId: string) {
-        console.debug('StatCollector - goalConceded - playerId =>' +playerId);
+        console.debug('StatCollector - goalConceded - playerId =>' + playerId);
         let stat = this.eventBuilder(context, StatType.GOAL_CONCEDED, 1);
         if (playerId) {
             stat.owner.push(playerId);
