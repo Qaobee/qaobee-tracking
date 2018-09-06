@@ -50,6 +50,7 @@ export class PlayerListPage {
     private getPlayers(refresher: Refresher) {
         this.personService.getListPersonSandbox(this.authenticationService.meta._id).subscribe(list => {
             this.playerList = list;
+            console.debug('[PlayerListPage] - getPlayers', this.playerList);
             this.playerListSize = this.playerList.length;
             this.storage.set(this.authenticationService.meta._id + '-players', list);
             if (refresher) {
@@ -68,6 +69,7 @@ export class PlayerListPage {
             } else {
                 this.playerList = players;
                 this.playerListSize = players.length;
+                console.debug('[PlayerListPage] - retrievePlayerList', this.playerList);
             }
         })
     }

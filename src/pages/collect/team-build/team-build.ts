@@ -66,7 +66,7 @@ export class TeamBuildPage {
                 this.getPlayers();
             } else {
                 console.debug('[TeamBuildPage] - constructor', players);
-                this.playerList = players;
+                this.playerList = players.filter((p)=>!p.desactivated || p.desactivated === 'false');
                 this.playerListSize = players.length;
             }
         });
@@ -185,7 +185,7 @@ export class TeamBuildPage {
     private getPlayers() {
         this.personService.getListPersonSandbox(this.authenticationService.meta._id).subscribe((players: any[]) => {
             console.debug('[TeamBuildPage] - getPlayers', players);
-            this.playerList = players;
+            this.playerList = players.filter((p)=>!p.desactivated || p.desactivated === 'false');
             this.playerListSize = this.playerList.length;
             this.storage.set(this.authenticationService.meta._id + '-players', players);
         });
