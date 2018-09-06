@@ -15,14 +15,8 @@
 <ion-content>
   <ion-item class="enteteLight">
     <ion-row>
-      <ion-col><ion-avatar>
-          <img src="assets/imgs/user.png" alt="avatar">
-        </ion-avatar></ion-col>
       <ion-col>
-        <h1>{{team.firstname}} {{team.name}}</h1>
-      </ion-col>
-      <ion-col text-right>
-        <ion-badge color="secondary">{{team.status.squadnumber}}</ion-badge>
+        <h1>{{team.label}}</h1>
       </ion-col>
     </ion-row>
 	</ion-item>
@@ -33,51 +27,19 @@
 				<stats-shoot-efficiency 
 					[ownerId]="ownerId" 
 					[numberMatch]="numberMatch" 
-					[positionType]="team.status.positionType.code">
+					[positionType]="'player'">
 				</stats-shoot-efficiency>
 		</ion-item>
 
-		<!-- team's use -->
 		<ion-item>
-			<ion-row text-center>
-				<ion-col>
-					<h1>Utilisation</h1>
-				</ion-col>
-			</ion-row>
-	
-			<ion-row text-center class="enteteDark">
-				<ion-col class="borderTable">
-					<h3>Nb match</h3>
-				</ion-col>
-				<ion-col class="borderTable">
-					<h3>Titulaire</h3>
-				</ion-col>
-				<ion-col class="borderTable">
-					<h3>Tps jeu Moy.</h3>
-				</ion-col>
-			</ion-row>
-			
-			<ion-row text-center class="enteteLight">
-				<ion-col class="borderTable">
-					<h2>{{numberMatch}}</h2>
-				</ion-col>
-				<ion-col class="borderTable">
-					<h2>{{numberHolder}}</h2>
-				</ion-col>
-				<ion-col class="borderTable">
-					<h2>{{avgPlaytime}} '</h2>
-				</ion-col>
-			</ion-row>
+			<stats-shoot-efficiency 
+				[ownerId]="ownerId" 
+				[numberMatch]="numberMatch" 
+				[positionType]="'goalkeeper'">
+			</stats-shoot-efficiency>
+	</ion-item>
 
-			<ion-row text-right class="enteteLight">
-				<ion-col>
-					<h3>
-						{{'component.stats.detail' | translate}} <ion-icon  name="eye"></ion-icon>
-					</h3>
-				</ion-col>
-			</ion-row>
-
-		</ion-item>
+		
 	
 		<!-- team's efficiency -->
 		<ion-item>

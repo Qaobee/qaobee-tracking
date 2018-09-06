@@ -74,6 +74,9 @@ export class TeamListPage {
                 });
                 this.myTeamListSize = this.teams.myTeams.lenght;
             }
+            if (refresher) {
+                refresher.complete();
+            }
         });
 
         // Retreive adversary team list

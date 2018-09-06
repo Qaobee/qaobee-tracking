@@ -151,13 +151,33 @@
   "team": {
     "TitleNavBarTeamList": "Teams",
     "TitleMyTeamList": "My Teams",
-    "TitleAdversaryTeamList": "My adversaries"
+    "TitleAdversaryTeamList": "My adversaries",
+    "TitleNavBarTeam":"Team's detail",
+    "confirmDesactivate": {
+      "title": "Disable team",
+      "message": "the team will be not delete, but will do not present on team's list",
+      "buttonLabelCancel": "Cancel",
+      "buttonLabelConfirm": "Ok"
+    },
+    "confirmActivate": {
+      "title": "Enable team",
+      "message": "Confirm enable team ?",
+      "buttonLabelCancel": "Cancel",
+      "buttonLabelConfirm": "Ok"
+    },
+    "messages": {
+      "updateDone": "Team update done",
+      "createDone": "The team has been created",
+      "updateFail": "A problem occurs during the team's update",
+      "createFail": "A problem occurs during the team's creation"
+    }
   },
   "player": {
     "TitleNavBarPlayer": "Player",
     "TitleNavBarPlayerStats": "Player's stats",
     "TitleNavBarPlayerEdit": "Player Edit",
     "TitleNavBarPlayerList": "Player list",
+    "TitleNavBarTeamStats":"Stats de l'équipe",
     "labels": {
       "mesuration": "Mesuration",
       "weight": "Weight",
