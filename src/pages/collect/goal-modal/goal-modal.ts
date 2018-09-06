@@ -8,6 +8,8 @@ import {
     transition
 } from '@angular/animations';
 import { ViewController } from 'ionic-angular';
+import { CollectService } from "../../../providers/api/api.collect.service";
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
     selector: 'goal-modal',
@@ -106,9 +108,19 @@ export class GoalModal {
     /**
      *
      * @param {ViewController} viewCtrl
+     * @param {GoogleAnalytics} ga
      */
-    constructor(public viewCtrl: ViewController) {
+    constructor(public viewCtrl: ViewController,
+                private ga: GoogleAnalytics) {
         console.debug('[GoalModal] constructor');
+    }
+
+
+    /**
+     *
+     */
+    ionViewDidEnter() {
+        this.ga.trackView('GoalModal');
     }
 
     /**

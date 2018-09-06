@@ -4,6 +4,7 @@ import { PersonService } from '../../../providers/api/api.person.service';
 import { PlayerUpsertPage } from '../player-upsert/player-upsert';
 import { PlayerStatsPage } from '../player-stats/player-stats';
 import { TranslateService } from '@ngx-translate/core';
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
     selector: 'page-player-detail',
@@ -20,13 +21,22 @@ export class PlayerDetailPage {
      * @param personService
      * @param alertCtrl
      * @param translateService
+     * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private personService: PersonService,
                 private alertCtrl: AlertController,
-                private translateService: TranslateService) {
+                private translateService: TranslateService,
+                private ga: GoogleAnalytics) {
         this.player = navParams.get('player');
+    }
+
+    /**
+     *
+     */
+    ionViewDidEnter() {
+        this.ga.trackView('PlayerDetailPage');
     }
 
     /**

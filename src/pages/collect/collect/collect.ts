@@ -36,6 +36,7 @@ import { SubstitutionModal } from '../substitution-modal/substitution-modal';
 import introJs from 'intro.js/intro.js';
 import { StatsModal } from '../stats-modal/stats-modal';
 import { EventsService } from "../../../providers/api/api.events.service";
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
     selector: 'page-collect',
@@ -101,6 +102,7 @@ export class CollectPage {
      * @param {AuthenticationService} authenticationService
      * @param {EventsService} eventsService
      * @param {HandFSM} handFSM
+     * @param {GoogleAnalytics} ga
      */
     constructor(
         public navParams: NavParams,
@@ -118,7 +120,8 @@ export class CollectPage {
         private collectService: CollectService,
         private authenticationService: AuthenticationService,
         private eventsService: EventsService,
-        private handFSM: HandFSM
+        private handFSM: HandFSM,
+        private ga: GoogleAnalytics
     ) {
         this.translateService.get([ 'collect', 'loader', 'actionButton', 'warning' ]).subscribe(t => {
             this.translations = {
@@ -171,6 +174,13 @@ export class CollectPage {
             console.debug('[CollectPage] - constructor - onStatCollector.UPLOAD_STAT', evt);
             this.uploadStats();
         });
+    }
+
+    /**
+     *
+     */
+    ionViewDidEnter() {
+        this.ga.trackView('CollectPage');
     }
 
     private startTour() {

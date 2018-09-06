@@ -1,6 +1,7 @@
 import { StatType } from '../../../model/stat.type';
 import { NavParams, ViewController } from 'ionic-angular';
 import { Component } from '@angular/core';
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
     selector: 'substitution-modal',
@@ -17,12 +18,21 @@ export class SubstitutionModal {
      *
      * @param {ViewController} viewCtrl
      * @param {NavParams} params
+     * @param {GoogleAnalytics} ga
      */
-    constructor(public viewCtrl: ViewController, private params: NavParams) {
+    constructor(public viewCtrl: ViewController, private params: NavParams,
+                private ga: GoogleAnalytics) {
         this.playerList = this.params.get('playerList');
         this.playerPositions = this.params.get('playerPositions');
         this.sanctions = this.params.get('sanctions');
         console.debug('[SubstitutionModal] - constructor', this.playerList, this.playerPositions, this.sanctions);
+    }
+
+    /**
+     *
+     */
+    ionViewDidEnter() {
+        this.ga.trackView('SubstitutionModal');
     }
 
     /**

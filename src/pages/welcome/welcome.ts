@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { SignupPage } from '../signup/signup';
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
     selector: 'page-welcome',
@@ -13,15 +14,18 @@ export class WelcomePage {
      *
      * @param {NavController} navCtrl
      * @param {NavParams} navParams
+     * @param {GoogleAnalytics} ga
      */
-    constructor(public navCtrl: NavController, public navParams: NavParams) {
+    constructor(public navCtrl: NavController,
+                public navParams: NavParams,
+                private ga: GoogleAnalytics) {
     }
 
     /**
      *
      */
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad WelcomePage');
+    ionViewDidEnter() {
+        this.ga.trackView('WelcomePage');
     }
 
     /**

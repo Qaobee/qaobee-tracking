@@ -1,4 +1,3 @@
-
 /*
  *  __________________
  *  Qaobee
@@ -26,6 +25,7 @@ import { Storage } from "@ionic/storage";
 import { AuthenticationService } from '../../../providers/authentication.service';
 import { TeamStatsPage } from '../team-stats/team-stats';
 import { TeamService } from '../../../providers/api/api.team.service';
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
     selector: 'page-team-list',
@@ -46,16 +46,24 @@ export class TeamListPage {
      * @param {NavController} navCtrl
      * @param {NavParams} navParams
      * @param {Storage} storage
-     * @param {PersonService} personService
      * @param {AuthenticationService} authenticationService
      * @param {TeamService} teamService
+     * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private storage: Storage,
                 private teamService: TeamService,
-                private authenticationService: AuthenticationService) {
+                private authenticationService: AuthenticationService,
+                private ga: GoogleAnalytics) {
         this.retrieveTeamList();
+    }
+
+    /**
+     *
+     */
+    ionViewDidEnter() {
+        this.ga.trackView('TeamListPage');
     }
 
     /**
@@ -68,7 +76,7 @@ export class TeamListPage {
             if (teams) {
                 this.teams.myTeams = [];
                 teams.forEach(item => {
-                    if(!item.adversary){
+                    if (!item.adversary) {
                         this.teams.myTeams.push(item);
                     }
                 });
@@ -81,7 +89,7 @@ export class TeamListPage {
             if (teams) {
                 this.teams.adversaries = [];
                 teams.forEach(item => {
-                    if(item.adversary){
+                    if (item.adversary) {
                         this.teams.adversaries.push(item);
                     }
                 });
@@ -94,7 +102,7 @@ export class TeamListPage {
      * if teams exist then return list, else, call personneService
      */
     private retrieveTeamList() {
-        this.storage.get(this.authenticationService.meta._id+'-teams').then(teams => {
+        this.storage.get(this.authenticationService.meta._id + '-teams').then(teams => {
             if (!teams) {
                 this.getTeams(null);
             } else {
@@ -117,7 +125,7 @@ export class TeamListPage {
         if (val && val.trim() != '') {
 
             // Reset items back to all of the items
-            this.storage.get(this.authenticationService.meta._id+'-teams').then(teams => {
+            this.storage.get(this.authenticationService.meta._id + '-teams').then(teams => {
                     for (let index = 0; index < teams.length; index++) {
                         const element = teams[ index ];
                         if (element.name.toLowerCase().indexOf(val.toLowerCase()) > -1 || element.firstname.toLowerCase().indexOf(val.toLowerCase()) > -1) {

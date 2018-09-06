@@ -25,6 +25,8 @@ import { APIModule } from "../providers/api/api.module";
 import { Utils } from "../providers/utils";
 import { SettingsService } from "../providers/settings.service";
 import { LocationService } from "../providers/location.service";
+import { AppVersion } from "@ionic-native/app-version";
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -62,6 +64,8 @@ export function createTranslateLoader(http: HttpClient) {
     ],
     providers: [
         {provide: ErrorHandler, useClass: IonicErrorHandler},
+        AppVersion,
+        GoogleAnalytics,
         StatusBar,
         SplashScreen,
         UniqueDeviceID,

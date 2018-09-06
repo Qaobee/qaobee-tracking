@@ -12,6 +12,7 @@ import { EventUpsertPage } from "../event-upsert/event-upsert";
 import { EventStatsPage } from "../event-stats/event-stats";
 import { TeamBuildPage } from "../../collect/team-build/team-build";
 import moment from 'moment';
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 /**
  * Generated class for the EventListPage page.
@@ -38,6 +39,7 @@ export class EventListPage {
      * @param {AuthenticationService} authenticationService
      * @param {SettingsService} settingsService
      * @param {CollectService} collectService
+     * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -45,7 +47,8 @@ export class EventListPage {
                 private storage: Storage,
                 private authenticationService: AuthenticationService,
                 private settingsService: SettingsService,
-                private collectService: CollectService) {
+                private collectService: CollectService,
+                private ga: GoogleAnalytics) {
         this.datePipe = new DatePipe(this.settingsService.getLanguage());
 
     }
@@ -54,6 +57,7 @@ export class EventListPage {
      *
      */
     ionViewDidEnter() {
+        this.ga.trackView('EventListPage');
         this.retrieveEventList();
     }
 
@@ -71,7 +75,7 @@ export class EventListPage {
         if (val && val.trim() != '') {
 
             // Reset items back to all of the items
-            this.storage.get(this.authenticationService.meta._id+'-events').then(events => {
+            this.storage.get(this.authenticationService.meta._id + '-events').then(events => {
                     for (let index = 0; index < events.length; index++) {
                         const element = events[ index ];
                         if (element.type.label.toLowerCase().indexOf(val.toLowerCase()) > -1 || element.label.toLowerCase().indexOf(val.toLowerCase()) > -1) {
@@ -91,7 +95,7 @@ export class EventListPage {
      * if evnets exist then return list, else, call eventsService
      */
     private retrieveEventList() {
-        this.storage.get(this.authenticationService.meta._id+'-events').then(events => {
+        this.storage.get(this.authenticationService.meta._id + '-events').then(events => {
             if (!events) {
                 this.getEvents(null);
             } else {
@@ -113,7 +117,7 @@ export class EventListPage {
             this.authenticationService.meta.activity._id,
             this.authenticationService.meta._id,
         ).subscribe(eventList => {
-            this.storage.set(this.authenticationService.meta._id+'-events', eventList);
+            this.storage.set(this.authenticationService.meta._id + '-events', eventList);
             this.populateEvents(eventList);
             if (refresher) {
                 refresher.complete();

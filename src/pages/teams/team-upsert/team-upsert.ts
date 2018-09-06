@@ -21,8 +21,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-import { Storage } from '@ionic/storage';
 import { AuthenticationService } from '../../../providers/authentication.service';
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
     selector: 'page-team-upsert',
@@ -41,13 +41,15 @@ export class TeamUpsertPage {
      * @param {FormBuilder} formBuilder
      * @param {AuthenticationService} authenticationService
      * @param {TranslateService} translateService
+     * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private toastCtrl: ToastController,
                 private formBuilder: FormBuilder,
                 private authenticationService: AuthenticationService,
-                private translateService: TranslateService) {
+                private translateService: TranslateService,
+                private ga: GoogleAnalytics) {
         this.editMode = navParams.get('editMode');
         if (this.editMode && this.editMode === 'CREATE') {
             this.team = {
@@ -63,11 +65,18 @@ export class TeamUpsertPage {
     }
 
     /**
+     *
+     */
+    ionViewDidEnter() {
+        this.ga.trackView('TeamUpsertPage');
+    }
+
+    /**
      * Match element in option list from select input
      * @param e1
      * @param e2
      */
-    compareOptionSelect(e1: any, e2: any): boolean {
+    static compareOptionSelect(e1: any, e2: any): boolean {
         return e1 && e2 ? (e1 === e2.code || e1.code === e2.code) : e1 === e2;
     }
 

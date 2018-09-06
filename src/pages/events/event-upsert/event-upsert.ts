@@ -27,6 +27,7 @@ import { ActivityCfgService } from "../../../providers/api/api.activityCfg.servi
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Storage } from "@ionic/storage";
 import moment from 'moment';
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 
 /**
@@ -72,6 +73,7 @@ export class EventUpsertPage {
      * @param {LocationService} locationService
      * @param {TeamService} teamService
      * @param {TranslateService} translateService
+     * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -83,7 +85,8 @@ export class EventUpsertPage {
                 private activityCfgService: ActivityCfgService,
                 private locationService: LocationService,
                 private teamService: TeamService,
-                private translateService: TranslateService) {
+                private translateService: TranslateService,
+                private ga: GoogleAnalytics) {
 
         // Retreive my team list
         this.teamService.getTeams(this.authenticationService.meta.effectiveDefault, this.authenticationService.meta._id, 'all', 'false').subscribe((teams: any[]) => {
@@ -119,6 +122,13 @@ export class EventUpsertPage {
             }
         });
         this.prepareEvent();
+    }
+
+    /**
+     *
+     */
+    ionViewDidEnter() {
+        this.ga.trackView('EventUpsertPage');
     }
 
     /**
@@ -176,7 +186,7 @@ export class EventUpsertPage {
      * @param e1
      * @param e2
      */
-    compareOptionTypeEvent(e1: any, e2: any): boolean {
+    static compareOptionTypeEvent(e1: any, e2: any): boolean {
         return e1 && e2 ? e1.code === e2.code : e1 === e2;
     }
 
@@ -185,7 +195,7 @@ export class EventUpsertPage {
      * @param e1
      * @param e2
      */
-    compareOptionTeam(e1: any, e2: any): boolean {
+    static compareOptionTeam(e1: any, e2: any): boolean {
         return e1 && e2 ? e1._id === e2._id : e1 === e2;
     }
 
