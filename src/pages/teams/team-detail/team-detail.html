@@ -1,121 +1,146 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>{{'team.TitleNavBarteam' | translate}}</ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="goToStats()">
-        <ion-icon name="stats"></ion-icon>
-      </button>
+    <ion-navbar>
+        <ion-title>{{'team.TitleNavBarteam' | translate}}</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="goToStats()">
+                <ion-icon name="stats"></ion-icon>
+            </button>
 
-      <button ion-button icon-only (click)="editTeam()">
-        <ion-icon name="create"></ion-icon>
-      </button>
+            <button ion-button icon-only (click)="editTeam()">
+                <ion-icon name="create"></ion-icon>
+            </button>
 
-    </ion-buttons>
-  </ion-navbar>
+        </ion-buttons>
+    </ion-navbar>
 </ion-header>
 
 
 <ion-content>
-  <ion-item class="enteteLight">
-    <ion-row>
-      <ion-col><ion-avatar>
-          <img src="assets/imgs/user.png" alt="avatar">
-        </ion-avatar></ion-col>
-      <ion-col>
-        <h1>{{team.firstname}} {{team.name}}</h1>
-      </ion-col>
-      <ion-col text-right>
-        <ion-badge color="secondary">{{team.status.squadnumber}}</ion-badge>
-      </ion-col>
-    </ion-row>
-  </ion-item>
-
-  <!-- PositionType--><!-- Laterality-->
-  <ion-item>
-      <ion-row >
-        <ion-col>
-          <h2 class="panel"><ion-icon name="locate"></ion-icon>  {{'team.labels.positionType' | translate}}</h2>
-        </ion-col>
-        <ion-col>
-          <h2 class="panel"><ion-icon name="hand"></ion-icon>  {{'team.labels.Laterality' | translate}}</h2>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-          <ion-col text-left><h2>{{team.status.positionType.label}}</h2></ion-col>
-          <ion-col text-left><h2>{{team.status.laterality.label}}</h2></ion-col>
-      </ion-row>
+    <ion-item class="enteteLight">
+        <ion-row>
+            <ion-col>
+                <ion-avatar>
+                    <img src="assets/imgs/user.png" alt="avatar">
+                </ion-avatar>
+            </ion-col>
+            <ion-col>
+                <h1>{{team.firstname}} {{team.name}}</h1>
+            </ion-col>
+            <ion-col text-right>
+                <ion-badge color="secondary">{{team.status?.squadnumber}}</ion-badge>
+            </ion-col>
+        </ion-row>
     </ion-item>
 
-  <!-- Mesuration-->
-  <ion-item>
-    <ion-row >
-      <ion-col>
-        <h2 class="panel"><ion-icon name="body"></ion-icon>  {{'team.labels.mesuration' | translate}}</h2>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-        <ion-col text-left><h3 class="label">{{'team.labels.weight' | translate}}</h3></ion-col>
-        <ion-col text-left><h3 class="label">{{'team.labels.height' | translate}}</h3></ion-col>
-    </ion-row>
-    <ion-row>    
-        <ion-col text-left>
-          <h2>{{team.status.weight}} {{'team.labels.weightUnit' | translate}}</h2>
-        </ion-col>
-        <ion-col text-left>
-          <h2>{{team.status.height}} {{'team.labels.heightUnit' | translate}}</h2>
-        </ion-col>
-    </ion-row>
-  </ion-item>
-  <!-- Etat Civil-->
-  <ion-item>
-    <ion-row>
-      <ion-col>
-        <h2 class="panel"><ion-icon name="contact"></ion-icon>  {{'team.labels.civilStatus' | translate}}</h2>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col text-left><h3 class="label">{{'team.labels.birthdate' | translate}}</h3></ion-col>
-      <ion-col text-left><h3 class="label">{{'team.labels.nationality' | translate}}</h3></ion-col>
-    </ion-row>
-    <ion-row>    
-        <ion-col text-left>
-          <h2>{{ team.birthdate | date:"mediumDate" }}</h2>
-        </ion-col>
-        <ion-col text-left>
-          <h2>{{team.nationality}}</h2>
-        </ion-col>
-    </ion-row>
-  </ion-item>  
-  <!-- Contact information-->
-  <ion-item *ngIf="team.contact">
-    <ion-row>
-      <ion-col>
-        <h2 class="panel"><ion-icon name="book"></ion-icon>  {{'team.labels.contact' | translate}}</h2>
-      </ion-col>
-    </ion-row>
-    <ion-row text-center>
-      <ion-col *ngIf="team.contact.cellphone">
-        <button ion-button outline small><ion-icon name="call"></ion-icon></button>
-      </ion-col>
-      <ion-col *ngIf="team.contact.email">
-        <button ion-button outline small><ion-icon name="mail"></ion-icon></button>
-      </ion-col>
-      <ion-col *ngIf="team.address">
-        <button ion-button outline small><ion-icon name="pin"></ion-icon></button>
-      </ion-col>
-    </ion-row>
-  </ion-item> 
+    <!-- PositionType--><!-- Laterality-->
+    <ion-item>
+        <ion-row>
+            <ion-col>
+                <h2 class="panel">
+                    <ion-icon name="locate"></ion-icon>
+                    {{'team.labels.positionType' | translate}}
+                </h2>
+            </ion-col>
+            <ion-col>
+                <h2 class="panel">
+                    <ion-icon name="hand"></ion-icon>
+                    {{'team.labels.Laterality' | translate}}
+                </h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col text-left><h2>{{team.status?.positionType.label}}</h2></ion-col>
+            <ion-col text-left><h2>{{team.status?.laterality.label}}</h2></ion-col>
+        </ion-row>
+    </ion-item>
 
-  <ion-row>
-    <ion-col text-center>
-      <h3 *ngIf="(team.desactivated !== 'true')">{{'team.confirmDesactivate.title' | translate}}</h3>
-      <button ion-button outline color="danger" (click)="desactivateTeam('team.confirmDesactivate','true')" *ngIf="(team.desactivated !== 'true')">
-        <ion-icon name="close-circle"></ion-icon>
-      </button>
-      <h3 *ngIf="(team.desactivated === 'true')">{{'team.confirmActivate.title' | translate}}</h3>
-      <button ion-button outline color="secondary" (click)="desactivateTeam('team.confirmActivate','false')" *ngIf="(team.desactivated === 'true')">
-        <ion-icon name="checkmark-circle"></ion-icon>
-      </button>
-    </ion-col>
-  </ion-row>
+    <!-- Mesuration-->
+    <ion-item>
+        <ion-row>
+            <ion-col>
+                <h2 class="panel">
+                    <ion-icon name="body"></ion-icon>
+                    {{'team.labels.mesuration' | translate}}
+                </h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col text-left><h3 class="label">{{'team.labels.weight' | translate}}</h3></ion-col>
+            <ion-col text-left><h3 class="label">{{'team.labels.height' | translate}}</h3></ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col text-left>
+                <h2>{{team.status?.weight}} {{'team.labels.weightUnit' | translate}}</h2>
+            </ion-col>
+            <ion-col text-left>
+                <h2>{{team.status?.height}} {{'team.labels.heightUnit' | translate}}</h2>
+            </ion-col>
+        </ion-row>
+    </ion-item>
+    <!-- Etat Civil-->
+    <ion-item>
+        <ion-row>
+            <ion-col>
+                <h2 class="panel">
+                    <ion-icon name="contact"></ion-icon>
+                    {{'team.labels.civilStatus' | translate}}
+                </h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col text-left><h3 class="label">{{'team.labels.birthdate' | translate}}</h3></ion-col>
+            <ion-col text-left><h3 class="label">{{'team.labels.nationality' | translate}}</h3></ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col text-left>
+                <h2>{{ team.birthdate | date:"mediumDate" }}</h2>
+            </ion-col>
+            <ion-col text-left>
+                <h2>{{team.nationality}}</h2>
+            </ion-col>
+        </ion-row>
+    </ion-item>
+    <!-- Contact information-->
+    <ion-item *ngIf="team.contact">
+        <ion-row>
+            <ion-col>
+                <h2 class="panel">
+                    <ion-icon name="book"></ion-icon>
+                    {{'team.labels.contact' | translate}}
+                </h2>
+            </ion-col>
+        </ion-row>
+        <ion-row text-center>
+            <ion-col *ngIf="team.contact.cellphone">
+                <button ion-button outline small>
+                    <ion-icon name="call"></ion-icon>
+                </button>
+            </ion-col>
+            <ion-col *ngIf="team.contact.email">
+                <button ion-button outline small>
+                    <ion-icon name="mail"></ion-icon>
+                </button>
+            </ion-col>
+            <ion-col *ngIf="team.address">
+                <button ion-button outline small>
+                    <ion-icon name="pin"></ion-icon>
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-item>
+
+    <ion-row>
+        <ion-col text-center>
+            <h3 *ngIf="(team.desactivated !== 'true')">{{'team.confirmDesactivate.title' | translate}}</h3>
+            <button ion-button outline color="danger" (click)="desactivateTeam('team.confirmDesactivate','true')"
+                    *ngIf="(team.desactivated !== 'true')">
+                <ion-icon name="close-circle"></ion-icon>
+            </button>
+            <h3 *ngIf="(team.desactivated === 'true')">{{'team.confirmActivate.title' | translate}}</h3>
+            <button ion-button outline color="secondary" (click)="desactivateTeam('team.confirmActivate','false')"
+                    *ngIf="(team.desactivated === 'true')">
+                <ion-icon name="checkmark-circle"></ion-icon>
+            </button>
+        </ion-col>
+    </ion-row>
 </ion-content>
