@@ -56,9 +56,9 @@ export class PlayerDetailPage {
     /**
      *
      * @param {string} confirmLabels
-     * @param {string} desactived
+     * @param {string} deactivated
      */
-    desactivatePlayer(confirmLabels: string, desactived: string) {
+    deactivatePlayer(confirmLabels: string, deactivated: string) {
         this.translateService.get(confirmLabels).subscribe(
             value => {
                 let alert = this.alertCtrl.create({
@@ -74,9 +74,9 @@ export class PlayerDetailPage {
                         {
                             text: value.buttonLabelConfirm,
                             handler: () => {
-                                this.player.desactivated = desactived;
+                                this.player.deactivated = deactivated;
                                 this.personService.updatePerson(this.player).subscribe(person => {
-                                    console.debug('[PlayerDetailPage] - desactivatePlayer - updatePerson', person);
+                                    console.debug('[PlayerDetailPage] - deactivatePlayer - updatePerson', person);
                                 });
                                 // update local cache
                                 this.storage.get(this.authenticationService.meta._id + '-players').then(players => {

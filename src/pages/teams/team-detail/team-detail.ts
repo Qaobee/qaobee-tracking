@@ -67,7 +67,7 @@ export class TeamDetailPage {
      * @param {string} confirmLabels
      * @param {string} desactived
      */
-    desactivateTeam(confirmLabels: string, desactived: string) {
+    deactivateTeam(confirmLabels: string, deactivated: string) {
         this.translateService.get(confirmLabels).subscribe(
             value => {
                 let alert = this.alertCtrl.create({
@@ -83,7 +83,7 @@ export class TeamDetailPage {
                         {
                             text: value.buttonLabelConfirm,
                             handler: () => {
-                                this.team.desactivated = desactived;
+                                this.team.deactivated = deactivated;
                                 /*
                                 this.personService.updatePerson(this.team).subscribe(person => {
                                     console.debug('[teamDetailPage] - desactivateteam - updatePerson', person);

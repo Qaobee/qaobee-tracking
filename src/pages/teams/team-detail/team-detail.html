@@ -28,12 +28,12 @@
   
   <ion-row>
     <ion-col text-center>
-      <h3 *ngIf="(team.desactivated !== 'true')">{{'team.confirmDesactivate.title' | translate}}</h3>
-      <button ion-button outline color="danger" (click)="desactivateTeam('team.confirmDesactivate','true')" *ngIf="(team.desactivated !== 'true')">
+      <h3 *ngIf="(team.deactivated !== 'true')">{{'team.confirmDeactivate.title' | translate}}</h3>
+      <button ion-button outline color="danger" (click)="deactivateTeam('team.confirmDeactivate','true')" *ngIf="(team.deactivated !== 'true')">
         <ion-icon name="close-circle"></ion-icon>
       </button>
-      <h3 *ngIf="(team.desactivated === 'true')">{{'team.confirmActivate.title' | translate}}</h3>
-      <button ion-button outline color="secondary" (click)="desactivateTeam('team.confirmActivate','false')" *ngIf="(team.desactivated === 'true')">
+      <h3 *ngIf="(team.deactivated === 'true')">{{'team.confirmActivate.title' | translate}}</h3>
+      <button ion-button outline color="secondary" (click)="deactivateTeam('team.confirmActivate','false')" *ngIf="(team.deactivated === 'true')">
         <ion-icon name="checkmark-circle"></ion-icon>
       </button>
     </ion-col>

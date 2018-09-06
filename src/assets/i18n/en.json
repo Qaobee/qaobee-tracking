@@ -153,7 +153,7 @@
     "TitleMyTeamList": "My Teams",
     "TitleAdversaryTeamList": "My adversaries",
     "TitleNavBarTeam":"Team's detail",
-    "confirmDesactivate": {
+    "confirmDeactivate": {
       "title": "Disable team",
       "message": "the team will be not delete, but will do not present on team's list",
       "buttonLabelCancel": "Cancel",
@@ -190,7 +190,7 @@
       "birthdate": "Birthdate",
       "nationality": "Nationality",
       "Laterality": "Lateralité",
-      "desactivated": "Desactivated Player",
+      "deactivated": "Deactivated Player",
       "name": "Name",
       "firstname": "Firstname",
       "mobile": "Mobile",
@@ -216,7 +216,7 @@
       "right-wingman": "Right-wingman",
       "left-wingman": "Left-wingman"
     },
-    "confirmDesactivate": {
+    "confirmDeactivate": {
       "title": "Disable Player",
       "message": "the player will be not delete, but will do not present on player's list",
       "buttonLabelCancel": "Cancel",
