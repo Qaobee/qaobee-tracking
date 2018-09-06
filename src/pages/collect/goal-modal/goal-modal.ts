@@ -1,14 +1,7 @@
 import { SassHelperComponent } from '../../../components/sass-helper.component';
 import { Component, ViewChild } from '@angular/core';
-import {
-    trigger,
-    state,
-    style,
-    animate,
-    transition
-} from '@angular/animations';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ViewController } from 'ionic-angular';
-import { CollectService } from "../../../providers/api/api.collect.service";
 import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
