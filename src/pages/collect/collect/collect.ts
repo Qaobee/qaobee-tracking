@@ -400,6 +400,7 @@ export class CollectPage {
         this.storage.get('gameState-' + this.currentEvent._id).then((gameState: GameState) => {
             console.debug('[CollectPage] - restoreState - gameState from storage', gameState);
             if (gameState) {
+                this.ga.trackEvent('Collect', 'Restore', 'Restore', 1);
                 this.gameState = gameState;
                 if (FSMStates.GAME_ENDED !== gameState.state) {
                     this.fsmContext.lastInMap = this.gameState.lastInMap || {};
@@ -441,6 +442,7 @@ export class CollectPage {
                     return;
                 }
             } else {
+                this.ga.trackEvent('Collect', 'New', 'New', 1);
                 console.debug('[CollectPage] - restoreState - new collect', 'playerPositions', this.playerPositions, 'playerList', this.playerList);
                 this.gameState = new GameState();
                 this.gameState.eventId = this.currentEvent._id;
@@ -1266,6 +1268,7 @@ export class CollectPage {
                                     this.currentEvent.isCollected = true;
                                     this.eventsService.addEvent(this.currentEvent);
                                     this.cleanFlowContext();
+                                    this.ga.trackEvent('Collect', 'End', 'End', this.fsmContext.chrono);
                                 });
                             }
                         }
