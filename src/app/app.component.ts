@@ -84,6 +84,7 @@ export class MyApp {
                 }).catch((error: any) => {
                     console.error('[MyApp] - initializeApp - error', error);
                     this.ga.setAppVersion(ENV.mode);
+                    this.ga.trackView('MainApp', '',true);
                 });
             }).catch(e => console.log('[MyApp] - initializeApp -Error starting GoogleAnalytics', e));
 
