@@ -20,8 +20,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { NavController, NavParams, ToastController } from 'ionic-angular';
-import { TranslateService } from '@ngx-translate/core';
-import { AuthenticationService } from '../../../providers/authentication.service';
 import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
@@ -39,16 +37,12 @@ export class TeamUpsertPage {
      * @param {NavParams} navParams
      * @param {ToastController} toastCtrl
      * @param {FormBuilder} formBuilder
-     * @param {AuthenticationService} authenticationService
-     * @param {TranslateService} translateService
      * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private toastCtrl: ToastController,
                 private formBuilder: FormBuilder,
-                private authenticationService: AuthenticationService,
-                private translateService: TranslateService,
                 private ga: GoogleAnalytics) {
         this.editMode = navParams.get('editMode');
         if (this.editMode && this.editMode === 'CREATE') {

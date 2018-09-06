@@ -8,7 +8,6 @@ import introJs from 'intro.js/intro.js';
 import { TeamListPage } from "../teams/team-list/team-list";
 import { TranslateService } from "@ngx-translate/core";
 import { Storage } from "@ionic/storage";
-import { StatsEventService } from "../events/stats.event.service";
 import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({

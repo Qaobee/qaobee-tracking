@@ -7,7 +7,6 @@ import { SignupPage } from '../signup/signup';
 import { MessageBus } from "../../providers/message-bus.service";
 import { UserService } from '../../providers/api/api.user.service';
 import { TranslateService } from "@ngx-translate/core";
-import { AuthenticationService } from "../../providers/authentication.service";
 import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 /**
