@@ -86,6 +86,7 @@ export class MyApp {
                     this.ga.setAppVersion(ENV.mode);
                 });
             }).catch(e => console.log('[MyApp] - initializeApp -Error starting GoogleAnalytics', e));
+
             this.eventService.on(MessageBus.userLogged, user => {
                 this.user = user;
                 this.ga.setUserId(user.account.login);
@@ -100,6 +101,11 @@ export class MyApp {
                         this.nav.setRoot(HomePage, {user: user});
                     }
                 });
+            });
+
+            this.eventService.on(MessageBus.userLoggout, () => {
+                this.user = undefined;
+                this.buildMenu();
             });
 
             this.eventService.on(MessageBus.navigation, page => {

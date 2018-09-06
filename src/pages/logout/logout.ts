@@ -4,6 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { AuthenticationService } from '../../providers/authentication.service';
 import { GoogleAnalytics } from "@ionic-native/google-analytics";
+import { MessageBus } from "../../providers/message-bus.service";
 
 @Component({
     selector: 'page-logout',
@@ -18,13 +19,15 @@ export class LogoutPage {
      * @param {Storage} storage
      * @param {AuthenticationService} authenticationService
      * @param {GoogleAnalytics} ga
+     * @param {MessageBus} eventService
      */
     constructor(
         public navCtrl: NavController,
         public navParams: NavParams,
         private storage: Storage,
         private authenticationService: AuthenticationService,
-        private ga: GoogleAnalytics
+        private ga: GoogleAnalytics,
+        private eventService: MessageBus
     ) {
 
     }
@@ -50,6 +53,7 @@ export class LogoutPage {
             delete this.authenticationService.token;
             delete this.authenticationService.user;
             this.ga.setUserId(null);
+            this.eventService.broadcast(MessageBus.userLoggout, {});
             this.navCtrl.setRoot(LoginPage, {});
         });
     }

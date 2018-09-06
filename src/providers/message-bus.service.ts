@@ -17,13 +17,14 @@
  *  from Qaobee.
  */
 import { Injectable } from "@angular/core";
-import { Subject, Observable } from "rxjs";
+import { Observable, Subject } from "rxjs";
 
 @Injectable()
 export class MessageBus {
     static goToLogin: any;
     public static navigation: string = 'navigation';
     public static userLogged: string = 'user-logged';
+    public static userLoggout: string = 'user-logged-out';
     private readonly listeners = {};
     private readonly eventsSubject = new Subject();
     private events;
