@@ -151,7 +151,27 @@
   "team": {
     "TitleNavBarTeamList": "Equipes",
     "TitleMyTeamList": "Mes équipes",
-    "TitleAdversaryTeamList": "Mes adversaires"
+    "TitleAdversaryTeamList": "Mes adversaires",
+    "TitleNavBarTeam":"Détail équipe",
+    "TitleNavBarTeamStats":"Stats de l'équipe",
+    "confirmDesactivate": {
+      "title": "Désactivation de l'équipe",
+      "message": "La désactivation d'une équipe ne le supprime pas, mais elle n'apparaîtra plus dans la liste des équipes sélectionnables",
+      "buttonLabelCancel": "Annuler",
+      "buttonLabelConfirm": "Valider"
+    },
+    "confirmActivate": {
+      "title": "Activation de l'équipe",
+      "message": "Confirmez-vous l'activation de l'équipe ?",
+      "buttonLabelCancel": "Annuler",
+      "buttonLabelConfirm": "Valider"
+    },
+    "messages": {
+      "updateDone": "L'équipe a bien été mis à jour",
+      "createDone": "L'équipe a bien été créé",
+      "updateFail": "La mise à jour de l'équipe a échoué",
+      "createFail": "La création de l'équipe a échoué"
+    }
   },
   "player": {
     "TitleNavBarPlayer": "Joueur",
