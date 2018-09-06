@@ -26,6 +26,7 @@ export class SignupEndPage {
      */
     ionViewDidEnter() {
         this.ga.trackView('SignupEndPage');
+        this.ga.trackEvent('Signup', 'End', 'End', 1);
     }
 
     /**

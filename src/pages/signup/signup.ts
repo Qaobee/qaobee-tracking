@@ -47,6 +47,7 @@ export class SignupPage {
      */
     ionViewDidEnter() {
         this.ga.trackView('SignupPage');
+        this.ga.trackEvent('Signup', 'Start', 'Start', 1);
     }
 
     /**
