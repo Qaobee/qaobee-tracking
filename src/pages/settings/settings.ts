@@ -4,6 +4,7 @@ import { AuthenticationService } from "../../providers/authentication.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Storage } from "@ionic/storage";
 import { SettingsService } from "../../providers/settings.service";
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
     selector: 'page-settings',
@@ -32,19 +33,22 @@ export class SettingsPage {
      * @param {Storage} storage
      * @param {ToastController} toastCtrl
      * @param {SettingsService} settingsService
+     * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController, public navParams: NavParams,
                 private authenticationService: AuthenticationService,
                 private translateService: TranslateService,
                 private storage: Storage,
                 private toastCtrl: ToastController,
-                private settingsService: SettingsService) {
+                private settingsService: SettingsService,
+                private ga: GoogleAnalytics) {
     }
 
     /**
      *
      */
-    ionViewDidLoad() {
+    ionViewDidEnter() {
+        this.ga.trackView('SettingsPage');
         this.settingsService.getParametersGame().subscribe(s => {
             this.settings = s;
         });

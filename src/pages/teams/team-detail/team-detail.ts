@@ -22,6 +22,7 @@ import { AlertController, NavController, NavParams } from 'ionic-angular';
 import { TeamUpsertPage } from '../team-upsert/team-upsert';
 import { TeamStatsPage } from '../team-stats/team-stats';
 import { TranslateService } from '@ngx-translate/core';
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
     selector: 'page-team-detail',
@@ -37,12 +38,21 @@ export class TeamDetailPage {
      * @param {NavParams} navParams
      * @param {AlertController} alertCtrl
      * @param {TranslateService} translateService
+     * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private alertCtrl: AlertController,
-                private translateService: TranslateService) {
+                private translateService: TranslateService,
+                private ga: GoogleAnalytics) {
         this.team = navParams.get('team');
+    }
+
+    /**
+     *
+     */
+    ionViewDidEnter() {
+        this.ga.trackView('TeamDetailPage');
     }
 
     /**
@@ -57,7 +67,7 @@ export class TeamDetailPage {
      * @param {string} confirmLabels
      * @param {string} desactived
      */
-    desactivateTeam(confirmLabels: string, desactived: string) {
+    deactivateTeam(confirmLabels: string, deactivated: string) {
         this.translateService.get(confirmLabels).subscribe(
             value => {
                 let alert = this.alertCtrl.create({
@@ -73,7 +83,7 @@ export class TeamDetailPage {
                         {
                             text: value.buttonLabelConfirm,
                             handler: () => {
-                                this.team.desactivated = desactived;
+                                this.team.deactivated = deactivated;
                                 /*
                                 this.personService.updatePerson(this.team).subscribe(person => {
                                     console.debug('[teamDetailPage] - desactivateteam - updatePerson', person);
@@ -92,7 +102,7 @@ export class TeamDetailPage {
      *
      */
     goToStats() {
-        this.navCtrl.push(TeamStatsPage, {team: this.team}); 
+        this.navCtrl.push(TeamStatsPage, {team: this.team});
     }
 
 }

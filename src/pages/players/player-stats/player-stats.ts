@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { APIStatsService } from '../../../providers/api/api.stats';
 import { AuthenticationService } from '../../../providers/authentication.service';
 import { Utils } from './../../../providers/utils';
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
     selector: 'page-player-stats',
@@ -23,21 +24,23 @@ export class PlayerStatsPage {
      * @param {NavParams} navParams
      * @param {APIStatsService} statsService
      * @param {AuthenticationService} authenticationService
+     * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private statsService: APIStatsService,
-                private authenticationService: AuthenticationService) {
+                private authenticationService: AuthenticationService,
+                private ga: GoogleAnalytics) {
 
         this.player = navParams.get('player');
         this.ownerId.push(this.player._id);
-
     }
 
     /**
      *
      */
     ionViewDidEnter() {
+        this.ga.trackView('PlayerStatsPage');
         this.searchPlayerUse();
     }
 

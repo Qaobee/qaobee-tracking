@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, ViewController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
     selector: 'page-signup-end',
@@ -10,19 +11,22 @@ export class SignupEndPage {
 
     /**
      *
-     * @param navCtrl
-     * @param viewCtrl
+     * @param {NavController} navCtrl
+     * @param {ViewController} viewCtrl
+     * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController,
-                public  viewCtrl: ViewController) {
+                public  viewCtrl: ViewController,
+                private ga: GoogleAnalytics) {
 
     }
 
     /**
      *
      */
-    ionViewDidLoad() {
-        console.debug('ionViewDidLoad SignupEndPage');
+    ionViewDidEnter() {
+        this.ga.trackView('SignupEndPage');
+        this.ga.trackEvent('Signup', 'End', 'End', 1);
     }
 
     /**

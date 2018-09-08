@@ -4,6 +4,9 @@ import { PersonService } from '../../../providers/api/api.person.service';
 import { PlayerUpsertPage } from '../player-upsert/player-upsert';
 import { PlayerStatsPage } from '../player-stats/player-stats';
 import { TranslateService } from '@ngx-translate/core';
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
+import { Storage } from "@ionic/storage";
+import { AuthenticationService } from "../../../providers/authentication.service";
 
 @Component({
     selector: 'page-player-detail',
@@ -15,18 +18,32 @@ export class PlayerDetailPage {
 
     /**
      *
-     * @param navCtrl
-     * @param navParams
-     * @param personService
-     * @param alertCtrl
-     * @param translateService
+     * @param {NavController} navCtrl
+     * @param {NavParams} navParams
+     * @param {PersonService} personService
+     * @param {AlertController} alertCtrl
+     * @param {Storage} storage
+     * @param {AuthenticationService} authenticationService
+     * @param {TranslateService} translateService
+     * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private personService: PersonService,
                 private alertCtrl: AlertController,
-                private translateService: TranslateService) {
+                private storage: Storage,
+                private authenticationService: AuthenticationService,
+                private translateService: TranslateService,
+                private ga: GoogleAnalytics) {
         this.player = navParams.get('player');
+        console.debug('[PlayerDetailPage] - constructor', this.player);
+    }
+
+    /**
+     *
+     */
+    ionViewDidEnter() {
+        this.ga.trackView('PlayerDetailPage');
     }
 
     /**
@@ -39,9 +56,9 @@ export class PlayerDetailPage {
     /**
      *
      * @param {string} confirmLabels
-     * @param {string} desactived
+     * @param {string} deactivated
      */
-    desactivatePlayer(confirmLabels: string, desactived: string) {
+    deactivatePlayer(confirmLabels: string, deactivated: string) {
         this.translateService.get(confirmLabels).subscribe(
             value => {
                 let alert = this.alertCtrl.create({
@@ -57,9 +74,21 @@ export class PlayerDetailPage {
                         {
                             text: value.buttonLabelConfirm,
                             handler: () => {
-                                this.player.desactivated = desactived;
+                                this.player.deactivated = deactivated;
                                 this.personService.updatePerson(this.player).subscribe(person => {
-                                    console.debug('[PlayerDetailPage] - desactivatePlayer - updatePerson', person);
+                                    console.debug('[PlayerDetailPage] - deactivatePlayer - updatePerson', person);
+                                });
+                                // update local cache
+                                this.storage.get(this.authenticationService.meta._id + '-players').then(players => {
+                                    if (players) {
+                                        const index = players.findIndex((p) => {
+                                            return p._id === this.player._id;
+                                        });
+                                        if(index >= 0) {
+                                            players[index] = this.player;
+                                            this.storage.set(this.authenticationService.meta._id + '-players', players);
+                                        }
+                                    }
                                 });
                             }
                         }

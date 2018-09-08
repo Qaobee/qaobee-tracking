@@ -154,7 +154,7 @@
     "TitleAdversaryTeamList": "Mes adversaires",
     "TitleNavBarTeam":"Détail équipe",
     "TitleNavBarTeamStats":"Stats de l'équipe",
-    "confirmDesactivate": {
+    "confirmDeactivate": {
       "title": "Désactivation de l'équipe",
       "message": "La désactivation d'une équipe ne le supprime pas, mais elle n'apparaîtra plus dans la liste des équipes sélectionnables",
       "buttonLabelCancel": "Annuler",
@@ -190,7 +190,7 @@
       "birthdate": "Date de naissance",
       "nationality": "Nationalité",
       "Laterality": "Lateralité",
-      "desactivated": "Joueur désactivé",
+      "deactivated": "Joueur désactivé",
       "name": "Nom",
       "firstname": "Prénom",
       "mobile": "Tel. Portable",
@@ -216,7 +216,7 @@
       "right-wingman": "Ailier Droit",
       "left-wingman": "Ailier Gauche"
     },
-    "confirmDesactivate": {
+    "confirmDeactivate": {
       "title": "Désactivation du joueur",
       "message": "La désactivation d'un joueur ne le supprime pas, mais il n'apparaîtra plus dans la liste des joueurs sélectionnables ",
       "buttonLabelCancel": "Annuler",

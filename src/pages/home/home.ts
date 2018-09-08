@@ -8,6 +8,7 @@ import introJs from 'intro.js/intro.js';
 import { TeamListPage } from "../teams/team-list/team-list";
 import { TranslateService } from "@ngx-translate/core";
 import { Storage } from "@ionic/storage";
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
     selector: 'page-home',
@@ -24,12 +25,14 @@ export class HomePage {
      * @param {TranslateService} translateService
      * @param {Storage} storage
      * @param {AuthenticationService} authenticationService
+     * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private translateService: TranslateService,
                 private storage: Storage,
-                private authenticationService: AuthenticationService) {
+                private authenticationService: AuthenticationService,
+                private ga: GoogleAnalytics) {
         this.user = navParams.get('user');
         if (!this.user) {
             this.user = this.authenticationService.user;
@@ -40,6 +43,7 @@ export class HomePage {
      *
      */
     ionViewDidEnter() {
+        this.ga.trackView('HomePage');
         this.startTour();
     }
 

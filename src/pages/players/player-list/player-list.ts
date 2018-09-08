@@ -6,6 +6,7 @@ import { Storage } from "@ionic/storage";
 import { PersonService } from '../../../providers/api/api.person.service';
 import { AuthenticationService } from "../../../providers/authentication.service";
 import { PlayerStatsPage } from '../player-stats/player-stats';
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
     selector: 'page-player-list',
@@ -24,13 +25,22 @@ export class PlayerListPage {
      * @param {Storage} storage
      * @param {PersonService} personService
      * @param {AuthenticationService} authenticationService
+     * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private storage: Storage,
                 private personService: PersonService,
-                private authenticationService: AuthenticationService) {
+                private authenticationService: AuthenticationService,
+                private ga: GoogleAnalytics) {
         this.retrievePlayerList();
+    }
+
+    /**
+     *
+     */
+    ionViewDidEnter() {
+        this.ga.trackView('PlayerListPage');
     }
 
     /**
@@ -40,8 +50,9 @@ export class PlayerListPage {
     private getPlayers(refresher: Refresher) {
         this.personService.getListPersonSandbox(this.authenticationService.meta._id).subscribe(list => {
             this.playerList = list;
+            console.debug('[PlayerListPage] - getPlayers', this.playerList);
             this.playerListSize = this.playerList.length;
-            this.storage.set(this.authenticationService.meta._id+'-players', list);
+            this.storage.set(this.authenticationService.meta._id + '-players', list);
             if (refresher) {
                 refresher.complete();
             }
@@ -52,12 +63,13 @@ export class PlayerListPage {
      * if players exist then return list, else, call personneService
      */
     private retrievePlayerList() {
-        this.storage.get(this.authenticationService.meta._id+'-players').then(players => {
+        this.storage.get(this.authenticationService.meta._id + '-players').then(players => {
             if (!players) {
                 this.getPlayers(null);
             } else {
                 this.playerList = players;
                 this.playerListSize = players.length;
+                console.debug('[PlayerListPage] - retrievePlayerList', this.playerList);
             }
         })
     }
@@ -76,7 +88,7 @@ export class PlayerListPage {
         if (val && val.trim() != '') {
 
             // Reset items back to all of the items
-            this.storage.get(this.authenticationService.meta._id+'-players').then(players => {
+            this.storage.get(this.authenticationService.meta._id + '-players').then(players => {
                     for (let index = 0; index < players.length; index++) {
                         const element = players[ index ];
                         if (element.name.toLowerCase().indexOf(val.toLowerCase()) > -1 || element.firstname.toLowerCase().indexOf(val.toLowerCase()) > -1) {

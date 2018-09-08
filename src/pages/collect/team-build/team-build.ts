@@ -12,6 +12,7 @@ import introJs from 'intro.js/intro.js';
 import { CollectService } from '../../../providers/api/api.collect.service';
 import { EffectiveService } from '../../../providers/api/api.effective.service';
 import { GameState } from '../../../model/game.state';
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
     selector: 'page-team-build',
@@ -41,6 +42,7 @@ export class TeamBuildPage {
      * @param {TranslateService} translateService
      * @param {CollectService} collectService
      * @param {EffectiveService} effectiveService
+     * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -52,6 +54,7 @@ export class TeamBuildPage {
                 private translateService: TranslateService,
                 private collectService: CollectService,
                 private effectiveService: EffectiveService,
+                private ga: GoogleAnalytics
     ) {
         this.event = navParams.get('event');
 
@@ -63,11 +66,11 @@ export class TeamBuildPage {
                 this.getPlayers();
             } else {
                 console.debug('[TeamBuildPage] - constructor', players);
-                this.playerList = players;
+                this.playerList = players.filter((p)=>!p.deactivated || p.deactivated === 'false');
                 this.playerListSize = players.length;
             }
         });
-        
+
         this.storage.get(this.authenticationService.meta._id + '-collects').then((collects: any[]) => {
             if (collects) {
                 this.testCollects(collects);
@@ -85,7 +88,11 @@ export class TeamBuildPage {
         });
     }
 
+    /**
+     *
+     */
     ionViewDidEnter() {
+        this.ga.trackView('TeamBuildPage');
         this.startTour();
     }
 
@@ -178,7 +185,7 @@ export class TeamBuildPage {
     private getPlayers() {
         this.personService.getListPersonSandbox(this.authenticationService.meta._id).subscribe((players: any[]) => {
             console.debug('[TeamBuildPage] - getPlayers', players);
-            this.playerList = players;
+            this.playerList = players.filter((p)=>!p.deactivated || p.deactivated === 'false');
             this.playerListSize = this.playerList.length;
             this.storage.set(this.authenticationService.meta._id + '-players', players);
         });

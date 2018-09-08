@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { UserService } from "../../providers/api/api.user.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { AlertController, NavController, NavParams } from 'ionic-angular';
 import { SignupEndPage } from './signupEnd';
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
     selector: 'page-signup',
@@ -21,13 +22,15 @@ export class SignupPage {
      * @param userService
      * @param {AlertController} alertCtrl
      * @param {TranslateService} translateService
+     * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private formBuilder: FormBuilder,
                 private userService: UserService,
                 private alertCtrl: AlertController,
-                private translateService: TranslateService) {
+                private translateService: TranslateService,
+                private ga: GoogleAnalytics) {
 
         this.userForm = this.formBuilder.group({
             'login': [ '', Validators.compose([ Validators.required, Validators.pattern(/[a-zA-Z0-9_\-]{4,}/) ]) ],
@@ -42,8 +45,9 @@ export class SignupPage {
     /**
      *
      */
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad SignupPage');
+    ionViewDidEnter() {
+        this.ga.trackView('SignupPage');
+        this.ga.trackEvent('Signup', 'Start', 'Start', 1);
     }
 
     /**

@@ -36,6 +36,7 @@ import { SubstitutionModal } from '../substitution-modal/substitution-modal';
 import introJs from 'intro.js/intro.js';
 import { StatsModal } from '../stats-modal/stats-modal';
 import { EventsService } from "../../../providers/api/api.events.service";
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
     selector: 'page-collect',
@@ -101,6 +102,7 @@ export class CollectPage {
      * @param {AuthenticationService} authenticationService
      * @param {EventsService} eventsService
      * @param {HandFSM} handFSM
+     * @param {GoogleAnalytics} ga
      */
     constructor(
         public navParams: NavParams,
@@ -118,7 +120,8 @@ export class CollectPage {
         private collectService: CollectService,
         private authenticationService: AuthenticationService,
         private eventsService: EventsService,
-        private handFSM: HandFSM
+        private handFSM: HandFSM,
+        private ga: GoogleAnalytics
     ) {
         this.translateService.get([ 'collect', 'loader', 'actionButton', 'warning' ]).subscribe(t => {
             this.translations = {
@@ -171,6 +174,13 @@ export class CollectPage {
             console.debug('[CollectPage] - constructor - onStatCollector.UPLOAD_STAT', evt);
             this.uploadStats();
         });
+    }
+
+    /**
+     *
+     */
+    ionViewDidEnter() {
+        this.ga.trackView('CollectPage');
     }
 
     private startTour() {
@@ -390,6 +400,7 @@ export class CollectPage {
         this.storage.get('gameState-' + this.currentEvent._id).then((gameState: GameState) => {
             console.debug('[CollectPage] - restoreState - gameState from storage', gameState);
             if (gameState) {
+                this.ga.trackEvent('Collect', 'Restore', 'Restore', 1);
                 this.gameState = gameState;
                 if (FSMStates.GAME_ENDED !== gameState.state) {
                     this.fsmContext.lastInMap = this.gameState.lastInMap || {};
@@ -431,6 +442,7 @@ export class CollectPage {
                     return;
                 }
             } else {
+                this.ga.trackEvent('Collect', 'New', 'New', 1);
                 console.debug('[CollectPage] - restoreState - new collect', 'playerPositions', this.playerPositions, 'playerList', this.playerList);
                 this.gameState = new GameState();
                 this.gameState.eventId = this.currentEvent._id;
@@ -1256,6 +1268,7 @@ export class CollectPage {
                                     this.currentEvent.isCollected = true;
                                     this.eventsService.addEvent(this.currentEvent);
                                     this.cleanFlowContext();
+                                    this.ga.trackEvent('Collect', 'End', 'End', this.fsmContext.chrono);
                                 });
                             }
                         }

@@ -1,4 +1,3 @@
-
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -23,7 +22,9 @@ import { UserService } from "../providers/api/api.user.service";
 import { AuthenticationService } from "../providers/authentication.service";
 import { Storage } from "@ionic/storage";
 import { MessageBus } from "../providers/message-bus.service";
-
+import { AppVersion } from '@ionic-native/app-version';
+import { GoogleAnalytics } from '@ionic-native/google-analytics';
+import { ENV } from "@app/env";
 
 @Component({
     templateUrl: 'app.html'
@@ -45,6 +46,8 @@ export class MyApp {
      * @param {TranslateService} translate
      * @param {MessageBus} eventService
      * @param {MetaService} metaService
+     * @param {AppVersion} appVersion
+     * @param {GoogleAnalytics} ga
      */
     constructor(private platform: Platform,
                 private statusBar: StatusBar,
@@ -54,7 +57,9 @@ export class MyApp {
                 private authenticationService: AuthenticationService,
                 private translate: TranslateService,
                 private eventService: MessageBus,
-                private metaService: MetaService
+                private metaService: MetaService,
+                private appVersion: AppVersion,
+                private ga: GoogleAnalytics
     ) {
         this.initializeApp();
         this.pages = [];
@@ -73,9 +78,18 @@ export class MyApp {
             this.splashScreen.hide();
             this.buildMenu();
             this.trySSO();
+            this.ga.startTrackerWithId('UA-72906581-2', 30).then(() => {
+                this.appVersion.getVersionNumber().then(v => {
+                    this.ga.setAppVersion(v);
+                }).catch((error: any) => {
+                    console.error('[MyApp] - initializeApp - error', error);
+                    this.ga.setAppVersion(ENV.mode);
+                });
+            }).catch(e => console.log('[MyApp] - initializeApp -Error starting GoogleAnalytics', e));
 
             this.eventService.on(MessageBus.userLogged, user => {
                 this.user = user;
+                this.ga.setUserId(user.account.login);
                 this.authenticationService.isLogged = true;
                 this.authenticationService.token = user.account.token;
                 this.authenticationService.user = user;
@@ -87,6 +101,11 @@ export class MyApp {
                         this.nav.setRoot(HomePage, {user: user});
                     }
                 });
+            });
+
+            this.eventService.on(MessageBus.userLoggout, () => {
+                this.user = undefined;
+                this.buildMenu();
             });
 
             this.eventService.on(MessageBus.navigation, page => {
@@ -110,16 +129,20 @@ export class MyApp {
         } else {
             this.nav.push(page.component);
         }
-
     }
 
     private buildMenu() {
         this.translate.get([ 'menu.Home', 'menu.Login', 'menu.Subscribe' ]).subscribe(
             value => {
                 this.pages = [
-                    {title: value[ 'menu.Home' ], component: WelcomePage, icon: 'home', color:'primary'},
-                    {title: value[ 'menu.Login' ], component: LoginPage, icon: 'arrow-dropright-circle', color:'secondary'},
-                    {title: value[ 'menu.Subscribe' ], component: SignupPage, icon: 'add-circle', color:'danger'}
+                    {title: value[ 'menu.Home' ], component: WelcomePage, icon: 'home', color: 'primary'},
+                    {
+                        title: value[ 'menu.Login' ],
+                        component: LoginPage,
+                        icon: 'arrow-dropright-circle',
+                        color: 'secondary'
+                    },
+                    {title: value[ 'menu.Subscribe' ], component: SignupPage, icon: 'add-circle', color: 'danger'}
                 ];
             }
         )
@@ -129,14 +152,14 @@ export class MyApp {
         this.translate.get([ 'menu.Home', 'menu.Events', 'menu.Players', 'menu.Teams', 'menu.Stats', 'menu.Settings', 'menu.Logout', 'menu.Synchro' ]).subscribe(
             value => {
                 this.pages = [
-                    {title: value[ 'menu.Home' ], component: HomePage, icon: 'home', color:'primary'},
-                    {title: value[ 'menu.Events' ], component: EventListPage, icon: 'calendar', color:'danger'},
-                    {title: value[ 'menu.Players' ], component: PlayerListPage, icon: 'contact', color:'green'},
-                    {title: value[ 'menu.Teams' ], component: TeamListPage, icon: 'contacts', color:'warning'},
+                    {title: value[ 'menu.Home' ], component: HomePage, icon: 'home', color: 'primary'},
+                    {title: value[ 'menu.Events' ], component: EventListPage, icon: 'calendar', color: 'danger'},
+                    {title: value[ 'menu.Players' ], component: PlayerListPage, icon: 'contact', color: 'green'},
+                    {title: value[ 'menu.Teams' ], component: TeamListPage, icon: 'contacts', color: 'warning'},
                     //{ title: value['menu.Stats'], component: CollectListPage, icon: 'stats',color:'danger' },
-                    {title: value[ 'menu.Synchro' ], component: SynchroPage, icon: 'sync', color:'primary'},
-                    {title: value[ 'menu.Settings' ], component: SettingsPage, icon: 'settings', color:'primary'},
-                    {title: value[ 'menu.Logout' ], component: LogoutPage, icon: 'log-out', color:'dark'}
+                    {title: value[ 'menu.Synchro' ], component: SynchroPage, icon: 'sync', color: 'primary'},
+                    {title: value[ 'menu.Settings' ], component: SettingsPage, icon: 'settings', color: 'primary'},
+                    {title: value[ 'menu.Logout' ], component: LogoutPage, icon: 'log-out', color: 'dark'}
                 ];
             }
         )

@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { EventUpsertPage } from "../event-upsert/event-upsert";
 import { TeamBuildPage } from "../../collect/team-build/team-build";
 import { GoogleMap, GoogleMapOptions, GoogleMaps, GoogleMapsEvent } from '@ionic-native/google-maps';
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 /**
  * Generated class for the EventListPage page.
@@ -22,10 +23,20 @@ export class EventDetailPage {
      *
      * @param navCtrl
      * @param navParams
+     * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController,
-                public navParams: NavParams) {
+                public navParams: NavParams,
+                private ga: GoogleAnalytics) {
         this.event = navParams.get('event');
+    }
+
+
+    /**
+     *
+     */
+    ionViewDidEnter() {
+        this.ga.trackView('EventDetailPage');
     }
 
     /**

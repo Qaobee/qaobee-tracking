@@ -7,6 +7,7 @@ import { SignupPage } from '../signup/signup';
 import { MessageBus } from "../../providers/message-bus.service";
 import { UserService } from '../../providers/api/api.user.service';
 import { TranslateService } from "@ngx-translate/core";
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 /**
  * LoginPage page.
@@ -31,6 +32,7 @@ export class LoginPage {
      * @param {UniqueDeviceID} uniqueDeviceID
      * @param {TranslateService} translateService
      * @param {MessageBus} eventService
+     * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -40,10 +42,18 @@ export class LoginPage {
                 private toastCtrl: ToastController,
                 private uniqueDeviceID: UniqueDeviceID,
                 private translateService: TranslateService,
-                private eventService: MessageBus) {
+                private eventService: MessageBus,
+                private ga: GoogleAnalytics) {
         this.storage.get('login').then(l => {
             this.login = l;
         })
+    }
+
+    /**
+     *
+     */
+    ionViewDidEnter() {
+        this.ga.trackView('LoginPage');
     }
 
     /**

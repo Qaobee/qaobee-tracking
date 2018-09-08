@@ -8,6 +8,7 @@ import { EffectiveService } from '../../providers/api/api.effective.service';
 import { CollectService } from '../../providers/api/api.collect.service';
 import { APIStatsService } from '../../providers/api/api.stats';
 import _ from "lodash";
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
     selector: 'page-synchro',
@@ -44,6 +45,7 @@ export class SynchroPage {
      * @param {EffectiveService} effectiveService
      * @param {APIStatsService} statAPI
      * @param {AuthenticationService} authenticationService
+     * @param {GoogleAnalytics} ga
      */
     constructor(
         public navCtrl: NavController,
@@ -53,8 +55,16 @@ export class SynchroPage {
         private collectService: CollectService,
         private effectiveService: EffectiveService,
         private statAPI: APIStatsService,
-        private authenticationService: AuthenticationService
+        private authenticationService: AuthenticationService,
+        private ga: GoogleAnalytics
     ) {
+    }
+
+    /**
+     *
+     */
+    ionViewDidEnter() {
+        this.ga.trackView('SynchroPage');
     }
 
 
@@ -100,11 +110,11 @@ export class SynchroPage {
                 this.authenticationService.meta._id,
             ).subscribe(eventList => {
                 console.debug('[SynchroPage] - syncEvents - eventList', eventList);
-                this.storage.get(this.authenticationService.meta._id+'-events').then(storedEvents => {
+                this.storage.get(this.authenticationService.meta._id + '-events').then(storedEvents => {
                     console.debug('[SynchroPage] - syncEvents - storedEvents', storedEvents);
                     let events = _.unionBy(storedEvents, eventList, '_id');
                     console.debug('[SynchroPage] - syncEvents - events', events);
-                    this.storage.set(this.authenticationService.meta._id+'-events', events);
+                    this.storage.set(this.authenticationService.meta._id + '-events', events);
                     let missing = _.differenceBy(storedEvents, eventList, '_id');
                     console.debug('[SynchroPage] - syncEvents - missing', missing);
                     let asyncs: Observable<boolean>[] = [];
@@ -186,9 +196,9 @@ export class SynchroPage {
                 startDate: this.authenticationService.meta.season.startDate,
                 endDate: this.authenticationService.meta.season.endDate
             }).subscribe((collectsFromAPI: any[]) => {
-                this.storage.get(this.authenticationService.meta._id+'-collects').then((storedCollects: any[]) => {
+                this.storage.get(this.authenticationService.meta._id + '-collects').then((storedCollects: any[]) => {
                     let effective = _.unionBy(storedCollects, collectsFromAPI, '_id');
-                    this.storage.set(this.authenticationService.meta._id+'-collects', effective);
+                    this.storage.set(this.authenticationService.meta._id + '-collects', effective);
                     let missing = _.differenceBy(storedCollects, collectsFromAPI, '_id');
                     let asyncs: Observable<boolean>[] = [];
                     missing.forEach(e => {
@@ -238,7 +248,7 @@ export class SynchroPage {
      */
     syncStats(): Observable<number> {
         return new Observable<number>(observer => {
-            this.storage.get(this.authenticationService.meta._id+'-events').then(storedEvents => {
+            this.storage.get(this.authenticationService.meta._id + '-events').then(storedEvents => {
                 let asyncs: Observable<number>[] = [];
                 storedEvents.forEach(currentEvent => {
                     this.storage.get('stats-' + currentEvent._id).then(stats => {

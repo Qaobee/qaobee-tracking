@@ -11,6 +11,7 @@ import { LocationService } from "../../../providers/location.service";
 import { PersonService } from '../../../providers/api/api.person.service';
 
 import moment from 'moment';
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 
 @Component({
@@ -41,6 +42,7 @@ export class PlayerUpsertPage {
      * @param {EffectiveService} effectiveService
      * @param {Storage} storage
      * @param {TranslateService} translateService
+     * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -52,7 +54,8 @@ export class PlayerUpsertPage {
                 private locationService: LocationService,
                 private effectiveService: EffectiveService,
                 private storage: Storage,
-                private translateService: TranslateService) {
+                private translateService: TranslateService,
+                private ga: GoogleAnalytics) {
         this.editMode = navParams.get('editMode');
         if (this.editMode && this.editMode === 'CREATE') {
             this.player = {
@@ -112,11 +115,18 @@ export class PlayerUpsertPage {
     }
 
     /**
+     *
+     */
+    ionViewDidEnter() {
+        this.ga.trackView('PlayerUpsertPage');
+    }
+
+    /**
      * Match element in option list from select input
      * @param e1
      * @param e2
      */
-    compareOptionSelect(e1: any, e2: any): boolean {
+    static compareOptionSelect(e1: any, e2: any): boolean {
         return e1 && e2 ? (e1 === e2.code || e1.code === e2.code) : e1 === e2;
     }
 
@@ -217,9 +227,9 @@ export class PlayerUpsertPage {
             this.personService.addPerson(dataContainer).subscribe(r => {
 
                 if (this.editMode === 'CREATE') {
-                    this.storage.get(this.authenticationService.meta._id+'-players').then(players => {
+                    this.storage.get(this.authenticationService.meta._id + '-players').then(players => {
                         players.push(r);
-                        this.storage.set(this.authenticationService.meta._id+'-players', players);
+                        this.storage.set(this.authenticationService.meta._id + '-players', players);
 
                         this.effectiveService.get(this.authenticationService.meta.effectiveDefault).subscribe(effectiveGet => {
                             console.log('effectiveGet', effectiveGet);

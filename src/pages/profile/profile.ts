@@ -5,6 +5,7 @@ import { UserService } from "../../providers/api/api.user.service";
 import { ENV } from '@app/env'
 import { AuthenticationService } from "../../providers/authentication.service";
 import { LocationService } from "../../providers/location.service";
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 
 @Component({
@@ -30,6 +31,7 @@ export class ProfilePage {
      * @param {AuthenticationService} authenticationService
      * @param {UserService} userService
      * @param {LocationService} locationService
+     * @param {GoogleAnalytics} ga
      */
     constructor(private camera: Camera,
                 private loadingCtrl: LoadingController,
@@ -37,7 +39,15 @@ export class ProfilePage {
                 private actionSheetCtrl: ActionSheetController,
                 private authenticationService: AuthenticationService,
                 private userService: UserService,
-                private locationService: LocationService) {
+                private locationService: LocationService,
+                private ga: GoogleAnalytics) {
+    }
+
+    /**
+     *
+     */
+    ionViewDidEnter() {
+        this.ga.trackView('ProfilePage');
     }
 
     /**

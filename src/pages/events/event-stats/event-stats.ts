@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { StatsEventService } from '../stats.event.service';
 import { StatsContainerModel } from 'model/stats.container';
+import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
     selector: 'page-event-stats',
@@ -22,10 +23,12 @@ export class EventStatsPage {
      * @param {NavController} navCtrl
      * @param {NavParams} navParams
      * @param {StatsEventService} statsEventService
+     * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
-                private statsEventService: StatsEventService) {
+                private statsEventService: StatsEventService,
+                private ga: GoogleAnalytics) {
         this.event = navParams.get('event');
         this.ownerId.push(this.event._id);
         if (this.event) {
@@ -36,6 +39,13 @@ export class EventStatsPage {
                 }
             });
         }
+    }
+
+    /**
+     *
+     */
+    ionViewDidEnter() {
+        this.ga.trackView('EventStatsPage');
     }
 
     /**
@@ -67,13 +77,6 @@ export class EventStatsPage {
                 this.scoreHome = goalScored;
             }
         }
-    }
-
-    /**
-     *
-     */
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad EventStatsPage');
     }
 
     /**
