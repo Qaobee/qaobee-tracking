@@ -6,7 +6,11 @@
 
 <ion-content>
   <ion-fab bottom right>
-    <button ion-fab large (tap)="goToAddteam()" color="danger"><ion-icon name="add"></ion-icon></button>
+    <button ion-fab mini color="danger"><ion-icon name="add"></ion-icon></button>
+    <ion-fab-list>
+      <button ion-fab><ion-icon name=""></ion-icon></button>
+      <button ion-fab><ion-icon name="logo-twitter"></ion-icon></button>
+    </ion-fab-list>
   </ion-fab>
 
   <ion-refresher (ionRefresh)="getTeams($event)">
