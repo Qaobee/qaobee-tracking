@@ -36,10 +36,10 @@
     "logistic": "Horaire et lieu",
     "actors": "Acteurs",
     "eventsList": {
-      "title": "Evénements"
+      "title": "Agenda"
     },
     "collectList": {
-      "title": "Collectes"
+      "title": "Stats"
     },
     "detail": {
       "edit": "Modifier",

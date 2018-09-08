@@ -5,7 +5,7 @@ import { AuthenticationService } from "../../providers/authentication.service";
 import { Storage } from "@ionic/storage";
 import { Utils } from "../../providers/utils";
 import { EventUpsertPage } from "../../pages/events/event-upsert/event-upsert";
-import { EventDetailPage } from '../../pages/events/event-detail/event-detail';
+import { EventListPage } from '../../pages/events/event-list/event-list';
 import { TeamBuildPage } from "../../pages/collect/team-build/team-build";
 
 @Component({
@@ -76,16 +76,6 @@ export class NextEventComponent {
      * @param event
      * @param clickEvent
      */
-    goToViewEventStat(event: any, clickEvent: any) {
-        clickEvent.stopPropagation();
-        console.log('goToViewEventStat');
-    }
-
-    /**
-     *
-     * @param event
-     * @param clickEvent
-     */
     goToStartCollect(event: any, clickEvent: any) {
         clickEvent.stopPropagation();
         this.navCtrl.push(TeamBuildPage, {event: event});
@@ -95,7 +85,7 @@ export class NextEventComponent {
      *
      */
     goToCreateEvent() {
-        this.navCtrl.push(EventUpsertPage, {event: event, editMode : 'CREATE'});
+        this.navCtrl.push(EventUpsertPage, {event: null, editMode : 'CREATE'});
     }
 
     /**
@@ -103,8 +93,7 @@ export class NextEventComponent {
      * @param event
      * @param clickEvent
      */
-    goToDetail(event: any, clickEvent: any) {
-        clickEvent.stopPropagation();
-        this.navCtrl.push(EventDetailPage, {event: event});
+    goToEventList() {
+        this.navCtrl.push(EventListPage);
     }
 }

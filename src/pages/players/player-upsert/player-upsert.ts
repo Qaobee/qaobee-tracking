@@ -126,7 +126,7 @@ export class PlayerUpsertPage {
      * @param e1
      * @param e2
      */
-    static compareOptionSelect(e1: any, e2: any): boolean {
+    compareOptionSelect(e1: any, e2: any): boolean {
         return e1 && e2 ? (e1 === e2.code || e1.code === e2.code) : e1 === e2;
     }
 
@@ -135,7 +135,7 @@ export class PlayerUpsertPage {
      * @param {string} field
      * @returns {boolean}
      */
-    isValid(field: string) {
+    isValid(field: string): boolean {
         let formField = this.playerForm.controls[ field ];
         return formField.valid || formField.pristine;
     }

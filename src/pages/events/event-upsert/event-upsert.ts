@@ -177,7 +177,7 @@ export class EventUpsertPage {
             'type': [ this.event.type, [ Validators.required ] ],
             'myTeam': [ this.myTeam, [ Validators.required ] ],
             'adversaryTeam': [ this.adversaryTeam, [ Validators.required ] ],
-            'radioHome': [ this.radioHome, [ Validators.required ] ],
+            'radioHome': [ this.radioHome, [ Validators.required ] ]
         });
     };
 
@@ -186,7 +186,7 @@ export class EventUpsertPage {
      * @param e1
      * @param e2
      */
-    static compareOptionTypeEvent(e1: any, e2: any): boolean {
+    compareOptionTypeEvent(e1: any, e2: any): boolean {
         return e1 && e2 ? e1.code === e2.code : e1 === e2;
     }
 
@@ -195,7 +195,7 @@ export class EventUpsertPage {
      * @param e1
      * @param e2
      */
-    static compareOptionTeam(e1: any, e2: any): boolean {
+    compareOptionTeam(e1: any, e2: any): boolean {
         return e1 && e2 ? e1._id === e2._id : e1 === e2;
     }
 
