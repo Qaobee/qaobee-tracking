@@ -46,8 +46,8 @@ export class StatsEventService {
                     this.collectService.getCollects(
                         this.authenticationService.meta._id,
                         eventId, null, null,
-                        this.authenticationService.meta.season.startDate,
-                        this.authenticationService.meta.season.endDate
+                        this.authenticationService.statStartDate,
+                        this.authenticationService.statEndDate
                     ).subscribe((collects: any[]) => {
                         if (collects.length > 0) {
                             statsContainer.collectList = collects;

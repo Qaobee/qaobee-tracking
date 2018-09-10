@@ -1,12 +1,12 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="warning">
     <ion-title>{{'team.TitleNavBarTeam' | translate}}</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="goToStats()">
         <ion-icon name="stats"></ion-icon>
       </button>
 
-      <button ion-button icon-only (click)="editTeam()">
+      <button ion-button icon-only (click)="editTeam(team.adversary)">
         <ion-icon name="create"></ion-icon>
       </button>
 
@@ -24,18 +24,28 @@
     </ion-row>
   </ion-item>
 
-  
-  
   <ion-row>
-    <ion-col text-center>
-      <h3 *ngIf="(team.deactivated !== 'true')">{{'team.confirmDeactivate.title' | translate}}</h3>
-      <button ion-button outline color="danger" (click)="deactivateTeam('team.confirmDeactivate','true')" *ngIf="(team.deactivated !== 'true')">
-        <ion-icon name="close-circle"></ion-icon>
-      </button>
-      <h3 *ngIf="(team.deactivated === 'true')">{{'team.confirmActivate.title' | translate}}</h3>
-      <button ion-button outline color="secondary" (click)="deactivateTeam('team.confirmActivate','false')" *ngIf="(team.deactivated === 'true')">
-        <ion-icon name="checkmark-circle"></ion-icon>
-      </button>
+    <ion-col>
+      <span class="label">{{ 'team.labels.categoryAge' | translate }}</span>
+      <span *ngIf="team.categoryAge">{{team.categoryAge.label}}</span>
     </ion-col>
   </ion-row>
+  <ion-row>
+    <ion-col>
+      <span class="label">{{ 'team.labels.championship' | translate }}</span>
+      <span>{{team.championship}}</span>
+    </ion-col>
+  </ion-row>
+  
+  <ion-list inset>
+      <ion-list-header>
+        {{'team.TitleAdversaryTeamList' | translate}}
+        <button ion-button item-end mini color="danger" (tap)="goToAddAdversary()"><ion-icon name="add"></ion-icon></button>
+      </ion-list-header>
+      
+      <ion-item *ngFor="let item of adversaries"  [ngClass]="{'teamDisactivated':item.enable==='false'}">
+        <h2>{{item.label}}</h2>
+      </ion-item>  
+    </ion-list>
+
 </ion-content>

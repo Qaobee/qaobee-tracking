@@ -149,10 +149,11 @@
     "Synchro": "Synchronisation"
   },
   "team": {
-    "TitleNavBarTeamList": "Equipes",
+    "TitleNavBarTeamList": "Mes équipes",
     "TitleMyTeamList": "Mes équipes",
-    "TitleAdversaryTeamList": "Mes adversaires",
-    "TitleNavBarTeam":"Détail équipe",
+    "TitleAdversaryTeamList": "Liste adversaires",
+    "TitleNavBarTeam":"Détail",
+    "TitleNavBarTeamEdit":"Mise à jour",
     "TitleNavBarTeamStats":"Stats de l'équipe",
     "confirmDeactivate": {
       "title": "Désactivation de l'équipe",
@@ -165,6 +166,11 @@
       "message": "Confirmez-vous l'activation de l'équipe ?",
       "buttonLabelCancel": "Annuler",
       "buttonLabelConfirm": "Valider"
+    },
+    "labels":{
+      "name":"Equipe",
+      "championship": "Championnat",
+      "categoryAge": "Catégorie"
     },
     "messages": {
       "updateDone": "L'équipe a bien été mis à jour",

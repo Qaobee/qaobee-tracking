@@ -75,8 +75,8 @@ export class TeamStatsPage {
         let search = {
             listIndicators: indicators,
             listOwners: this.ownerId,
-            startDate: this.authenticationService.meta.season.startDate,
-            endDate: this.authenticationService.meta.season.endDate,
+            startDate: this.authenticationService.statStartDate,
+            endDate: this.authenticationService.statEndDate,
             aggregat: 'COUNT',
             listFieldsGroupBy: listFieldsGroupBy
         };
@@ -101,8 +101,8 @@ export class TeamStatsPage {
                 search = {
                     listIndicators: indicators,
                     listOwners: this.ownerId,
-                    startDate: this.authenticationService.meta.season.startDate,
-                    endDate: this.authenticationService.meta.season.endDate,
+                    startDate: this.authenticationService.statStartDate,
+                    endDate: this.authenticationService.statEndDate,
                     aggregat: 'SUM',
                     listFieldsGroupBy: listFieldsGroupBy
                 };

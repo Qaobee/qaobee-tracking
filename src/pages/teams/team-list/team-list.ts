@@ -20,7 +20,8 @@
 import { TeamDetailPage } from '../team-detail/team-detail';
 import { TeamUpsertPage } from '../team-upsert/team-upsert';
 import { Component } from '@angular/core';
-import { NavController, NavParams, Refresher } from 'ionic-angular';
+import { AlertController, NavController, NavParams, Refresher } from 'ionic-angular';
+import { TranslateService } from '@ngx-translate/core';
 import { Storage } from "@ionic/storage";
 import { AuthenticationService } from '../../../providers/authentication.service';
 import { TeamStatsPage } from '../team-stats/team-stats';
@@ -33,10 +34,7 @@ import { GoogleAnalytics } from "@ionic-native/google-analytics";
 })
 export class TeamListPage {
 
-    teams: any = {
-        myTeams: [],
-        adversaries: []
-    };
+    myTeams: any;
     myTeamListSize: number;
     adversaryTeamListSize: number;
     teamListFiltred: any;
@@ -46,6 +44,8 @@ export class TeamListPage {
      * @param {NavController} navCtrl
      * @param {NavParams} navParams
      * @param {Storage} storage
+     * @param {AlertController} alertCtrl
+     * @param {TranslateService} translateService
      * @param {AuthenticationService} authenticationService
      * @param {TeamService} teamService
      * @param {GoogleAnalytics} ga
@@ -55,6 +55,8 @@ export class TeamListPage {
                 private storage: Storage,
                 private teamService: TeamService,
                 private authenticationService: AuthenticationService,
+                private alertCtrl: AlertController,
+                private translateService: TranslateService,
                 private ga: GoogleAnalytics) {
         this.retrieveTeamList();
     }
@@ -64,6 +66,7 @@ export class TeamListPage {
      */
     ionViewDidEnter() {
         this.ga.trackView('TeamListPage');
+        this.retrieveTeamList();
     }
 
     /**
@@ -74,29 +77,17 @@ export class TeamListPage {
         // Retreive my team list
         this.teamService.getTeams(this.authenticationService.meta.effectiveDefault, this.authenticationService.meta._id, 'all', 'false').subscribe((teams: any[]) => {
             if (teams) {
-                this.teams.myTeams = [];
+                this.myTeams = [];
                 teams.forEach(item => {
                     if (!item.adversary) {
-                        this.teams.myTeams.push(item);
+                        this.myTeams.push(item);
                     }
                 });
-                this.myTeamListSize = this.teams.myTeams.lenght;
+                this.storage.set(this.authenticationService.meta._id + '-teams',teams);
+                this.myTeamListSize = this.myTeams.lenght;
             }
             if (refresher) {
                 refresher.complete();
-            }
-        });
-
-        // Retreive adversary team list
-        this.teamService.getTeams(this.authenticationService.meta.effectiveDefault, this.authenticationService.meta._id, 'all', 'true').subscribe((teams: any[]) => {
-            if (teams) {
-                this.teams.adversaries = [];
-                teams.forEach(item => {
-                    if (item.adversary) {
-                        this.teams.adversaries.push(item);
-                    }
-                });
-                this.adversaryTeamListSize = this.teams.adversaries.lenght;
             }
         });
     }
@@ -109,46 +100,52 @@ export class TeamListPage {
             if (!teams) {
                 this.getTeams(null);
             } else {
-                this.teams = teams;
+                this.myTeams= teams;
             }
         })
     }
 
     /**
-     * Filter team list
-     * @param ev
+     *
+     * @param {string} confirmLabels
+     * @param {string} desactived
      */
-    searchItems(ev: any) {
-
-        // set val to the value of the ev target
-        let val = ev.target.value;
-        this.teamListFiltred = [];
-
-        // if the value is an empty string don't filter the items
-        if (val && val.trim() != '') {
-
-            // Reset items back to all of the items
-            this.storage.get(this.authenticationService.meta._id + '-teams').then(teams => {
-                    for (let index = 0; index < teams.length; index++) {
-                        const element = teams[ index ];
-                        if (element.name.toLowerCase().indexOf(val.toLowerCase()) > -1 || element.firstname.toLowerCase().indexOf(val.toLowerCase()) > -1) {
-                            this.teamListFiltred.push(element);
+    deactivateTeam(team: any, confirmLabels: string, deactivated: string) {
+        this.translateService.get(confirmLabels).subscribe(
+            value => {
+                let alert = this.alertCtrl.create({
+                    title: value.title,
+                    message: value.message,
+                    buttons: [
+                        {
+                            text: value.buttonLabelCancel,
+                            role: 'cancel',
+                            handler: () => {
+                            }
+                        },
+                        {
+                            text: value.buttonLabelConfirm,
+                            handler: () => {
+                                team.enable = deactivated;
+                                console.debug('team',team);
+                                this.teamService.updateTeam(team).subscribe(r => {
+                                  
+                                  this.retrieveTeamList();
+                                });
+                            }
                         }
-                    }
-                    this.teams = this.teamListFiltred;
-                    this.myTeamListSize = this.teamListFiltred.length;
-                }
-            );
-        } else {
-            this.retrieveTeamList();
-        }
+                    ]
+                });
+                alert.present();
+            }
+        )
     }
 
     /**
      *
      */
     goToAddteam() {
-        this.navCtrl.push(TeamUpsertPage, {editMode: 'CREATE'});
+        this.navCtrl.push(TeamUpsertPage, {editMode: 'CREATE', adversary:false});
     }
 
     /**
