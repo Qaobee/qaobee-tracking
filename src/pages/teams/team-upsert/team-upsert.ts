@@ -82,7 +82,7 @@ export class TeamUpsertPage {
         //Initialiaze team's form
         this.teamForm = this.formBuilder.group({
             'label': [ this.team.label|| '', [ Validators.required ] ],
-            'championShip': [ this.team.championShip|| '', [ Validators.required ] ],
+            'championship': [ this.team.championship|| '', [ Validators.required ] ],
             'categoryAge': [ this.team.categoryAge, [ Validators.required ] ]
         });
 
@@ -136,7 +136,7 @@ export class TeamUpsertPage {
 
         if (this.teamForm.valid) {
           this.team.label = formVal.label;
-          this.team.championShip = formVal.championShip;
+          this.team.championship = formVal.championship;
           
           if (formVal.categoryAge) {
               this.team.categoryAge = formVal.categoryAge;

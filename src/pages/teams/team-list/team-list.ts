@@ -20,8 +20,7 @@
 import { TeamDetailPage } from '../team-detail/team-detail';
 import { TeamUpsertPage } from '../team-upsert/team-upsert';
 import { Component } from '@angular/core';
-import { AlertController, NavController, NavParams, Refresher } from 'ionic-angular';
-import { TranslateService } from '@ngx-translate/core';
+import { NavController, NavParams, Refresher } from 'ionic-angular';
 import { Storage } from "@ionic/storage";
 import { AuthenticationService } from '../../../providers/authentication.service';
 import { TeamStatsPage } from '../team-stats/team-stats';
@@ -44,8 +43,6 @@ export class TeamListPage {
      * @param {NavController} navCtrl
      * @param {NavParams} navParams
      * @param {Storage} storage
-     * @param {AlertController} alertCtrl
-     * @param {TranslateService} translateService
      * @param {AuthenticationService} authenticationService
      * @param {TeamService} teamService
      * @param {GoogleAnalytics} ga
@@ -55,8 +52,6 @@ export class TeamListPage {
                 private storage: Storage,
                 private teamService: TeamService,
                 private authenticationService: AuthenticationService,
-                private alertCtrl: AlertController,
-                private translateService: TranslateService,
                 private ga: GoogleAnalytics) {
         this.retrieveTeamList();
     }
@@ -103,42 +98,6 @@ export class TeamListPage {
                 this.myTeams= teams;
             }
         })
-    }
-
-    /**
-     *
-     * @param {string} confirmLabels
-     * @param {string} desactived
-     */
-    deactivateTeam(team: any, confirmLabels: string, deactivated: string) {
-        this.translateService.get(confirmLabels).subscribe(
-            value => {
-                let alert = this.alertCtrl.create({
-                    title: value.title,
-                    message: value.message,
-                    buttons: [
-                        {
-                            text: value.buttonLabelCancel,
-                            role: 'cancel',
-                            handler: () => {
-                            }
-                        },
-                        {
-                            text: value.buttonLabelConfirm,
-                            handler: () => {
-                                team.enable = deactivated;
-                                console.debug('team',team);
-                                this.teamService.updateTeam(team).subscribe(r => {
-                                  
-                                  this.retrieveTeamList();
-                                });
-                            }
-                        }
-                    ]
-                });
-                alert.present();
-            }
-        )
     }
 
     /**

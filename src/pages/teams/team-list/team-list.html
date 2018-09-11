@@ -28,19 +28,8 @@
         <ion-icon name="stats" large color="secondary" (click)="goToStats(item, $event)"></ion-icon>
       </ion-avatar>
       <h2 (click)="goToDetail(item, $event)">{{item.label}}</h2>
-      <p (click)="goToDetail(item, $event)">{{'team.labels.championship' | translate}} : {{item.championShip}}</p>
+      <p (click)="goToDetail(item, $event)">{{'team.labels.championship' | translate}} : {{item.championship}}</p>
       <p *ngIf="item.categoryAge" (click)="goToDetail(item, $event)">{{'team.labels.categoryAge' | translate}} : {{item.categoryAge.label}}</p>
-      <p *ngIf="(item.enable)">
-        <button ion-button outline mini color="danger" (click)="deactivateTeam(item,'team.confirmDeactivate',false)">
-          <ion-icon name="close-circle"></ion-icon>
-        </button>
-      </p>
-
-      <p *ngIf="(!item.enable)">
-        <button ion-button outline mini color="secondary" (click)="deactivateTeam(item,'team.confirmActivate',true  )">
-          <ion-icon name="checkmark-circle"></ion-icon>
-        </button>
-      </p>
     </ion-item>  
   </ion-list>
 </ion-content>

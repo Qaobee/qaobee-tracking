@@ -18,9 +18,11 @@
  */
 
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { AlertController, NavController, NavParams } from 'ionic-angular';
 import { TeamUpsertPage } from '../team-upsert/team-upsert';
 import { TeamStatsPage } from '../team-stats/team-stats';
+import { TeamAdversaryPage} from '../team-adversary/team-adversary';
+import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService } from '../../../providers/authentication.service';
 import { TeamService } from '../../../providers/api/api.team.service';
 import { GoogleAnalytics } from "@ionic-native/google-analytics";
@@ -41,12 +43,16 @@ export class TeamDetailPage {
      * @param {NavParams} navParams
      * @param {AuthenticationService} authenticationService
      * @param {TeamService} teamService
+     * @param {AlertController} alertCtrl
+     * @param {TranslateService} translateService
      * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private teamService: TeamService,
                 private authenticationService: AuthenticationService,
+                private alertCtrl: AlertController,
+                private translateService: TranslateService,
                 private ga: GoogleAnalytics) {
         this.team = navParams.get('team');
     }
@@ -84,7 +90,14 @@ export class TeamDetailPage {
      *
      */
     goToAddAdversary() {
-        this.navCtrl.push(TeamUpsertPage, {editMode: 'CREATE', adversary:true});
+        this.navCtrl.push(TeamAdversaryPage, {editMode: 'CREATE', adversary:true});
+    }
+
+    /**
+     *
+     */
+    goToViewAdversary(adversary: any) {
+        this.navCtrl.push(TeamAdversaryPage, {team: adversary});
     }
 
 
@@ -95,4 +108,36 @@ export class TeamDetailPage {
         this.navCtrl.push(TeamStatsPage, {team: this.team});
     }
 
+    /**
+     *
+     * @param {string} confirmLabels
+     * @param {string} desactived
+     */
+    deactivateTeam(team: any, confirmLabels: string, deactivated: string) {
+      this.translateService.get(confirmLabels).subscribe(
+        value => {
+          let alert = this.alertCtrl.create({
+            title: value.title,
+            message: value.message,
+            buttons: [
+              {
+                text: value.buttonLabelCancel,
+                role: 'cancel',
+                handler: () => {
+                }
+              },
+              {
+                text: value.buttonLabelConfirm,
+                handler: () => {
+                    team.enable = deactivated;
+                    this.teamService.updateTeam(team).subscribe(r => {
+                    });
+                }
+              }
+            ]
+          });
+          alert.present();
+        }
+      )
+    }
 }

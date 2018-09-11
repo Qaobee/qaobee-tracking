@@ -16,6 +16,7 @@
  *  is strictly forbidden unless prior written permission is obtained
  *  from Qaobee.
  */
+import { TeamAdversaryPage } from './team-adversary/team-adversary';
 import { TeamListPage } from './team-list/team-list';
 import { TeamDetailPage } from './team-detail/team-detail';
 import { TeamUpsertPage } from './team-upsert/team-upsert';
@@ -32,6 +33,7 @@ import { App, IonicModule } from "ionic-angular";
 
 @NgModule({
     declarations: [
+        TeamAdversaryPage,
         TeamListPage,
         TeamDetailPage,
         TeamUpsertPage,
@@ -51,6 +53,7 @@ import { App, IonicModule } from "ionic-angular";
         })
     ],
     entryComponents: [
+        TeamAdversaryPage,
         TeamListPage,
         TeamDetailPage,
         TeamUpsertPage,
