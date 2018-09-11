@@ -23,9 +23,9 @@
       <span  id="teamListTitle">{{'team.TitleMyTeamList' | translate}}</span>
     </ion-list-header>
 
-    <ion-item *ngFor="let item of myTeams"  [ngClass]="{'teamDisactivated':item.enable!=='false'}">
+    <ion-item *ngFor="let item of myTeams"  [ngClass]="{'teamDisactivated':item.enable===false}">
       <ion-avatar item-start>
-        <ion-icon name="stats" large color="secondary" (click)="goToStats(item, $event)"></ion-icon>
+        <ion-icon name="stats" large (click)="goToStats(item, $event)"></ion-icon>
       </ion-avatar>
       <h2 (click)="goToDetail(item, $event)">{{item.label}}</h2>
       <p (click)="goToDetail(item, $event)">{{'team.labels.championship' | translate}} : {{item.championship}}</p>

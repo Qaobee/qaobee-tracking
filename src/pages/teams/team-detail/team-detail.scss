@@ -20,9 +20,4 @@ page-team-detail {
     ion-col {
       text-align: center;
     }
-
-    .teamDisactivated ion-badge {
-      background-color: color($colors, primary, base);
-      color : color($colors, light, base);
-  }
 }

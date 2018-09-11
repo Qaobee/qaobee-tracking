@@ -129,9 +129,10 @@ export class TeamDetailPage {
               {
                 text: value.buttonLabelConfirm,
                 handler: () => {
-                    team.enable = deactivated;
-                    this.teamService.updateTeam(team).subscribe(r => {
-                    });
+                  team.enable = deactivated;
+                  this.teamService.updateTeam(team).subscribe(r => {
+                    this.navCtrl.pop();
+                  });
                 }
               }
             ]

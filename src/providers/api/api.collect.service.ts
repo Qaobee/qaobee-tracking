@@ -66,4 +66,14 @@ export class CollectService {
             catchError(this.apiService.handleError('MetaServices.getMeta'))
         );
     }
+
+    /**
+     *
+     * @param search
+     */
+    deleteCollect(eventId: number) {
+        return this.http.delete<any>(ENV.hive + this.apiService.rootPath + '/sandbox/stats/collect/'+ eventId, this.apiService.addHeaderToken()).pipe(
+            catchError(this.apiService.handleError('MetaServices.getMeta'))
+        );
+    }
 }

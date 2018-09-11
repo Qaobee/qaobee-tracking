@@ -53,7 +53,6 @@ export class TeamListPage {
                 private teamService: TeamService,
                 private authenticationService: AuthenticationService,
                 private ga: GoogleAnalytics) {
-        this.retrieveTeamList();
     }
 
     /**
@@ -61,7 +60,7 @@ export class TeamListPage {
      */
     ionViewDidEnter() {
         this.ga.trackView('TeamListPage');
-        this.retrieveTeamList();
+        this.getTeams(null);
     }
 
     /**

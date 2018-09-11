@@ -61,6 +61,12 @@
       "timeRequired": "Time is required",
       "myTeamRequired": "choose your team, please",
       "adversaryRequired": "choose an adversary, please"
+    },
+    "confirmDelete": {
+      "title": "Remove Collect",
+      "message": "Confirm delete stats for this event ?",
+      "buttonLabelCancel": "Cancel",
+      "buttonLabelConfirm": "Ok"
     }
   },
   "home": {
