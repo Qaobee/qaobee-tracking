@@ -102,6 +102,12 @@ export class MyApp {
                         this.nav.setRoot(HomePage, {user: user});
                     }
                 });
+
+                //Initialization search stats period
+                let startDate = new Date(0).getMilliseconds();
+                let endDate = Date.now();
+                this.authenticationService.statStartDate = startDate;
+                this.authenticationService.statEndDate = endDate;
             });
 
             this.eventService.on(MessageBus.userLoggout, () => {

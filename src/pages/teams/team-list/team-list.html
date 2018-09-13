@@ -1,12 +1,12 @@
 <ion-header>
   <ion-navbar color="warning">
-    <ion-title>{{'team.TitleNavBarTeamList' | translate}}</ion-title>
+    <ion-title><ion-icon name="contacts"></ion-icon> {{'team.TitleNavBarTeamList' | translate}}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
   <ion-fab bottom right>
-    <button ion-fab large (tap)="goToAddteam()" color="danger"><ion-icon name="add"></ion-icon></button>
+    <button ion-fab mini color="danger" (tap)="goToAddteam()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 
   <ion-refresher (ionRefresh)="getTeams($event)">
@@ -20,25 +20,16 @@
 
   <ion-list inset>
     <ion-list-header>
-      <span color="warning">{{'team.TitleMyTeamList' | translate}}</span>
+      <span  id="teamListTitle">{{'team.TitleMyTeamList' | translate}}</span>
     </ion-list-header>
 
-    <ion-item *ngFor="let item of teams.myTeams" (click)="goToDetail(item, $event)" [ngClass]="{'teamDisactivated':item.enable==='false'}">
-      <h2>{{item.label}}</h2>
-      <ion-icon item-end name="stats" color="warning" (click)="goToStats(item, $event)"></ion-icon>
-    </ion-item>  
-  </ion-list>
-
-  <ion-list inset>
-    <ion-list-header>
-      {{'team.TitleAdversaryTeamList' | translate}}
-    </ion-list-header>
-    <ion-item>
-    <ion-badge color="danger" item-start>{{playerListSize}}</ion-badge>
-      <ion-searchbar (ionInput)="searchItems($event)"></ion-searchbar>
-    </ion-item>
-    <ion-item *ngFor="let item of teams.adversaries" (click)="goToDetail(item, $event)" [ngClass]="{'teamDisactivated':item.enable==='false'}">
-      <h2>{{item.label}}</h2>
+    <ion-item *ngFor="let item of myTeams"  [ngClass]="{'teamDisactivated':item.enable===false}">
+      <ion-avatar item-start>
+        <ion-icon name="stats" large (click)="goToStats(item, $event)"></ion-icon>
+      </ion-avatar>
+      <h2 (click)="goToDetail(item, $event)">{{item.label}}</h2>
+      <p (click)="goToDetail(item, $event)">{{'team.labels.championship' | translate}} : {{item.championship}}</p>
+      <p *ngIf="item.categoryAge" (click)="goToDetail(item, $event)">{{'team.labels.categoryAge' | translate}} : {{item.categoryAge.label}}</p>
     </ion-item>  
   </ion-list>
 </ion-content>

@@ -103,8 +103,8 @@ export class CollectListPage {
      */
     private getEvents(refresher: Refresher) {
         this.eventsServices.getEvents(
-            this.authenticationService.meta.season.startDate,
-            this.authenticationService.meta.season.endDate,
+            this.authenticationService.statStartDate,
+            this.authenticationService.statEndDate,
             'championship',
             this.authenticationService.meta.activity._id,
             this.authenticationService.meta._id,

@@ -9,4 +9,6 @@ export class AuthenticationService {
     public isLogged: boolean = false;
     public user: any;
     public meta: any;
+    public statStartDate: number;
+    public statEndDate: number;
 }

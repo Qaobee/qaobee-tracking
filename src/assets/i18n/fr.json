@@ -36,10 +36,10 @@
     "logistic": "Horaire et lieu",
     "actors": "Acteurs",
     "eventsList": {
-      "title": "Evénements"
+      "title": "Agenda"
     },
     "collectList": {
-      "title": "Collectes"
+      "title": "Stats"
     },
     "detail": {
       "edit": "Modifier",
@@ -61,6 +61,12 @@
       "timeRequired": "L'heure du match est obligatoire",
       "myTeamRequired": "Vous devez choisir votre équipe",
       "adversaryRequired": "Vous devez choisir un adversaire"
+    },
+    "confirmDelete": {
+      "title": "Suppression de la collecte",
+      "message": "Confirmez-vous la suppresion des stats pour cet événement ?",
+      "buttonLabelCancel": "Annuler",
+      "buttonLabelConfirm": "Valider"
     }
   },
   "home": {
@@ -149,10 +155,11 @@
     "Synchro": "Synchronisation"
   },
   "team": {
-    "TitleNavBarTeamList": "Equipes",
+    "TitleNavBarTeamList": "Mes équipes",
     "TitleMyTeamList": "Mes équipes",
-    "TitleAdversaryTeamList": "Mes adversaires",
-    "TitleNavBarTeam":"Détail équipe",
+    "TitleAdversaryTeamList": "Liste adversaires",
+    "TitleNavBarTeam":"Détail",
+    "TitleNavBarTeamEdit":"Mise à jour",
     "TitleNavBarTeamStats":"Stats de l'équipe",
     "confirmDeactivate": {
       "title": "Désactivation de l'équipe",
@@ -165,6 +172,11 @@
       "message": "Confirmez-vous l'activation de l'équipe ?",
       "buttonLabelCancel": "Annuler",
       "buttonLabelConfirm": "Valider"
+    },
+    "labels":{
+      "name":"Equipe",
+      "championship": "Championnat",
+      "categoryAge": "Catégorie"
     },
     "messages": {
       "updateDone": "L'équipe a bien été mis à jour",

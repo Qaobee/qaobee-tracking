@@ -33,10 +33,7 @@ import { GoogleAnalytics } from "@ionic-native/google-analytics";
 })
 export class TeamListPage {
 
-    teams: any = {
-        myTeams: [],
-        adversaries: []
-    };
+    myTeams: any;
     myTeamListSize: number;
     adversaryTeamListSize: number;
     teamListFiltred: any;
@@ -56,7 +53,6 @@ export class TeamListPage {
                 private teamService: TeamService,
                 private authenticationService: AuthenticationService,
                 private ga: GoogleAnalytics) {
-        this.retrieveTeamList();
     }
 
     /**
@@ -64,6 +60,7 @@ export class TeamListPage {
      */
     ionViewDidEnter() {
         this.ga.trackView('TeamListPage');
+        this.getTeams(null);
     }
 
     /**
@@ -74,29 +71,17 @@ export class TeamListPage {
         // Retreive my team list
         this.teamService.getTeams(this.authenticationService.meta.effectiveDefault, this.authenticationService.meta._id, 'all', 'false').subscribe((teams: any[]) => {
             if (teams) {
-                this.teams.myTeams = [];
+                this.myTeams = [];
                 teams.forEach(item => {
                     if (!item.adversary) {
-                        this.teams.myTeams.push(item);
+                        this.myTeams.push(item);
                     }
                 });
-                this.myTeamListSize = this.teams.myTeams.lenght;
+                this.storage.set(this.authenticationService.meta._id + '-teams',teams);
+                this.myTeamListSize = this.myTeams.lenght;
             }
             if (refresher) {
                 refresher.complete();
-            }
-        });
-
-        // Retreive adversary team list
-        this.teamService.getTeams(this.authenticationService.meta.effectiveDefault, this.authenticationService.meta._id, 'all', 'true').subscribe((teams: any[]) => {
-            if (teams) {
-                this.teams.adversaries = [];
-                teams.forEach(item => {
-                    if (item.adversary) {
-                        this.teams.adversaries.push(item);
-                    }
-                });
-                this.adversaryTeamListSize = this.teams.adversaries.lenght;
             }
         });
     }
@@ -109,46 +94,16 @@ export class TeamListPage {
             if (!teams) {
                 this.getTeams(null);
             } else {
-                this.teams = teams;
+                this.myTeams= teams;
             }
         })
-    }
-
-    /**
-     * Filter team list
-     * @param ev
-     */
-    searchItems(ev: any) {
-
-        // set val to the value of the ev target
-        let val = ev.target.value;
-        this.teamListFiltred = [];
-
-        // if the value is an empty string don't filter the items
-        if (val && val.trim() != '') {
-
-            // Reset items back to all of the items
-            this.storage.get(this.authenticationService.meta._id + '-teams').then(teams => {
-                    for (let index = 0; index < teams.length; index++) {
-                        const element = teams[ index ];
-                        if (element.name.toLowerCase().indexOf(val.toLowerCase()) > -1 || element.firstname.toLowerCase().indexOf(val.toLowerCase()) > -1) {
-                            this.teamListFiltred.push(element);
-                        }
-                    }
-                    this.teams = this.teamListFiltred;
-                    this.myTeamListSize = this.teamListFiltred.length;
-                }
-            );
-        } else {
-            this.retrieveTeamList();
-        }
     }
 
     /**
      *
      */
     goToAddteam() {
-        this.navCtrl.push(TeamUpsertPage, {editMode: 'CREATE'});
+        this.navCtrl.push(TeamUpsertPage, {editMode: 'CREATE', adversary:false});
     }
 
     /**

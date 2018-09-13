@@ -48,8 +48,8 @@ export class StatsHighligthsByQuarterComponent {
         let search = {
             listIndicators: indicatorsOk,
             listOwners: this.ownerId,
-            startDate: this.authenticationService.meta.season.startDate,
-            endDate: this.authenticationService.meta.season.endDate,
+            startDate: this.authenticationService.statStartDate,
+            endDate: this.authenticationService.statEndDate,
             aggregat: 'COUNT'
         };
         //get actions positives
@@ -94,8 +94,8 @@ export class StatsHighligthsByQuarterComponent {
         let search = {
             listIndicators: indicatorsKo,
             listOwners: this.ownerId,
-            startDate: this.authenticationService.meta.season.startDate,
-            endDate: this.authenticationService.meta.season.endDate,
+            startDate: this.authenticationService.statStartDate,
+            endDate: this.authenticationService.statEndDate,
             aggregat: 'COUNT'
         };
 

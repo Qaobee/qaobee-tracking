@@ -49,6 +49,7 @@ export class StatsShootEfficiencyComponent {
         // goal scored or stopped
         let indicators = [];
         console.log('StatsShootEfficiencyComponent =>ngOnChanges', this.ownerId);
+
         let labels = '';
         if (this.positionType && this.positionType === 'goalkeeper') {
             indicators = [ 'goalConceded', 'originShootDef' ];
@@ -62,8 +63,8 @@ export class StatsShootEfficiencyComponent {
         let search = {
             listIndicators: indicators,
             listOwners: this.ownerId,
-            startDate: this.authenticationService.meta.season.startDate,
-            endDate: this.authenticationService.meta.season.endDate,
+            startDate: this.authenticationService.statStartDate,
+            endDate: this.authenticationService.statEndDate,
             aggregat: 'COUNT',
             listFieldsGroupBy: listFieldsGroupBy
         };

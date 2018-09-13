@@ -1,20 +1,28 @@
-<ion-content>
-    <ion-item *ngIf="nextEvent" id="nextEventAreaOn" (click)="goToDetail(nextEvent, $event)">
-            <h2 class="panel">
-            <ion-icon name="ribbon" *ngIf="nextEvent.type.code==='championship'"></ion-icon>
-            <ion-icon name="trophy" *ngIf="nextEvent.type.code==='cup'"></ion-icon>
-            <ion-icon name="happy" *ngIf="nextEvent.type.code==='friendlyGame'"></ion-icon>
-            {{nextEvent.type.label}}
-            </h2>
-            <h2>{{ nextEvent.label }}</h2>
-            <h3>{{ nextEvent.participants.teamHome.label }} / {{ nextEvent.participants.teamVisitor.label }}</h3>
-            <p>{{ nextEvent.startDate | date:"mediumDate" }} {{ nextEvent.startDate | date:"shortTime" }}</p>
-            <ion-icon item-end name="stopwatch" color="danger" *ngIf="!nextEvent.isCollected" (click)="goToStartCollect(nextEvent, $event)"></ion-icon>
-            <ion-icon item-end name="stats" color="danger" *ngIf="nextEvent.isCollected" (click)="goToViewEventStat(nextEvent, $event)"></ion-icon>
+<ion-content class="card-background-page">
+    
+  <ion-card *ngIf="nextEvent" >
+    <div class="card-title">{{ 'home.agenda' | translate }}</div>
+    <img src="assets/imgs/agenda-2018.jpg" alt="bg"/>
+    <ion-item>
+      <ion-icon name="football" item-start large></ion-icon>
+      <h2>{{ nextEvent.label }}</h2>
+      <p>{{ nextEvent.startDate | date:"mediumDate" }} {{ nextEvent.startDate | date:"shortTime" }}</p>
     </ion-item>
+    <ion-item>
+        <span item-end>{{ 'home.agendaText' | translate }}</span>
+      <button id="step1" ion-button (tap)="goToEventList()" large color="danger" small outline item-end>
+        <ion-icon name="calendar"></ion-icon>
+      </button>
+    </ion-item>
+  </ion-card>
 
-    <ion-item text-left *ngIf="!nextEvent" id="nextEventAreaOff">
-        <h2 padding>{{ 'nextEvent.titleNotFound'  | translate}}</h2>
-        <button ion-button color="danger" outline item-end large (tap)="goToCreateEvent()"><ion-icon name="add"></ion-icon></button>
+  <ion-card *ngIf="!nextEvent">
+    <div class="card-title">{{ 'home.agenda' | translate }}</div>
+    <img src="assets/imgs/agenda-2018.jpg" alt="bg"/>
+    
+    <ion-item text-left>
+      <h2 padding>{{ 'nextEvent.titleNotFound'  | translate}}</h2>
+      <button ion-button color="danger" outline item-end large (tap)="goToCreateEvent($event)"><ion-icon name="add"></ion-icon></button>
     </ion-item>
+  </ion-card>
 </ion-content>

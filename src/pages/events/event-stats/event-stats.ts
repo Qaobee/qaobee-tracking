@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { AlertController, NavController, NavParams } from 'ionic-angular';
 import { StatsEventService } from '../stats.event.service';
 import { StatsContainerModel } from 'model/stats.container';
+import { TranslateService } from '@ngx-translate/core';
+import { CollectService } from '../../../providers/api/api.collect.service';
 import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
@@ -19,15 +21,21 @@ export class EventStatsPage {
 
 
     /**
-     *
-     * @param {NavController} navCtrl
-     * @param {NavParams} navParams
-     * @param {StatsEventService} statsEventService
-     * @param {GoogleAnalytics} ga
+     * 
+     * @param navCtrl 
+     * @param navParams 
+     * @param statsEventService 
+     * @param authenticationService 
+     * @param alertCtrl 
+     * @param translateService 
+     * @param ga 
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 private statsEventService: StatsEventService,
+                private collectService: CollectService,
+                private alertCtrl: AlertController,
+                private translateService: TranslateService,
                 private ga: GoogleAnalytics) {
         this.event = navParams.get('event');
         this.ownerId.push(this.event._id);
@@ -82,8 +90,32 @@ export class EventStatsPage {
     /**
      *
      */
-    deleteCollect() {
-        console.log('deleteCollect EventStatsPage');
+    deleteCollect(eventId: any, confirmLabels: string) {
+      this.translateService.get(confirmLabels).subscribe(
+        value => {
+          let alert = this.alertCtrl.create({
+            title: value.title,
+            message: value.message,
+            buttons: [
+              {
+                text: value.buttonLabelCancel,
+                role: 'cancel',
+                handler: () => {
+                }
+              },
+              {
+                text: value.buttonLabelConfirm,
+                handler: () => {
+                  this.collectService.deleteCollect(eventId).subscribe(r => {
+                    this.navCtrl.pop();
+                  });
+                }
+              }
+            ]
+          });
+          alert.present();
+        }
+      )
     }
 
 }

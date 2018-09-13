@@ -61,6 +61,12 @@
       "timeRequired": "Time is required",
       "myTeamRequired": "choose your team, please",
       "adversaryRequired": "choose an adversary, please"
+    },
+    "confirmDelete": {
+      "title": "Remove Collect",
+      "message": "Confirm delete stats for this event ?",
+      "buttonLabelCancel": "Cancel",
+      "buttonLabelConfirm": "Ok"
     }
   },
   "home": {
@@ -136,9 +142,9 @@
     "buttonHome": "Home"
   },
   "menu": {
-    "Login": "Signin",
     "Home": "Home",
     "Subscribe": "Signup",
+    "Login": "Signin",
     "Profile": "Profil",
     "Events": "Agenda",
     "Players": "Players",
@@ -153,6 +159,8 @@
     "TitleMyTeamList": "My Teams",
     "TitleAdversaryTeamList": "My adversaries",
     "TitleNavBarTeam":"Team's detail",
+    "TitleNavBarTeamEdit":"Update team",
+    "TitleNavBarTeamStats":"Team's Stats",
     "confirmDeactivate": {
       "title": "Disable team",
       "message": "the team will be not delete, but will do not present on team's list",
@@ -164,6 +172,11 @@
       "message": "Confirm enable team ?",
       "buttonLabelCancel": "Cancel",
       "buttonLabelConfirm": "Ok"
+    },
+    "labels":{
+      "name": "Label",
+      "championship": "Championship",
+      "categoryAge": "Age's category"
     },
     "messages": {
       "updateDone": "Team update done",
@@ -177,7 +190,6 @@
     "TitleNavBarPlayerStats": "Player's stats",
     "TitleNavBarPlayerEdit": "Player Edit",
     "TitleNavBarPlayerList": "Player list",
-    "TitleNavBarTeamStats":"Stats de l'équipe",
     "labels": {
       "mesuration": "Mesuration",
       "weight": "Weight",

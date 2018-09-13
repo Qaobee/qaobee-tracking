@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar color="warning">
+    <ion-title>{{'team.TitleNavBarTeam' | translate}}</ion-title>
+    <ion-buttons end>
+     
+      <button ion-button icon-only (click)="editTeam(team.adversary)">
+        <ion-icon name="create"></ion-icon>
+      </button>
+
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-item class="enteteLight">
+    <ion-row>
+      <ion-col>
+        <h1>{{team.label}}</h1>
+      </ion-col>
+    </ion-row>
+  </ion-item>
+  
+  <ion-list inset>
+      <ion-list-header>
+        {{'team.TitleAdversaryTeamList' | translate}}
+      </ion-list-header>
+      
+      <ion-item *ngFor="let item of collects">
+        <h2>{{item.label}}</h2>
+      </ion-item>  
+    </ion-list>
+
+</ion-content>
