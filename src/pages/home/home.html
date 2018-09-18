@@ -1,3 +1,4 @@
+<tour-component [steps]="steps" #tour (onOver)="endTour($event)"></tour-component>
 <ion-header>
     <ion-navbar color="dark">
         <button id="step4" ion-button menuToggle>
@@ -10,7 +11,6 @@
 <ion-content>
   <next-event></next-event>
 </ion-content>
-
 <ion-footer>
   <ion-toolbar color="light">
     <ion-row>

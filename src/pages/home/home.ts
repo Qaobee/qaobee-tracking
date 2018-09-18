@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AuthenticationService } from "../../providers/authentication.service";
 import { PlayerListPage } from '../players/player-list/player-list';
@@ -9,15 +9,17 @@ import { TeamListPage } from "../teams/team-list/team-list";
 import { TranslateService } from "@ngx-translate/core";
 import { Storage } from "@ionic/storage";
 import { GoogleAnalytics } from "@ionic-native/google-analytics";
+import { TourComponent } from "../../components/tour/tour.component";
 
 @Component({
     selector: 'page-home',
     templateUrl: 'home.html'
 })
 export class HomePage {
+    @ViewChild('tour') tour: TourComponent;
 
     user: any;
-
+    steps: any[];
     /**
      *
      * @param {NavController} navCtrl
@@ -50,46 +52,29 @@ export class HomePage {
     private startTour() {
         this.storage.get(this.authenticationService.meta._id + "-tour-home").then(tourDone => {
             if (!tourDone) {
-                let intro = introJs.introJs();
                 this.translateService.get('showcase').subscribe(showcase => {
-                    intro.setOptions({
-                        steps: [
-                            {
-                                element: "#step1",
-                                intro: showcase.home.events,
-                                position: "bottom"
-                            },
-                            {
-                                element: "#step2",
-                                intro: showcase.home.players,
-                                position: "bottom"
-                            },
-                            {
-                                element: "#step3",
-                                intro: showcase.home.stats,
-                                position: "bottom"
-                            },
-                            {
-                                element: "#step4",
-                                intro: showcase.home.settings,
-                                position: "bottom"
-                            }
-                        ],
-                        showProgress: false,
-                        skipLabel: showcase.navigation.skip,
-                        doneLabel: showcase.navigation.ok,
-                        nextLabel: showcase.navigation.next,
-                        prevLabel: showcase.navigation.prev,
-                        overlayOpacity: "0.8",
-                        tooltipPosition: 'top',
-                        hidePrev: true,
-                        hideNext: true,
-                        showStepNumbers: false,
-                        exitOnOverlayClick: false,
-                        disableInteraction: true
-                    });
-                    intro.oncomplete(this.endTour.bind(this));
-                    intro.start();
+                    this.steps = [
+                        {
+                            target: '#step1',
+                            description: showcase.home.events,
+                            position: 'top'
+                        },
+                        {
+                            target: '#step2',
+                            description: showcase.home.players,
+                            position: 'top'
+                        },
+                        {
+                            target: "#step3",
+                            description: showcase.home.stats,
+                            position: "top"
+                        },
+                        {
+                            target: "#step4",
+                            description: showcase.home.settings,
+                            position: "right"
+                        }
+                    ];
                 });
             }
         });

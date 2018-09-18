@@ -191,9 +191,9 @@ export class CollectPage {
                     intro.setOptions({
                         steps: [
                             {
-                                element: "page-collect > ion-content > div.scroll-content > ion-list > chrono-component > ion-grid > ion-row > ion-col:nth-child(2) > button",
+                                element: "chrono-component > ion-grid > ion-row > ion-col:nth-child(2) > button",
                                 intro: showcase.collect.collect,
-                                position: "bottom"
+                                position: "bottom-middle-aligned"
                             },
                             {
                                 element: "page-collect > ion-content > div.scroll-content > ion-list > ion-grid:nth-child(5) > ion-row:nth-child(2) > ion-col:nth-child(1) > button",
@@ -237,7 +237,7 @@ export class CollectPage {
                         nextLabel: showcase.navigation.next,
                         prevLabel: showcase.navigation.prev,
                         overlayOpacity: "0.8",
-                        tooltipPosition: 'top',
+                        tooltipPosition: 'bottom-middle-aligned',
                         hidePrev: true,
                         hideNext: true,
                         showStepNumbers: false,
@@ -434,7 +434,9 @@ export class CollectPage {
                         this.handFSM.saveState(this.fsmContext);
                         loader.dismiss();
                         console.debug('[CollectPage] - restoreState - fetch context', 'fsmContext', this.fsmContext, 'gameState', this.gameState);
+                        window.setTimeout(() => {
                         this.startTour();
+                        }, 5000);
                     });
                 } else {
                     loader.dismiss();
@@ -453,7 +455,9 @@ export class CollectPage {
                 loader.dismiss();
                 this.saveSats();
                 console.debug('[CollectPage] - restoreState - new collect', 'fsmContext', this.fsmContext, 'gameState', this.gameState);
-                this.startTour();
+                window.setTimeout(() => {
+                    this.startTour();
+                }, 1000);
             }
         });
     }

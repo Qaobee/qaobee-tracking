@@ -14,6 +14,7 @@ import { SassHelperComponent } from './sass-helper.component';
 import { StatsShootEfficiencyComponent } from './stats-shoot-efficiency/stats-shoot-efficiency';
 import { StatsHighligthsByQuarterComponent } from './stats-highligths-by-quarter/stats-highligths-by-quarter';
 import { StatsCollectTimeSheetComponent } from './stats-collect-time-sheet/stats-collect-time-sheet';
+import { TourComponent } from "./tour/tour.component";
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { StatsCollectTimeSheetComponent } from './stats-collect-time-sheet/stats
         ChronoComponent,
         StatsShootEfficiencyComponent,
         StatsHighligthsByQuarterComponent,
-        StatsCollectTimeSheetComponent
+        StatsCollectTimeSheetComponent,
+        TourComponent
     ],
     imports: [
         IonicModule.forRoot(MyApp),
@@ -45,7 +47,8 @@ import { StatsCollectTimeSheetComponent } from './stats-collect-time-sheet/stats
         SassHelperComponent,
         StatsShootEfficiencyComponent,
         StatsHighligthsByQuarterComponent,
-        StatsCollectTimeSheetComponent
+        StatsCollectTimeSheetComponent,
+        TourComponent
     ],
     providers: [
         Utils
