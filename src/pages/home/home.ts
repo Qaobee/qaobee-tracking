@@ -1,10 +1,9 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AuthenticationService } from "../../providers/authentication.service";
 import { PlayerListPage } from '../players/player-list/player-list';
 import { EventListPage } from '../events/event-list/event-list';
 import { CollectListPage } from "../collect/collect-list/collect-list";
-import introJs from 'intro.js/intro.js';
 import { TeamListPage } from "../teams/team-list/team-list";
 import { TranslateService } from "@ngx-translate/core";
 import { Storage } from "@ionic/storage";
@@ -80,7 +79,7 @@ export class HomePage {
         });
     }
 
-    private endTour() {
+    endTour() {
         this.storage.set(this.authenticationService.meta._id + "-tour-home", true).then(() => {
         });
     }

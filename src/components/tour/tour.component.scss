@@ -25,7 +25,7 @@ tour-component {
     z-index: 600;
     top: 0;
     left: 0;
-    width: 90%;
+    width: 100%;
     height: auto;
     padding: 10%;
     opacity: 1;
@@ -45,6 +45,10 @@ tour-component {
     }
     h1 {
       font-size: 25px;
+    }
+    ion-icon.help-icon {
+      color: #ffffff;
+      font-size: 5em;
     }
   }
 

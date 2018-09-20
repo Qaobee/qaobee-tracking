@@ -1,19 +1,29 @@
-<div class="overlay" #overlay></div>
+<div class="overlay" #overlay (swipe)="swipe($event)"></div>
 
-<div class="tour" #tour>
+<div class="tour" #tour (swipe)="swipe($event)">
+    <ion-icon class="help-icon" name="help-circle"></ion-icon>
     <p  [innerHTML]="content"></p>
     <ion-row>
         <ion-col>
-            <button ion-button (click)="skip()">{{'showcase.navigation.skip' | translate}}</button>
+            <button ion-button (click)="skip()" color="danger">
+                <ion-icon name="close"></ion-icon>
+                <!--{{'showcase.navigation.skip' | translate}}-->
+            </button>
         </ion-col>
         <ion-col>
-            <button ion-button *ngIf="steps && currentStep > 0" (click)="previous()">{{'showcase.navigation.prev' | translate}}</button>
+            <button ion-button *ngIf="steps && currentStep > 0" (click)="previous()" color="light"><!--{{'showcase.navigation.prev' | translate}}-->
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
         </ion-col>
         <ion-col>
-            <button ion-button *ngIf="steps && currentStep < steps.length - 1" (click)="next()">{{'showcase.navigation.next' | translate}}</button>
+            <button ion-button *ngIf="steps && currentStep < steps.length - 1" (click)="next()" color="light"><!--{{'showcase.navigation.next' | translate}}-->
+                <ion-icon name="arrow-forward"></ion-icon>
+            </button>
         </ion-col>
         <ion-col>
-            <button ion-button *ngIf="steps && currentStep === steps.length - 1" (click)="end()">{{'showcase.navigation.ok' | translate}}</button>
+            <button ion-button *ngIf="steps && currentStep === steps.length - 1" (click)="end()" color="secondary"><!--{{'showcase.navigation.ok' | translate}}-->
+                <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
+            </button>
         </ion-col>
     </ion-row>
 </div>

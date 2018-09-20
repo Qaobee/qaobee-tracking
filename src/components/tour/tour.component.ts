@@ -43,7 +43,7 @@ export class TourComponent implements OnChanges {
     }
 
     public start() {
-        if(this.steps && this.steps.length >0) {
+        if (this.steps && this.steps.length > 0) {
             this.overlay.nativeElement.style.display = 'block';
             this.tour.nativeElement.style.display = 'block';
             this.highlight.nativeElement.style.display = 'block';
@@ -62,21 +62,40 @@ export class TourComponent implements OnChanges {
         this.currentStep = -1;
     }
 
+
+    swipe(event) {
+        console.debug('swipe', event.direction)
+        switch (event.direction) {
+            case 2:
+                this.next();
+                break;
+            case 4:
+                this.previous();
+                break;
+        }
+    }
+
     previous() {
-        this.currentStep -= 1;
-        this.display();
+        if (this.steps && this.currentStep > 0) {
+            this.currentStep -= 1;
+            this.display();
+        }
     }
 
     next() {
-        this.currentStep += 1;
-        this.display();
+        if (this.steps && this.currentStep < this.steps.length - 1) {
+            this.currentStep += 1;
+            this.display();
+        }
     }
 
     end() {
-        this.overlay.nativeElement.style.display = 'none';
-        this.tour.nativeElement.style.display = 'none';
-        this.highlight.nativeElement.style.display = 'none';
-        this.onOver.emit(this.currentStep);
+        if (this.steps && this.currentStep === this.steps.length - 1) {
+            this.overlay.nativeElement.style.display = 'none';
+            this.tour.nativeElement.style.display = 'none';
+            this.highlight.nativeElement.style.display = 'none';
+            this.onOver.emit(this.currentStep);
+        }
     }
 
     display() {
@@ -93,20 +112,30 @@ export class TourComponent implements OnChanges {
                 this.highlight.nativeElement.style.top = (dims.top - 20) + 'px';
                 this.highlight.nativeElement.style.left = (dims.left - 20) + 'px';
                 this.highlight.nativeElement.style.width = (dims.ow + 40) + 'px';
-                this.highlight.nativeElement.style.height = (dims.oh + 40 ) +'px';
+                this.highlight.nativeElement.style.height = (dims.oh + 40) + 'px';
                 this.highlight.nativeElement.innerHTML = target.outerHTML;
                 this.highlight.nativeElement.children[ 0 ].className = this.highlight.nativeElement.children[ 0 ].className + ' highlighted';
-                const tourDims = TourComponent.offset(this.tour.nativeElement);
-                switch (this.steps[ this.currentStep ].position) {
-                    case 'top' :
-                        this.tour.nativeElement.style.top = Math.max(0, dims.top - tourDims.oh - 20)+ 'px';
-                        this.tour.nativeElement.style.left = '0px';
-                        break;
-                    case 'right' :
-                        this.tour.nativeElement.style.top = Math.max(0,  dims.top - tourDims.oh / 2 )+ 'px';
-                        this.tour.nativeElement.style.left = Math.max(window.innerWidth - tourDims.ow - 20, dims.left  + dims.ow )+ 'px';
-                        break;
-                }
+                window.setTimeout(() => {
+                    const tourDims = TourComponent.offset(this.tour.nativeElement);
+                    switch (this.steps[ this.currentStep ].position) {
+                        case 'top' :
+                            this.tour.nativeElement.style.top = Math.max(0, dims.top - tourDims.oh - 10) + 'px';
+                            this.tour.nativeElement.style.left = '0px';
+                            break;
+                        case 'right' :
+                            this.tour.nativeElement.style.top = Math.max(0, dims.top - tourDims.oh / 2) + 'px';
+                            this.tour.nativeElement.style.left = Math.min(window.innerWidth - tourDims.ow - 10, dims.left + dims.ow) + 'px';
+                            break;
+                        case 'left' :
+                            this.tour.nativeElement.style.top = Math.max(0, dims.top - tourDims.oh / 2) + 'px';
+                            this.tour.nativeElement.style.left = Math.max(0, dims.left - tourDims.ow - 10) + 'px';
+                            break;
+                        case 'bottom' :
+                            this.tour.nativeElement.style.top = Math.min(window.innerHeight - tourDims.oh, dims.top + dims.oh + 10) + 'px';
+                            this.tour.nativeElement.style.left = '0px';
+                            break;
+                    }
+                }, 100);
             }
         }
     }

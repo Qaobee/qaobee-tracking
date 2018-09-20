@@ -33,7 +33,6 @@ import { MessageBus } from '../../../providers/message-bus.service';
 import { Utils } from '../../../providers/utils';
 import { GoalModal } from '../goal-modal/goal-modal';
 import { SubstitutionModal } from '../substitution-modal/substitution-modal';
-import introJs from 'intro.js/intro.js';
 import { StatsModal } from '../stats-modal/stats-modal';
 import { EventsService } from "../../../providers/api/api.events.service";
 import { GoogleAnalytics } from "@ionic-native/google-analytics";
@@ -83,6 +82,7 @@ export class CollectPage {
             {key: 'right-wingman', label: 'right_wingman', class: 'dark'}
         ]
     ];
+    steps: any[];
 
 
     /**
@@ -186,72 +186,55 @@ export class CollectPage {
     private startTour() {
         this.storage.get(this.authenticationService.meta._id + "-tour-collect").then(tourDone => {
             if (!tourDone) {
-                let intro = introJs.introJs();
                 this.translateService.get('showcase').subscribe(showcase => {
-                    intro.setOptions({
-                        steps: [
-                            {
-                                element: "chrono-component > ion-grid > ion-row > ion-col:nth-child(2) > button",
-                                intro: showcase.collect.collect,
-                                position: "bottom-middle-aligned"
-                            },
-                            {
-                                element: "page-collect > ion-content > div.scroll-content > ion-list > ion-grid:nth-child(5) > ion-row:nth-child(2) > ion-col:nth-child(1) > button",
-                                intro: showcase.collect.game_phase,
-                                position: "bottom"
-                            },
-                            {
-                                element: "#ground-area > ion-row:nth-child(1) > ion-col > div > button",
-                                intro: showcase.collect.select_player,
-                                position: "bottom"
-                            },
-                            {
-                                element: "page-collect > ion-content > div.scroll-content > ion-list > ion-grid:nth-child(4) > ion-row.btn-list.row > ion-col:nth-child(1) > div > button",
-                                intro: showcase.collect.indicators,
-                                position: "bottom"
-                            },
-                            {
-                                element: "page-collect > ion-content > div.scroll-content > ion-list > ion-grid:nth-child(4) > ion-row.btn-list.row > ion-col:nth-child(2)",
-                                intro: showcase.collect.shoot,
-                                position: "bottom"
-                            },
-                            {
-                                element: "page-collect > ion-content > div.scroll-content > ion-list > ion-grid:nth-child(5) > ion-row:nth-child(2) > ion-col:nth-child(2) > ion-fab > button",
-                                intro: showcase.collect.stats,
-                                position: "bottom"
-                            },
-                            {
-                                element: "page-collect > ion-content > div.scroll-content > ion-list > ion-grid:nth-child(5) > ion-row:nth-child(1) > ion-col > ion-fab > button",
-                                intro: showcase.collect.toggle_substitutes,
-                                position: "bottom"
-                            },
-                            {
-                                element: "page-collect > ion-content > div.scroll-content > ion-list > chrono-component > ion-grid > ion-row > ion-col:nth-child(4) > button",
-                                intro: showcase.collect.stop_game,
-                                position: "bottom"
-                            }
-                        ],
-                        showProgress: false,
-                        skipLabel: showcase.navigation.skip,
-                        doneLabel: showcase.navigation.ok,
-                        nextLabel: showcase.navigation.next,
-                        prevLabel: showcase.navigation.prev,
-                        overlayOpacity: "0.8",
-                        tooltipPosition: 'bottom-middle-aligned',
-                        hidePrev: true,
-                        hideNext: true,
-                        showStepNumbers: false,
-                        exitOnOverlayClick: false,
-                        disableInteraction: true
-                    });
-                    intro.oncomplete(this.endTour.bind(this));
-                    intro.start();
+                    this.steps = [
+                        {
+                            target: 'chrono-component > ion-grid > ion-row > ion-col:nth-child(2) > button',
+                            description: showcase.collect.collect,
+                            position: 'bottom'
+                        },
+                        {
+                            target: 'page-collect > ion-content > div.scroll-content > ion-list > ion-grid:nth-child(5) > ion-row:nth-child(2) > ion-col:nth-child(1) > button',
+                            description: showcase.collect.game_phase,
+                            position: 'top'
+                        },
+                        {
+                            target: "#ground-area > ion-row:nth-child(1) > ion-col > div > button",
+                            description: showcase.collect.select_player,
+                            position: "bottom"
+                        },
+                        {
+                            target: "page-collect > ion-content > div.scroll-content > ion-list > ion-grid:nth-child(4) > ion-row.btn-list.row > ion-col:nth-child(1) > div > button",
+                            description: showcase.collect.indicators,
+                            position: "top"
+                        },
+                        {
+                            target: "page-collect > ion-content > div.scroll-content > ion-list > ion-grid:nth-child(4) > ion-row.btn-list.row > ion-col:nth-child(2)",
+                            description: showcase.collect.shoot,
+                            position: "top"
+                        },
+                        {
+                            target: "page-collect > ion-content > div.scroll-content > ion-list > ion-grid:nth-child(5) > ion-row:nth-child(2) > ion-col:nth-child(2) > ion-fab > button",
+                            description: showcase.collect.stats,
+                            position: "top"
+                        },
+                        {
+                            target: "page-collect > ion-content > div.scroll-content > ion-list > ion-grid:nth-child(5) > ion-row:nth-child(1) > ion-col > ion-fab > button",
+                            description: showcase.collect.toggle_substitutes,
+                            position: "top"
+                        },
+                        {
+                            target: "page-collect > ion-content > div.scroll-content > ion-list > chrono-component > ion-grid > ion-row > ion-col:nth-child(4) > button",
+                            description: showcase.collect.stop_game,
+                            position: "bottom"
+                        },
+                    ];
                 });
             }
         });
     }
 
-    private endTour() {
+    endTour() {
         this.storage.set(this.authenticationService.meta._id + "-tour-collect", true).then(() => {
         });
     }
@@ -434,9 +417,7 @@ export class CollectPage {
                         this.handFSM.saveState(this.fsmContext);
                         loader.dismiss();
                         console.debug('[CollectPage] - restoreState - fetch context', 'fsmContext', this.fsmContext, 'gameState', this.gameState);
-                        window.setTimeout(() => {
-                        this.startTour();
-                        }, 5000);
+                        window.setTimeout(() => this.startTour(), 500);
                     });
                 } else {
                     loader.dismiss();
@@ -455,9 +436,7 @@ export class CollectPage {
                 loader.dismiss();
                 this.saveSats();
                 console.debug('[CollectPage] - restoreState - new collect', 'fsmContext', this.fsmContext, 'gameState', this.gameState);
-                window.setTimeout(() => {
-                    this.startTour();
-                }, 1000);
+                window.setTimeout(() => this.startTour(), 500);
             }
         });
     }
