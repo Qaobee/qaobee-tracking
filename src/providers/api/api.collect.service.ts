@@ -69,7 +69,7 @@ export class CollectService {
 
     /**
      *
-     * @param search
+     * @param eventId
      */
     deleteCollect(eventId: number) {
         return this.http.delete<any>(ENV.hive + this.apiService.rootPath + '/sandbox/stats/collect/?eventId='+ eventId, this.apiService.addHeaderToken()).pipe(

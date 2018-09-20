@@ -8,7 +8,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { SettingsService } from "../../../providers/settings.service";
 import { CollectPage } from "../collect/collect";
 import moment from 'moment';
-import introJs from 'intro.js/intro.js';
 import { CollectService } from '../../../providers/api/api.collect.service';
 import { EffectiveService } from '../../../providers/api/api.effective.service';
 import { GameState } from '../../../model/game.state';
@@ -27,7 +26,7 @@ export class TeamBuildPage {
         substitutes: []
     };
     collect: any = {};
-    private intro = introJs.introJs();
+    steps: any[];
     private settings: any;
 
     /**
@@ -93,52 +92,35 @@ export class TeamBuildPage {
      */
     ionViewDidEnter() {
         this.ga.trackView('TeamBuildPage');
-        this.startTour();
     }
 
     private startTour() {
         this.storage.get(this.authenticationService.meta._id + "-tour-team-build").then(tourDone => {
             if (!tourDone) {
                 this.translateService.get('showcase').subscribe(showcase => {
-                    this.intro.setOptions({
-                        steps: [
-                            {
-                                element: "#ground-area > ion-row:nth-child(1) > ion-col > ion-chip",
-                                intro: showcase.team.position,
-                                position: "right"
-                            },
-                            {
-                                element: "#substitute-area ion-fab",
-                                intro: showcase.team.substitutes,
-                                position: "bottom"
-                            },
-                            {
-                                element: "ion-header ion-buttons button",
-                                intro: showcase.team.start,
-                                position: "bottom"
-                            }
-                        ],
-                        showProgress: false,
-                        skipLabel: showcase.navigation.skip,
-                        doneLabel: showcase.navigation.ok,
-                        nextLabel: showcase.navigation.next,
-                        prevLabel: showcase.navigation.prev,
-                        overlayOpacity: "0.8",
-                        tooltipPosition: 'bottom',
-                        hidePrev: true,
-                        hideNext: true,
-                        showStepNumbers: false,
-                        exitOnOverlayClick: false,
-                        disableInteraction: true
-                    });
-                    this.intro.oncomplete(this.endTour.bind(this));
-                    this.intro.start();
+                    this.steps = [
+                        {
+                            target: '#ground-area > ion-row:nth-child(1) > ion-col > ion-chip',
+                            description: showcase.team.position,
+                            position: 'bottom'
+                        },
+                        {
+                            target: '#substitute-area ion-fab',
+                            description: showcase.team.substitutes,
+                            position: 'bottom'
+                        },
+                        {
+                            target: "ion-header ion-buttons button",
+                            description: showcase.team.start,
+                            position: "bottom"
+                        },
+                    ];
                 });
             }
         });
     }
 
-    private endTour() {
+    endTour() {
         this.storage.set(this.authenticationService.meta._id + "-tour-team-build", true).then(() => {
         });
     }
@@ -176,6 +158,8 @@ export class TeamBuildPage {
                     });
                 }
             });
+        } else {
+            window.setTimeout(() => this.startTour(), 500);
         }
     }
 
@@ -196,7 +180,6 @@ export class TeamBuildPage {
      */
     goToResumeCollect() {
         console.debug('[TeamBuildPage] - goToResumeCollect');
-        this.intro.exit(true);
         this.navCtrl.push(CollectPage, {event: this.event, collect: this.collect, playerList: this.playerList});
     }
 

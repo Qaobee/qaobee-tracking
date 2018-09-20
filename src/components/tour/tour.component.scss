@@ -1,0 +1,112 @@
+tour-component {
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #356aa0;
+    background: -moz-linear-gradient(-45deg, #356aa0 0%, #004f9e 100%);
+    background: -webkit-linear-gradient(-45deg, #356aa0 0%, #004f9e 100%);
+    background: linear-gradient(135deg, #356aa0 0%, #004f9e 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#356aa0', endColorstr='#004f9e', GradientType=1);
+    z-index: 500;
+    display: none;
+    opacity: 0.8;
+
+    &.visible {
+      display: block;
+    }
+
+
+  }
+  .tour {
+    position: absolute;
+    z-index: 600;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    padding: 10%;
+    opacity: 1;
+    animation-duration: 1s;
+    animation-name: appearText;
+    transition: all 1s ease-in-out;
+    display: none;
+
+    &.visible {
+      display: block;
+    }
+    p, h1 {
+      color: white;
+    }
+    p {
+      font-size: 20px;
+    }
+    h1 {
+      font-size: 25px;
+    }
+    ion-icon.help-icon {
+      color: #ffffff;
+      font-size: 5em;
+    }
+  }
+
+
+
+  .highlight {
+    display: none;
+    background-color: white;
+    z-index: 700;
+    position: absolute;
+    border-radius: 50%;
+    opacity: 1;
+    margin: 0;
+    top: calc(100vh + 100px);
+    left: 50%;
+    transition: all 1s ease-in-out;
+
+    &.visible {
+      display: block;
+    }
+    .highlighted {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 1;
+      animation-duration: 1s;
+      animation-name: appear;
+      &.bar-button-menutoggle {
+        color: #000000 !important;
+      }
+      &.bar-button ion-icon {
+        color: #000000 !important;
+
+      }
+    }
+  }
+  @keyframes appear {
+    from {
+      opacity: 0;
+    }
+
+    90% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes appearText {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+}
