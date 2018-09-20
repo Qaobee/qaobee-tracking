@@ -1,8 +1,8 @@
 <ion-header>
     <ion-navbar>
-        <ion-title *ngIf="event.type">{{ event.type.label }}</ion-title>
+        <ion-title *ngIf="event.type"><ion-icon name="stats"></ion-icon> {{ event.type.label }}</ion-title>
         <ion-buttons end>
-            <button ion-button icon-only (click)="deleteCollect(event._id)">
+            <button ion-button icon-only (click)="deleteCollect(event._id, 'eventsModule.confirmDelete')">
                 <ion-icon name="trash"></ion-icon>
             </button>
         </ion-buttons>
