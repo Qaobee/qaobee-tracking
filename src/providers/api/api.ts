@@ -13,7 +13,7 @@ import { MessageBus } from '../message-bus.service';
 @Injectable()
 export class ApiService {
     private excludedOperations: string[] = [ 'UserService.login' ];
-    rootPath: string = '/api/1/';
+    rootPath: string = '/api/1';
 
     /**
      *
