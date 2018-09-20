@@ -89,8 +89,8 @@ export class TeamDetailPage {
     /**
      *
      */
-    goToAddAdversary() {
-        this.navCtrl.push(TeamAdversaryPage, {editMode: 'CREATE', adversary:true});
+    goToAddAdversary(myTeamId: any) {
+        this.navCtrl.push(TeamAdversaryPage, {myTeamId: myTeamId, editMode: 'CREATE'});
     }
 
     /**

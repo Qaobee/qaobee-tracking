@@ -18,11 +18,14 @@
  */
 
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { TeamUpsertPage } from '../team-upsert/team-upsert';
 import { TeamStatsPage } from '../team-stats/team-stats';
 import { AuthenticationService } from '../../../providers/authentication.service';
+import { EffectiveService } from '../../../providers/api/api.effective.service';
 import { TeamService } from '../../../providers/api/api.team.service';
+import { TranslateService } from '@ngx-translate/core';
 import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({ 
@@ -31,24 +34,48 @@ import { GoogleAnalytics } from "@ionic-native/google-analytics";
 })
 export class TeamAdversaryPage {
 
+    editMode: string;
     team: any;
     adversaries: any;
-    adversaryTeamListSize: number;
+    myTeamId: string;
+    teamForm: FormGroup;
 
     /**
      *
      * @param {NavController} navCtrl
      * @param {NavParams} navParams
+     * @param {ToastController} toastCtrl
+     * @param {ActivityCfgService} activityCfgService
      * @param {AuthenticationService} authenticationService
      * @param {TeamService} teamService
+     * @param {FormBuilder} formBuilder
+     * @param {EffectiveService} effectiveService
+     * @param {Storage} storage
+     * @param {TranslateService} translateService
      * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
-                private teamService: TeamService,
+                private toastCtrl: ToastController,
+                private formBuilder: FormBuilder,
                 private authenticationService: AuthenticationService,
+                private teamService: TeamService,
+                private effectiveService: EffectiveService,
+                private translateService: TranslateService,
                 private ga: GoogleAnalytics) {
-        this.team = navParams.get('team');
+      this.editMode = navParams.get('editMode');
+      this.myTeamId = navParams.get('myTeamId');
+
+      if (this.editMode && this.editMode !== 'CREATE') {
+        this.team = navParams.get('adversary');
+      } else {
+        this.team = {};
+      }
+
+      //Initialiaze team's form
+      this.teamForm = this.formBuilder.group({
+          'label': [ this.team.label|| '', [ Validators.required ] ]  
+      });
     }
 
     /**
@@ -59,26 +86,88 @@ export class TeamAdversaryPage {
         
     }
 
-    /**
-     *
-     */
-    editTeam(adversary: boolean) {
-        this.navCtrl.push(TeamUpsertPage, {editMode: 'UPDATE', team: this.team, adversary: adversary});
+  /**
+   *
+   * @param {string} field
+   * @returns {boolean}
+   */
+  isValid(field: string): boolean {
+    let formField = this.teamForm.controls[ field ];
+    return formField.valid || formField.pristine;
+  }
+
+  /**
+   *
+   */
+  cancel() {
+      this.navCtrl.pop();
+  }
+
+  /**
+   *
+   * @param formVal
+   */
+  saveAdversary(formVal) {
+
+    if (this.teamForm.valid) {
+      this.team.label = formVal.label;
+      
+      if (this.editMode === 'CREATE') {
+        this.team.adversary = true;
+        this.team.enable = true;
+        
+        //sandboxId
+        this.team.sandboxId = this.authenticationService.meta._id;
+
+        // retrieve effective Id
+        this.effectiveService.get(this.authenticationService.meta.effectiveDefault).subscribe(effectiveGet => {
+          let effective: any = effectiveGet;
+          this.team.effectiveId = effective._id;
+
+          let linkTeam: any[] = [];
+          linkTeam.push(this.myTeamId);
+          this.team.linkTeamId = linkTeam;
+          console.debug('team', this.team);
+
+          this.teamService.addTeam(this.team).subscribe(r => {
+            this.navCtrl.pop();
+            this.translateService.get('team.messages.createDone').subscribe(
+              value => {
+                this.presentToast(value);
+              }
+            )
+          });
+        });
+      } else {
+        console.debug('team', this.team);
+        this.teamService.updateTeam(this.team).subscribe(r => {
+          this.navCtrl.pop();
+          this.translateService.get('team.messages.updateDone').subscribe(
+            value => {
+              this.presentToast(value);
+            }
+          )
+        });
+      }
     }
+  }
 
-    /**
-     *
-     */
-    goToAddAdversary() {
-        this.navCtrl.push(TeamUpsertPage, {editMode: 'CREATE', adversary:true});
-    }
+  /**
+   *
+   * @param msg
+   */
+  private presentToast(msg) {
+      let toast = this.toastCtrl.create({
+          message: msg,
+          duration: 3000,
+          position: 'bottom'
+      });
 
+      toast.onDidDismiss(() => {
+      });
 
-    /**
-     *
-     */
-    goToStats() {
-        this.navCtrl.push(TeamStatsPage, {team: this.team});
-    }
+      toast.present();
+  }
 
+    
 }

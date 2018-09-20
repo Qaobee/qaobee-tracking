@@ -1,33 +1,33 @@
 <ion-header>
   <ion-navbar color="warning">
-    <ion-title>{{'team.TitleNavBarTeam' | translate}}</ion-title>
-    <ion-buttons end>
-     
-      <button ion-button icon-only (click)="editTeam(team.adversary)">
-        <ion-icon name="create"></ion-icon>
-      </button>
-
-    </ion-buttons>
+      <ion-title>{{'team.TitleNavBarTeamEdit' | translate}}</ion-title>
+      <ion-buttons end>
+          <button ion-button icon-only (click)="cancel()">
+              <ion-icon name="close-circle"></ion-icon>
+          </button>
+          <button ion-button icon-only (click)="saveAdversary(teamForm.value)" type="submit" [disabled]="!teamForm.valid">
+              <ion-icon name="checkmark-circle"></ion-icon>
+          </button>
+      </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-item class="enteteLight">
-    <ion-row>
-      <ion-col>
-        <h1>{{team.label}}</h1>
-      </ion-col>
-    </ion-row>
-  </ion-item>
-  
-  <ion-list inset>
-      <ion-list-header>
-        {{'team.TitleAdversaryTeamList' | translate}}
-      </ion-list-header>
-      
-      <ion-item *ngFor="let item of collects">
-        <h2>{{item.label}}</h2>
-      </ion-item>  
-    </ion-list>
-
+  <form [formGroup]="teamForm">
+      <ion-item color="light">
+          <h2 class="panel">
+              <ion-icon name="contacts"></ion-icon>
+              {{'team.labels.adversaryLabel' | translate}}
+          </h2>
+      </ion-item>
+      <ion-row>
+          <ion-col>
+              <ion-item class="form-group">
+                  <ion-label stacked>{{ 'team.labels.name' | translate }}</ion-label>
+                  <ion-input type="text" formControlName="label" id="label" autocomplete="name" clearInput></ion-input>
+                  <p *ngIf="!isValid('label')" danger padding-left>Invalid label</p>
+              </ion-item>
+          </ion-col>
+      </ion-row>
+  </form>
 </ion-content>

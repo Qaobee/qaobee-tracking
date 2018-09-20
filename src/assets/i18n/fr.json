@@ -175,6 +175,7 @@
     },
     "labels":{
       "name":"Equipe",
+      "adversaryLabel":"Nom de l'équipe adverse",
       "championship": "Championnat",
       "categoryAge": "Catégorie"
     },

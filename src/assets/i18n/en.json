@@ -175,6 +175,7 @@
     },
     "labels":{
       "name": "Label",
+      "adversaryLabel":"Adversary's label",
       "championship": "Championship",
       "categoryAge": "Age's category"
     },

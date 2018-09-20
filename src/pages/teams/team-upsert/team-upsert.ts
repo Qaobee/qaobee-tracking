@@ -34,7 +34,6 @@ import { Storage } from '@ionic/storage';
 })
 export class TeamUpsertPage {
     editMode: string;
-    adversary: boolean;
     team: any;
     teamForm: FormGroup;
     listCategoryAge: any[] = [];
@@ -66,7 +65,6 @@ export class TeamUpsertPage {
                 private ga: GoogleAnalytics) {
         
         this.editMode = navParams.get('editMode');
-        this.adversary = navParams.get('adversary')
 
         if (this.editMode && this.editMode === 'CREATE') {
             this.team = {
@@ -76,8 +74,6 @@ export class TeamUpsertPage {
         } else {
             this.team = navParams.get('team');
         }
-
-        console.debug('adversary',this.adversary);
 
         //Initialiaze team's form
         this.teamForm = this.formBuilder.group({
@@ -143,7 +139,7 @@ export class TeamUpsertPage {
           }
 
           if (this.editMode === 'CREATE') {
-            this.team.adversary = this.adversary;
+            this.team.adversary = false;
             this.team.enable = true;
             
             //sandboxId
