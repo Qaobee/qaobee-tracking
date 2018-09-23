@@ -1,80 +1,89 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title><ion-icon name="stats"></ion-icon> {{'player.TitleNavBarPlayerStats' | translate}}</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>
+            <ion-icon name="stats"></ion-icon>
+            {{'player.TitleNavBarPlayerStats' | translate}}
+        </ion-title>
+    </ion-navbar>
 </ion-header>
 
 
 <ion-content>
-  <ion-item class="enteteLight">
-    <ion-row>
-      <ion-col><ion-avatar>
-          <img src="assets/imgs/user.png" alt="avatar">
-        </ion-avatar></ion-col>
-      <ion-col>
-        <h1>{{player.firstname}} {{player.name}}</h1>
-      </ion-col>
-      <ion-col text-right>
-        <ion-badge color="secondary">{{player.status.squadnumber}}</ion-badge>
-      </ion-col>
-    </ion-row>
-	</ion-item>
+    <ion-item class="enteteLight">
+        <ion-row>
+            <ion-col>
+                <ion-avatar>
+                    <img src="assets/imgs/user.png" alt="avatar">
+                </ion-avatar>
+            </ion-col>
+            <ion-col>
+                <h1>{{player.firstname}} {{player.name}}</h1>
+            </ion-col>
+            <ion-col text-right>
+                <ion-badge color="secondary">{{player.status.squadnumber}}</ion-badge>
+            </ion-col>
+        </ion-row>
+    </ion-item>
 
-	<ion-list *ngIf="numberMatch>0" >
-		<!-- player's shoot efficiency -->
-		<ion-item>
-				<stats-shoot-efficiency 
-					[ownerId]="ownerId" 
-					[numberMatch]="numberMatch" 
-					[positionType]="player.status.positionType.code">
-				</stats-shoot-efficiency>
-		</ion-item>
+    <ion-list *ngIf="numberMatch>0">
+        <!-- player's shoot efficiency -->
+        <ion-item>
+            <stats-shoot-efficiency
+                    [ownerId]="ownerId"
+                    [numberMatch]="numberMatch"
+                    [positionType]="player.status.positionType.code">
+            </stats-shoot-efficiency>
+        </ion-item>
 
-		<!-- player's use -->
-		<ion-item>
-			<ion-row text-center>
-				<ion-col>
-					<h1>Utilisation</h1>
-				</ion-col>
-			</ion-row>
-	
-			<ion-row text-center class="enteteDark">
-				<ion-col class="borderTable">
-					<h3>Nb match</h3>
-				</ion-col>
-				<ion-col class="borderTable">
-					<h3>Titulaire</h3>
-				</ion-col>
-				<ion-col class="borderTable">
-					<h3>Tps jeu Moy.</h3>
-				</ion-col>
-			</ion-row>
-			
-			<ion-row text-center class="enteteLight">
-				<ion-col class="borderTable">
-					<h2>{{numberMatch}}</h2>
-				</ion-col>
-				<ion-col class="borderTable">
-					<h2>{{numberHolder}}</h2>
-				</ion-col>
-				<ion-col class="borderTable">
-					<h2>{{avgPlaytime}} '</h2>
-				</ion-col>
-			</ion-row>
+        <!-- player's use -->
+        <ion-item>
+            <ion-row text-center>
+                <ion-col>
+                    <h1>Utilisation</h1>
+                </ion-col>
+            </ion-row>
 
-			<ion-row text-right class="enteteLight">
-				<ion-col>
-					<h3>
-						{{'component.stats.detail' | translate}} <ion-icon  name="eye"></ion-icon>
-					</h3>
-				</ion-col>
-			</ion-row>
+            <ion-row text-center class="enteteDark">
+                <ion-col class="borderTable">
+                    <h3>Nb match</h3>
+                </ion-col>
+                <ion-col class="borderTable">
+                    <h3>Titulaire</h3>
+                </ion-col>
+                <ion-col class="borderTable">
+                    <h3>Tps jeu Moy.</h3>
+                </ion-col>
+            </ion-row>
 
-		</ion-item>
-	
-		<!-- player's efficiency -->
-		<ion-item>
-			<stats-highligths-by-quarter [ownerId]="ownerId"></stats-highligths-by-quarter>
-		</ion-item>
-	</ion-list>
+            <ion-row text-center class="enteteLight">
+                <ion-col class="borderTable">
+                    <h2>{{numberMatch}}</h2>
+                </ion-col>
+                <ion-col class="borderTable">
+                    <h2>{{numberHolder}}</h2>
+                </ion-col>
+                <ion-col class="borderTable">
+                    <h2>{{avgPlaytime}} '</h2>
+                </ion-col>
+            </ion-row>
+
+            <ion-row text-right class="enteteLight">
+                <ion-col>
+                    <h3>
+                        {{'component.stats.detail' | translate}}
+                        <ion-icon name="eye"></ion-icon>
+                    </h3>
+                </ion-col>
+            </ion-row>
+
+        </ion-item>
+
+        <!-- player's efficiency -->
+        <ion-item>
+            <stats-highligths-by-quarter [ownerId]="ownerId"></stats-highligths-by-quarter>
+        </ion-item>
+    </ion-list>
 </ion-content>

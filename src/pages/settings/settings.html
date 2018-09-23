@@ -1,35 +1,40 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>{{'settings.title' | translate}}</ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="save()" type="submit">
-        <ion-icon name="checkmark-circle"></ion-icon>
-      </button>
-    </ion-buttons>
-  </ion-navbar>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{'settings.title' | translate}}</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="save()" type="submit">
+                <ion-icon name="checkmark-circle"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
 </ion-header>
 
 
 <ion-content>
-  <ion-list no-lines *ngIf="settings">
-    <ion-list-header>{{ 'settings.game_parameters' | translate }}</ion-list-header>
-    <ion-item>
-      <ion-label stacked>{{ 'settings.half_time_duration' | translate }}</ion-label>
-      <ion-input type="number" [(ngModel)]="settings.periodDuration"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label stacked>{{ 'settings.half_time_count' | translate }}</ion-label>
-      <ion-input type="number" [(ngModel)]="settings.nbPeriod"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label stacked>{{ 'settings.min_players' | translate }}</ion-label>
-      <ion-input type="number" [(ngModel)]="settings.nbMinPlayers"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label stacked>{{ 'settings.max_players' | translate }}</ion-label>
-      <ion-input type="number" [(ngModel)]="settings.nbMaxPlayers"></ion-input>
-    </ion-item>
-    <ion-list-header>{{ 'settings.app_parameters' | translate }}</ion-list-header>
-    <ion-item><button ion-button (click)="resetTour()">{{ 'settings.tour' | translate }}</button></ion-item>
-  </ion-list>
+    <ion-list no-lines *ngIf="settings">
+        <ion-list-header>{{ 'settings.game_parameters' | translate }}</ion-list-header>
+        <ion-item>
+            <ion-label stacked>{{ 'settings.half_time_duration' | translate }}</ion-label>
+            <ion-input type="number" [(ngModel)]="settings.periodDuration"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>{{ 'settings.half_time_count' | translate }}</ion-label>
+            <ion-input type="number" [(ngModel)]="settings.nbPeriod"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>{{ 'settings.min_players' | translate }}</ion-label>
+            <ion-input type="number" [(ngModel)]="settings.nbMinPlayers"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label stacked>{{ 'settings.max_players' | translate }}</ion-label>
+            <ion-input type="number" [(ngModel)]="settings.nbMaxPlayers"></ion-input>
+        </ion-item>
+        <ion-list-header>{{ 'settings.app_parameters' | translate }}</ion-list-header>
+        <ion-item>
+            <button ion-button (click)="resetTour()">{{ 'settings.tour' | translate }}</button>
+        </ion-item>
+    </ion-list>
 </ion-content>

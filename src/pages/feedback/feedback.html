@@ -1,0 +1,37 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{ 'feedback.title' | translate }}</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="send()">
+                <ion-icon name="send"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content *ngIf="img">
+    <ion-list>
+        <ion-item>
+            {{ 'feedback.message' | translate }}
+        </ion-item>
+        <ion-item>
+            <ion-card>
+                <ion-card-content>
+                    <div class="outsideWrapper">
+                        <div class="insideWrapper" #screenshot>
+                            <img src="{{img}}" class="coveredImage" #imgElem/>
+                            <canvas id="sheet" class="coveringCanvas"></canvas>
+                        </div>
+                    </div>
+                </ion-card-content>
+            </ion-card>
+        </ion-item>
+        <ion-item>
+            <ion-label color="primary">{{ 'feedback.comment' | translate }}</ion-label>
+            <ion-textarea [(ngModel)]="comment"></ion-textarea>
+        </ion-item>
+    </ion-list>
+</ion-content>

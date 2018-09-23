@@ -1,5 +1,8 @@
 <ion-header>
     <ion-navbar color="warning">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
         <ion-title>{{'team.TitleNavBarTeamEdit' | translate}}</ion-title>
         <ion-buttons end>
             <button ion-button icon-only (click)="cancel()">
@@ -25,26 +28,28 @@
             <ion-col>
                 <ion-item class="form-group">
                     <ion-label stacked>{{ 'team.labels.name' | translate }}</ion-label>
-                    <ion-input type="text" formControlName="label" id="label" autocomplete="name" clearInput></ion-input>
+                    <ion-input type="text" formControlName="label" id="label" autocomplete="name"
+                               clearInput></ion-input>
                     <p *ngIf="!isValid('label')" danger padding-left>Invalid label</p>
                 </ion-item>
             </ion-col>
         </ion-row>
         <ion-row>
             <ion-col>
-              <ion-item class="form-group">
-                  <ion-label stacked>{{ 'team.labels.categoryAge' | translate }}</ion-label>
-                  <ion-select formControlName="categoryAge" interface="popover" [compareWith]="compareOptionSelect">
-                    <ion-option *ngFor="let t of listCategoryAge" [value]="t">{{t.label}}</ion-option>
-                  </ion-select>
-              </ion-item>
+                <ion-item class="form-group">
+                    <ion-label stacked>{{ 'team.labels.categoryAge' | translate }}</ion-label>
+                    <ion-select formControlName="categoryAge" interface="popover" [compareWith]="compareOptionSelect">
+                        <ion-option *ngFor="let t of listCategoryAge" [value]="t">{{t.label}}</ion-option>
+                    </ion-select>
+                </ion-item>
             </ion-col>
         </ion-row>
         <ion-row>
             <ion-col>
                 <ion-item class="form-group">
                     <ion-label stacked>{{ 'team.labels.championship' | translate }}</ion-label>
-                    <ion-input type="text" formControlName="championship" id="championship" autocomplete="name" clearInput></ion-input>
+                    <ion-input type="text" formControlName="championship" id="championship" autocomplete="name"
+                               clearInput></ion-input>
                     <p *ngIf="!isValid('championship')" danger padding-left>Invalid label</p>
                 </ion-item>
             </ion-col>
@@ -64,7 +69,8 @@
             <ion-col>
                 <ion-item class="form-group">
                     <ion-label stacked>{{ 'team.labels.name' | translate }}</ion-label>
-                    <ion-input type="text" formControlName="label" id="label" autocomplete="name" clearInput></ion-input>
+                    <ion-input type="text" formControlName="label" id="label" autocomplete="name"
+                               clearInput></ion-input>
                     <p *ngIf="!isValid('label')" danger padding-left>Invalid label</p>
                 </ion-item>
             </ion-col>

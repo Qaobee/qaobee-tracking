@@ -1,45 +1,47 @@
 <ion-header>
-  <ion-navbar color="warning">
-    <ion-title>{{'team.TitleNavBarTeamStats' | translate}}</ion-title>
-    <ion-buttons end>
+    <ion-navbar color="warning">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{'team.TitleNavBarTeamStats' | translate}}</ion-title>
+        <ion-buttons end>
 
-    </ion-buttons>
-  </ion-navbar>
+        </ion-buttons>
+    </ion-navbar>
 </ion-header>
 
 
 <ion-content>
-  <ion-item class="enteteLight">
-    <ion-row>
-      <ion-col>
-        <h1>{{team.label}}</h1>
-      </ion-col>
-    </ion-row>
-	</ion-item>
+    <ion-item class="enteteLight">
+        <ion-row>
+            <ion-col>
+                <h1>{{team.label}}</h1>
+            </ion-col>
+        </ion-row>
+    </ion-item>
 
-	<ion-list *ngIf="numberMatch>0" >
-		<!-- team's shoot efficiency -->
-		<ion-item>
-				<stats-shoot-efficiency 
-					[ownerId]="ownerId" 
-					[numberMatch]="numberMatch" 
-					[positionType]="'player'">
-				</stats-shoot-efficiency>
-		</ion-item>
+    <ion-list *ngIf="numberMatch>0">
+        <!-- team's shoot efficiency -->
+        <ion-item>
+            <stats-shoot-efficiency
+                    [ownerId]="ownerId"
+                    [numberMatch]="numberMatch"
+                    [positionType]="'player'">
+            </stats-shoot-efficiency>
+        </ion-item>
 
-		<ion-item>
-			<stats-shoot-efficiency 
-				[ownerId]="ownerId" 
-				[numberMatch]="numberMatch" 
-				[positionType]="'goalkeeper'">
-			</stats-shoot-efficiency>
-	</ion-item>
+        <ion-item>
+            <stats-shoot-efficiency
+                    [ownerId]="ownerId"
+                    [numberMatch]="numberMatch"
+                    [positionType]="'goalkeeper'">
+            </stats-shoot-efficiency>
+        </ion-item>
 
-		
-	
-		<!-- team's efficiency -->
-		<ion-item>
-			<stats-highligths-by-quarter [ownerId]="ownerId"></stats-highligths-by-quarter>
-		</ion-item>
-	</ion-list>
+
+        <!-- team's efficiency -->
+        <ion-item>
+            <stats-highligths-by-quarter [ownerId]="ownerId"></stats-highligths-by-quarter>
+        </ion-item>
+    </ion-list>
 </ion-content>

@@ -19,6 +19,7 @@ import { PlayersModule } from "./players/players.module";
 import { TeamsModule } from "./teams/teams.module";
 import { CollectModule } from "./collect/collect.module";
 import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
+import { FeedbackComponent } from './feedback/feedback';
 
 @NgModule({
     declarations: [
@@ -30,7 +31,8 @@ import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
         SignupEndPage,
         LogoutPage,
         SynchroPage,
-        WelcomePage
+        WelcomePage,
+        FeedbackComponent
     ],
     imports: [
         IonicPageModule.forChild(HomePage),
@@ -59,7 +61,8 @@ import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
         SignupEndPage,
         LoginPage,
         SynchroPage,
-        WelcomePage
+        WelcomePage,
+        FeedbackComponent
     ]
 })
 

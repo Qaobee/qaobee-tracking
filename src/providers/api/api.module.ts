@@ -16,6 +16,7 @@ import { EffectiveService } from "./api.effective.service"
 import { APIStatsService } from './api.stats';
 import { UserService } from "./api.user.service";
 import { ApiService } from "./api";
+import { CommonService } from "./api.common.service";
 
 @NgModule({
     declarations: [],
@@ -43,6 +44,7 @@ import { ApiService } from "./api";
         APIStatsService,
         CollectService,
         EffectiveService,
+        CommonService,
         FileTransfer,
 
     ]

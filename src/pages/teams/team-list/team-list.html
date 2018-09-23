@@ -1,35 +1,44 @@
 <ion-header>
-  <ion-navbar color="warning">
-    <ion-title><ion-icon name="contacts"></ion-icon> {{'team.TitleNavBarTeamList' | translate}}</ion-title>
-  </ion-navbar>
+    <ion-navbar color="warning">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>
+            <ion-icon name="contacts"></ion-icon>
+            {{'team.TitleNavBarTeamList' | translate}}
+        </ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-fab bottom right>
-    <button ion-fab mini color="danger" (tap)="goToAddteam()"><ion-icon name="add"></ion-icon></button>
-  </ion-fab>
+    <ion-fab bottom right>
+        <button ion-fab mini color="danger" (tap)="goToAddteam()">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
 
-  <ion-refresher (ionRefresh)="getTeams($event)">
-    <ion-refresher-content
-            pullingIcon="arrow-dropdown"
-            pullingText="{{ 'refresher.label' | translate }}"
-            refreshingSpinner="circles"
-            refreshingText="{{ 'refresher.message' | translate }}">
-    </ion-refresher-content>
-  </ion-refresher>
+    <ion-refresher (ionRefresh)="getTeams($event)">
+        <ion-refresher-content
+                pullingIcon="arrow-dropdown"
+                pullingText="{{ 'refresher.label' | translate }}"
+                refreshingSpinner="circles"
+                refreshingText="{{ 'refresher.message' | translate }}">
+        </ion-refresher-content>
+    </ion-refresher>
 
-  <ion-list inset>
-    <ion-list-header>
-      <span  id="teamListTitle">{{'team.TitleMyTeamList' | translate}}</span>
-    </ion-list-header>
+    <ion-list inset>
+        <ion-list-header>
+            <span id="teamListTitle">{{'team.TitleMyTeamList' | translate}}</span>
+        </ion-list-header>
 
-    <ion-item *ngFor="let item of myTeams"  [ngClass]="{'teamDisactivated':item.enable===false}">
-      <ion-avatar item-start>
-        <ion-icon name="stats" large (click)="goToStats(item, $event)"></ion-icon>
-      </ion-avatar>
-      <h2 (click)="goToDetail(item, $event)">{{item.label}}</h2>
-      <p (click)="goToDetail(item, $event)">{{'team.labels.championship' | translate}} : {{item.championship}}</p>
-      <p *ngIf="item.categoryAge" (click)="goToDetail(item, $event)">{{'team.labels.categoryAge' | translate}} : {{item.categoryAge.label}}</p>
-    </ion-item>  
-  </ion-list>
+        <ion-item *ngFor="let item of myTeams" [ngClass]="{'teamDisactivated':item.enable===false}">
+            <ion-avatar item-start>
+                <ion-icon name="stats" large (click)="goToStats(item, $event)"></ion-icon>
+            </ion-avatar>
+            <h2 (click)="goToDetail(item, $event)">{{item.label}}</h2>
+            <p (click)="goToDetail(item, $event)">{{'team.labels.championship' | translate}} : {{item.championship}}</p>
+            <p *ngIf="item.categoryAge" (click)="goToDetail(item, $event)">{{'team.labels.categoryAge' | translate}} :
+                {{item.categoryAge.label}}</p>
+        </ion-item>
+    </ion-list>
 </ion-content>

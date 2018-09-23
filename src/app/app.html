@@ -4,16 +4,22 @@
             <button ion-button menuToggle>
                 <ion-icon name="arrow-round-back"></ion-icon>
             </button>
-            <ion-title>Menu</ion-title>
+            <ion-title>{{'menu.title' | translate }}</ion-title>
         </ion-toolbar>
     </ion-header>
 
     <ion-content>
         <ion-list inset>
             <menu-header [user]="user"></menu-header>
+
             <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
                 <ion-icon name="{{ p.icon }}" *ngIf="p.icon" color="{{p.color}}"></ion-icon>
                 <span color="{{p.color}}">{{p.title}}</span>
+            </button>
+
+            <button menuClose ion-item (click)="feedback(p)">
+                <ion-icon name="camera"  color="primary"></ion-icon>
+                <span color="primary">{{'menu.feedback' | translate }}</span>
             </button>
         </ion-list>
     </ion-content>

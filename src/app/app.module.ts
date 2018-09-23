@@ -27,6 +27,7 @@ import { SettingsService } from "../providers/settings.service";
 import { LocationService } from "../providers/location.service";
 import { AppVersion } from "@ionic-native/app-version";
 import { GoogleAnalytics } from "@ionic-native/google-analytics";
+import { Device } from "@ionic-native/device";
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -74,6 +75,7 @@ export function createTranslateLoader(http: HttpClient) {
         SettingsService,
         LocationService,
         Utils,
+        Device,
         {
             provide: LOCALE_ID,
             deps: [ SettingsService ],      //some service handling global settings

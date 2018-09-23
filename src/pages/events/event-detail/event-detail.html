@@ -1,5 +1,8 @@
 <ion-header>
     <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
         <ion-title *ngIf="event.type">{{ event.type.label }}</ion-title>
         <ion-buttons end *ngIf="!event.isCollected">
             <button ion-button icon-only (click)="goToEdit()">

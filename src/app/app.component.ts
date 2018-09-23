@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Menu, Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -25,12 +25,15 @@ import { MessageBus } from "../providers/message-bus.service";
 import { AppVersion } from '@ionic-native/app-version';
 import { GoogleAnalytics } from '@ionic-native/google-analytics';
 import { ENV } from "@app/env";
+import * as html2canvas from "html2canvas"
+import { FeedbackComponent } from "../pages/feedback/feedback";
 
 @Component({
     templateUrl: 'app.html'
 })
 export class MyApp {
     @ViewChild(Nav) nav: Nav;
+    @ViewChild(Menu) menu: Menu;
     rootPage: any = WelcomePage;
     pages: Array<{ title: string, component: any, icon: string, color: string }>;
     user: any;
@@ -135,6 +138,16 @@ export class MyApp {
             this.nav.setRoot(page.component);
         } else {
             this.nav.push(page.component);
+        }
+    }
+
+    feedback() {
+        if(this.menu.isOpen) {
+          window.setTimeout(()=>{this.feedback()}, 100);
+        } else {
+            html2canvas(this.nav.getNativeElement()).then((canvas) => {
+                this.nav.push(FeedbackComponent, {img: canvas.toDataURL(), url: this.nav.getActive().name});
+            });
         }
     }
 
