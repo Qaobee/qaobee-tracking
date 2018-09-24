@@ -3,7 +3,8 @@
  *  Qaobee
  *  __________________
  *
- *  Copyright (c) 2015.  Qaobee
+ *  Copyright (c) 2015.
+ *  Qaobee
  *  All Rights Reserved.
  *
  *  NOTICE: All information contained here is, and remains
@@ -20,8 +21,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { TeamUpsertPage } from '../team-upsert/team-upsert';
-import { TeamStatsPage } from '../team-stats/team-stats';
 import { AuthenticationService } from '../../../providers/authentication.service';
 import { EffectiveService } from '../../../providers/api/api.effective.service';
 import { TeamService } from '../../../providers/api/api.team.service';
@@ -45,12 +44,10 @@ export class TeamAdversaryPage {
      * @param {NavController} navCtrl
      * @param {NavParams} navParams
      * @param {ToastController} toastCtrl
-     * @param {ActivityCfgService} activityCfgService
      * @param {AuthenticationService} authenticationService
      * @param {TeamService} teamService
      * @param {FormBuilder} formBuilder
      * @param {EffectiveService} effectiveService
-     * @param {Storage} storage
      * @param {TranslateService} translateService
      * @param {GoogleAnalytics} ga
      */
@@ -120,16 +117,15 @@ export class TeamAdversaryPage {
         this.team.sandboxId = this.authenticationService.meta._id;
 
         // retrieve effective Id
-        this.effectiveService.get(this.authenticationService.meta.effectiveDefault).subscribe(effectiveGet => {
-          let effective: any = effectiveGet;
-          this.team.effectiveId = effective._id;
+        this.effectiveService.get(this.authenticationService.meta.effectiveDefault).subscribe(effectiveGet=> {
+          this.team.effectiveId = (effectiveGet as any)._id;
 
           let linkTeam: any[] = [];
           linkTeam.push(this.myTeamId);
           this.team.linkTeamId = linkTeam;
           console.debug('team', this.team);
 
-          this.teamService.addTeam(this.team).subscribe(r => {
+          this.teamService.addTeam(this.team).subscribe(() => {
             this.navCtrl.pop();
             this.translateService.get('team.messages.createDone').subscribe(
               value => {
@@ -140,7 +136,7 @@ export class TeamAdversaryPage {
         });
       } else {
         console.debug('team', this.team);
-        this.teamService.updateTeam(this.team).subscribe(r => {
+        this.teamService.updateTeam(this.team).subscribe(() => {
           this.navCtrl.pop();
           this.translateService.get('team.messages.updateDone').subscribe(
             value => {
