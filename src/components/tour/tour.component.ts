@@ -84,7 +84,6 @@ export class TourComponent implements OnChanges {
 
 
     swipe(event) {
-        console.debug('swipe', event.direction)
         switch (event.direction) {
             case 2:
                 this.next();
@@ -120,15 +119,15 @@ export class TourComponent implements OnChanges {
 
     display() {
         if (this.currentStep >= 0 && this.steps && this.steps[ this.currentStep ]) {
-            console.log('[Tour] - display', this.currentStep, this.steps[ this.currentStep ]);
+            console.debug('[Tour] - display', this.currentStep, this.steps[ this.currentStep ]);
             this.content = this.steps[ this.currentStep ].description;
-            const target = document.querySelector(this.steps[ this.currentStep ].target) as HTMLElement;
+            const target = document.querySelector(this.steps[ this.currentStep ].target);
             if (!target) {
                 window.setTimeout(() => {
                     this.display();
                 }, 100);
             } else {
-                const dims = TourComponent.offset(target);
+                const dims = TourComponent.offset(target as HTMLElement);
                 this.highlight.nativeElement.style.top = (dims.top - 20) + 'px';
                 this.highlight.nativeElement.style.left = (dims.left - 20) + 'px';
                 this.highlight.nativeElement.style.width = (dims.ow + 40) + 'px';

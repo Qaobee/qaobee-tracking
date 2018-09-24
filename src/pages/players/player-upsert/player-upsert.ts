@@ -259,7 +259,7 @@ export class PlayerUpsertPage {
                                 let roleMember = {code: 'player', label: 'Joueur'};
                                 let member = {personId: r._id, role: roleMember};
 
-                                if (effective) {
+                                if (effective.members) {
                                     effective.members.push(member);
                                 } else {
                                     effective.members = [];
