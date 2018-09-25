@@ -17,9 +17,8 @@ tour-component {
     &.visible {
       display: block;
     }
-
-
   }
+
   .tour {
     position: absolute;
     z-index: 600;
@@ -30,29 +29,34 @@ tour-component {
     padding: 10%;
     opacity: 1;
     animation-duration: 1s;
-    animation-name: appearText;
     transition: all 1s ease-in-out;
     display: none;
+    margin-top: 25px;
 
     &.visible {
       display: block;
     }
+
     p, h1 {
       color: white;
     }
+
     p {
       font-size: 20px;
+      display: block;
+      -webkit-animation: fadeIn 1s;
+      animation: fadeIn 1s;
     }
+
     h1 {
       font-size: 25px;
     }
+
     ion-icon.help-icon {
       color: #ffffff;
       font-size: 5em;
     }
   }
-
-
 
   .highlight {
     display: none;
@@ -69,6 +73,7 @@ tour-component {
     &.visible {
       display: block;
     }
+
     .highlighted {
       margin: 0;
       position: absolute;
@@ -87,6 +92,20 @@ tour-component {
       }
     }
   }
+
+  @-webkit-keyframes appear {
+    from {
+      opacity: 0;
+    }
+
+    90% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
   @keyframes appear {
     from {
       opacity: 0;
@@ -100,11 +119,18 @@ tour-component {
     }
   }
 
-  @keyframes appearText {
+  @-webkit-keyframes fadeIn {
     from {
       opacity: 0;
     }
-
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
     to {
       opacity: 1;
     }
