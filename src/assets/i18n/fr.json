@@ -406,14 +406,14 @@
       "start": "<h1>Validez</h1><p>Une fois votre composition d'équipe terminée, cliquez sur ce bouton pour lancer la collecte des statistiques.</p>"
     },
     "collect": {
-      "collect": "<h1>Démarrez le match</h1><p>Pour démarrer la collecte des statistiques cliquez sur ce bouton.</p>",
+      "collect": "<h1>Démarrez le match</h1><p>Pour démarrer la collecte des statistiques cliquez sur ce bouton start.</p>",
       "game_phase": "Vous devez choisir la phase de jeu.",
-      "select_player": "Pour enregister une action, sélectionnez le joueur réalisant l'action.",
-      "indicators": "Vous pouvez enregistrer les actions positives ou négatives de vos joueurs en attaque et en défense",
+      "select_player": "Pour enregister l'action d'un joueur, 1 - sélectionnez le joueur réalisant l'action.",
+      "indicators": "2 - Vous pouvez enregistrer les actions positives ou négatives de vos joueurs en attaque et en défense",
       "shoot": "Pour les tirs ou les buts de votre équipe ou de votre adversaire, cliquez sur le ballon ici, une popup de séquence de tir vous guidera pour achever l'action.",
       "stats": "A tout moment, vous pouvez consulter les statistique du match.",
-      "toggle_substitutes": "Pour effectuer un remplacements de joueur, cliquez ici.",
-      "stop_game": "Enfin, pour mettre fin au match et avoir vos statistiques, cliquer sur le bouton stop."
+      "toggle_substitutes": "Pour effectuer un remplacement de joueur, cliquez ici.",
+      "stop_game": "Enfin, pour mettre fin au match et enregistrer les statistiques, cliquer sur le bouton stop."
     }
   }
 }

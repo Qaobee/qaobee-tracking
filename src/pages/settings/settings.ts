@@ -59,7 +59,7 @@ export class SettingsPage {
      * Save preferences
      */
     save() {
-        this.settings.periodDuration = this.settings.periodDuration*60;
+        this.settings.periodDuration = this.settings.periodDuration/60;
         this.settingsService.setParametersGame(this.settings);
         this.translateService.get("settings.saved").subscribe(t=> {
             this.presentToast(t);
