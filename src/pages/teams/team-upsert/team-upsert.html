@@ -16,7 +16,7 @@
 </ion-header>
 
 
-<ion-content *ngIf="adversary===false">
+<ion-content>
     <form [formGroup]="teamForm">
         <ion-item color="light">
             <h2 class="panel">
@@ -51,27 +51,6 @@
                     <ion-input type="text" formControlName="championship" id="championship" autocomplete="name"
                                clearInput></ion-input>
                     <p *ngIf="!isValid('championship')" danger padding-left>Invalid label</p>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-    </form>
-</ion-content>
-
-<ion-content *ngIf="adversary===true">
-    <form [formGroup]="teamForm">
-        <ion-item color="light">
-            <h2 class="panel">
-                <ion-icon name="contacts"></ion-icon>
-                {{'team.labels.name' | translate}}
-            </h2>
-        </ion-item>
-        <ion-row>
-            <ion-col>
-                <ion-item class="form-group">
-                    <ion-label stacked>{{ 'team.labels.name' | translate }}</ion-label>
-                    <ion-input type="text" formControlName="label" id="label" autocomplete="name"
-                               clearInput></ion-input>
-                    <p *ngIf="!isValid('label')" danger padding-left>Invalid label</p>
                 </ion-item>
             </ion-col>
         </ion-row>

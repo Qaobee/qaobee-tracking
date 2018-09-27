@@ -94,10 +94,8 @@ export class NextEventComponent {
     /**
      *
      * @param event
-     * @param clickEvent
      */
-    goToStartCollect(event: any, clickEvent: any) {
-        clickEvent.stopPropagation();
+    goToStartCollect(event: any) {
         this.navCtrl.push(TeamBuildPage, {event: event});
     }
 
