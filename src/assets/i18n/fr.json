@@ -394,26 +394,26 @@
       "ok": "Terminer"
     },
     "home": {
-      "players": "<h1>Gérez vos joueurs</h1><p>Vous pouvez ajouter/modifier vos joueurs.</p>",
-      "events": "<h1>Planifiez vos événements</h1><p>Vous pouvez créer des événement ou bénéficier de ceux du championat.</p>",
+      "players": "<h1>Managez vos joueurs</h1><p>Vous pouvez ajouter/modifier vos joueurs.</p>",
+      "events": "<h1>Planifiez vos matchs</h1><p>Vous pouvez planifier des matchs amicaux, de coupe ou de championnat</p>",
       "settings": "<h1>Paramétres</h1><p>Pour changer les paramètres d'un match (Durée des mi-temps, nombre de joueur etc…) cliquez sur le menu principal en haut à gauche et choisissez l'option Paramètres.</p>",
-      "teams": "<h1>Gérez vos équipes</h1><p>Gérez les membres de vos équipes</p>",
-      "stats": "<h1>Statistiques</h1><p>Visualisez les statistiques relatives à vos événements collectés.</p>"
+      "teams": "<h1>Gérez vos équipes</h1><p>Gérez vos équipes et leur adversaires</p>",
+      "stats": "<h1>Statistiques</h1><p>Consultez les statistiques que vous avez collectées pour un match.</p>"
     },
     "team": {
-      "position": "<h1>Affecter un joueur à un poste</h1><p>Pour affecter un joueur à un poste, cliquez sur le poste et choisissez un joureur dans la liste.</p>",
-      "substitutes": "<h1>Sélectionnez des remplaçants</h1><p>Cliquez sur ce bouton pour choisir les remplaçants.</p>",
-      "start": "<h1>Validez</h1><p>Une fois votre équipe composée, validez votre feuille de match pour démarrer une collecte.</p>"
+      "position": "<h1>Affectez un joueur à un poste</h1><p>Cliquez sur le poste et choisissez un joueur dans la liste de vos joueurs.</p>",
+      "substitutes": "<h1>Sélectionnez des remplaçants</h1><p>Cliquez sur ce bouton pour ajouter les remplaçants.</p>",
+      "start": "<h1>Validez</h1><p>Une fois votre composition d'équipe terminée, cliquez sur ce bouton pour lancer la collecte des statistiques.</p>"
     },
     "collect": {
-      "collect": "<h1>Démarrez le chrono du match</h1><p>Pour démarrer la collecte des statistiques cliquez sur ce bouton.</p>",
-      "game_phase": "Choisissez une phase de jeu.",
-      "select_player": "Sélectionnez le joueur réalisant l'action.",
-      "indicators": "Choisissez l'indicateur correspondant à l'action.",
-      "shoot": "Un bouton de tir  apparaît, une popup de séquence de tir vous guidera pour achever l'action.",
-      "stats": "A tout moment, vous avez accès aux statistique de l'événement.",
-      "toggle_substitutes": "Effectuez des remplacements de joueurs.",
-      "stop_game": "Enfin, stopez le chrono pour mettre fin à l'événement et avoir vos statistiques."
+      "collect": "<h1>Démarrez le match</h1><p>Pour démarrer la collecte des statistiques cliquez sur ce bouton.</p>",
+      "game_phase": "Vous devez choisir la phase de jeu.",
+      "select_player": "Pour enregister une action, sélectionnez le joueur réalisant l'action.",
+      "indicators": "Vous pouvez enregistrer les actions positives ou négatives de vos joueurs en attaque et en défense",
+      "shoot": "Pour les tirs ou les buts de votre équipe ou de votre adversaire, cliquez sur le ballon ici, une popup de séquence de tir vous guidera pour achever l'action.",
+      "stats": "A tout moment, vous pouvez consulter les statistique du match.",
+      "toggle_substitutes": "Pour effectuer un remplacements de joueur, cliquez ici.",
+      "stop_game": "Enfin, pour mettre fin au match et avoir vos statistiques, cliquer sur le bouton stop."
     }
   }
 }

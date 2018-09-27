@@ -51,6 +51,7 @@ export class SettingsPage {
         this.ga.trackView('SettingsPage');
         this.settingsService.getParametersGame().subscribe(s => {
             this.settings = s;
+            this.settings.periodDuration = this.settings.periodDuration/60;
         });
     }
 
@@ -58,6 +59,7 @@ export class SettingsPage {
      * Save preferences
      */
     save() {
+        this.settings.periodDuration = this.settings.periodDuration*60;
         this.settingsService.setParametersGame(this.settings);
         this.translateService.get("settings.saved").subscribe(t=> {
             this.presentToast(t);

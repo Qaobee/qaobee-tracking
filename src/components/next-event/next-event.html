@@ -3,7 +3,7 @@
   <ion-card *ngIf="nextEvent" >
     <div class="card-title">{{ 'home.agenda' | translate }}</div>
     <img src="assets/imgs/agenda-2018.jpg" alt="bg"/>
-    <ion-item>
+    <ion-item (tap)="goToStartCollect(nextEvent)">
       <ion-icon name="football" item-start large></ion-icon>
       <h2>{{ nextEvent.label }}</h2>
       <p>{{ nextEvent.startDate | date:"mediumDate" }} {{ nextEvent.startDate | date:"shortTime" }}</p>
