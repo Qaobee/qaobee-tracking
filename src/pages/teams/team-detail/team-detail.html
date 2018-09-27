@@ -1,67 +1,75 @@
 <ion-header>
-  <ion-navbar color="warning">
-    <ion-title>{{'team.TitleNavBarTeam' | translate}}</ion-title>
-  </ion-navbar>
+    <ion-navbar color="warning">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{'team.TitleNavBarTeam' | translate}}</ion-title>
+    </ion-navbar>
 </ion-header>
 
 
 <ion-content>
-  <ion-list inset>
-    <ion-list-header>  
-      <h2>{{team.label}}</h2>
-    </ion-list-header>
-    <ion-item>
-      <ion-row>
-        <ion-col align-self-center>
-          <button *ngIf="(team.enable)" ion-button outline small color="danger" (click)="deactivateTeam(team,'team.confirmDeactivate',false)">
-            <ion-icon name="close-circle"></ion-icon>
-          </button>
+    <ion-list inset>
+        <ion-list-header>
+            <h2>{{team.label}}</h2>
+        </ion-list-header>
+        <ion-item>
+            <ion-row>
+                <ion-col align-self-center>
+                    <button *ngIf="(team.enable)" ion-button outline small color="danger"
+                            (click)="deactivateTeam(team,'team.confirmDeactivate',false)">
+                        <ion-icon name="close-circle"></ion-icon>
+                    </button>
 
-          <button *ngIf="(!team.enable)" ion-button outline small color="secondary" (click)="deactivateTeam(team,'team.confirmActivate',true  )">
-            <ion-icon name="checkmark-circle"></ion-icon>
-          </button>
-        </ion-col>
-        <ion-col align-self-center>
-          <button ion-button outline small color="dark" (click)="editTeam(team.adversary)">
-            <ion-icon name="create"></ion-icon>
-          </button>
-        </ion-col>
-        <ion-col align-self-center>
-          <button small item-end outline ion-button color="danger" (click)="goToStats()">
-            <ion-icon name="stats"></ion-icon>
-          </button>
-        </ion-col>
-      </ion-row>
-    </ion-item>
-    <ion-item>
-      <ion-row>
-        <ion-col>
-          <span class="label">{{ 'team.labels.categoryAge' | translate }}</span>
-        </ion-col>
-        <ion-col>
-          <span class="value" *ngIf="team.categoryAge">{{team.categoryAge.label}}</span>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <span class="label">{{ 'team.labels.championship' | translate }}</span>
-        </ion-col>
-        <ion-col>
-          <span class="value" >{{team.championship}}</span>
-        </ion-col>
-      </ion-row>
-    </ion-item>
-  </ion-list>
-  
-  <ion-list inset>
-      <ion-list-header>
-        <h3>{{'team.TitleAdversaryTeamList' | translate}}</h3>
-        <button ion-button item-end outline color="danger" (tap)="goToAddAdversary(team._id)"><ion-icon name="add"></ion-icon></button>
-      </ion-list-header>
-      
-      <ion-item *ngFor="let item of adversaries"  [ngClass]="{'teamDisactivated':item.enable==='false'}" (tap)="goToViewAdversary(item)">
-        <h3>{{item.label}}</h3>
-      </ion-item>  
+                    <button *ngIf="(!team.enable)" ion-button outline small color="secondary"
+                            (click)="deactivateTeam(team,'team.confirmActivate',true  )">
+                        <ion-icon name="checkmark-circle"></ion-icon>
+                    </button>
+                </ion-col>
+                <ion-col align-self-center>
+                    <button ion-button outline small color="dark" (click)="editTeam(team.adversary)">
+                        <ion-icon name="create"></ion-icon>
+                    </button>
+                </ion-col>
+                <ion-col align-self-center>
+                    <button small item-end outline ion-button color="danger" (click)="goToStats()">
+                        <ion-icon name="stats"></ion-icon>
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-item>
+        <ion-item>
+            <ion-row>
+                <ion-col>
+                    <span class="label">{{ 'team.labels.categoryAge' | translate }}</span>
+                </ion-col>
+                <ion-col>
+                    <span class="value" *ngIf="team.categoryAge">{{team.categoryAge.label}}</span>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col>
+                    <span class="label">{{ 'team.labels.championship' | translate }}</span>
+                </ion-col>
+                <ion-col>
+                    <span class="value">{{team.championship}}</span>
+                </ion-col>
+            </ion-row>
+        </ion-item>
+    </ion-list>
+
+    <ion-list inset>
+        <ion-list-header>
+            <h3>{{'team.TitleAdversaryTeamList' | translate}}</h3>
+            <button ion-button item-end outline color="danger" (tap)="goToAddAdversary(team._id)">
+                <ion-icon name="add"></ion-icon>
+            </button>
+        </ion-list-header>
+
+        <ion-item *ngFor="let item of adversaries" [ngClass]="{'teamDisactivated':item.enable==='false'}"
+                  (tap)="goToViewAdversary(item)">
+            <h3>{{item.label}}</h3>
+        </ion-item>
     </ion-list>
 
 </ion-content>

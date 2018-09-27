@@ -1,108 +1,130 @@
 <ion-header>
     <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
         <ion-title>{{ 'eventsModule.TitleNavBarEdit' | translate }}</ion-title>
         <ion-buttons end>
-          <button ion-button icon-only (click)="cancel()">
-            <ion-icon name="close-circle"></ion-icon>
-          </button>
-          <button ion-button icon-only (click)="saveEvent(eventForm.value)" type="submit" [disabled]="!eventForm.valid"> 
-            <ion-icon name="checkmark-circle"></ion-icon>
-          </button>
+            <button ion-button icon-only (click)="cancel()">
+                <ion-icon name="close-circle"></ion-icon>
+            </button>
+            <button ion-button icon-only (click)="saveEvent(eventForm.value)" type="submit"
+                    [disabled]="!eventForm.valid">
+                <ion-icon name="checkmark-circle"></ion-icon>
+            </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
 
 <ion-content *ngIf="event">
     <form [formGroup]="eventForm">
-      <!-- Identity-->
-      <ion-item color="light">
-        <h2 class="panel">
-          <ion-icon name="bookmark"></ion-icon>  
-          {{'eventsModule.identity' | translate}}
-        </h2>
-      </ion-item>
-      <ion-item>
-          <ion-label>{{ 'eventsModule.type' | translate }}</ion-label>
-          <ion-select formControlName="type" interface="popover" [compareWith]="compareOptionTypeEvent">
-              <ion-option *ngFor="let t of eventTypes" [value]="t">{{t.label}}</ion-option>
-          </ion-select>
-      </ion-item>
-      <div class="errorControlForm" *ngIf="eventForm.get('type').errors && !eventForm.get('type').pristine">{{ 'eventsModule.errorControlForm.typeRequired' | translate }}</div>
-      <ion-item>
-          <ion-label floating>{{ 'eventsModule.label' | translate }}</ion-label>
-          <ion-input id="label" type="text" formControlName="label" clearInput></ion-input>
-      </ion-item>
-      <div class="errorControlForm" *ngIf="eventForm.get('label').errors && !eventForm.get('label').pristine">{{ 'eventsModule.errorControlForm.labelRequired' | translate }}</div>
-      <!-- logistic -->
-      <ion-item color="light">
-        <h2 class="panel">
-          <ion-icon name="pin"></ion-icon>  
-          {{'eventsModule.logistic' | translate}}
-        </h2>
-      </ion-item>
-      <ion-row>
-        <ion-col>
-            <ion-item>
-                <ion-label floating>{{ 'eventsModule.startDate' | translate }}</ion-label>
-                <ion-datetime formControlName="startDate" min="2016" max="2040" displayFormat="{{ 'format.displayDate' | translate }}"></ion-datetime>
-            </ion-item>
-            <div class="errorControlForm" *ngIf="eventForm.get('startDate').errors && !eventForm.get('startDate').pristine">{{ 'eventsModule.errorControlForm.dateRequired' | translate }}</div>
-        </ion-col>
-        <ion-col>
-            <ion-item>
-                <ion-label floating>{{ 'eventsModule.startTime' | translate }}</ion-label>
-                <ion-datetime displayFormat="{{ 'format.displayTime' | translate }}" pickerFormat="{{ 'format.pickerTime' | translate }}"
-                              formControlName="startTime"></ion-datetime>
-            </ion-item>
-            <div class="errorControlForm" *ngIf="eventForm.get('startTime').errors && !eventForm.get('startTime').pristine">{{ 'eventsModule.errorControlForm.timeRequired' | translate }}</div>
-        </ion-col>
-      </ion-row>
-      <div class="autocomplete">
-        <ion-item>
-            <ion-label floating>{{ 'eventsModule.address' | translate }}</ion-label>
-            <ion-input type="text" formControlName="address" (keyup)="updateSearchResults()" autocomplete="street-address"></ion-input>
+        <!-- Identity-->
+        <ion-item color="light">
+            <h2 class="panel">
+                <ion-icon name="bookmark"></ion-icon>
+                {{'eventsModule.identity' | translate}}
+            </h2>
         </ion-item>
-        <ion-list>
-            <ion-item *ngFor="let res of autocompleteItems" (click)="selectSearchResult(res)">
-                {{res.description}}
+        <ion-item>
+            <ion-label>{{ 'eventsModule.type' | translate }}</ion-label>
+            <ion-select formControlName="type" interface="popover" [compareWith]="compareOptionTypeEvent">
+                <ion-option *ngFor="let t of eventTypes" [value]="t">{{t.label}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <div class="errorControlForm" *ngIf="eventForm.get('type').errors && !eventForm.get('type').pristine">{{
+            'eventsModule.errorControlForm.typeRequired' | translate }}
+        </div>
+        <ion-item>
+            <ion-label floating>{{ 'eventsModule.label' | translate }}</ion-label>
+            <ion-input id="label" type="text" formControlName="label" clearInput></ion-input>
+        </ion-item>
+        <div class="errorControlForm" *ngIf="eventForm.get('label').errors && !eventForm.get('label').pristine">{{
+            'eventsModule.errorControlForm.labelRequired' | translate }}
+        </div>
+        <!-- logistic -->
+        <ion-item color="light">
+            <h2 class="panel">
+                <ion-icon name="pin"></ion-icon>
+                {{'eventsModule.logistic' | translate}}
+            </h2>
+        </ion-item>
+        <ion-row>
+            <ion-col>
+                <ion-item>
+                    <ion-label floating>{{ 'eventsModule.startDate' | translate }}</ion-label>
+                    <ion-datetime formControlName="startDate" min="2016" max="2040"
+                                  displayFormat="{{ 'format.displayDate' | translate }}"></ion-datetime>
+                </ion-item>
+                <div class="errorControlForm"
+                     *ngIf="eventForm.get('startDate').errors && !eventForm.get('startDate').pristine">{{
+                    'eventsModule.errorControlForm.dateRequired' | translate }}
+                </div>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label floating>{{ 'eventsModule.startTime' | translate }}</ion-label>
+                    <ion-datetime displayFormat="{{ 'format.displayTime' | translate }}"
+                                  pickerFormat="{{ 'format.pickerTime' | translate }}"
+                                  formControlName="startTime"></ion-datetime>
+                </ion-item>
+                <div class="errorControlForm"
+                     *ngIf="eventForm.get('startTime').errors && !eventForm.get('startTime').pristine">{{
+                    'eventsModule.errorControlForm.timeRequired' | translate }}
+                </div>
+            </ion-col>
+        </ion-row>
+        <div class="autocomplete">
+            <ion-item>
+                <ion-label floating>{{ 'eventsModule.address' | translate }}</ion-label>
+                <ion-input type="text" formControlName="address" (keyup)="updateSearchResults()"
+                           autocomplete="street-address"></ion-input>
             </ion-item>
-        </ion-list>
-      </div>
-      <ion-row radio-group formControlName="radioHome">
-          <ion-col>
-              <ion-item>
-                  <ion-label>{{ 'eventsModule.home' | translate }}</ion-label>
-                  <ion-radio [value]="true"></ion-radio>
-              </ion-item>
-          </ion-col>
-          <ion-col>
-              <ion-item>
-                  <ion-label>{{ 'eventsModule.outside' | translate }}</ion-label>
-                  <ion-radio [value]="false"></ion-radio>
-              </ion-item>
-          </ion-col>
-      </ion-row>
+            <ion-list>
+                <ion-item *ngFor="let res of autocompleteItems" (click)="selectSearchResult(res)">
+                    {{res.description}}
+                </ion-item>
+            </ion-list>
+        </div>
+        <ion-row radio-group formControlName="radioHome">
+            <ion-col>
+                <ion-item>
+                    <ion-label>{{ 'eventsModule.home' | translate }}</ion-label>
+                    <ion-radio [value]="true"></ion-radio>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label>{{ 'eventsModule.outside' | translate }}</ion-label>
+                    <ion-radio [value]="false"></ion-radio>
+                </ion-item>
+            </ion-col>
+        </ion-row>
 
-      <!-- Actors-->
-      <ion-item color="light">
-        <h2 class="panel">
-          <ion-icon name="contacts"></ion-icon>  
-          {{'eventsModule.actors' | translate}}
-        </h2>
-      </ion-item>
-      <ion-item>
-          <ion-label>{{ 'eventsModule.teamHome' | translate }}</ion-label>
-          <ion-select formControlName="myTeam" [compareWith]="compareOptionTeam">
-              <ion-option *ngFor="let t of teams.myTeams" [value]="t">{{t.label}}</ion-option>
-          </ion-select>
-      </ion-item>
-      <div class="errorControlForm" *ngIf="eventForm.get('myTeam').errors && !eventForm.get('myTeam').pristine">{{ 'eventsModule.errorControlForm.myTeamRequired' | translate }}</div>
-      <ion-item>
-          <ion-label>{{ 'eventsModule.teamVisitor' | translate }}</ion-label>
-          <ion-select formControlName="adversaryTeam" [compareWith]="compareOptionTeam">
-              <ion-option *ngFor="let t of teams.adversaries" [value]="t">{{t.label}}</ion-option>
-          </ion-select>
-      </ion-item>
-      <div class="errorControlForm" *ngIf="eventForm.get('adversaryTeam').errors && !eventForm.get('adversaryTeam').pristine">{{ 'eventsModule.errorControlForm.adversaryRequired' | translate }}</div>
+        <!-- Actors-->
+        <ion-item color="light">
+            <h2 class="panel">
+                <ion-icon name="contacts"></ion-icon>
+                {{'eventsModule.actors' | translate}}
+            </h2>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{ 'eventsModule.teamHome' | translate }}</ion-label>
+            <ion-select formControlName="myTeam" [compareWith]="compareOptionTeam">
+                <ion-option *ngFor="let t of teams.myTeams" [value]="t">{{t.label}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <div class="errorControlForm" *ngIf="eventForm.get('myTeam').errors && !eventForm.get('myTeam').pristine">{{
+            'eventsModule.errorControlForm.myTeamRequired' | translate }}
+        </div>
+        <ion-item>
+            <ion-label>{{ 'eventsModule.teamVisitor' | translate }}</ion-label>
+            <ion-select formControlName="adversaryTeam" [compareWith]="compareOptionTeam">
+                <ion-option *ngFor="let t of teams.adversaries" [value]="t">{{t.label}}</ion-option>
+            </ion-select>
+        </ion-item>
+        <div class="errorControlForm"
+             *ngIf="eventForm.get('adversaryTeam').errors && !eventForm.get('adversaryTeam').pristine">{{
+            'eventsModule.errorControlForm.adversaryRequired' | translate }}
+        </div>
     </form>
 </ion-content>

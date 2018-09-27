@@ -1,121 +1,149 @@
 <ion-header>
-  <ion-navbar color="green">
-    <ion-title>{{'player.TitleNavBarPlayer' | translate}}</ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="goToStats()">
-        <ion-icon name="stats"></ion-icon>
-      </button>
+    <ion-navbar color="green">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{'player.TitleNavBarPlayer' | translate}}</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="goToStats()">
+                <ion-icon name="stats"></ion-icon>
+            </button>
 
-      <button ion-button icon-only (click)="editPlayer()">
-        <ion-icon name="create"></ion-icon>
-      </button>
+            <button ion-button icon-only (click)="editPlayer()">
+                <ion-icon name="create"></ion-icon>
+            </button>
 
-    </ion-buttons>
-  </ion-navbar>
+        </ion-buttons>
+    </ion-navbar>
 </ion-header>
 
 
 <ion-content>
-  <ion-item class="enteteLight">
-    <ion-row>
-      <ion-col><ion-avatar>
-          <img src="assets/imgs/user.png" alt="avatar">
-        </ion-avatar></ion-col>
-      <ion-col>
-        <h1>{{player.firstname}} {{player.name}}</h1>
-      </ion-col>
-      <ion-col text-right>
-        <ion-badge color="secondary">{{player.status.squadnumber}}</ion-badge>
-      </ion-col>
-    </ion-row>
-  </ion-item>
-
-  <!-- PositionType--><!-- Laterality-->
-  <ion-item>
-      <ion-row >
-        <ion-col>
-          <h2 class="panel"><ion-icon name="locate"></ion-icon>  {{'player.labels.positionType' | translate}}</h2>
-        </ion-col>
-        <ion-col>
-          <h2 class="panel"><ion-icon name="hand"></ion-icon>  {{'player.labels.Laterality' | translate}}</h2>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-          <ion-col text-left><h2>{{player.status.positionType.label}}</h2></ion-col>
-          <ion-col text-left><h2>{{player.status.laterality.label}}</h2></ion-col>
-      </ion-row>
+    <ion-item class="enteteLight">
+        <ion-row>
+            <ion-col>
+                <ion-avatar>
+                    <img src="assets/imgs/user.png" alt="avatar">
+                </ion-avatar>
+            </ion-col>
+            <ion-col>
+                <h1>{{player.firstname}} {{player.name}}</h1>
+            </ion-col>
+            <ion-col text-right>
+                <ion-badge color="secondary">{{player.status.squadnumber}}</ion-badge>
+            </ion-col>
+        </ion-row>
     </ion-item>
 
-  <!-- Mesuration-->
-  <ion-item>
-    <ion-row >
-      <ion-col>
-        <h2 class="panel"><ion-icon name="body"></ion-icon>  {{'player.labels.mesuration' | translate}}</h2>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-        <ion-col text-left><h3 class="label">{{'player.labels.weight' | translate}}</h3></ion-col>
-        <ion-col text-left><h3 class="label">{{'player.labels.height' | translate}}</h3></ion-col>
-    </ion-row>
-    <ion-row>
-        <ion-col text-left>
-          <h2>{{player.status.weight}} {{'player.labels.weightUnit' | translate}}</h2>
-        </ion-col>
-        <ion-col text-left>
-          <h2>{{player.status.height}} {{'player.labels.heightUnit' | translate}}</h2>
-        </ion-col>
-    </ion-row>
-  </ion-item>
-  <!-- Etat Civil-->
-  <ion-item>
-    <ion-row>
-      <ion-col>
-        <h2 class="panel"><ion-icon name="contact"></ion-icon>  {{'player.labels.civilStatus' | translate}}</h2>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col text-left><h3 class="label">{{'player.labels.birthdate' | translate}}</h3></ion-col>
-      <ion-col text-left><h3 class="label">{{'player.labels.nationality' | translate}}</h3></ion-col>
-    </ion-row>
-    <ion-row>
-        <ion-col text-left>
-          <h2>{{ player.birthdate | date:"mediumDate" }}</h2>
-        </ion-col>
-        <ion-col text-left>
-          <h2>{{player.nationality}}</h2>
-        </ion-col>
-    </ion-row>
-  </ion-item>
-  <!-- Contact information-->
-  <ion-item *ngIf="player.contact">
-    <ion-row>
-      <ion-col>
-        <h2 class="panel"><ion-icon name="book"></ion-icon>  {{'player.labels.contact' | translate}}</h2>
-      </ion-col>
-    </ion-row>
-    <ion-row text-center>
-      <ion-col *ngIf="player.contact.cellphone">
-        <button ion-button outline small><ion-icon name="call"></ion-icon></button>
-      </ion-col>
-      <ion-col *ngIf="player.contact.email">
-        <button ion-button outline small><ion-icon name="mail"></ion-icon></button>
-      </ion-col>
-      <ion-col *ngIf="player.address">
-        <button ion-button outline small><ion-icon name="pin"></ion-icon></button>
-      </ion-col>
-    </ion-row>
-  </ion-item>
+    <!-- PositionType--><!-- Laterality-->
+    <ion-item>
+        <ion-row>
+            <ion-col>
+                <h2 class="panel">
+                    <ion-icon name="locate"></ion-icon>
+                    {{'player.labels.positionType' | translate}}
+                </h2>
+            </ion-col>
+            <ion-col>
+                <h2 class="panel">
+                    <ion-icon name="hand"></ion-icon>
+                    {{'player.labels.Laterality' | translate}}
+                </h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col text-left><h2>{{player.status.positionType.label}}</h2></ion-col>
+            <ion-col text-left><h2>{{player.status.laterality.label}}</h2></ion-col>
+        </ion-row>
+    </ion-item>
 
-  <ion-row>
-    <ion-col text-center>
-      <h3 *ngIf="(player.deactivated !== 'true')">{{'player.confirmDeactivate.title' | translate}}</h3>
-      <button ion-button outline color="danger" (click)="deactivatePlayer('player.confirmDeactivate','true')" *ngIf="(player.deactivated !== 'true')">
-        <ion-icon name="close-circle"></ion-icon>
-      </button>
-      <h3 *ngIf="(player.deactivated === 'true')">{{'player.confirmActivate.title' | translate}}</h3>
-      <button ion-button outline color="secondary" (click)="deactivatePlayer('player.confirmActivate','false')" *ngIf="(player.deactivated === 'true')">
-        <ion-icon name="checkmark-circle"></ion-icon>
-      </button>
-    </ion-col>
-  </ion-row>
+    <!-- Mesuration-->
+    <ion-item>
+        <ion-row>
+            <ion-col>
+                <h2 class="panel">
+                    <ion-icon name="body"></ion-icon>
+                    {{'player.labels.mesuration' | translate}}
+                </h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col text-left><h3 class="label">{{'player.labels.weight' | translate}}</h3></ion-col>
+            <ion-col text-left><h3 class="label">{{'player.labels.height' | translate}}</h3></ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col text-left>
+                <h2>{{player.status.weight}} {{'player.labels.weightUnit' | translate}}</h2>
+            </ion-col>
+            <ion-col text-left>
+                <h2>{{player.status.height}} {{'player.labels.heightUnit' | translate}}</h2>
+            </ion-col>
+        </ion-row>
+    </ion-item>
+    <!-- Etat Civil-->
+    <ion-item>
+        <ion-row>
+            <ion-col>
+                <h2 class="panel">
+                    <ion-icon name="contact"></ion-icon>
+                    {{'player.labels.civilStatus' | translate}}
+                </h2>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col text-left><h3 class="label">{{'player.labels.birthdate' | translate}}</h3></ion-col>
+            <ion-col text-left><h3 class="label">{{'player.labels.nationality' | translate}}</h3></ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col text-left>
+                <h2>{{ player.birthdate | date:"mediumDate" }}</h2>
+            </ion-col>
+            <ion-col text-left>
+                <h2>{{player.nationality}}</h2>
+            </ion-col>
+        </ion-row>
+    </ion-item>
+    <!-- Contact information-->
+    <ion-item *ngIf="player.contact">
+        <ion-row>
+            <ion-col>
+                <h2 class="panel">
+                    <ion-icon name="book"></ion-icon>
+                    {{'player.labels.contact' | translate}}
+                </h2>
+            </ion-col>
+        </ion-row>
+        <ion-row text-center>
+            <ion-col *ngIf="player.contact.cellphone">
+                <button ion-button outline small>
+                    <ion-icon name="call"></ion-icon>
+                </button>
+            </ion-col>
+            <ion-col *ngIf="player.contact.email">
+                <button ion-button outline small>
+                    <ion-icon name="mail"></ion-icon>
+                </button>
+            </ion-col>
+            <ion-col *ngIf="player.address">
+                <button ion-button outline small>
+                    <ion-icon name="pin"></ion-icon>
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-item>
+
+    <ion-row>
+        <ion-col text-center>
+            <h3 *ngIf="(player.deactivated !== 'true')">{{'player.confirmDeactivate.title' | translate}}</h3>
+            <button ion-button outline color="danger" (click)="deactivatePlayer('player.confirmDeactivate','true')"
+                    *ngIf="(player.deactivated !== 'true')">
+                <ion-icon name="close-circle"></ion-icon>
+            </button>
+            <h3 *ngIf="(player.deactivated === 'true')">{{'player.confirmActivate.title' | translate}}</h3>
+            <button ion-button outline color="secondary" (click)="deactivatePlayer('player.confirmActivate','false')"
+                    *ngIf="(player.deactivated === 'true')">
+                <ion-icon name="checkmark-circle"></ion-icon>
+            </button>
+        </ion-col>
+    </ion-row>
 </ion-content>

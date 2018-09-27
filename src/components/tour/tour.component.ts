@@ -1,3 +1,23 @@
+/*
+ *  __________________
+ *  Qaobee
+ *  __________________
+ *
+ *  Copyright (c) 2015.
+ *  Qaobee
+ *  All Rights Reserved.
+ *
+ *  NOTICE: All information contained here is, and remains
+ *  the property of Qaobee and its suppliers,
+ *  if any. The intellectual and technical concepts contained
+ *  here are proprietary to Qaobee and its suppliers and may
+ *  be covered by U.S. and Foreign Patents, patents in process,
+ *  and are protected by trade secret or copyright law.
+ *  Dissemination of this information or reproduction of this material
+ *  is strictly forbidden unless prior written permission is obtained
+ *  from Qaobee.
+ */
+
 import {
     Component,
     ElementRef,
@@ -64,7 +84,6 @@ export class TourComponent implements OnChanges {
 
 
     swipe(event) {
-        console.debug('swipe', event.direction)
         switch (event.direction) {
             case 2:
                 this.next();
@@ -100,15 +119,15 @@ export class TourComponent implements OnChanges {
 
     display() {
         if (this.currentStep >= 0 && this.steps && this.steps[ this.currentStep ]) {
-            console.log('[Tour] - display', this.currentStep, this.steps[ this.currentStep ]);
+            console.debug('[Tour] - display', this.currentStep, this.steps[ this.currentStep ]);
             this.content = this.steps[ this.currentStep ].description;
-            const target = document.querySelector(this.steps[ this.currentStep ].target) as HTMLElement;
+            const target = document.querySelector(this.steps[ this.currentStep ].target);
             if (!target) {
                 window.setTimeout(() => {
                     this.display();
                 }, 100);
             } else {
-                const dims = TourComponent.offset(target);
+                const dims = TourComponent.offset(target as HTMLElement);
                 this.highlight.nativeElement.style.top = (dims.top - 20) + 'px';
                 this.highlight.nativeElement.style.left = (dims.left - 20) + 'px';
                 this.highlight.nativeElement.style.width = (dims.ow + 40) + 'px';

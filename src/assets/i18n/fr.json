@@ -152,7 +152,15 @@
     "Stats": "Stats",
     "Settings": "Paramètres",
     "Logout": "Déconnexion",
-    "Synchro": "Synchronisation"
+    "Synchro": "Synchronisation",
+    "title": "Menu",
+    "feedback": "Feedback"
+  },
+  "feedback": {
+    "title": "Feedback",
+    "message": "Vous pouvez dessiner sur la capture d'écran",
+    "comment": "Laissez un commentaire",
+    "done" : "Merci pour votre retour."
   },
   "team": {
     "TitleNavBarTeamList": "Mes équipes",

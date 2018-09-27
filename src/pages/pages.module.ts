@@ -1,3 +1,23 @@
+/*
+ *  __________________
+ *  Qaobee
+ *  __________________
+ *
+ *  Copyright (c) 2015.
+ *  Qaobee
+ *  All Rights Reserved.
+ *
+ *  NOTICE: All information contained here is, and remains
+ *  the property of Qaobee and its suppliers,
+ *  if any. The intellectual and technical concepts contained
+ *  here are proprietary to Qaobee and its suppliers and may
+ *  be covered by U.S. and Foreign Patents, patents in process,
+ *  and are protected by trade secret or copyright law.
+ *  Dissemination of this information or reproduction of this material
+ *  is strictly forbidden unless prior written permission is obtained
+ *  from Qaobee.
+ */
+
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ProfilePage } from './profile/profile';
@@ -19,6 +39,7 @@ import { PlayersModule } from "./players/players.module";
 import { TeamsModule } from "./teams/teams.module";
 import { CollectModule } from "./collect/collect.module";
 import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
+import { FeedbackComponent } from './feedback/feedback';
 
 @NgModule({
     declarations: [
@@ -30,7 +51,8 @@ import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
         SignupEndPage,
         LogoutPage,
         SynchroPage,
-        WelcomePage
+        WelcomePage,
+        FeedbackComponent
     ],
     imports: [
         IonicPageModule.forChild(HomePage),
@@ -59,7 +81,8 @@ import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
         SignupEndPage,
         LoginPage,
         SynchroPage,
-        WelcomePage
+        WelcomePage,
+        FeedbackComponent
     ]
 })
 

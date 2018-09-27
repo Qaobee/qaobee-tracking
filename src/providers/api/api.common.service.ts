@@ -26,7 +26,7 @@ import { ENV } from "@app/env";
 import { catchError } from "rxjs/operators";
 
 @Injectable()
-export class MetaService {
+export class CommonService {
     /**
      *
      * @param {ApiService} apiService
@@ -41,20 +41,9 @@ export class MetaService {
      *
      * @returns {Observable<any>}
      */
-    getMeta(): Observable<any> {
-        return this.http.get<any>(ENV.hive + this.apiService.rootPath + '/commons/users/user/meta', this.apiService.addHeaderToken()).pipe(
+    sendFeedback(feedback:{}): Observable<any> {
+        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/commons/feedback/send/mob',feedback).pipe(
             catchError(this.apiService.handleError('MetaServices.getMeta'))
         );
     }
-
-    /**
-     *
-     * @returns {Observable<any>}
-     */
-    getParams(): Observable<any> {
-        return this.http.get<any>(ENV.hive + this.apiService.rootPath + '/commons/settings/get', this.apiService.addHeaderToken()).pipe(
-            catchError(this.apiService.handleError('MetaServices.getParams'))
-        );
-    }
-
 }

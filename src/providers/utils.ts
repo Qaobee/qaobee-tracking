@@ -3,7 +3,8 @@
  *  Qaobee
  *  __________________
  *
- *  Copyright (c) 2015.  Qaobee
+ *  Copyright (c) 2015.
+ *  Qaobee
  *  All Rights Reserved.
  *
  *  NOTICE: All information contained here is, and remains
