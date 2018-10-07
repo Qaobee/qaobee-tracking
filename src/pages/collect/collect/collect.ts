@@ -708,7 +708,11 @@ export class CollectPage {
             if (wasAttack) {
                 this.statCollector.goalScored(this.fsmContext, this.fsmContext.selectedPlayer.playerId);
                 this.cleanFlowContext();
-                this.gameState.homeScore++;
+                if(this.currentEvent.participants.teamHome.adversary) {
+                    this.gameState.visitorScore++;
+                } else {
+                    this.gameState.homeScore++;
+                }
                 if (this.handFSM.trigger(fsmEvent)) {
                     this.doDefense();
                 }
@@ -718,8 +722,11 @@ export class CollectPage {
                     this.statCollector.goalConceded(this.fsmContext, goalKeeperId);
                     this.cleanFlowContext();
                 }
-
-                this.gameState.visitorScore++;
+                if(this.currentEvent.participants.teamHome.adversary) {
+                    this.gameState.homeScore++;
+                } else {
+                    this.gameState.visitorScore++;
+                }
                 if (this.handFSM.trigger(fsmEvent)) {
                     this.doAttack();
                 }
