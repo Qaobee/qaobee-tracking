@@ -3,7 +3,7 @@
     <name>QSwarm - Handball</name>
     <description>Qaobee Handball.</description>
     <author email="contact@qaobee.com" href="https://qaobee.com/">Qaobee Team</author>
-    <content original-src="index.html" src="http://192.168.60.46:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -102,7 +102,6 @@
         <variable name="GMS_VERSION" value="15.0.0" />
     </plugin>
     <plugin name="cordova-plugin-device" spec="2.0.2" />
-    <allow-navigation href="http://192.168.60.46:8100" sessionid="be62d162" />
     <engine name="browser" spec="5.0.3" />
     <engine name="android" spec="7.0.0" />
 </widget>

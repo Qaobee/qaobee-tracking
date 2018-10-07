@@ -19,9 +19,9 @@
  */
 
 import { Injectable } from "@angular/core";
-import { App, ToastController } from 'ionic-angular';
-import { Observable, ObservableInput } from "rxjs/Observable";
-import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
+import { ToastController } from 'ionic-angular';
+import { Observable } from "rxjs/Observable";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { of } from "rxjs/observable/of";
 import { AuthenticationService } from "../authentication.service";
@@ -34,12 +34,10 @@ import { Storage } from "@ionic/storage";
  */
 @Injectable()
 export class ApiService {
-    private excludedOperations: string[] = [ 'UserService.login', 'UserService.sso' ];
     rootPath: string = '/api/1';
 
     /**
      *
-     * @param {App} app
      * @param {AuthenticationService} authenticationService
      * @param {ToastController} toastCtrl
      * @param {MessageBus} eventService
@@ -47,7 +45,6 @@ export class ApiService {
      * @param {Storage} storage
      */
     constructor(
-        private app: App,
         private authenticationService: AuthenticationService,
         private toastCtrl: ToastController,
         private eventService: MessageBus,
