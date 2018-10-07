@@ -41,7 +41,7 @@ export class EffectiveService {
      * @param  {string} effectiveId
      */
     get(effectiveId: string) {
-        return this.http.get<any>(ENV.hive + this.apiService.rootPath + '/sandbox/effective/effective/get?_id=' + effectiveId, this.apiService.addHeaderToken()).pipe(
+        return this.http.get<any>(ENV.hive + this.apiService.rootPath + '/sandbox/effective/effective/get?_id=' + effectiveId).pipe(
             catchError(this.apiService.handleError('MetaServices.getMeta'))
         );
     }
@@ -50,7 +50,7 @@ export class EffectiveService {
      * @param  {string} sandboxconfigId
      */
     getList(sandboxconfigId: string) {
-        return this.http.get<any>(ENV.hive + this.apiService.rootPath + '/sandbox/effective/effective/getList?sandboxId=' + sandboxconfigId, this.apiService.addHeaderToken()).pipe(
+        return this.http.get<any>(ENV.hive + this.apiService.rootPath + '/sandbox/effective/effective/getList?sandboxId=' + sandboxconfigId).pipe(
             catchError(this.apiService.handleError('MetaServices.getMeta'))
         );
     }
@@ -59,7 +59,7 @@ export class EffectiveService {
      * @param  {any} effective
      */
     update(effective: any) {
-        return this.http.put<any>(ENV.hive + this.apiService.rootPath + '/sandbox/effective/effective/update', effective, this.apiService.addHeaderToken()).pipe(
+        return this.http.put<any>(ENV.hive + this.apiService.rootPath + '/sandbox/effective/effective/update', effective).pipe(
             catchError(this.apiService.handleError('MetaServices.getMeta'))
         );
     }

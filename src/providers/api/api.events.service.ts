@@ -48,7 +48,7 @@ export class EventsService {
         if (type) {
             request[ 'link.type' ] = type;
         }
-        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/sandbox/event/event/list', request, this.apiService.addHeaderToken()).pipe(
+        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/sandbox/event/event/list', request).pipe(
             catchError(this.apiService.handleError('EventsService.getEvents'))
         );
     }

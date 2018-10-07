@@ -27,7 +27,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { File } from '@ionic-native/file';
 import { Camera } from '@ionic-native/camera';
 import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
-
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import { MyApp } from './app.component';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -48,6 +48,7 @@ import { LocationService } from "../providers/location.service";
 import { AppVersion } from "@ionic-native/app-version";
 import { GoogleAnalytics } from "@ionic-native/google-analytics";
 import { Device } from "@ionic-native/device";
+import { APIInterceptor } from "../providers/api/interceptor";
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -100,6 +101,11 @@ export function createTranslateLoader(http: HttpClient) {
             provide: LOCALE_ID,
             deps: [ SettingsService ],      //some service handling global settings
             useFactory: (settingsService) => settingsService.getLanguage()  //returns locale string
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: APIInterceptor,
+            multi: true,
         },
         File,
         Camera

@@ -20,19 +20,21 @@
 
 import { Injectable } from "@angular/core";
 import { App, ToastController } from 'ionic-angular';
-import { Observable } from "rxjs/Observable";
+import { Observable, ObservableInput } from "rxjs/Observable";
+import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { of } from "rxjs/observable/of";
-import { HttpHeaders } from "@angular/common/http";
 import { AuthenticationService } from "../authentication.service";
 import { MessageBus } from '../message-bus.service';
+import { ENV } from "@app/env";
+import { Storage } from "@ionic/storage";
 
 /**
  * ApiService
  */
 @Injectable()
 export class ApiService {
-    private excludedOperations: string[] = [ 'UserService.login' ];
+    private excludedOperations: string[] = [ 'UserService.login', 'UserService.sso' ];
     rootPath: string = '/api/1';
 
     /**
@@ -41,12 +43,16 @@ export class ApiService {
      * @param {AuthenticationService} authenticationService
      * @param {ToastController} toastCtrl
      * @param {MessageBus} eventService
+     * @param {HttpClient} http
+     * @param {Storage} storage
      */
     constructor(
         private app: App,
         private authenticationService: AuthenticationService,
         private toastCtrl: ToastController,
-        private eventService: MessageBus
+        private eventService: MessageBus,
+        private http: HttpClient,
+        private storage: Storage
     ) {
     }
 
@@ -58,25 +64,17 @@ export class ApiService {
      */
     handleError<T>(operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
-            console.error(operation, error);
-            if (error.status === 401 && this.excludedOperations.indexOf(operation) === -1) {
-                console.debug('[APIService] - handleError', this.app.getRootNav(), operation, result);
-                this.eventService.broadcast(MessageBus.goToLogin, {});
-                this.authenticationService.isLogged = false;
-                return of(result);
-            } else {
-                console.error(error);
-                console.error(`${operation} failed: ${error.message}`);
-                let errMsg = (error.error.message) ? error.error.message : error.status ? error.statusText : 'Server error';
-                this.toastCtrl.create({
-                    message: errMsg,
-                    duration: 3000,
-                    position: 'top',
-                    cssClass: 'danger-toast'
-                }).present();
-                // Let the app keep running by returning an empty result.
-                return of(result);
-            }
+            console.error(error);
+            console.error(`${operation} failed: ${error.message}`);
+            let errMsg = (error.error.message) ? error.error.message : error.status ? error.statusText : 'Server error';
+            this.toastCtrl.create({
+                message: errMsg,
+                duration: 3000,
+                position: 'top',
+                cssClass: 'danger-toast'
+            }).present();
+            // Let the app keep running by returning an empty result.
+            return of(result);
         };
     }
 
@@ -86,5 +84,33 @@ export class ApiService {
      */
     addHeaderToken(): any {
         return {headers: new HttpHeaders().set('token', this.authenticationService.token)};
+    }
+
+    /**
+     * Sso login
+     *
+     * @returns {Observable<any>}
+     */
+    doSSO(): Observable<any> {
+        return new Observable<any>((observer) => {
+            this.storage.get('login').then(l => {
+                this.storage.get('mobileToken').then(mt => {
+                    if (l && mt) {
+                        this.http.post<any>(ENV.hive + this.rootPath + '/commons/users/user/sso', {
+                            login: l,
+                            mobileToken: mt
+                        }).subscribe(result => {
+                            if (result) {
+                                this.storage.set('mobileToken', mt);
+                                this.authenticationService.isLogged = true;
+                                this.authenticationService.token = result.account.token;
+                            }
+                            observer.next(result);
+                            observer.complete();
+                        });
+                    }
+                });
+            });
+        });
     }
 }

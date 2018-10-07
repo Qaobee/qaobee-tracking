@@ -45,7 +45,7 @@ export class PersonService {
      * @param sandboxId
      */
     getListPersonSandbox(sandboxId: string) {
-        return this.http.get<any>(this.apiUrl + 'listSandbox/?sandboxId=' + sandboxId, this.apiService.addHeaderToken()).pipe(
+        return this.http.get<any>(this.apiUrl + 'listSandbox/?sandboxId=' + sandboxId).pipe(
             catchError(this.apiService.handleError('PersonService.getListPersonSandbox'))
         );
     }
@@ -60,7 +60,7 @@ export class PersonService {
         return this.http.post<any>(this.apiUrl + '/list', {
             listId: listId,
             listField: listField
-        }, this.apiService.addHeaderToken()).pipe(
+        }).pipe(
             catchError(this.apiService.handleError('PersonService.getListPerson'))
         );
     }
@@ -72,7 +72,7 @@ export class PersonService {
      * @param {any} person : person to add
      */
     addPerson(person: any) {
-        return this.http.put<any>(this.apiUrl + '/add', person, this.apiService.addHeaderToken()).pipe(
+        return this.http.put<any>(this.apiUrl + '/add', person).pipe(
             catchError(this.apiService.handleError('addPerson', person))
         );
     }
@@ -84,7 +84,7 @@ export class PersonService {
      * @param {any} person : person to update
      */
     updatePerson(person: any) {
-        return this.http.put<any>(this.apiUrl + '/update', person, this.apiService.addHeaderToken()).pipe(
+        return this.http.put<any>(this.apiUrl + '/update', person).pipe(
             catchError(this.apiService.handleError('updatePerson', person))
         );
     }

@@ -161,8 +161,10 @@ export class EventListPage {
                 }
 
                 this.collectService.getCollects(this.authenticationService.meta._id, e._id, e.owner.effectiveId, e.owner.teamId, moment("01/01/2000", "DD/MM/YYYY").valueOf(), moment().valueOf()).subscribe(result => {
-                    e.isCollected = result[ 0 ] && result[ 0 ].status === 'done';
-                    this.eventList[ startDateStr ].push(e);
+                    if (result) {
+                        e.isCollected = result[ 0 ] && result[ 0 ].status === 'done';
+                        this.eventList[ startDateStr ].push(e);
+                    }
                 });
             });
             this.eventListSize = events.length;

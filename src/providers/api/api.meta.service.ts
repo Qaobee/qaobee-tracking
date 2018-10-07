@@ -42,7 +42,7 @@ export class MetaService {
      * @returns {Observable<any>}
      */
     getMeta(): Observable<any> {
-        return this.http.get<any>(ENV.hive + this.apiService.rootPath + '/commons/users/user/meta', this.apiService.addHeaderToken()).pipe(
+        return this.http.get<any>(ENV.hive + this.apiService.rootPath + '/commons/users/user/meta').pipe(
             catchError(this.apiService.handleError('MetaServices.getMeta'))
         );
     }
@@ -52,7 +52,7 @@ export class MetaService {
      * @returns {Observable<any>}
      */
     getParams(): Observable<any> {
-        return this.http.get<any>(ENV.hive + this.apiService.rootPath + '/commons/settings/get', this.apiService.addHeaderToken()).pipe(
+        return this.http.get<any>(ENV.hive + this.apiService.rootPath + '/commons/settings/get').pipe(
             catchError(this.apiService.handleError('MetaServices.getParams'))
         );
     }

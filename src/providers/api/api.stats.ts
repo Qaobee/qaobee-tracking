@@ -49,7 +49,7 @@ export class APIStatsService {
      */
     getIndicatorCfg(activityId: string, countryId: string, listIndicators: string[]) {
         let request = {activityId: activityId, countryId: countryId, listIndicators: listIndicators};
-        return this.http.post<any>(this.apiUrl + '/commons/settings/indicator/getByCode', request, this.apiService.addHeaderToken()).pipe(
+        return this.http.post<any>(this.apiUrl + '/commons/settings/indicator/getByCode', request).pipe(
             catchError(this.apiService.handleError('APIStatsService.getIndicatorCfg'))
         );
     }
@@ -64,7 +64,7 @@ export class APIStatsService {
      */
     getListIndicators(activityId: string, countryId: string, screen: string[]) {
         let request = {activityId: activityId, countryId: countryId, screen: screen};
-        return this.http.post<any>(this.apiUrl + '/commons/settings/indicator/getList', request, this.apiService.addHeaderToken()).pipe(
+        return this.http.post<any>(this.apiUrl + '/commons/settings/indicator/getList', request).pipe(
             catchError(this.apiService.handleError('APIStatsService.getListIndicators'))
         );
     }
@@ -80,7 +80,7 @@ export class APIStatsService {
             let s: any = stat;
             request.push(s);
         });
-        return this.http.put<any>(this.apiUrl + '/sandbox/stats/statistics/addBulk', request, this.apiService.addHeaderToken()).pipe(
+        return this.http.put<any>(this.apiUrl + '/sandbox/stats/statistics/addBulk', request).pipe(
             catchError(this.apiService.handleError('APIStatsService.addBulk'))
         );
     }
@@ -92,7 +92,7 @@ export class APIStatsService {
      * @param  {string} eventId
      */
     getListForEvent(eventId: string) {
-        return this.http.get<any>(this.apiUrl + '/sandbox/stats/statistics/?eventId=' + eventId, this.apiService.addHeaderToken()).pipe(
+        return this.http.get<any>(this.apiUrl + '/sandbox/stats/statistics/?eventId=' + eventId).pipe(
             catchError(this.apiService.handleError('APIStatsService.getListForEvent'))
         );
     }
@@ -103,7 +103,7 @@ export class APIStatsService {
      * @returns {Observable<any>}
      */
     getStatGroupBy(search: any) {
-        return this.http.post<any>(this.apiUrl + '/sandbox/stats/statistics/getStatGroupBy', search, this.apiService.addHeaderToken()).pipe(
+        return this.http.post<any>(this.apiUrl + '/sandbox/stats/statistics/getStatGroupBy', search).pipe(
             catchError(this.apiService.handleError('APIStatsService.getStatGroupBy'))
         );
     }
@@ -114,7 +114,7 @@ export class APIStatsService {
      * @returns {Observable<any>}
      */
     getListDetailValue(search: any) {
-        return this.http.post<any>(this.apiUrl + '/sandbox/stats/statistics/getListDetailValue', search, this.apiService.addHeaderToken()).pipe(
+        return this.http.post<any>(this.apiUrl + '/sandbox/stats/statistics/getListDetailValue', search).pipe(
             catchError(this.apiService.handleError('APIStatsService.getListDetailValue'))
         );
     }
