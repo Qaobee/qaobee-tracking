@@ -2,6 +2,10 @@
   "country": "CNTR-250-FR-FRA",
   "loader": "Please wait...",
   "warning": "Warning",
+  "appTermination" : {
+    "title": "App termination",
+    "message": "Do you want to close the app?"
+  },
   "actionButton": {
     "Submit": "Submit",
     "Cancel": "Cancel",
