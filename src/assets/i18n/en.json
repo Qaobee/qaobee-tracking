@@ -74,10 +74,10 @@
     "players": "Players",
     "teams": "Teams",
     "stats": "Stats",
-    "agendaText": "Planifier vos matchs dans l'agenda",
-    "playersText": "Gerez et consultez les perfs de vos joueurs",
-    "teamsText": "Gérez et consultez les perfs de vos Equipes",
-    "statsText": "Consultez vos les stats d'un match"
+    "agendaText": "Schedule your games in the calendar",
+    "playersText": "Manage and display players statistics",
+    "teamsText": "Manage and display teams statistics",
+    "statsText": "Display games statistics"
   },
   "welcome": {
     "Login": "Signin",
@@ -105,7 +105,7 @@
     "Events": "Events",
     "Effectives": "Effectives",
     "Collects": "Collects",
-    "Statistics": "Statistiques"
+    "Statistics": "Statistics"
   },
   "signup": {
     "TitleNavBar": "Subscription",
@@ -205,25 +205,25 @@
       "weightUnit": "Kgs",
       "height": "Hight",
       "heightUnit": "cm",
-      "positionType": "Poste",
+      "positionType": "Position",
       "contact": "Contact information",
       "civilStatus": "Civil status",
       "birthdate": "Birthdate",
       "nationality": "Nationality",
-      "Laterality": "Lateralité",
+      "Laterality": "Laterality",
       "deactivated": "Deactivated Player",
       "name": "Name",
       "firstname": "Firstname",
       "mobile": "Mobile",
       "address": "Address",
       "email": "Email",
-      "squadNumber": "Numéro",
-      "profil": "Profil"
+      "squadNumber": "Squad number",
+      "profil": "Profile"
     },
     "laterality": {
       "right-handed": "Right-handed",
       "left-handed": "Left-handed",
-      "ambidextrous": "Ambidextrexe"
+      "ambidextrous": "Ambidextrous"
     },
     "positionType": {
       "midfielder": "Midfielder",
