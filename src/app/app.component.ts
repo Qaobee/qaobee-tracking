@@ -101,7 +101,8 @@ export class MyApp {
             this.splashScreen.hide();
             this.buildMenu();
             this.trySSO();
-            this.ga.startTrackerWithId('UA-72906581-2', 30).then(() => {
+            this.ga.enableUncaughtExceptionReporting(true);
+                this.ga.startTrackerWithId('UA-72906581-2', 30).then(() => {
                 this.appVersion.getVersionNumber().then(v => {
                     this.ga.setAppVersion(v);
                 }).catch((error: any) => {
