@@ -50,9 +50,6 @@ export class TourComponent implements OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        const steps: SimpleChange = changes.steps;
-        console.log('prev value: ', steps.previousValue);
-        console.log('got name: ', steps.currentValue);
         this.start();
     }
 

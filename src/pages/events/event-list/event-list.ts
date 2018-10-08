@@ -18,8 +18,8 @@
  *  from Qaobee.
  */
 
-import { Component } from '@angular/core';
-import { NavController, NavParams, Refresher } from 'ionic-angular';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Content, NavController, NavParams, Refresher } from 'ionic-angular';
 import { AuthenticationService } from "../../../providers/authentication.service";
 import { EventsService } from "../../../providers/api/api.events.service";
 import { CollectService } from '../../../providers/api/api.collect.service';
@@ -45,6 +45,8 @@ import { GoogleAnalytics } from "@ionic-native/google-analytics";
     templateUrl: 'event-list.html',
 })
 export class EventListPage {
+    @ViewChild(Content) content: Content;
+
     datePipe: DatePipe;
     eventList: any;
     eventListSize: number;
@@ -60,6 +62,7 @@ export class EventListPage {
      * @param {SettingsService} settingsService
      * @param {CollectService} collectService
      * @param {GoogleAnalytics} ga
+     * @param {ElementRef} el
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -68,7 +71,8 @@ export class EventListPage {
                 private authenticationService: AuthenticationService,
                 private settingsService: SettingsService,
                 private collectService: CollectService,
-                private ga: GoogleAnalytics) {
+                private ga: GoogleAnalytics,
+                private el: ElementRef) {
         this.datePipe = new DatePipe(this.settingsService.getLanguage());
 
     }
@@ -133,10 +137,11 @@ export class EventListPage {
         this.eventsServices.getEvents(
             this.authenticationService.meta.season.startDate,
             this.authenticationService.meta.season.endDate,
-            'championship',
+            undefined,
             this.authenticationService.meta.activity._id,
             this.authenticationService.meta._id,
         ).subscribe(eventList => {
+            console.log('[EventListPage] - getEvents', eventList);
             this.storage.set(this.authenticationService.meta._id + '-events', eventList);
             this.populateEvents(eventList);
             if (refresher) {
@@ -151,23 +156,32 @@ export class EventListPage {
      */
     private populateEvents(events: any[]) {
         this.eventList = {};
+        let scrollDate;
         console.log('[EventListPage] - populateEvents', events);
         if (events) {
             events.sort(Utils.compareEvents);
             events.forEach(e => {
                 let startDateStr = this.datePipe.transform(e.startDate, 'MMMM  - yyyy');
+                if (e.startDate < moment().valueOf()) {
+                    scrollDate = startDateStr;
+                }
                 if (!this.eventList.hasOwnProperty(startDateStr)) {
                     this.eventList[ startDateStr ] = [];
                 }
-
                 this.collectService.getCollects(this.authenticationService.meta._id, e._id, e.owner.effectiveId, e.owner.teamId, moment("01/01/2000", "DD/MM/YYYY").valueOf(), moment().valueOf()).subscribe(result => {
                     if (result) {
                         e.isCollected = result[ 0 ] && result[ 0 ].status === 'done';
+                    }
+                    if (e) {
                         this.eventList[ startDateStr ].push(e);
                     }
                 });
             });
             this.eventListSize = events.length;
+            console.debug('[EventListPage] - populateEvents - scrollDate', scrollDate, moment().valueOf());
+            if (scrollDate) {
+                this.scrollTo(this.buildId(scrollDate));
+            }
         }
     }
 
@@ -209,4 +223,17 @@ export class EventListPage {
         this.navCtrl.push(EventDetailPage, {event: event});
     }
 
+    buildId(key: string) {
+        return 'area-' + key.replace(/ /g, '-');
+    }
+
+    private scrollTo(element: string) {
+        window.setTimeout(() => {
+            const target = document.querySelector('#' + element);
+            if (target) {
+                let yOffset = document.getElementById(element).offsetTop;
+                this.content.scrollTo(0, yOffset, 4000)
+            }
+        }, 500);
+    }
 }

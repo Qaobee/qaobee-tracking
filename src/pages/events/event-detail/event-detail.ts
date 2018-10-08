@@ -117,9 +117,14 @@ export class EventDetailPage {
                     handler: () => {
                         this.eventsServices.deleteEvent(this.event._id).subscribe(res => {
                             console.log('[EventDetailPage] - delete', res);
-                            this.storage.get(this.authenticationService.meta._id + '-events').then(events => {
-                                events = events.filter((e) => e._id !== this.event._id);
-                                this.storage.set(this.authenticationService.meta._id + '-events', events);
+                            this.eventsServices.getEvents(
+                                this.authenticationService.meta.season.startDate,
+                                this.authenticationService.meta.season.endDate,
+                                undefined,
+                                this.authenticationService.meta.activity._id,
+                                this.authenticationService.meta._id,
+                            ).subscribe(eventList => {
+                                this.storage.set(this.authenticationService.meta._id + '-events', eventList);
                                 this.presentToast(t[ 'eventsModule' ].messages.deleteDone);
                                 if (this.navCtrl.canGoBack()) {
                                     this.navCtrl.pop();

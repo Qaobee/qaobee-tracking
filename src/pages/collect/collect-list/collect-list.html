@@ -28,7 +28,7 @@
     </ion-item>
 
     <!-- items -->
-    <div *ngFor="let entry of eventList | keys">
+    <div *ngFor="let entry of eventList | keys"  [id]="buildId(entry.key)">
       <ion-item-divider color="light">{{ entry.key }}</ion-item-divider>
       <ion-item *ngFor="let event of entry.value" (click)="goToDetail(event, $event)">
         <h2 class="panel">
