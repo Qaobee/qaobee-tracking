@@ -41,14 +41,14 @@ export class EventStatsPage {
 
 
     /**
-     * 
-     * @param navCtrl 
-     * @param navParams 
-     * @param statsEventService 
-     * @param authenticationService 
-     * @param alertCtrl 
-     * @param translateService 
-     * @param ga 
+     *
+     * @param {NavController} navCtrl
+     * @param {NavParams} navParams
+     * @param {StatsEventService} statsEventService
+     * @param {CollectService} collectService
+     * @param {AlertController} alertCtrl
+     * @param {TranslateService} translateService
+     * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -96,7 +96,7 @@ export class EventStatsPage {
                 }
             }
 
-            // Gestion score en fonction match à domicile ou extérieur
+            // Score management if played at home or outside
             if (this.event.participants.teamHome.adversary) {
                 this.scoreHome = goalConceded;
                 this.scoreVisitor = goalScored;
@@ -111,31 +111,30 @@ export class EventStatsPage {
      *
      */
     deleteCollect(eventId: any, confirmLabels: string) {
-      this.translateService.get(confirmLabels).subscribe(
-        value => {
-          let alert = this.alertCtrl.create({
-            title: value.title,
-            message: value.message,
-            buttons: [
-              {
-                text: value.buttonLabelCancel,
-                role: 'cancel',
-                handler: () => {
-                }
-              },
-              {
-                text: value.buttonLabelConfirm,
-                handler: () => {
-                  this.collectService.deleteCollect(eventId).subscribe(r => {
-                    this.navCtrl.pop();
-                  });
-                }
-              }
-            ]
-          });
-          alert.present();
-        }
-      )
+        this.translateService.get(confirmLabels).subscribe(value => {
+                let alert = this.alertCtrl.create({
+                    title: value.title,
+                    message: value.message,
+                    buttons: [
+                        {
+                            text: value.buttonLabelCancel,
+                            role: 'cancel',
+                            handler: () => {
+                            }
+                        },
+                        {
+                            text: value.buttonLabelConfirm,
+                            handler: () => {
+                                this.collectService.deleteCollect(eventId).subscribe(() => {
+                                    this.navCtrl.pop();
+                                });
+                            }
+                        }
+                    ]
+                });
+                alert.present();
+            }
+        )
     }
 
 }
