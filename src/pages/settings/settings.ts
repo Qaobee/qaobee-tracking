@@ -110,5 +110,4 @@ export class SettingsPage {
         });
         toast.present();
     }
-
 }

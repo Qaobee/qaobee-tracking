@@ -68,9 +68,7 @@
     },
     "confirmDelete": {
       "title": "Suppression de la collecte",
-      "message": "Confirmez-vous la suppresion des stats pour cet événement ?",
-      "buttonLabelCancel": "Annuler",
-      "buttonLabelConfirm": "Valider"
+      "message": "Confirmez-vous la suppresion des stats pour cet événement ?"
     }
   },
   "home": {

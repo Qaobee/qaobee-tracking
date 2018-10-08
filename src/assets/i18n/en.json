@@ -68,9 +68,7 @@
     },
     "confirmDelete": {
       "title": "Remove Collect",
-      "message": "Confirm delete stats for this event ?",
-      "buttonLabelCancel": "Cancel",
-      "buttonLabelConfirm": "Ok"
+      "message": "Confirm delete stats for this event ?"
     }
   },
   "home": {
