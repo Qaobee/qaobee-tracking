@@ -71,7 +71,7 @@ export class TeamDetailPage {
                 this.adversaries = [];
                 console.debug('adversaries',teams);
                 teams.forEach(item => {
-                    if (item.linkTeamId[0] && item.linkTeamId[0] === this.team._id) {
+                    if (item.linkTeamId && item.linkTeamId[0] && item.linkTeamId[0] === this.team._id) {
                         this.adversaries.push(item);
                     }
                 });
