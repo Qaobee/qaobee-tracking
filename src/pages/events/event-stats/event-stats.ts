@@ -109,21 +109,22 @@ export class EventStatsPage {
 
     /**
      *
+     * @param eventId
      */
-    deleteCollect(eventId: any, confirmLabels: string) {
-        this.translateService.get(confirmLabels).subscribe(value => {
+    deleteCollect(eventId: string) {
+        this.translateService.get([ 'eventsModule', 'actionButton']).subscribe(value => {
                 let alert = this.alertCtrl.create({
-                    title: value.title,
-                    message: value.message,
+                    title: value['eventsModule'].confirmDelete.title,
+                    message: value['eventsModule'].confirmDelete.message,
                     buttons: [
                         {
-                            text: value.buttonLabelCancel,
+                            text: value[ 'actionButton' ][ 'Cancel' ],
                             role: 'cancel',
                             handler: () => {
                             }
                         },
                         {
-                            text: value.buttonLabelConfirm,
+                            text: value[ 'actionButton' ][ 'Ok' ],
                             handler: () => {
                                 this.collectService.deleteCollect(eventId).subscribe(() => {
                                     this.navCtrl.pop();

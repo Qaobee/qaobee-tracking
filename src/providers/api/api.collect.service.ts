@@ -91,7 +91,7 @@ export class CollectService {
      *
      * @param eventId
      */
-    deleteCollect(eventId: number) {
+    deleteCollect(eventId: string) {
         return this.http.delete<any>(ENV.hive + this.apiService.rootPath + '/sandbox/stats/collect/?eventId='+ eventId).pipe(
             catchError(this.apiService.handleError('MetaServices.getMeta'))
         );
