@@ -25,7 +25,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { of } from "rxjs/observable/of";
 import { AuthenticationService } from "../authentication.service";
-import { MessageBus } from '../message-bus.service';
 import { ENV } from "@app/env";
 import { Storage } from "@ionic/storage";
 
@@ -40,14 +39,12 @@ export class ApiService {
      *
      * @param {AuthenticationService} authenticationService
      * @param {ToastController} toastCtrl
-     * @param {MessageBus} eventService
      * @param {HttpClient} http
      * @param {Storage} storage
      */
     constructor(
         private authenticationService: AuthenticationService,
         private toastCtrl: ToastController,
-        private eventService: MessageBus,
         private http: HttpClient,
         private storage: Storage
     ) {
