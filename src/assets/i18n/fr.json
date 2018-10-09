@@ -56,7 +56,8 @@
       "deleteDone": "L'événement a bien été supprimé",
       "updateFail": "La mise à jour de l'événement a échoué",
       "createFail": "La création de l'événement a échoué",
-      "deleteFail": "La suppression de l'événement a échoué"
+      "deleteFail": "La suppression de l'événement a échoué",
+      "myTeamNull": "Vous devez choix une de vos équipes d'abord"
     },
     "errorControlForm": {
       "typeRequired": "Le type du match est obligatoire",

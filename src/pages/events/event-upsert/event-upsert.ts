@@ -23,6 +23,7 @@ import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { EventsService } from "../../../providers/api/api.events.service";
 import { LocationService } from "../../../providers/location.service";
 import { TeamService } from "../../../providers/api/api.team.service";
+import { TeamAdversaryPage} from '../../teams/team-adversary/team-adversary';
 import { AuthenticationService } from "../../../providers/authentication.service";
 import { ActivityCfgService } from "../../../providers/api/api.activityCfg.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
@@ -89,27 +90,7 @@ export class EventUpsertPage {
                 private translateService: TranslateService,
                 private ga: GoogleAnalytics) {
 
-        // Retreive my team list
-        this.teamService.getTeams(this.authenticationService.meta.effectiveDefault, this.authenticationService.meta._id, 'all', 'false').subscribe((teams: any[]) => {
-            if (teams) {
-                this.teams.myTeams = teams;
-                if (teams.length === 1 && !this.event.participants.teamHome) {
-                    this.event.participants.teamHome = teams[ 0 ];
-                    this.eventForm.controls[ 'myTeam' ].setValue(teams[ 0 ]);
-                }
-            }
-        });
-
-        // Retreive adversary team list
-        this.teamService.getTeams(this.authenticationService.meta.effectiveDefault, this.authenticationService.meta._id, 'all', 'true').subscribe((teams: any[]) => {
-            if (teams) {
-                this.teams.adversaries = teams;
-                if (teams.length === 1 && !this.event.participants.teamVisitor) {
-                    this.event.participants.teamVisitor = teams[ 0 ];
-                    this.eventForm.controls[ 'adversaryTeam' ].setValue(teams[ 0 ]);
-                }
-            }
-        });
+        
 
         // Retreive list event type
         this.activityCfgService.getParamFieldList(this.authenticationService.meta.activity._id, 'listEventType').subscribe((types: any[]) => {
@@ -130,6 +111,28 @@ export class EventUpsertPage {
      */
     ionViewDidEnter() {
         this.ga.trackView('EventUpsertPage');
+
+        // Retreive my team list
+        this.teamService.getTeams(this.authenticationService.meta.effectiveDefault, this.authenticationService.meta._id, 'true', 'false').subscribe((teams: any[]) => {
+            if (teams) {
+                this.teams.myTeams = teams;
+                if (teams.length === 1 && !this.event.participants.teamHome) {
+                    this.event.participants.teamHome = teams[ 0 ];
+                    this.eventForm.controls[ 'myTeam' ].setValue(teams[ 0 ]);
+                }
+            }
+        });
+
+        // Retreive adversary team list
+        this.teamService.getTeams(this.authenticationService.meta.effectiveDefault, this.authenticationService.meta._id, 'true', 'true').subscribe((teams: any[]) => {
+            if (teams) {
+                this.teams.adversaries = teams;
+                if (teams.length === 1 && !this.event.participants.teamVisitor) {
+                    this.event.participants.teamVisitor = teams[ 0 ];
+                    this.eventForm.controls[ 'adversaryTeam' ].setValue(teams[ 0 ]);
+                }
+            }
+        });
     }
 
     /**
@@ -316,5 +319,21 @@ export class EventUpsertPage {
         });
 
         toast.present();
+    }
+
+    /**
+     *
+     */
+    goToAddAdversary(formVal) {
+        if(formVal.myTeam) {
+            this.navCtrl.push(TeamAdversaryPage, {myTeamId: formVal.myTeam._id, editMode: 'CREATE'});
+        } else {
+            this.translateService.get('eventsModule.messages.myTeamNull').subscribe(
+                value => {
+                    this.presentToast(value);
+                }
+            )
+        }
+        
     }
 }

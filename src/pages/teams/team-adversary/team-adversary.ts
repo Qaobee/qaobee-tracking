@@ -27,60 +27,62 @@ import { TeamService } from '../../../providers/api/api.team.service';
 import { TranslateService } from '@ngx-translate/core';
 import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
-@Component({
-  selector: 'page-team-adversary',
-  templateUrl: 'team-adversary.html',
+@Component({ 
+    selector: 'page-team-adversary',
+    templateUrl: 'team-adversary.html',
 })
 export class TeamAdversaryPage {
 
-  editMode: string;
-  team: any;
-  adversaries: any;
-  myTeamId: string;
-  teamForm: FormGroup;
+    editMode: string;
+    team: any;
+    adversaries: any;
+    myTeamId: string;
+    teamForm: FormGroup;
 
-  /**
-   *
-   * @param {NavController} navCtrl
-   * @param {NavParams} navParams
-   * @param {ToastController} toastCtrl
-   * @param {AuthenticationService} authenticationService
-   * @param {TeamService} teamService
-   * @param {FormBuilder} formBuilder
-   * @param {EffectiveService} effectiveService
-   * @param {TranslateService} translateService
-   * @param {GoogleAnalytics} ga
-   */
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              private toastCtrl: ToastController,
-              private formBuilder: FormBuilder,
-              private authenticationService: AuthenticationService,
-              private teamService: TeamService,
-              private effectiveService: EffectiveService,
-              private translateService: TranslateService,
-              private ga: GoogleAnalytics) {
-    this.editMode = navParams.get('editMode');
-    this.myTeamId = navParams.get('myTeamId');
+    /**
+     *
+     * @param {NavController} navCtrl
+     * @param {NavParams} navParams
+     * @param {ToastController} toastCtrl
+     * @param {AuthenticationService} authenticationService
+     * @param {TeamService} teamService
+     * @param {FormBuilder} formBuilder
+     * @param {EffectiveService} effectiveService
+     * @param {TranslateService} translateService
+     * @param {GoogleAnalytics} ga
+     */
+    constructor(public navCtrl: NavController,
+                public navParams: NavParams,
+                private toastCtrl: ToastController,
+                private formBuilder: FormBuilder,
+                private authenticationService: AuthenticationService,
+                private teamService: TeamService,
+                private effectiveService: EffectiveService,
+                private translateService: TranslateService,
+                private ga: GoogleAnalytics) {
+      this.editMode = navParams.get('editMode');
+      this.myTeamId = navParams.get('myTeamId');
 
-    if(this.editMode && this.editMode !== 'CREATE') {
-      this.team = navParams.get('adversary');
-    } else {
-      this.team = {};
+      if (this.editMode && this.editMode !== 'CREATE') {
+        this.team = navParams.get('adversary');
+        console.debug('team', this.team);
+      } else {
+        this.team = {};
+      }
+
+      //Initialiaze team's form
+      this.teamForm = this.formBuilder.group({
+          'label': [ this.team.label|| '', [ Validators.required ] ]  
+      });
     }
 
-    //Initialiaze team's form
-    this.teamForm = this.formBuilder.group({
-      'label': [ this.team.label || '', [ Validators.required ] ]
-    });
-  }
-
-  /**
-   *
-   */
-  ionViewDidEnter() {
-    this.ga.trackView('TeamDetailPage');
-  }
+    /**
+     *
+     */
+    ionViewDidEnter() {
+        this.ga.trackView('TeamDetailPage');
+        
+    }
 
   /**
    *
@@ -96,7 +98,7 @@ export class TeamAdversaryPage {
    *
    */
   cancel() {
-    this.navCtrl.pop();
+      this.navCtrl.pop();
   }
 
   /**
@@ -104,19 +106,20 @@ export class TeamAdversaryPage {
    * @param formVal
    */
   saveAdversary(formVal) {
-    if(this.teamForm.valid) {
-      this.team.label = formVal.label;
 
-      if(this.editMode === 'CREATE') {
+    if (this.teamForm.valid) {
+      this.team.label = formVal.label;
+      
+      if (this.editMode === 'CREATE') {
         this.team.adversary = true;
         this.team.enable = true;
-
+        
         //sandboxId
         this.team.sandboxId = this.authenticationService.meta._id;
 
         // retrieve effective Id
-        this.effectiveService.get(this.authenticationService.meta.effectiveDefault).subscribe(effectiveGet => {
-          this.team.effectiveId = effectiveGet._id;
+        this.effectiveService.get(this.authenticationService.meta.effectiveDefault).subscribe(effectiveGet=> {
+          this.team.effectiveId = (effectiveGet as any)._id;
 
           let linkTeam: any[] = [];
           linkTeam.push(this.myTeamId);
@@ -151,17 +154,17 @@ export class TeamAdversaryPage {
    * @param msg
    */
   private presentToast(msg) {
-    let toast = this.toastCtrl.create({
-      message: msg,
-      duration: 3000,
-      position: 'bottom'
-    });
+      let toast = this.toastCtrl.create({
+          message: msg,
+          duration: 3000,
+          position: 'bottom'
+      });
 
-    toast.onDidDismiss(() => {
-    });
+      toast.onDidDismiss(() => {
+      });
 
-    toast.present();
+      toast.present();
   }
 
-
+    
 }

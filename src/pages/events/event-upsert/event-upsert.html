@@ -107,21 +107,38 @@
                 {{'eventsModule.actors' | translate}}
             </h2>
         </ion-item>
-        <ion-item>
-            <ion-label>{{ 'eventsModule.teamHome' | translate }}</ion-label>
-            <ion-select formControlName="myTeam" [compareWith]="compareOptionTeam">
-                <ion-option *ngFor="let t of teams.myTeams" [value]="t">{{t.label}}</ion-option>
-            </ion-select>
-        </ion-item>
-        <div class="errorControlForm" *ngIf="eventForm.get('myTeam').errors && !eventForm.get('myTeam').pristine">{{
-            'eventsModule.errorControlForm.myTeamRequired' | translate }}
-        </div>
-        <ion-item>
-            <ion-label>{{ 'eventsModule.teamVisitor' | translate }}</ion-label>
-            <ion-select formControlName="adversaryTeam" [compareWith]="compareOptionTeam">
-                <ion-option *ngFor="let t of teams.adversaries" [value]="t">{{t.label}}</ion-option>
-            </ion-select>
-        </ion-item>
+        
+        <ion-grid>
+        <ion-row>
+            <ion-col>
+                    <ion-item>
+                            <ion-label>{{ 'eventsModule.teamHome' | translate }}</ion-label>
+                            <ion-select formControlName="myTeam" [compareWith]="compareOptionTeam">
+                                <ion-option *ngFor="let t of teams.myTeams" [value]="t">{{t.label}}</ion-option>
+                            </ion-select>
+                        </ion-item>
+                        <div class="errorControlForm" *ngIf="eventForm.get('myTeam').errors && !eventForm.get('myTeam').pristine">{{
+                            'eventsModule.errorControlForm.myTeamRequired' | translate }}
+                        </div>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-10>
+                <ion-item>
+                    <ion-label>{{ 'eventsModule.teamVisitor' | translate }}</ion-label>
+                    <ion-select formControlName="adversaryTeam" [compareWith]="compareOptionTeam">
+                        <ion-option *ngFor="let t of teams.adversaries" [value]="t">{{t.label}}</ion-option>
+                    </ion-select>
+                </ion-item>        
+            </ion-col>
+            <ion-col center>
+                <button ion-button small outline color="danger" (tap)="goToAddAdversary(eventForm.value)">
+                    <ion-icon name="add"></ion-icon>
+                </button>
+            </ion-col>
+        </ion-row>
+        </ion-grid>
+        
         <div class="errorControlForm"
              *ngIf="eventForm.get('adversaryTeam').errors && !eventForm.get('adversaryTeam').pristine">{{
             'eventsModule.errorControlForm.adversaryRequired' | translate }}
