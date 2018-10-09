@@ -128,13 +128,7 @@ export class TeamBuildComponent {
             if (this.isTeamBuilding) {
                 alert.addButton({
                     text: this.translations.actionButton.Clear,
-                    handler: data => {
-                        console.debug('[TeamBuildPage] - showPlayerChooser - clear', position, data);
-                        delete this.playerPositions[ position ];
-                        if (data) {
-                            this.playerList.push(data);
-                        }
-                    }
+                    handler: data => this.deletePlayer(position, data)
                 });
             }
             alert.addButton({
@@ -207,13 +201,7 @@ export class TeamBuildComponent {
 
         alert.addButton({
             text: this.translations.actionButton.Clear,
-            handler: data => {
-                console.debug('[TeamBuildComponent] - showSubstituesChooser - clear', position, data);
-                delete this.playerPositions[ position ];
-                if (data) {
-                    this.playerList.push(data);
-                }
-            }
+            handler: data => this.deletePlayer(position, data)
         });
         alert.addButton({
             text: this.translations.actionButton.Ok,
@@ -284,6 +272,13 @@ export class TeamBuildComponent {
             return 'yellow';
         } else {
             return pos.class;
+        }
+    }
+
+    private deletePlayer(position: string, data: any) {
+        delete this.playerPositions[ position ];
+        if (data) {
+            this.playerList.push(data);
         }
     }
 }

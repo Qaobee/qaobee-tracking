@@ -44,15 +44,10 @@ export class StatsCollectTimeSheetComponent {
      *
      */
     ngOnChanges() {
-        switch (this.type) {
-            case 'EVENT':
-                this.statsEventService.getEventStats(this.ownerId).subscribe(statsContainer => {
-                    this.buildStats(statsContainer);
-                });
-                break;
-
-            default:
-                break;
+        if (this.type === 'EVENT') {
+            this.statsEventService.getEventStats(this.ownerId).subscribe(statsContainer => {
+                this.buildStats(statsContainer);
+            });
         }
     }
 

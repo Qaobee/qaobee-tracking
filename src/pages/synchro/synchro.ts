@@ -18,7 +18,7 @@
  *  from Qaobee.
  */
 
-import { Observable } from 'rxjs';
+import { Observable, Subscriber } from 'rxjs';
 import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
@@ -151,11 +151,7 @@ export class SynchroPage {
                         }));
                     });
                     if (asyncs.length > 0) {
-                        Observable.forkJoin(asyncs).subscribe(r => {
-                            console.debug('[SynchroPage] - syncEvents - forkJoin', r);
-                            observer.next(asyncs.length);
-                            observer.complete();
-                        });
+                        Observable.forkJoin(asyncs).subscribe(r => SynchroPage.forkJoin(observer, asyncs.length, r));
                     } else {
                         observer.next(0);
                         observer.complete();
@@ -188,14 +184,9 @@ export class SynchroPage {
                                 obs.complete();
                             });
                         }));
-
                     });
                     if (asyncs.length > 0) {
-                        Observable.forkJoin(asyncs).subscribe(r => {
-                            console.debug('[SynchroPage] - syncEffective - forkJoin', r);
-                            observer.next(asyncs.length);
-                            observer.complete();
-                        });
+                        Observable.forkJoin(asyncs).subscribe(r => SynchroPage.forkJoin(observer, asyncs.length, r));
                     } else {
                         observer.next(0);
                         observer.complete();
@@ -248,11 +239,7 @@ export class SynchroPage {
                         }));
                     });
                     if (asyncs.length > 0) {
-                        Observable.forkJoin(asyncs).subscribe(r => {
-                            console.debug('[SynchroPage] - syncCollects - forkJoin', r);
-                            observer.next(asyncs.length);
-                            observer.complete();
-                        });
+                        Observable.forkJoin(asyncs).subscribe(r => SynchroPage.forkJoin(observer, asyncs.length, r));
                     } else {
                         observer.next(0);
                         observer.complete();
@@ -297,5 +284,11 @@ export class SynchroPage {
                 }
             });
         });
+    }
+
+    private static forkJoin(observer: Subscriber<number>, result: any, res: any) {
+        console.debug('[SynchroPage] - forkJoin', result);
+        observer.next(res);
+        observer.complete();
     }
 }
