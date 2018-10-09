@@ -18,8 +18,8 @@
  *  from Qaobee.
  */
 
-import { Component } from '@angular/core';
-import { NavController, NavParams, Refresher } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Content, NavController, NavParams, Refresher } from 'ionic-angular';
 import { DatePipe } from "@angular/common";
 import { EventsService } from "../../../providers/api/api.events.service";
 import { Storage } from "@ionic/storage";
@@ -36,6 +36,7 @@ import { GoogleAnalytics } from "@ionic-native/google-analytics";
     templateUrl: 'collect-list.html',
 })
 export class CollectListPage {
+    @ViewChild(Content) content: Content;
 
     datePipe: DatePipe;
     eventList: any;
@@ -90,7 +91,7 @@ export class CollectListPage {
             this.storage.get(this.authenticationService.meta._id + '-events').then(events => {
                     for (let index = 0; index < events.length; index++) {
                         const element = events[ index ];
-                        if (element.type.label.toLowerCase().indexOf(val.toLowerCase()) > -1 || element.label.toLowerCase().indexOf(val.toLowerCase()) > -1) {
+                        if (element && element.type && (element.type.label.toLowerCase().indexOf(val.toLowerCase()) > -1 || element.label.toLowerCase().indexOf(val.toLowerCase()) > -1)) {
                             this.eventListFiltred.push(element);
                         }
                     }
@@ -125,7 +126,7 @@ export class CollectListPage {
         this.eventsServices.getEvents(
             this.authenticationService.statStartDate,
             this.authenticationService.statEndDate,
-            'championship',
+            undefined,
             this.authenticationService.meta.activity._id,
             this.authenticationService.meta._id,
         ).subscribe(eventList => {
@@ -143,10 +144,14 @@ export class CollectListPage {
      */
     private populateEvents(events: any[]) {
         this.eventList = {};
+        let scrollDate;
         if (events) {
-            console.log('[CollectListPage] - populateEvents', events);
+            console.debug('[CollectListPage] - populateEvents', events);
             events.forEach(e => {
-                let startDateStr = this.datePipe.transform(e.startDate, 'MMMM  - yyyy');
+                const startDateStr = this.datePipe.transform(e.startDate, 'MMMM  - yyyy');
+                if(e.startDate < moment().valueOf()) {
+                    scrollDate = startDateStr;
+                }
                 if (!this.eventList.hasOwnProperty(startDateStr)) {
                     this.eventList[ startDateStr ] = [];
                 }
@@ -159,6 +164,10 @@ export class CollectListPage {
                 });
             });
             this.eventListSize = events.length;
+            console.debug('[CollectListPage] - populateEvents - scrollDate', scrollDate, moment().valueOf());
+            if (scrollDate) {
+                this.scrollTo(this.buildId(scrollDate));
+            }
         }
     }
 
@@ -182,4 +191,19 @@ export class CollectListPage {
         this.navCtrl.push(EventDetailPage, {event: event});
     }
 
+
+
+    buildId(key: string) {
+        return 'area-' + key.replace(/ /g, '-');
+    }
+
+    private scrollTo(element: string) {
+        window.setTimeout(() => {
+            const target = document.querySelector('#' + element);
+            if (target) {
+                let yOffset = document.getElementById(element).offsetTop;
+                this.content.scrollTo(0, yOffset, 4000)
+            }
+        }, 500);
+    }
 }

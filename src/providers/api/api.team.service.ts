@@ -46,7 +46,7 @@ export class TeamService {
      * @returns {Observable<any>}
      */
     getTeams(effectiveId: string, sandboxId: string, enable: string, adversary: string): Observable<any> {
-        return this.http.get<any>(ENV.hive + this.apiService.rootPath + '/sandbox/effective/team/list?enable=' + enable + '&adversary=' + adversary + '&effectiveId=' + effectiveId + '&sandboxId=' + sandboxId, this.apiService.addHeaderToken()).pipe(
+        return this.http.get<any>(ENV.hive + this.apiService.rootPath + '/sandbox/effective/team/list?enable=' + enable + '&adversary=' + adversary + '&effectiveId=' + effectiveId + '&sandboxId=' + sandboxId).pipe(
             catchError(this.apiService.handleError('TeamService.getTeams'))
         );
     }
@@ -57,7 +57,7 @@ export class TeamService {
      * @returns {Observable<any>}
      */
     addTeam(team: any): Observable<any> {
-        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/sandbox/effective/team/add', team, this.apiService.addHeaderToken()).pipe(
+        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/sandbox/effective/team/add', team).pipe(
             catchError(this.apiService.handleError('TeamService.addTeam'))
         );
     }
@@ -68,7 +68,7 @@ export class TeamService {
      * @returns {Observable<any>}
      */
     updateTeam(team: any): Observable<any> {
-        return this.http.put<any>(ENV.hive + this.apiService.rootPath + '/sandbox/effective/team/update', team, this.apiService.addHeaderToken()).pipe(
+        return this.http.put<any>(ENV.hive + this.apiService.rootPath + '/sandbox/effective/team/update', team).pipe(
             catchError(this.apiService.handleError('TeamService.updateTeam'))
         );
     }

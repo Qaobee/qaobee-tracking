@@ -44,16 +44,12 @@ export class TourComponent implements OnChanges {
     @ViewChild('tour') tour: ElementRef;
     @ViewChild('highlight') highlight: ElementRef;
 
-    content = '';
     currentStep: number = -1;
 
     constructor() {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        const steps: SimpleChange = changes.steps;
-        console.log('prev value: ', steps.previousValue);
-        console.log('got name: ', steps.currentValue);
         this.start();
     }
 
@@ -120,7 +116,6 @@ export class TourComponent implements OnChanges {
     display() {
         if (this.currentStep >= 0 && this.steps && this.steps[ this.currentStep ]) {
             console.debug('[Tour] - display', this.currentStep, this.steps[ this.currentStep ]);
-            this.content = this.steps[ this.currentStep ].description;
             const target = document.querySelector(this.steps[ this.currentStep ].target);
             if (!target) {
                 window.setTimeout(() => {
@@ -150,7 +145,7 @@ export class TourComponent implements OnChanges {
                             this.tour.nativeElement.style.left = Math.max(0, dims.left - tourDims.ow - 10) + 'px';
                             break;
                         case 'bottom' :
-                            this.tour.nativeElement.style.top = Math.min(window.innerHeight - tourDims.oh, dims.top + dims.oh + 10) + 'px';
+                            this.tour.nativeElement.style.top = Math.min(window.innerHeight - tourDims.oh, dims.top + dims.oh + 20) + 'px';
                             this.tour.nativeElement.style.left = '0px';
                             break;
                     }

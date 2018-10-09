@@ -19,7 +19,7 @@
  */
 
 import { Component, ViewChild } from '@angular/core';
-import { Menu, Nav, Platform } from 'ionic-angular';
+import { AlertController, App, Menu, Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -57,10 +57,11 @@ export class MyApp {
     rootPage: any = WelcomePage;
     pages: Array<{ title: string, component: any, icon: string, color: string }>;
     user: any;
-
+    unregisterBackButtonAction: any;
     /**
      *
      * @param {Platform} platform
+     * @param {App} app
      * @param {StatusBar} statusBar
      * @param {SplashScreen} splashScreen
      * @param {UserService} userService
@@ -69,10 +70,12 @@ export class MyApp {
      * @param {TranslateService} translate
      * @param {MessageBus} eventService
      * @param {MetaService} metaService
+     * @param {AlertController} alertCtrl
      * @param {AppVersion} appVersion
      * @param {GoogleAnalytics} ga
      */
     constructor(private platform: Platform,
+                private app: App,
                 private statusBar: StatusBar,
                 private splashScreen: SplashScreen,
                 private userService: UserService,
@@ -81,6 +84,7 @@ export class MyApp {
                 private translate: TranslateService,
                 private eventService: MessageBus,
                 private metaService: MetaService,
+                private alertCtrl: AlertController,
                 private appVersion: AppVersion,
                 private ga: GoogleAnalytics
     ) {
@@ -90,18 +94,49 @@ export class MyApp {
         translate.use(translate.getBrowserLang());
     }
 
+    ionViewWillLeave() {
+        // Unregister the custom back button action for this page
+        this.unregisterBackButtonAction && this.unregisterBackButtonAction();
+    }
     /**
      *
      */
     initializeApp() {
         this.platform.ready().then(() => {
+            this.platform.registerBackButtonAction(() => {
+                this.unregisterBackButtonAction = this.platform.registerBackButtonAction(()=>{
+                    let nav = this.app.getActiveNavs()[0];
+                    if (nav.canGoBack()){ //Can we go back?
+                        nav.pop();
+                    } else {
+                        this.translate.get(['app', 'actionButton']).subscribe(t =>{
+                        const alert = this.alertCtrl.create({
+                            title: t['app'].title,
+                            message: t['app'].message,
+                            buttons: [{
+                                text: t['actionButton']['Cancel'],
+                                role: 'cancel',
+                                handler: () => {}
+                            },{
+                                text: t['actionButton']['Ok'],
+                                handler: () => {
+                                    this.platform.exitApp(); // Close this application
+                                }
+                            }]
+                        });
+                        alert.present();
+                        });
+                    }
+                }, 101);
+            });
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
             this.statusBar.styleDefault();
             this.splashScreen.hide();
             this.buildMenu();
             this.trySSO();
-            this.ga.startTrackerWithId('UA-72906581-2', 30).then(() => {
+            this.ga.enableUncaughtExceptionReporting(true);
+                this.ga.startTrackerWithId('UA-72906581-2', 30).then(() => {
                 this.appVersion.getVersionNumber().then(v => {
                     this.ga.setAppVersion(v);
                 }).catch((error: any) => {

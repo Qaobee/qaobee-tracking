@@ -48,7 +48,7 @@ export class EventsService {
         if (type) {
             request[ 'link.type' ] = type;
         }
-        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/sandbox/event/event/list', request, this.apiService.addHeaderToken()).pipe(
+        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/sandbox/event/event/list', request).pipe(
             catchError(this.apiService.handleError('EventsService.getEvents'))
         );
     }
@@ -59,9 +59,18 @@ export class EventsService {
      * @returns {Observable<any>}
      */
     addEvent(event: any): Observable<any> {
-        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/sandbox/event/event/add', event, this.apiService.addHeaderToken()).pipe(
+        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/sandbox/event/event/add', event).pipe(
             catchError(this.apiService.handleError('EventsService.addEvent'))
         );
     }
 
+    /**
+     * 
+     * @param {string} id Event id
+     */
+    deleteEvent(id: string) : Observable<any> {
+        return this.http.delete<any>(ENV.hive + this.apiService.rootPath + '/sandbox/event/event?_id=' + id).pipe(
+            catchError(this.apiService.handleError('EventsService.deleteEvent'))
+        );
+    }
 }

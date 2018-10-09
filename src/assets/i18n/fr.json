@@ -2,6 +2,10 @@
   "country": "CNTR-250-FR-FRA",
   "loader": "Veuillez patienter...",
   "warning": "Attention",
+  "appTermination" : {
+    "title": "Fermer l'application",
+    "message": "Etes vous sur de vouloir quitter l'application?"
+  },
   "actionButton": {
     "Submit": "Valider",
     "Cancel": "Annuler",
@@ -65,9 +69,7 @@
     },
     "confirmDelete": {
       "title": "Suppression de la collecte",
-      "message": "Confirmez-vous la suppresion des stats pour cet événement ?",
-      "buttonLabelCancel": "Annuler",
-      "buttonLabelConfirm": "Valider"
+      "message": "Confirmez-vous la suppresion des stats pour cet événement ?"
     }
   },
   "home": {

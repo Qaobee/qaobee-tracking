@@ -118,7 +118,7 @@ export class UserService {
      * @returns {Observable<any>}
      */
     updateUser(user: any): Observable<any> {
-        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/commons/users/profile', user, this.apiService.addHeaderToken()).pipe(
+        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/commons/users/profile', user).pipe(
             catchError(this.apiService.handleError('UserService.updateUser'))
         );
     }
@@ -128,7 +128,7 @@ export class UserService {
      * @returns {Observable<any>}
      */
     logoff(): Observable<any> {
-        return this.http.get<any>(ENV.hive + this.apiService.rootPath + '/commons/users/user/logout', this.apiService.addHeaderToken()).pipe(
+        return this.http.get<any>(ENV.hive + this.apiService.rootPath + '/commons/users/user/logout').pipe(
             catchError(this.apiService.handleError('UserService.logoff'))
         );
     }
@@ -138,7 +138,7 @@ export class UserService {
      * @returns {Observable<any>}
      */
     getCurrentUser(): Observable<any> {
-        return this.http.get<any>(ENV.hive + this.apiService.rootPath + '/commons/users/user/current', this.apiService.addHeaderToken()).pipe(
+        return this.http.get<any>(ENV.hive + this.apiService.rootPath + '/commons/users/user/current').pipe(
             catchError(this.apiService.handleError('UserService.getCurrentUser'))
         );
     }
@@ -149,7 +149,7 @@ export class UserService {
      * @returns {Observable<any>}
      */
     getEncryptedInfos(path: string): Observable<any> {
-        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/commons/users/user/encrypt', {path: path}, this.apiService.addHeaderToken()).pipe(
+        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/commons/users/user/encrypt', {path: path}).pipe(
             catchError(this.apiService.handleError('UserService.getEncryptedInfos'))
         );
     }

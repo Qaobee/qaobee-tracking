@@ -243,7 +243,7 @@ export class TeamBuildComponent {
         if (avatar && avatar !== 'null') {
             return this.root + '/file/SB_Person/' + avatar;
         } else {
-            return '/assets/imgs/user.png';
+            return 'assets/imgs/user.png'; // FIXME: wrong path
         }
     }
 

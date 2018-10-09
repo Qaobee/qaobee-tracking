@@ -19,7 +19,7 @@
  */
 
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, LOCALE_ID, NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, ErrorHandler, LOCALE_ID, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
@@ -27,13 +27,12 @@ import { IonicStorageModule } from '@ionic/storage';
 import { File } from '@ionic-native/file';
 import { Camera } from '@ionic-native/camera';
 import { PasswordStrengthBarModule } from 'ng2-password-strength-bar';
-
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { MyApp } from './app.component';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { UniqueDeviceID } from "@ionic-native/unique-device-id";
 
 import { MessageBus } from "../providers/message-bus.service";
@@ -48,6 +47,7 @@ import { LocationService } from "../providers/location.service";
 import { AppVersion } from "@ionic-native/app-version";
 import { GoogleAnalytics } from "@ionic-native/google-analytics";
 import { Device } from "@ionic-native/device";
+import { APIInterceptor } from "../providers/api/interceptor";
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -100,6 +100,11 @@ export function createTranslateLoader(http: HttpClient) {
             provide: LOCALE_ID,
             deps: [ SettingsService ],      //some service handling global settings
             useFactory: (settingsService) => settingsService.getLanguage()  //returns locale string
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: APIInterceptor,
+            multi: true,
         },
         File,
         Camera

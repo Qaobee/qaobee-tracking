@@ -2,7 +2,7 @@
 
 <div class="tour" #tour (swipe)="swipe($event)">
     <ion-icon class="help-icon" name="help-circle"></ion-icon>
-    <p  [innerHTML]="content"></p>
+    <span *ngFor="let s of steps; index as i"><p [hidden]="i !== currentStep" [innerHTML]="s.description"></p></span>
     <ion-row>
         <ion-col>
             <button ion-button (click)="skip()" color="danger">

@@ -71,7 +71,7 @@ export class TeamDetailPage {
                 this.adversaries = [];
                 console.debug('adversaries',teams);
                 teams.forEach(item => {
-                    if (item.linkTeamId[0] === this.team._id) {
+                    if (item.linkTeamId && item.linkTeamId[0] && item.linkTeamId[0] === this.team._id) {
                         this.adversaries.push(item);
                     }
                 });
@@ -110,9 +110,9 @@ export class TeamDetailPage {
     }
 
     /**
-     *
+     * @param {any} team
      * @param {string} confirmLabels
-     * @param {string} desactived
+     * @param {string} deactivated
      */
     deactivateTeam(team: any, confirmLabels: string, deactivated: string) {
       this.translateService.get(confirmLabels).subscribe(
@@ -131,7 +131,7 @@ export class TeamDetailPage {
                 text: value.buttonLabelConfirm,
                 handler: () => {
                   team.enable = deactivated;
-                  this.teamService.updateTeam(team).subscribe(r => {
+                  this.teamService.updateTeam(team).subscribe(() => {
                     this.navCtrl.pop();
                   });
                 }

@@ -19,17 +19,17 @@
  */
 
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { AlertController, NavController, NavParams, ToastController } from 'ionic-angular';
 import { EventUpsertPage } from "../event-upsert/event-upsert";
 import { TeamBuildPage } from "../../collect/team-build/team-build";
-import { GoogleMap, GoogleMapOptions, GoogleMaps, GoogleMapsEvent } from '@ionic-native/google-maps';
 import { GoogleAnalytics } from "@ionic-native/google-analytics";
+import { EventsService } from "../../../providers/api/api.events.service";
+import { TranslateService } from "@ngx-translate/core";
+import { Storage } from "@ionic/storage";
+import { AuthenticationService } from "../../../providers/authentication.service";
 
 /**
  * Generated class for the EventListPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
  */
 @Component({
     selector: 'page-event-detail',
@@ -37,17 +37,28 @@ import { GoogleAnalytics } from "@ionic-native/google-analytics";
 })
 export class EventDetailPage {
     event: any;
-    map: GoogleMap;
 
     /**
      *
-     * @param navCtrl
-     * @param navParams
+     * @param {NavController} navCtrl
+     * @param {NavParams} navParams
      * @param {GoogleAnalytics} ga
+     * @param {AlertController} alertCtrl
+     * @param {TranslateService} translateService
+     * @param {ToastController} toastCtrl
+     * @param {Storage} storage
+     * @param {AuthenticationService} authenticationService
+     * @param {EventsService} eventsServices
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
-                private ga: GoogleAnalytics) {
+                private ga: GoogleAnalytics,
+                private alertCtrl: AlertController,
+                private translateService: TranslateService,
+                private toastCtrl: ToastController,
+                private storage: Storage,
+                private authenticationService: AuthenticationService,
+                private eventsServices: EventsService) {
         this.event = navParams.get('event');
     }
 
@@ -57,55 +68,6 @@ export class EventDetailPage {
      */
     ionViewDidEnter() {
         this.ga.trackView('EventDetailPage');
-    }
-
-    /**
-     *
-     */
-    ionViewDidLoad() {
-        this.loadMap();
-    }
-
-    /**
-     *
-     */
-    loadMap() {
-        let mapOptions: GoogleMapOptions = {
-            camera: {
-                target: {
-                    lat: 43.0741904,
-                    lng: -89.3809802
-                },
-                zoom: 18,
-                tilt: 30
-            }
-        };
-
-        this.map = GoogleMaps.create('map_canvas', mapOptions);
-
-        // Wait the MAP_READY before using any methods.
-        this.map.one(GoogleMapsEvent.MAP_READY)
-            .then(() => {
-                console.log('Map is ready!');
-
-                // Now you can use all methods safely.
-                this.map.addMarker({
-                    title: 'Ionic',
-                    icon: 'blue',
-                    animation: 'DROP',
-                    position: {
-                        lat: 43.0741904,
-                        lng: -89.3809802
-                    }
-                })
-                    .then(marker => {
-                        marker.on(GoogleMapsEvent.MARKER_CLICK)
-                            .subscribe(() => {
-                                alert('clicked');
-                            });
-                    });
-
-            });
     }
 
     /**
@@ -141,6 +103,51 @@ export class EventDetailPage {
      */
     delete() {
         console.log('[EventDetailPage] - delete');
-        // TODO
+        this.translateService.get([ 'eventsModule', 'actionButton' ]).subscribe(t => {
+            const alert = this.alertCtrl.create({
+                title: t[ 'eventsModule' ].confirmDelete.title,
+                message: t[ 'eventsModule' ].confirmDelete.message,
+                buttons: [ {
+                    text: t[ 'actionButton' ][ 'Cancel' ],
+                    role: 'cancel',
+                    handler: () => {
+                    }
+                }, {
+                    text: t[ 'actionButton' ][ 'Ok' ],
+                    handler: () => {
+                        this.eventsServices.deleteEvent(this.event._id).subscribe(res => {
+                            console.log('[EventDetailPage] - delete', res);
+                            this.eventsServices.getEvents(
+                                this.authenticationService.meta.season.startDate,
+                                this.authenticationService.meta.season.endDate,
+                                undefined,
+                                this.authenticationService.meta.activity._id,
+                                this.authenticationService.meta._id,
+                            ).subscribe(eventList => {
+                                this.storage.set(this.authenticationService.meta._id + '-events', eventList);
+                                this.presentToast(t[ 'eventsModule' ].messages.deleteDone);
+                                if (this.navCtrl.canGoBack()) {
+                                    this.navCtrl.pop();
+                                }
+                            });
+                        });
+                    }
+                } ]
+            });
+            alert.present();
+        });
+    }
+
+    /**
+     *
+     * @param msg
+     */
+    private presentToast(msg) {
+        let toast = this.toastCtrl.create({
+            message: msg,
+            duration: 3000,
+            position: 'bottom'
+        });
+        toast.present();
     }
 }

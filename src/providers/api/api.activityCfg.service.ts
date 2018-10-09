@@ -51,7 +51,7 @@ export class ActivityCfgService {
             this.translate.get('country').subscribe(value => {
                 this.http.get<any>(ENV.hive + this.apiService.rootPath + '/commons/settings/activitycfg/get?activityId=' + activityId
                     + '&date=' + moment.utc().valueOf()
-                    + '&countryId=' + value, this.apiService.addHeaderToken()).pipe(
+                    + '&countryId=' + value).pipe(
                     catchError(this.apiService.handleError('ActivityCfgService.get'))
                 ).subscribe(data => {
                     observer.next(data);
@@ -71,7 +71,7 @@ export class ActivityCfgService {
             this.translate.get('country').subscribe(value => {
                 this.http.get<any[]>(ENV.hive + this.apiService.rootPath + '/commons/settings/activitycfg/params?paramFieldList=' + params
                     + '&activityId=' + activityId
-                    + '&date=' + moment.utc().valueOf() + '&countryId=' + value, this.apiService.addHeaderToken()).pipe(
+                    + '&date=' + moment.utc().valueOf() + '&countryId=' + value).pipe(
                     catchError(this.apiService.handleError('ActivityCfgService.getParamFieldList'))
                 ).subscribe(data => {
                     observer.next(data);

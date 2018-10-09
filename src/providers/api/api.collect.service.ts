@@ -40,7 +40,7 @@ export class CollectService {
      * @param  {any} collect
      */
     updateCollect(collect: any) {
-        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/sandbox/stats/collect/update', collect, this.apiService.addHeaderToken()).pipe(
+        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/sandbox/stats/collect/update', collect).pipe(
             catchError(this.apiService.handleError('MetaServices.getMeta'))
         );
     }
@@ -49,7 +49,7 @@ export class CollectService {
      * @param  {any} collect
      */
     addCollect(collect: any) {
-        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/sandbox/stats/collect/add', collect, this.apiService.addHeaderToken()).pipe(
+        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/sandbox/stats/collect/add', collect).pipe(
             catchError(this.apiService.handleError('MetaServices.getMeta'))
         );
     }
@@ -72,7 +72,7 @@ export class CollectService {
             startDate: startDate,
             endDate: endDate
         };
-        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/sandbox/stats/collect/list', request, this.apiService.addHeaderToken()).pipe(
+        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/sandbox/stats/collect/list', request).pipe(
             catchError(this.apiService.handleError('MetaServices.getMeta'))
         );
     }
@@ -82,7 +82,7 @@ export class CollectService {
      * @param search
      */
     getCollectList(search: any) {
-        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/sandbox/stats/collect/list', search, this.apiService.addHeaderToken()).pipe(
+        return this.http.post<any>(ENV.hive + this.apiService.rootPath + '/sandbox/stats/collect/list', search).pipe(
             catchError(this.apiService.handleError('MetaServices.getMeta'))
         );
     }
@@ -91,8 +91,8 @@ export class CollectService {
      *
      * @param eventId
      */
-    deleteCollect(eventId: number) {
-        return this.http.delete<any>(ENV.hive + this.apiService.rootPath + '/sandbox/stats/collect/?eventId='+ eventId, this.apiService.addHeaderToken()).pipe(
+    deleteCollect(eventId: string) {
+        return this.http.delete<any>(ENV.hive + this.apiService.rootPath + '/sandbox/stats/collect/?eventId='+ eventId).pipe(
             catchError(this.apiService.handleError('MetaServices.getMeta'))
         );
     }
