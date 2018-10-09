@@ -98,7 +98,7 @@ export class TeamDetailPage {
      *
      */
     goToViewAdversary(adversary: any) {
-        this.navCtrl.push(TeamAdversaryPage, {team: adversary});
+        this.navCtrl.push(TeamAdversaryPage, {adversary: adversary, editMode: 'UPDATE'});
     }
 
 

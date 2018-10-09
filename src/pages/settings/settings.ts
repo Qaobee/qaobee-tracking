@@ -71,7 +71,9 @@ export class SettingsPage {
         this.ga.trackView('SettingsPage');
         this.settingsService.getParametersGame().subscribe(s => {
             this.settings = s;
+            console.debug('settings',s);
             this.settings.periodDuration = this.settings.periodDuration/60;
+            console.debug('settings',this.settings);
         });
     }
 
@@ -79,10 +81,12 @@ export class SettingsPage {
      * Save preferences
      */
     save() {
-        this.settings.periodDuration = this.settings.periodDuration/60;
+        this.settings.periodDuration = this.settings.periodDuration*60;
+        console.debug('settings',this.settings);
         this.settingsService.setParametersGame(this.settings);
         this.translateService.get("settings.saved").subscribe(t=> {
             this.presentToast(t);
+            this.settings.periodDuration = this.settings.periodDuration/60;
         });
     }
 

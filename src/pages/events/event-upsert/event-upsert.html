@@ -116,6 +116,9 @@
         <div class="errorControlForm" *ngIf="eventForm.get('myTeam').errors && !eventForm.get('myTeam').pristine">{{
             'eventsModule.errorControlForm.myTeamRequired' | translate }}
         </div>
+        <button ion-button item-start outline color="danger" (tap)="goToAddAdversary()">
+              <ion-icon name="add"></ion-icon>
+            </button>
         <ion-item>
             <ion-label>{{ 'eventsModule.teamVisitor' | translate }}</ion-label>
             <ion-select formControlName="adversaryTeam" [compareWith]="compareOptionTeam">

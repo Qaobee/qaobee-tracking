@@ -65,6 +65,7 @@ export class TeamAdversaryPage {
 
       if (this.editMode && this.editMode !== 'CREATE') {
         this.team = navParams.get('adversary');
+        console.debug('team', this.team);
       } else {
         this.team = {};
       }
