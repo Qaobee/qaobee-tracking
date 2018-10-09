@@ -119,7 +119,7 @@ export class TeamAdversaryPage {
 
         // retrieve effective Id
         this.effectiveService.get(this.authenticationService.meta.effectiveDefault).subscribe(effectiveGet=> {
-          this.team.effectiveId = (effectiveGet as any)._id;
+          this.team.effectiveId = effectiveGet._id;
 
           let linkTeam: any[] = [];
           linkTeam.push(this.myTeamId);
