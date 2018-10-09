@@ -90,6 +90,28 @@ export class EventUpsertPage {
                 private translateService: TranslateService,
                 private ga: GoogleAnalytics) {
 
+        
+
+        // Retreive list event type
+        this.activityCfgService.getParamFieldList(this.authenticationService.meta.activity._id, 'listEventType').subscribe((types: any[]) => {
+            console.log('[EventUpsertPage] event type list', types);
+            if (types) {
+                this.eventTypes = types;
+                if (types.length === 1) {
+                    this.event.type = types[ 0 ];
+                    this.eventForm.controls[ 'type' ].setValue(this.event.type);
+                }
+            }
+        });
+        this.prepareEvent();
+    }
+
+    /**
+     *
+     */
+    ionViewDidEnter() {
+        this.ga.trackView('EventUpsertPage');
+
         // Retreive my team list
         this.teamService.getTeams(this.authenticationService.meta.effectiveDefault, this.authenticationService.meta._id, 'true', 'false').subscribe((teams: any[]) => {
             if (teams) {
@@ -111,26 +133,6 @@ export class EventUpsertPage {
                 }
             }
         });
-
-        // Retreive list event type
-        this.activityCfgService.getParamFieldList(this.authenticationService.meta.activity._id, 'listEventType').subscribe((types: any[]) => {
-            console.log('[EventUpsertPage] event type list', types);
-            if (types) {
-                this.eventTypes = types;
-                if (types.length === 1) {
-                    this.event.type = types[ 0 ];
-                    this.eventForm.controls[ 'type' ].setValue(this.event.type);
-                }
-            }
-        });
-        this.prepareEvent();
-    }
-
-    /**
-     *
-     */
-    ionViewDidEnter() {
-        this.ga.trackView('EventUpsertPage');
     }
 
     /**
@@ -322,7 +324,16 @@ export class EventUpsertPage {
     /**
      *
      */
-    goToAddAdversary() {
-        this.navCtrl.push(TeamAdversaryPage, {myTeamId: null, editMode: 'CREATE'});
+    goToAddAdversary(formVal) {
+        if(formVal.myTeam) {
+            this.navCtrl.push(TeamAdversaryPage, {myTeamId: formVal.myTeam._id, editMode: 'CREATE'});
+        } else {
+            this.translateService.get('eventsModule.messages.myTeamNull').subscribe(
+                value => {
+                    this.presentToast(value);
+                }
+            )
+        }
+        
     }
 }

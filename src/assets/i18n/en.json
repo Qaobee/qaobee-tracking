@@ -52,7 +52,8 @@
       "deleteDone": "The event has been deleted",
       "updateFail": "A problem occurs during the event's update",
       "createFail": "A problem occurs during the event's creation",
-      "deleteFail": "A problem occurs during the event's delete"
+      "deleteFail": "A problem occurs during the event's delete",
+      "myTeamNull": "Choose yout team before"
     },
     "errorControlForm": {
       "typeRequired": "Type is required",
