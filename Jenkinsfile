@@ -50,7 +50,7 @@ node {
         stage("Doc $version") {
             sh 'yarn run doc'
             sh 'git_stats generate -o build/docs/git'
-            sh 'node changelog.js'
+            sh 'node changelog.js > CHANGELOG.md'
             publishHTML(target: [
                     allowMissing         : false,
                     alwaysLinkToLastBuild: false,
