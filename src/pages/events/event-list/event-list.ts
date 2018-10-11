@@ -18,7 +18,7 @@
  *  from Qaobee.
  */
 
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Content, NavController, NavParams, Refresher } from 'ionic-angular';
 import { AuthenticationService } from "../../../providers/authentication.service";
 import { EventsService } from "../../../providers/api/api.events.service";
@@ -62,7 +62,6 @@ export class EventListPage {
      * @param {SettingsService} settingsService
      * @param {CollectService} collectService
      * @param {GoogleAnalytics} ga
-     * @param {ElementRef} el
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -71,8 +70,7 @@ export class EventListPage {
                 private authenticationService: AuthenticationService,
                 private settingsService: SettingsService,
                 private collectService: CollectService,
-                private ga: GoogleAnalytics,
-                private el: ElementRef) {
+                private ga: GoogleAnalytics) {
         this.datePipe = new DatePipe(this.settingsService.getLanguage());
 
     }

@@ -25,7 +25,6 @@ import {
     Input,
     OnChanges,
     Output,
-    SimpleChange,
     SimpleChanges,
     ViewChild
 } from "@angular/core";
