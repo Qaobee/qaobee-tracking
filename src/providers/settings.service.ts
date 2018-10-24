@@ -86,18 +86,16 @@ export class SettingsService {
         return this.locale;
     }
 
-    getParametersGame(): Observable<{ periodDuration: number, nbMaxPlayers: number, nbMinPlayers: number, nbPeriod: number, nbTimeout: number, timeoutDuration: number, yellowCardMax: number, exclusionTempo: number, halfTimeDuration: number }> {
+    getParametersGame(): Observable<{ periodDuration: number,  periodDurationMinute: number, nbMaxPlayers: number, nbMinPlayers: number, nbPeriod: number, nbTimeout: number, timeoutDuration: number, yellowCardMax: number, exclusionTempo: number, halfTimeDuration: number }> {
         return new Observable<any>((observer) => {
             this.init().subscribe(() => {
-                console.debug('[SettingsService] - getParametersGame', this.activityCfg);
                 observer.next(this.activityCfg.parametersGame);
                 observer.complete();
             });
         });
     }
 
-    setParametersGame(parameters: { periodDuration: number, nbMaxPlayers: number, nbMinPlayers: number, nbPeriod: number, nbTimeout: number, timeoutDuration: number, yellowCardMax: number, exclusionTempo: number, halfTimeDuration: number }) {
-        console.debug('[setParametersGame] - parameters', parameters);
+    setParametersGame(parameters: { periodDuration: number, periodDurationMinute: number, nbMaxPlayers: number, nbMinPlayers: number, nbPeriod: number, nbTimeout: number, timeoutDuration: number, yellowCardMax: number, exclusionTempo: number, halfTimeDuration: number }) {
         this.activityCfg.parametersGame = parameters;
         this.save();
     }
