@@ -34,6 +34,7 @@ export class SettingsPage {
 
     settings: {
         periodDuration: number,
+        periodDurationMinute: number,
         nbMaxPlayers: number,
         nbMinPlayers: number,
         nbPeriod: number,
@@ -71,9 +72,7 @@ export class SettingsPage {
         this.ga.trackView('SettingsPage');
         this.settingsService.getParametersGame().subscribe(s => {
             this.settings = s;
-            console.debug('settings',s);
-            this.settings.periodDuration = this.settings.periodDuration/60;
-            console.debug('settings',this.settings);
+            this.settings.periodDurationMinute = this.settings.periodDuration/60;
         });
     }
 
@@ -81,12 +80,11 @@ export class SettingsPage {
      * Save preferences
      */
     save() {
-        this.settings.periodDuration = this.settings.periodDuration*60;
-        console.debug('settings',this.settings);
         this.settingsService.setParametersGame(this.settings);
+        this.settings.periodDuration = this.settings.periodDurationMinute*60;
+        console.debug('settings',this.settings);
         this.translateService.get("settings.saved").subscribe(t=> {
             this.presentToast(t);
-            this.settings.periodDuration = this.settings.periodDuration/60;
         });
     }
 
