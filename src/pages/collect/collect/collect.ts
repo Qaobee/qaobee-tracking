@@ -625,10 +625,10 @@ export class CollectPage {
       let goalModal = this.modalController.create(GoalModal, {});
       goalModal.onDidDismiss((data: { ground: string, goal: string, scorred: boolean }) => {
         console.debug('[CollectPage] - showGround', data, this.fsmContext.selectedPlayer);
-        const playerId = this.fsmContext.selectedPlayer.playerId;
         if(data) {
           if(data.ground.startsWith('outside') || data.goal.startsWith('outside')) {
             if(this.fsmContext.gamePhase && this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.outsideAtt)) {
+              const playerId = this.fsmContext.selectedPlayer.playerId;
               this.statCollector.outside(this.fsmContext, data.ground, playerId);
               this.cleanFlowContext();
             } else if(this.fsmContext.gamePhase && !this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.outsideDef)) {
@@ -639,6 +639,7 @@ export class CollectPage {
             this.fsmContext.shootSeqId = undefined;
           } else {
             if(this.fsmContext.gamePhase && this.fsmContext.gamePhase.attack && this.handFSM.trigger(FSMEvents.groundAtt)) {
+              const playerId = this.fsmContext.selectedPlayer.playerId;
               this.statCollector.ground(this.fsmContext, StatType.ORIGIN_SHOOT_ATT, data.ground, playerId);
               this.cleanFlowContext();
               this.showGoal(data);
