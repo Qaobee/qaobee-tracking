@@ -849,10 +849,10 @@ export class CollectPage {
     this.fsmContext.gamePhase.attack = true;
     this.fsmContext.gamePhase.code = StatType.TIME_ATTACK;
     this.fsmContext.gamePhase.startTime = this.fsmContext.chrono;
-    this.attackEnabled = true;
+    
     this.buttonColorAtt = "secondary";
     this.buttonColorDef = "light";
-    this.defenseEnabled = false;
+    
     this.fsmContext.selectedPlayer = undefined;
     this.populateActions('attack');
   }
@@ -877,8 +877,7 @@ export class CollectPage {
     this.fsmContext.gamePhase.attack = false;
     this.fsmContext.gamePhase.code = StatType.TIME_DEFENSE;
     this.fsmContext.gamePhase.startTime = this.fsmContext.chrono;
-    this.attackEnabled = false;
-    this.defenseEnabled = true;
+    
     this.buttonColorAtt = "light";
     this.buttonColorDef = "secondary";
     this.fsmContext.selectedPlayer = undefined;

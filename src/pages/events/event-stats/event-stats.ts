@@ -25,6 +25,7 @@ import { StatsEventService } from '../stats.event.service';
 import { StatsContainerModel } from 'model/stats.container';
 import { TranslateService } from '@ngx-translate/core';
 import { CollectService } from '../../../providers/api/api.collect.service';
+import { AuthenticationService } from '../../../providers/authentication.service';
 import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
@@ -50,6 +51,7 @@ export class EventStatsPage {
      * @param {CollectService} collectService
      * @param {AlertController} alertCtrl
      * @param {TranslateService} translateService
+     * @param {AuthenticationService} authenticationService
      * @param {GoogleAnalytics} ga
      */
     constructor(public navCtrl: NavController,
@@ -59,11 +61,13 @@ export class EventStatsPage {
                 private collectService: CollectService,
                 private alertCtrl: AlertController,
                 private translateService: TranslateService,
+                private authenticationService: AuthenticationService,
                 private ga: GoogleAnalytics) {
         this.event = navParams.get('event');
         this.ownerId.push(this.event._id);
         if (this.event) {
             this.statsEventService.getEventStats(this.event._id).subscribe((statsContainer) => {
+                console.debug('statsContainer ',statsContainer);
                 this.statsContainer = statsContainer;
                 if (this.statsContainer) {
                     this.getScore();
@@ -84,7 +88,7 @@ export class EventStatsPage {
      */
     getScore() {
         if (this.statsContainer.statList.length > 0) {
-
+            
             this.statsNotFound = false;
             let goalConceded = 0;
             let goalScored = 0;
@@ -114,7 +118,7 @@ export class EventStatsPage {
      *
      * @param eventId
      */
-    deleteCollect(eventId: string) {
+    deleteCollect(eventId: any) {
         this.translateService.get([ 'eventsModule', 'actionButton']).subscribe(value => {
                 let alert = this.alertCtrl.create({
                     title: value['eventsModule'].confirmDelete.title,
@@ -132,6 +136,19 @@ export class EventStatsPage {
                                 this.collectService.deleteCollect(eventId).subscribe(() => {
                                     this.storage.remove('gameState-'+ eventId);
                                     this.storage.remove('stats-'+ eventId);
+                                    this.storage.get(this.authenticationService.meta._id + '-collects').then((collects: any[]) => {
+                                        if(!collects) {
+                                          collects = [];
+                                        }
+                                        console.debug("collects 1",collects.length);
+                                        const index = collects.findIndex(value => {
+                                          return value._id = eventId
+                                        }, this);
+                                        if(index !== -1) {
+                                          collects.splice(index,1);
+                                        }
+                                        console.debug("collects 2",collects.length);
+                                      });
                                     this.navCtrl.pop();
                                 });
                             }
