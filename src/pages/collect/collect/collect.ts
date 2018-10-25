@@ -686,12 +686,16 @@ export class CollectPage {
         this.statCollector.stopShoot(this.fsmContext, undefined);
         this.cleanFlowContext();
         this.fsmContext.selectedPlayer = undefined;
-        this.doDefense();
+        if(this.handFSM.trigger(FSMEvents.doDefense)) {
+          this.doDefense();
+        }
       } else {
         this.statCollector.stopShoot(this.fsmContext, this.getGoalkeeperId());
         this.cleanFlowContext();
         this.doSelectGoalKeeper();
-        this.doAttack();
+        if(this.handFSM.trigger(FSMEvents.doAttack)) {
+          this.doAttack();
+        }
       }
       this.fsmContext.shootSeqId = undefined;
       this.handFSM.trigger(fsmPhase);
