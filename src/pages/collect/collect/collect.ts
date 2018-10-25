@@ -217,7 +217,7 @@ export class CollectPage {
               position: 'bottom'
             },
             {
-              target: 'page-collect > ion-content > div.scroll-content > ion-list > ion-grid:nth-child(5) > ion-row:nth-child(2) > ion-col:nth-child(1) > button',
+              target: '#actionBtn-area > ion-row:nth-child(3) > ion-col:nth-child(1) > button',
               description: showcase.collect.game_phase,
               position: 'top'
             },
@@ -227,27 +227,27 @@ export class CollectPage {
               position: "bottom"
             },
             {
-              target: "page-collect > ion-content > div.scroll-content > ion-list > ion-grid:nth-child(4) > ion-row.btn-list.row > ion-col:nth-child(1) > div > button",
+              target: "#actionBtn-area > ion-row:nth-child(1) > ion-col:nth-child(1) > div > button",
               description: showcase.collect.indicators,
               position: "top"
             },
             {
-              target: "page-collect > ion-content > div.scroll-content > ion-list > ion-grid:nth-child(4) > ion-row.btn-list.row > ion-col:nth-child(2)",
+              target: "#actionBtn-area > ion-row:nth-child(1) > ion-col:nth-child(2)",
               description: showcase.collect.shoot,
               position: "top"
             },
             {
-              target: "page-collect > ion-content > div.scroll-content > ion-list > ion-grid:nth-child(5) > ion-row:nth-child(2) > ion-col:nth-child(2) > ion-fab > button",
+              target: "#actionBtn-area > ion-row:nth-child(3) > ion-col:nth-child(2) > ion-fab > button",
               description: showcase.collect.stats,
               position: "top"
             },
             {
-              target: "page-collect > ion-content > div.scroll-content > ion-list > ion-grid:nth-child(5) > ion-row:nth-child(1) > ion-col > ion-fab > button",
+              target: "#actionBtn-area > ion-row:nth-child(2) > ion-col > ion-fab > button",
               description: showcase.collect.toggle_substitutes,
               position: "top"
             },
             {
-              target: "page-collect > ion-content > div.scroll-content > ion-list > chrono-component > ion-grid > ion-row > ion-col:nth-child(4) > button",
+              target: "chrono-component > ion-grid > ion-row > ion-col:nth-child(4) > button",
               description: showcase.collect.stop_game,
               position: "bottom"
             },

@@ -26,12 +26,12 @@ tour-component {
     left: 0;
     width: 100%;
     height: auto;
-    padding: 10%;
+    padding: 40px;
     opacity: 1;
     animation-duration: 1s;
     transition: all 1s ease-in-out;
     display: none;
-    margin-top: 25px;
+    margin-top: 0;
 
     &.visible {
       display: block;
@@ -42,7 +42,7 @@ tour-component {
     }
 
     p {
-      font-size: 20px;
+      font-size: 2.4rem;
       display: block;
       -webkit-animation: fadeIn 1s;
       animation: fadeIn 1s;

@@ -91,7 +91,7 @@ export class HomePage {
                         {
                             target: "#step4",
                             description: showcase.home.settings,
-                            position: "right"
+                            position: "bottom"
                         }
                     ];
                 });
