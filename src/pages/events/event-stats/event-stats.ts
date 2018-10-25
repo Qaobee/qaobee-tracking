@@ -19,6 +19,7 @@
  */
 
 import { Component } from '@angular/core';
+import { Storage } from '@ionic/storage';
 import { AlertController, NavController, NavParams } from 'ionic-angular';
 import { StatsEventService } from '../stats.event.service';
 import { StatsContainerModel } from 'model/stats.container';
@@ -44,6 +45,7 @@ export class EventStatsPage {
      *
      * @param {NavController} navCtrl
      * @param {NavParams} navParams
+     * @param {Storage} storage
      * @param {StatsEventService} statsEventService
      * @param {CollectService} collectService
      * @param {AlertController} alertCtrl
@@ -52,6 +54,7 @@ export class EventStatsPage {
      */
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
+                private storage: Storage,
                 private statsEventService: StatsEventService,
                 private collectService: CollectService,
                 private alertCtrl: AlertController,
@@ -127,6 +130,8 @@ export class EventStatsPage {
                             text: value[ 'actionButton' ][ 'Ok' ],
                             handler: () => {
                                 this.collectService.deleteCollect(eventId).subscribe(() => {
+                                    this.storage.remove('gameState-'+ eventId);
+                                    this.storage.remove('stats-'+ eventId);
                                     this.navCtrl.pop();
                                 });
                             }

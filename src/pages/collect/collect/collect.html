@@ -82,7 +82,7 @@
             </ion-row>
             <ion-row class="btn-list">
                 <ion-col text-center>
-                    <button ion-button color="dark" (click)="attackButton($event)" large [disabled]="!attackEnabled">{{ 'collect.attack' | translate }}</button>
+                    <button ion-button [color]="buttonColorAtt" (click)="attackButton($event)" large [disabled]="!attackEnabled">{{ 'collect.attack' | translate }}</button>
                 </ion-col>
 
                 <ion-col text-center>
@@ -94,7 +94,7 @@
                 </ion-col>
 
                 <ion-col text-center>
-                    <button ion-button color="dark" (click)="defenseButton($event)" large [disabled]="!defenseEnabled">{{ 'collect.defense' | translate }}</button>
+                    <button ion-button [color]="buttonColorDef" (click)="defenseButton($event)" large [disabled]="!defenseEnabled">{{ 'collect.defense' | translate }}</button>
                 </ion-col>
             </ion-row>
         </ion-grid>

@@ -83,6 +83,8 @@ export class CollectPage {
   };
   attackEnabled = true;
   defenseEnabled = true;
+  buttonColorAtt: string = 'light';
+  buttonColorDef: string = 'light';
   timeoutThemState: boolean[] = [ false, false, false ];
   timeoutUsState: boolean[] = [ false, false, false ];
   positiveActions: any[] = [];
@@ -143,6 +145,7 @@ export class CollectPage {
     private handFSM: HandFSM,
     private ga: GoogleAnalytics
   ) {
+    
     this.translateService.get([ 'collect', 'loader', 'actionButton', 'warning' ]).subscribe(t => {
       this.translations = {
         collect: t.collect,
@@ -846,8 +849,10 @@ export class CollectPage {
     this.fsmContext.gamePhase.attack = true;
     this.fsmContext.gamePhase.code = StatType.TIME_ATTACK;
     this.fsmContext.gamePhase.startTime = this.fsmContext.chrono;
-    this.attackEnabled = false;
-    this.defenseEnabled = true;
+    this.attackEnabled = true;
+    this.buttonColorAtt = "secondary";
+    this.buttonColorDef = "light";
+    this.defenseEnabled = false;
     this.fsmContext.selectedPlayer = undefined;
     this.populateActions('attack');
   }
@@ -872,8 +877,10 @@ export class CollectPage {
     this.fsmContext.gamePhase.attack = false;
     this.fsmContext.gamePhase.code = StatType.TIME_DEFENSE;
     this.fsmContext.gamePhase.startTime = this.fsmContext.chrono;
-    this.attackEnabled = true;
-    this.defenseEnabled = false;
+    this.attackEnabled = false;
+    this.defenseEnabled = true;
+    this.buttonColorAtt = "light";
+    this.buttonColorDef = "secondary";
     this.fsmContext.selectedPlayer = undefined;
     this.populateActions('defense');
   }
@@ -1283,6 +1290,8 @@ export class CollectPage {
                   this.eventsService.addEvent(this.currentEvent);
                   this.cleanFlowContext();
                   this.ga.trackEvent('Collect', 'End', 'End', this.fsmContext.chrono);
+                  this.storage.remove('gameState-'+ this.currentEvent._id);
+                  this.storage.remove('stats-'+ this.currentEvent._id);
                 });
               }
             }
