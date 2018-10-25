@@ -83,8 +83,8 @@ export class StatsShootEfficiencyComponent {
         let search = {
             listIndicators: indicators,
             listOwners: this.ownerId,
-            startDate: this.authenticationService.statStartDate,
-            endDate: this.authenticationService.statEndDate,
+            startDate: 0,
+            endDate: Date.now(),
             aggregat: 'COUNT',
             listFieldsGroupBy: listFieldsGroupBy
         };

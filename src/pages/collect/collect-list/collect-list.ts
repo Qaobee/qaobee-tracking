@@ -125,7 +125,7 @@ export class CollectListPage {
     private getEvents(refresher: Refresher) {
         this.eventsServices.getEvents(
             this.authenticationService.statStartDate,
-            this.authenticationService.statEndDate,
+            Date.now(),
             undefined,
             this.authenticationService.meta.activity._id,
             this.authenticationService.meta._id,

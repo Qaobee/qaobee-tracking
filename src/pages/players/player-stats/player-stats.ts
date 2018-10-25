@@ -77,7 +77,7 @@ export class PlayerStatsPage {
             listIndicators: indicators,
             listOwners: this.ownerId,
             startDate: this.authenticationService.statStartDate,
-            endDate: this.authenticationService.statEndDate,
+            endDate: Date.now(),
             aggregat: 'COUNT',
             listFieldsGroupBy: listFieldsGroupBy
         };
@@ -103,7 +103,7 @@ export class PlayerStatsPage {
                     listIndicators: indicators,
                     listOwners: this.ownerId,
                     startDate: this.authenticationService.statStartDate,
-                    endDate: this.authenticationService.statEndDate,
+                    endDate: Date.now(),
                     aggregat: 'SUM',
                     listFieldsGroupBy: listFieldsGroupBy
                 };

@@ -136,18 +136,17 @@ export class EventStatsPage {
                                 this.collectService.deleteCollect(eventId).subscribe(() => {
                                     this.storage.remove('gameState-'+ eventId);
                                     this.storage.remove('stats-'+ eventId);
+                                    this.storage.remove(this.authenticationService.meta._id+ '-' + eventId);
                                     this.storage.get(this.authenticationService.meta._id + '-collects').then((collects: any[]) => {
                                         if(!collects) {
                                           collects = [];
                                         }
-                                        console.debug("collects 1",collects.length);
                                         const index = collects.findIndex(value => {
                                           return value._id = eventId
                                         }, this);
                                         if(index !== -1) {
                                           collects.splice(index,1);
                                         }
-                                        console.debug("collects 2",collects.length);
                                       });
                                     this.navCtrl.pop();
                                 });

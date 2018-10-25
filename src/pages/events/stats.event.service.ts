@@ -54,6 +54,7 @@ export class StatsEventService {
     getEventStats(eventId: string): Observable<StatsContainerModel> {
         return new Observable<StatsContainerModel>((observer) => {
             this.storage.get(this.authenticationService.meta._id + '-' + eventId).then(statsContainer => {
+                console.debug('je passe ici ou pas',statsContainer);
                 if (statsContainer) {
                     observer.next(statsContainer);
                     observer.complete();
@@ -61,17 +62,17 @@ export class StatsEventService {
                     let statsContainer = new StatsContainerModel();
                     statsContainer.type = 'EVENT';
                     statsContainer.onwerId = eventId;
-
+                    console.debug('je passe ici ou pas 2',statsContainer);
                     //Get Collect info
                     this.collectService.getCollects(
                         this.authenticationService.meta._id,
                         eventId, null, null,
-                        this.authenticationService.statStartDate,
-                        this.authenticationService.statEndDate
+                        0,
+                        Date.now(),
                     ).subscribe((collects: any[]) => {
                         if (collects.length > 0) {
                             statsContainer.collectList = collects;
-
+                            console.debug('je passe ici ou pas 3',statsContainer);
                             //get Playerlist
                             const listField = [ '_id', 'name', 'firstname', 'status' ];
                             this.personService.getListPerson(statsContainer.collectList[ 0 ].players, listField).subscribe((playersInfos: any[]) => {
@@ -79,6 +80,7 @@ export class StatsEventService {
                                     for (let index = 0; index < playersInfos.length; index++) {
                                         statsContainer.playerList.push(playersInfos[ index ]);
                                     }
+                                    console.debug('je passe ici ou pas 4',statsContainer);
                                     // get Stats
                                     this.statsService.getListForEvent(statsContainer.onwerId).subscribe((result: any) => {
                                         if (result && result.stats.length > 0) {
@@ -86,6 +88,7 @@ export class StatsEventService {
                                             this.storage.set(this.authenticationService.meta._id + '-' + statsContainer.onwerId, statsContainer);
                                             observer.next(statsContainer);
                                             observer.complete();
+                                            console.debug('je passe ici ou pas 5',statsContainer);
                                         }
                                     });
                                 }

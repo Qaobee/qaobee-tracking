@@ -69,7 +69,7 @@ export class StatsHighligthsByQuarterComponent {
             listIndicators: indicatorsOk,
             listOwners: this.ownerId,
             startDate: this.authenticationService.statStartDate,
-            endDate: this.authenticationService.statEndDate,
+            endDate: Date.now(),
             aggregat: 'COUNT'
         };
         //get actions positives
@@ -115,7 +115,7 @@ export class StatsHighligthsByQuarterComponent {
             listIndicators: indicatorsKo,
             listOwners: this.ownerId,
             startDate: this.authenticationService.statStartDate,
-            endDate: this.authenticationService.statEndDate,
+            endDate: Date.now(),
             aggregat: 'COUNT'
         };
 
