@@ -15,7 +15,7 @@
 
 <ion-content>
     <ion-list no-lines *ngIf="settings">
-        <ion-list-header>{{ 'settings.game_parameters' | translate }}</ion-list-header>
+        <ion-list-header class="enteteLight">{{ 'settings.game_parameters' | translate }}</ion-list-header>
         <ion-item>
             <ion-label stacked>{{ 'settings.half_time_duration' | translate }}</ion-label>
             <ion-input type="number" [(ngModel)]="settings.periodDurationMinute"></ion-input>
@@ -32,7 +32,7 @@
             <ion-label stacked>{{ 'settings.max_players' | translate }}</ion-label>
             <ion-input type="number" [(ngModel)]="settings.nbMaxPlayers"></ion-input>
         </ion-item>
-        <ion-list-header>{{ 'settings.app_parameters' | translate }}</ion-list-header>
+        <ion-list-header class="enteteLight">{{ 'settings.app_parameters' | translate }}</ion-list-header>
         <ion-item>
             <button ion-button (click)="resetTour()">{{ 'settings.tour' | translate }}</button>
         </ion-item>

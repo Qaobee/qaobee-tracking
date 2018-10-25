@@ -85,6 +85,7 @@ export class SettingsPage {
         console.debug('settings',this.settings);
         this.translateService.get("settings.saved").subscribe(t=> {
             this.presentToast(t);
+            this.navCtrl.pop();
         });
     }
 
@@ -97,6 +98,7 @@ export class SettingsPage {
         this.storage.set(this.authenticationService.meta._id + "-tour-team-build", false);
         this.translateService.get("settings.tour_reseted").subscribe(t=> {
             this.presentToast(t);
+            this.navCtrl.pop();
         });
     }
 
