@@ -1101,14 +1101,6 @@ export class CollectPage {
   /**
    * @param  {any} event
    */
-  onBackPressed(event: any) {
-    console.debug('[CollectPage] - onBackPressed', event);
-    // TODO
-  }
-
-  /**
-   * @param  {any} event
-   */
   positiveActionButton(event: any) {
     console.debug('[CollectPage] - positiveActionButton', event);
     if(!this.fsmContext.gamePhase) {
@@ -1228,6 +1220,7 @@ export class CollectPage {
     this.gameState.state = this.handFSM.context.state;
     this.saveState();
     this.presentToast(this.translations.collect.ended_popup_title);
+    this.endCollectFinish();
   }
 
   /**
@@ -1266,37 +1259,7 @@ export class CollectPage {
           {
             text: this.translations.actionButton.Ok,
             handler: () => {
-              if(this.handFSM.trigger(FSMEvents.endChrono)) {
-                this.currentCollect.endDate = moment.utc().valueOf();
-                this.currentCollect.status = 'done';
-                this.storage.get(this.authenticationService.meta._id + '-collects').then((collects: any[]) => {
-                  if(!collects) {
-                    collects = [];
-                  }
-                  const index = collects.findIndex(value => {
-                    return value._id = this.currentCollect._id
-                  }, this);
-                  if(index === -1) {
-                    collects.push(this.currentCollect);
-                  } else {
-                    collects[ index ] = this.currentCollect;
-                  }
-
-                  this.storage.set(this.authenticationService.meta._id + '-collects', collects);
-                  console.debug('[CollectPage] - collects', collects);
-                  console.debug('[CollectPage] - this.rawPlayerList', this.rawPlayerList);
-                  this.saveSats();
-                  this.fsmContext.players = this.rawPlayerList;
-                  this.saveState();
-                  this.statCollector.endCollect(this.fsmContext);
-                  this.currentEvent.isCollected = true;
-                  this.eventsService.addEvent(this.currentEvent);
-                  this.cleanFlowContext();
-                  this.ga.trackEvent('Collect', 'End', 'End', this.fsmContext.chrono);
-                  this.storage.remove('gameState-'+ this.currentEvent._id);
-                  this.storage.remove('stats-'+ this.currentEvent._id);
-                });
-              }
+              this.endCollectFinish()
             }
           }
         ]
@@ -1338,5 +1301,38 @@ export class CollectPage {
       position: 'bottom'
     });
     toast.present();
+  }
+
+  private endCollectFinish() {
+    if(this.handFSM.trigger(FSMEvents.endChrono)) {
+      this.currentCollect.endDate = moment.utc().valueOf();
+      this.currentCollect.status = 'done';
+      this.storage.get(this.authenticationService.meta._id + '-collects').then((collects: any[]) => {
+        if(!collects) {
+          collects = [];
+        }
+        const index = collects.findIndex(value => {
+          return value._id = this.currentCollect._id
+        }, this);
+        if(index === -1) {
+          collects.push(this.currentCollect);
+        } else {
+          collects[ index ] = this.currentCollect;
+        }
+
+        this.storage.set(this.authenticationService.meta._id + '-collects', collects);
+        console.debug('[CollectPage] - collects', collects);
+        console.debug('[CollectPage] - this.rawPlayerList', this.rawPlayerList);
+        this.fsmContext.players = this.rawPlayerList;
+        this.saveState();
+        this.statCollector.endCollect(this.fsmContext);
+        this.currentEvent.isCollected = true;
+        this.eventsService.addEvent(this.currentEvent);
+        this.cleanFlowContext();
+        this.ga.trackEvent('Collect', 'End', 'End', this.fsmContext.chrono);
+        this.storage.remove('gameState-'+ this.currentEvent._id);
+        this.storage.remove('stats-'+ this.currentEvent._id);
+      });
+    }
   }
 }

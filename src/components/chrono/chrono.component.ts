@@ -90,14 +90,14 @@ export class ChronoComponent {
             .subscribe(() => {
                 this.chrono += 1;
                 this.chronoChange.emit(this.chrono);
-                if (this.chrono > this.settings.periodDuration * this.currentPhase) {
+                if (this.chrono >= this.settings.periodDuration * this.currentPhase) {
                     if (this.currentPhase === this.settings.nbPeriod) {
                         console.debug('[ChronoComponent] - start - game ended', this.chrono, this.settings.periodDuration);
-                        this.stop();
+                        this.stop(false);
                         this.onGameEnded.emit(this.chrono);
                     } else {
                         console.debug('[ChronoComponent] - start - period change', this.chrono, this.settings.periodDuration);
-                        this.currentPhase++;
+                        this.currentPhase+=1;
                         this.currentPhaseChange.emit(this.currentPhase);
                         this.pause();
                         this.onPeriodEnded.emit(this.chrono);
@@ -114,11 +114,14 @@ export class ChronoComponent {
         this.onPaused.emit(this.chrono);
     }
 
-    /**
-     *
-     */
-    stop() {
+  /**
+   *
+   * @param {boolean} askForEnding
+   */
+  stop(askForEnding: boolean) {
         this.run = false;
-        this.onStopped.emit(this.chrono);
+        if(askForEnding) {
+          this.onStopped.emit(this.chrono);
+        }
     }
 }
