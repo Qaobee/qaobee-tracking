@@ -234,7 +234,7 @@ export class CollectPage {
             {
               target: "#actionBtn-area > ion-row:nth-child(1) > ion-col:nth-child(2)",
               description: showcase.collect.shoot,
-              position: "top"
+              position: "bottom"
             },
             {
               target: "#actionBtn-area > ion-row:nth-child(3) > ion-col:nth-child(2) > ion-fab > button",
