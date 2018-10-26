@@ -66,7 +66,7 @@ export class ChronoComponent {
                 this.start();
             });
             this.messageBus.on(ChronoComponent.STOP, () => {
-                this.stop();
+                this.stop(true);
             });
         });
     }
