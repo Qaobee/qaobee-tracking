@@ -8,38 +8,53 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <next-event></next-event>
+<ion-content class="card-background-page">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+          <ion-card>
+
+              <img src="assets/imgs/rsz_d5d4ex_large.png"/>
+          
+              <ion-card-content>
+                <ion-card-title>
+                  Qaobee Tracking
+                </ion-card-title>
+                
+              </ion-card-content>
+          
+              <ion-row no-padding>
+                <ion-col text-center>
+                    <h3>{{ 'home.agenda' | translate }}</h3>
+                  <button id="step1" ion-button medium color="dark" (tap)="goToEventList()">
+                    <ion-icon name='calendar'></ion-icon>
+                  </button>
+                </ion-col>
+                <ion-col text-center>
+                    <h3>{{ 'home.players' | translate }}</h3>
+                  <button id="step2" ion-button medium color="secondary" (tap)="goToPlayerList()">
+                    <ion-icon name='contact'></ion-icon>
+                  </button>
+                </ion-col>
+              </ion-row>
+              <ion-row><ion-col>&nbsp;</ion-col></ion-row>
+              <ion-row>
+                <ion-col text-center>
+                    <h3>{{ 'home.teams' | translate }}</h3>
+                  <button ion-button medium color="warning" (tap)="goToTeamsList()">
+                    <ion-icon name='contacts'></ion-icon>
+                  </button>
+                </ion-col>
+                <ion-col text-center>
+                    <h3>{{ 'home.stats' | translate }}</h3>
+                  <button id="step3" ion-button medium color="danger" (tap)="goToCollectList()">
+                    <ion-icon name='stats'></ion-icon>
+                  </button>
+                </ion-col>
+              </ion-row>
+              <ion-row><ion-col>&nbsp;</ion-col></ion-row>
+            </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
-<ion-footer>
-  <ion-toolbar color="light">
-    <ion-row>
-      <ion-col text-center>
-        <div>{{ 'home.players' | translate }}</div>
-      </ion-col>
-      <ion-col text-center>
-        <div>{{ 'home.teams' | translate }}</div>
-      </ion-col>
-      <ion-col text-center>
-        <div>{{ 'home.stats' | translate }}</div>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col text-center>
-        <button id="step2" ion-button (tap)="goToPlayerList()" large color="green">
-          <ion-icon name="contact"></ion-icon>
-        </button>
-      </ion-col>
-      <ion-col text-center>
-        <button ion-button (tap)="goToTeamsList()" large color="warning">  
-          <ion-icon name="contacts"></ion-icon>
-        </button>
-      </ion-col>
-      <ion-col text-center>
-        <button id="step3" ion-button (tap)="goToCollectList()" large color="danger">
-          <ion-icon name="stats"></ion-icon>
-        </button>
-      </ion-col>
-    </ion-row>
-  </ion-toolbar>
-</ion-footer>

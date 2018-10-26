@@ -73,6 +73,7 @@
     }
   },
   "home": {
+    "accueil": "Welcome  !",
     "agenda": "Agenda",
     "players": "Players",
     "teams": "Teams",

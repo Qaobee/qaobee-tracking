@@ -23,6 +23,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { AuthenticationService } from "../../providers/authentication.service";
 import { PlayerListPage } from '../players/player-list/player-list';
 import { EventListPage } from '../events/event-list/event-list';
+import { EventUpsertPage } from '../events/event-upsert/event-upsert'
 import { CollectListPage } from "../collect/collect-list/collect-list";
 import { TeamListPage } from "../teams/team-list/team-list";
 import { TranslateService } from "@ngx-translate/core";
@@ -66,6 +67,13 @@ export class HomePage {
     ionViewDidEnter() {
         this.ga.trackView('HomePage');
         this.startTour();
+    }
+
+    /**
+     *
+     */
+    goToCreateEvent() {
+        this.navCtrl.push(EventUpsertPage, {event: null, editMode : 'CREATE'});
     }
 
     private startTour() {

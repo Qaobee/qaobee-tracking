@@ -73,6 +73,7 @@
     }
   },
   "home": {
+    "accueil": "Bienvenue !",
     "agenda": "Agenda",
     "players": "Joueurs",
     "teams": "Equipes",
