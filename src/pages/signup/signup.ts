@@ -27,145 +27,135 @@ import { SignupEndPage } from './signupEnd';
 import { GoogleAnalytics } from "@ionic-native/google-analytics";
 
 @Component({
-    selector: 'page-signup',
-    templateUrl: 'signup.html',
+  selector: 'page-signup',
+  templateUrl: 'signup.html',
 })
 export class SignupPage {
 
-    userForm: FormGroup;
+  userForm: FormGroup;
 
-    /**
-     *
-     * @param navCtrl
-     * @param navParams
-     * @param formBuilder
-     * @param userService
-     * @param {AlertController} alertCtrl
-     * @param {TranslateService} translateService
-     * @param {GoogleAnalytics} ga
-     */
-    constructor(public navCtrl: NavController,
-                public navParams: NavParams,
-                private formBuilder: FormBuilder,
-                private userService: UserService,
-                private alertCtrl: AlertController,
-                private translateService: TranslateService,
-                private ga: GoogleAnalytics) {
+  /**
+   *
+   * @param navCtrl
+   * @param navParams
+   * @param formBuilder
+   * @param userService
+   * @param {AlertController} alertCtrl
+   * @param {TranslateService} translateService
+   * @param {GoogleAnalytics} ga
+   */
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private formBuilder: FormBuilder,
+              private userService: UserService,
+              private alertCtrl: AlertController,
+              private translateService: TranslateService,
+              private ga: GoogleAnalytics) {
 
-        this.userForm = this.formBuilder.group({
-            'login': [ '', Validators.compose([ Validators.required, Validators.pattern(/[a-zA-Z0-9_\-]{4,}/) ]) ],
-            'email': [ '', Validators.compose([ Validators.required, Validators.email ]) ],
-            'password': [ '', Validators.compose([ Validators.required, Validators.pattern(/[a-zA-Z0-9_\-]{4,}/) ]) ],
-            'confirmPassword': [ '', [ Validators.required ] ],
-            'cgu': [ 'false', Validators.compose([ Validators.required, Validators.requiredTrue ]) ]
-        }, {validator: this.matchingPasswords('password', 'confirmPassword')});
+    this.userForm = this.formBuilder.group({
+      'login': [ '', Validators.compose([ Validators.required, Validators.pattern(/[a-zA-Z0-9_\-]{4,}/) ]) ],
+      'email': [ '', Validators.compose([ Validators.required, Validators.email ]) ],
+      'password': [ '', Validators.compose([ Validators.required, Validators.pattern(/[a-zA-Z0-9_\-]{4,}/) ]) ],
+      'confirmPassword': [ '', [ Validators.required ] ],
+      'cgu': [ 'false', Validators.compose([ Validators.required, Validators.requiredTrue ]) ]
+    }, { validator: this.matchingPasswords('password', 'confirmPassword') });
 
+  }
+
+  /**
+   *
+   */
+  ionViewDidEnter() {
+    this.ga.trackView('SignupPage');
+    this.ga.trackEvent('Signup', 'Start', 'Start', 1);
+  }
+
+  /**
+   *
+   * @param {string} passwordKey
+   * @param {string} confirmPasswordKey
+   * @returns {(group: FormGroup) => {[p: string]: any}}
+   */
+  matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
+    return (group: FormGroup): { [ key: string ]: any } => {
+      let password = group.controls[ passwordKey ];
+      let confirmPassword = group.controls[ confirmPasswordKey ];
+
+      if(password.value !== confirmPassword.value) {
+        return {
+          mismatchedPasswords: true
+        };
+      }
     }
+  }
 
-    /**
-     *
-     */
-    ionViewDidEnter() {
-        this.ga.trackView('SignupPage');
-        this.ga.trackEvent('Signup', 'Start', 'Start', 1);
-    }
+  /**
+   *
+   * @param formVal
+   */
+  createAccount(formVal) {
+    if(this.userForm.valid) {
+      let account = { login: formVal.login, passwd: formVal.password };
+      let contact = { email: formVal.email };
+      let plan = { levelPlan: 'FREEMIUM', activity: { _id: 'ACT-HAND' } };
 
-    /**
-     *
-     * @param {string} passwordKey
-     * @param {string} confirmPasswordKey
-     * @returns {(group: FormGroup) => {[p: string]: any}}
-     */
-    matchingPasswords(passwordKey: string, confirmPasswordKey: string) {
-        return (group: FormGroup): { [ key: string ]: any } => {
-            let password = group.controls[ passwordKey ];
-            let confirmPassword = group.controls[ confirmPasswordKey ];
+      let user = {
+        account: account,
+        contact: contact,
+        plan: plan,
+      };
 
-            if (password.value !== confirmPassword.value) {
-                return {
-                    mismatchedPasswords: true
-                };
-            }
-        }
-    }
-
-    /**
-     *
-     * @param formVal
-     */
-    createAccount(formVal) {
-        if (this.userForm.valid) {
-            let account = {login: formVal.login, passwd: formVal.password};
-            let contact = {email: formVal.email};
-            let plan = {levelPlan: 'FREEMIUM', activity: {_id: 'ACT-HAND'}};
-
-            let user = {
-                account: account,
-                contact: contact,
-                plan: plan,
-            };
-
-            // Test unicite du login
-            this.userService.usernameTest(account.login).subscribe(r => {
-                if (r.status === true) {
-                    this.translateService.get('signup.messages.loginAlreadyExists').subscribe(
-                        value => {
-                            this.showAlert(value);
-                        }
-                    )
-                } else {
-                    // Enregistrement
-                    this.userService.registerUser(user).subscribe(rs => {
-                        if (rs.person !== 'null' && rs.person._id !== 'null') {
-                            this.navCtrl.push(SignupEndPage, {});
-                        }
-                    })
-                }
-            })
-
-        }
-    }
-
-    /**
-     *
-     * @param {string} message
-     */
-    showAlert(message: string) {
-        let okButton = '';
-        this.translateService.get('signup.messages.alert.button.ok').subscribe(
+      // Test unicite du login
+      this.userService.usernameTest(account.login).subscribe(r => {
+        if(r.status === true) {
+          this.translateService.get('signup.error.nonunique').subscribe(
             value => {
-                okButton = value;
+              this.showAlert(value);
             }
-        );
-        let errorTitle = '';
-        this.translateService.get('signup.messages.alert.title').subscribe(
-            value => {
-                errorTitle = value;
+          )
+        } else {
+          // Enregistrement
+          this.userService.registerUser(user).subscribe(rs => {
+            if(rs.person !== 'null' && rs.person._id !== 'null') {
+              this.navCtrl.push(SignupEndPage, {});
             }
-        );
+          })
+        }
+      })
 
-        let alert = this.alertCtrl.create({
-            title: errorTitle,
-            subTitle: message,
-            buttons: [ okButton ]
-        });
-        alert.present();
     }
+  }
 
-    /**
-     *
-     */
-    cancel() {
-        this.navCtrl.pop();
-    }
+  /**
+   *
+   * @param {string} message
+   */
+  showAlert(message: string) {
+    this.translateService.get([ 'actionButton.Ok', 'warning' ]).subscribe(t => {
+      let alert = this.alertCtrl.create({
+        title: t[ 'warning' ],
+        subTitle: message,
+        buttons: [ t[ 'actionButton.Ok' ] ]
+      });
+      alert.present();
+    });
 
-    /**
-     *
-     * @param {string} field
-     * @returns {boolean}
-     */
-    isValid(field: string) {
-        let formField = this.userForm.controls[ field ];
-        return formField.valid || formField.pristine;
-    }
+  }
+
+  /**
+   *
+   */
+  cancel() {
+    this.navCtrl.pop();
+  }
+
+  /**
+   *
+   * @param {string} field
+   * @returns {boolean}
+   */
+  isValid(field: string) {
+    let formField = this.userForm.controls[ field ];
+    return formField.valid || formField.pristine;
+  }
 }
