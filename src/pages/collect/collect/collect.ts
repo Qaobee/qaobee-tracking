@@ -626,6 +626,7 @@ export class CollectPage {
       this.presentToast(this.translations.collect.select_player);
     } else {
       let goalModal = this.modalController.create(GoalModal, {});
+      this.fsmContext.shootSeqId = Utils.generateGUID();
       goalModal.onDidDismiss((data: { ground: string, goal: string, scorred: boolean }) => {
         console.debug('[CollectPage] - showGround', data, this.fsmContext.selectedPlayer);
         if(data) {
