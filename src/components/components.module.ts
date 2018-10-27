@@ -22,7 +22,6 @@ import { NgModule } from '@angular/core';
 import { MenuHeaderComponent } from './menu-header/menu-header';
 import { IonicModule } from "ionic-angular";
 import { MyApp } from "../app/app.component";
-import { NextEventComponent } from './next-event/next-event';
 import { LastCollectComponent } from './last-collect/last-collect';
 import { Utils } from "../providers/utils";
 import { APIModule } from "../providers/api/api.module";
@@ -39,7 +38,6 @@ import { TourComponent } from "./tour/tour.component";
 @NgModule({
     declarations: [
         MenuHeaderComponent,
-        NextEventComponent,
         LastCollectComponent,
         SassHelperComponent,
         ChronoComponent,
@@ -61,7 +59,6 @@ import { TourComponent } from "./tour/tour.component";
     ],
     exports: [
         MenuHeaderComponent,
-        NextEventComponent,
         LastCollectComponent,
         ChronoComponent,
         SassHelperComponent,
