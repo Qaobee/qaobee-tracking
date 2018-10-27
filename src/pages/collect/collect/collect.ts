@@ -145,7 +145,7 @@ export class CollectPage {
     private handFSM: HandFSM,
     private ga: GoogleAnalytics
   ) {
-    
+
     this.translateService.get([ 'collect', 'loader', 'actionButton', 'warning' ]).subscribe(t => {
       this.translations = {
         collect: t.collect,
@@ -853,10 +853,10 @@ export class CollectPage {
     this.fsmContext.gamePhase.attack = true;
     this.fsmContext.gamePhase.code = StatType.TIME_ATTACK;
     this.fsmContext.gamePhase.startTime = this.fsmContext.chrono;
-    
+
     this.buttonColorAtt = "secondary";
     this.buttonColorDef = "light";
-    
+
     this.fsmContext.selectedPlayer = undefined;
     this.populateActions('attack');
   }
@@ -881,7 +881,7 @@ export class CollectPage {
     this.fsmContext.gamePhase.attack = false;
     this.fsmContext.gamePhase.code = StatType.TIME_DEFENSE;
     this.fsmContext.gamePhase.startTime = this.fsmContext.chrono;
-    
+
     this.buttonColorAtt = "light";
     this.buttonColorDef = "secondary";
     this.fsmContext.selectedPlayer = undefined;
@@ -1283,7 +1283,18 @@ export class CollectPage {
           console.debug('[CollectPage] - uploadStats - addBulk', res);
           if(res) {
             this.presentToast(this.translations.collect.upload_done);
-            this.navCtrl.setRoot(HomePage, { user: this.authenticationService.user });
+            this.eventsService.getEvents(
+              this.authenticationService.meta.season.startDate,
+              this.authenticationService.meta.season.endDate,
+              undefined,
+              this.authenticationService.meta.activity._id,
+              this.authenticationService.meta._id,
+            ).subscribe(eventList => {
+              console.log('[CollectPage] - getEvents', eventList);
+              this.storage.set(this.authenticationService.meta._id + '-events', eventList).then(() => {
+                this.navCtrl.setRoot(HomePage, { user: this.authenticationService.user });
+              });
+            });
           }
         });
       }
@@ -1330,8 +1341,8 @@ export class CollectPage {
         this.eventsService.addEvent(this.currentEvent);
         this.cleanFlowContext();
         this.ga.trackEvent('Collect', 'End', 'End', this.fsmContext.chrono);
-        this.storage.remove('gameState-'+ this.currentEvent._id);
-        this.storage.remove('stats-'+ this.currentEvent._id);
+        this.storage.remove('gameState-' + this.currentEvent._id);
+        this.storage.remove('stats-' + this.currentEvent._id);
       });
     }
   }
