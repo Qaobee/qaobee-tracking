@@ -25,7 +25,7 @@
             </ion-item>
 
             <ion-item>
-                <button id="connectButton" ion-button icon-left large (tap)="doLogin()" color="secondary" outline>
+                <button id="connectButton" ion-button icon-left large (tap)="doLogin()" color="secondary">
                     <ion-icon name="log-in"></ion-icon>
                     {{ 'actionButton.Submit' | translate  }}
                 </button>
@@ -38,7 +38,7 @@
             </ion-item>
         </ion-list>
 
-        <button id="subscribeButton" ion-button icon-left medium (tap)="goToSignup()" outline color="danger">
+        <button id="subscribeButton" ion-button icon-left medium (tap)="goToSignup()" color="danger">
                 {{ 'login.Subscribe' | translate  }}
         </button>
     
