@@ -124,7 +124,7 @@ export class TeamBuildPage {
               position: 'bottom'
             },
             {
-              target: "ion-header ion-buttons button",
+              target: "#step3 > ion-navbar ion-buttons button",
               description: showcase.team.start,
               position: "bottom"
             },

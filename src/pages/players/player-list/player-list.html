@@ -39,7 +39,7 @@
             </ion-avatar>
             <h2>{{item.firstname}} {{item.name}}</h2>
             <p *ngIf="(item.deactivated === 'true')">{{'player.labels.deactivated' | translate}}</p>
-            <p *ngIf="(item.deactivated !== 'true')">{{item.status.positionType.label}}</p>
+            <p *ngIf="(item.deactivated !== 'true')">{{'player.positionType.'+item.status.positionType.code | translate}}</p>
             <ion-badge color="secondary" item-end>{{item.status.squadnumber}}</ion-badge>
             <ion-icon item-end name="stats" color="danger" (click)="goToStats(item, $event)"></ion-icon>
         </ion-item>

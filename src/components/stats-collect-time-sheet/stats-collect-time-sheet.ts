@@ -21,6 +21,8 @@
 import { Component, Input } from '@angular/core';
 import { StatsContainerModel } from '../../model/stats.container';
 import { StatsEventService } from '../../pages/events/stats.event.service';
+import { NavController } from 'ionic-angular';
+import { PlayerStatsPage } from './../../pages/players/player-stats/player-stats';
 
 @Component({
     selector: 'stats-collect-time-sheet',
@@ -34,10 +36,11 @@ export class StatsCollectTimeSheetComponent {
     playerList: any[];
 
     /**
-     *
+     * @param {NavController} navCtrl
      * @param {StatsEventService} statsEventService
      */
-    constructor(private statsEventService: StatsEventService) {
+    constructor(public navCtrl: NavController,
+                private statsEventService: StatsEventService) {
     }
 
     /**
@@ -155,5 +158,13 @@ export class StatsCollectTimeSheetComponent {
             });
         });
         this.statsNotFound = false;
+    }
+
+    /**
+     *
+     */
+    goToStatsPlayer(player: any, clickEvent: any) {
+        clickEvent.stopPropagation();
+        this.navCtrl.push(PlayerStatsPage, {player: player});
     }
 }
