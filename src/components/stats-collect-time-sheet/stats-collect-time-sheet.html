@@ -37,9 +37,9 @@
     <div *ngIf="item.status.positionType.code !=='goalkeeper'">
       <ion-row>
         <ion-col>
-          <h2>
-            <ion-icon item-start name="stats" color="danger"></ion-icon>
-            {{item.firstname}} {{item.name}}
+          <h2 (click)="goToStatsPlayer(item, $event)">
+                <ion-icon item-start name="stats" color="danger"></ion-icon>
+                {{item.firstname}} {{item.name}}
           </h2>
         </ion-col>
       </ion-row>
