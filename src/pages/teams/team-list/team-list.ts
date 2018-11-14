@@ -88,19 +88,6 @@ export class TeamListPage {
     }
 
     /**
-     * if teams exist then return list, else, call personneService
-     */
-    private retrieveTeamList() {
-        this.storage.get(this.authenticationService.meta._id + '-teams').then(teams => {
-            if (!teams) {
-                this.getTeams(null);
-            } else {
-                this.myTeams= teams;
-            }
-        })
-    }
-
-    /**
      *
      */
     goToAddteam() {

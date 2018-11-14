@@ -21,7 +21,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { APIStatsService } from '../../providers/api/api.stats';
-import { AuthenticationService } from '../../providers/authentication.service';
 import { Utils } from "../../providers/utils";
 
 import { Chart } from 'chart.js';
@@ -54,11 +53,9 @@ export class StatsShootEfficiencyComponent {
      *
      * @param statsService
      * @param translateService
-     * @param authenticationService
      */
     constructor(private statsService: APIStatsService,
-                private translateService: TranslateService,
-                private authenticationService: AuthenticationService) {
+                private translateService: TranslateService) {
     }
 
 

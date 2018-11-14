@@ -42,7 +42,12 @@ export class SettingsService {
         this.locale = this.translate.getBrowserLang();
         registerLocaleData(localeFr, 'fr');
         registerLocaleData(localeEn, 'en');
-        registerLocaleData(localeEn, 'us');
+        this.translate.addLangs(['fr', 'en']);
+        if(this.translate.getLangs().filter(l=> l === this.translate.getBrowserLang()).length > 0) {
+            this.locale = this.translate.getBrowserLang();
+        } else {
+            this.locale = this.translate.getDefaultLang();
+        }
         this.init();
     }
 
