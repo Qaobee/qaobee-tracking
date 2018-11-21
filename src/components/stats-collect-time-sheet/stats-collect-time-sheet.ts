@@ -65,7 +65,7 @@ export class StatsCollectTimeSheetComponent {
 
         // List of negatives actions
         const actionsAttNegatives = [ 'forceAtt', 'marcher', 'doubleDribble', 'looseball', 'foot', 'zone' ];
-        const actionsDefNegatives = [ 'goalConceded', 'penaltyConceded', 'interceptionKo', 'duelLoose', 'badPosition' ];
+        const actionsDefNegatives = [ 'goalConceded', 'penaltyConceded', 'interceptionKo', 'duelLoose', 'badPosition, exclTmp' ];
 
         this.playerList = statsContainer.playerList;
 

@@ -74,6 +74,39 @@
             <ion-row class="btn-list">
                 <ion-col text-center>
                     <ion-fab center middle>
+                        <button ion-fab mini color="secondary" (click)="hurtButton($event)">
+                            <ion-icon name="medkit"></ion-icon>
+                        </button>
+                    </ion-fab>
+                </ion-col>
+                
+                <ion-col text-center>
+                    <ion-fab center middle>
+                        <button ion-fab mini color="yellow" (click)="yellowCardButton($event)">
+                            <ion-icon name="document"></ion-icon>
+                        </button>
+                    </ion-fab>
+                </ion-col>
+                <ion-col text-center>
+                    <ion-fab center middle>
+                        <button ion-fab mini color="warning" (click)="orangeCardButton($event)">
+                            +2
+                        </button>
+                    </ion-fab>
+                </ion-col>
+                <ion-col text-center>
+                    <ion-fab center middle>
+                        <button ion-fab mini color="danger" (click)="redCardButton($event)">
+                            <ion-icon name="document"></ion-icon>
+                        </button>
+                    </ion-fab>
+                </ion-col>
+            
+            </ion-row>
+
+            <ion-row class="btn-list">
+                <ion-col text-center>
+                    <ion-fab center middle>
                         <button ion-fab mini color="secondary" (click)="toggleSubstitutes($event)">
                             <ion-icon name="swap"></ion-icon>
                         </button>
