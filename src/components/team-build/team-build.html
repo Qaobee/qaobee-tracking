@@ -22,7 +22,7 @@
         </ion-fab>
         <ion-row>
             <ion-col text-center *ngFor="let s of playerPositions['substitutes']" ion-col>
-                <ion-chip [color]="hasOrangeCard(s._id)? 'orange': 'white'">
+                <ion-chip [color]="hasRedCard(s._id)? 'red' : hasOrangeCard(s._id)? 'orange': 'white'">
                     <ion-avatar>
                         <img [src]="getAvatar(s.avatar)" alt="avatar">
                     </ion-avatar>

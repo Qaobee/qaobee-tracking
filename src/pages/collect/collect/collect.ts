@@ -1035,7 +1035,9 @@ export class CollectPage {
         this.fsmContext.playTimeMap[ selectedPlayer.playerId ] = totalPlayTime + this.fsmContext.chrono - lastIn;
         this.statCollector.totalPlayTime(this.fsmContext, selectedPlayer.playerId);
         this.cleanFlowContext();
+        let p = _.cloneDeep(this.playerPositions[ selectedPlayer.position ]);
         delete this.playerPositions[ selectedPlayer.position ];
+        this.playerPositions.substitutes.push(p);
         this.saveState();
       }
     }
