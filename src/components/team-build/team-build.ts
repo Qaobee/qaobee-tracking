@@ -150,12 +150,14 @@ export class TeamBuildComponent {
             value: chosen,
             checked: this.playerPositions[ chosenPosition ] && this.playerPositions[ chosenPosition ]._id === chosen._id,
             handler: data => {
-                console.debug(chosenPosition, data.value);
+                console.debug('[TeamBuildPage] -addplayerToAlert - handler', chosenPosition, positionBefore, data.value);
                 if ('substitutes' === positionBefore) {
                     this.playerPositions[ positionBefore ] = this.playerPositions[ positionBefore ].filter(p => {
                         return p._id !== data.value._id;
                     });
-                    this.playerPositions[ positionBefore ].push(this.playerPositions[ chosenPosition ]);
+                    if(this.playerPositions[ chosenPosition ]) {
+                      this.playerPositions[ positionBefore ].push(this.playerPositions[ chosenPosition ]);
+                    }
                 } else {
                     this.playerPositions[ positionBefore ] = this.playerPositions[ chosenPosition ];
                 }
