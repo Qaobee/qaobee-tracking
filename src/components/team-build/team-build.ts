@@ -235,7 +235,9 @@ export class TeamBuildComponent {
   }
 
   /**
-   * @param  {string} playerId
+   *
+   * @param {string} playerId
+   * @return {boolean}
    */
   hasOrangeCard(playerId: string) {
     return _.findIndex(this.sanctions, o => {
@@ -244,17 +246,20 @@ export class TeamBuildComponent {
   }
 
   /**
-   * @param  {string} position
+   *
+   * @param {string} playerId
+   * @return {boolean}
    */
   hasRedCard(playerId: string) {
-    console.debug('[TeamBuildComponent] - constructor - sanctions', this.sanctions);
     return _.findIndex(this.sanctions, o => {
-      return o.playerId === playerId && o.sanction === StatType.RED_CARD
+      return o.playerId === playerId && o.sanction === StatType.RED_CARD;
     }) > -1;
   }
 
   /**
-   * @param  {string} playerId
+   *
+   * @param {string} playerId
+   * @return {boolean}
    */
   hasYellowCard(playerId: string): boolean {
     return _.findIndex(this.sanctions, o => {

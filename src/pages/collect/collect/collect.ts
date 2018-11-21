@@ -932,13 +932,15 @@ export class CollectPage {
     }
   }
 
-
+  /**
+   *
+   */
   checkSanctions() {
     Observable.interval(1000).timeInterval().subscribe(() => {
       this.gameState.sanctions.forEach(s => {
         switch(s.sanction) {
           case StatType.ORANGE_CARD:
-            if(this.fsmContext.chrono >= s.time + 2 * 60 * 1000) {
+            if(this.fsmContext.chrono >= s.time + 2 * 60) {
               this.gameState.sanctions = this.gameState.sanctions.filter(p => {
                 return p.playerId !== s.playerId;
               });
@@ -946,7 +948,7 @@ export class CollectPage {
             }
             break;
           case StatType.RED_CARD:
-            if(this.fsmContext.chrono >= s.time + 2 * 60 * 1000) {
+            if(this.fsmContext.chrono >= s.time + 60 * 60) {
               this.gameState.sanctions.filter(p => {
                 return p.playerId !== s.playerId;
               }).forEach(s => {
@@ -972,7 +974,8 @@ export class CollectPage {
   }
 
   /**
-   * @param  {any} event
+   *
+   * @param event
    */
   yellowCardButton(event: any) {
     console.debug('[CollectPage] - yellowCardButton', event);
@@ -999,7 +1002,9 @@ export class CollectPage {
   }
 
   /**
-   * @param  {string} playerId
+   *
+   * @param {string} playerId
+   * @return {boolean}
    */
   hasYellowCard(playerId: string): boolean {
     return _.findIndex(this.gameState.sanctions, o => {
